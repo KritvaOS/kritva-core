@@ -1,0 +1,34 @@
+#==============================================================================
+# Copyright (c) 2026 KritvaOS
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : source-header-check.yml
+# Description : GitHub Actions source header validation
+#
+# Component   : Infrastructure
+# Module      : Source Header Checker
+# Layer       : Development Infrastructure
+#
+# Requirements: HEADER-001
+# API         : GitHub Actions workflow
+#
+# Author      : KritvaOS
+# Created     : 26-09-2026
+#==============================================================================
+
+name: Source Header Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  source-header-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check source headers
+        run: python3 scripts/lint/check_source_headers.py --mode tracked --strict

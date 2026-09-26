@@ -13,7 +13,7 @@
 // API         : CORE-API-STATUS
 //
 // Author      : KritvaOS Core Team
-// Created     : 2026-09-14
+// Created     : 14-09-2026
 //==============================================================================
 
 #pragma once
