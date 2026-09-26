@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : event_type.hpp
-// Description : Standard event classifications for Core event envelopes.
+// Description : Standard event classifications.
 //
 // Component   : Kritva Core
 // Module      : Event
@@ -13,24 +13,14 @@
 // API         : CORE-API-EVENT
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
+
 #pragma once
-
 #include <cstdint>
-
 namespace kritva::core {
-
-/// @brief Identifies the class of an emitted Core event.
 enum class EventType : std::uint32_t {
-    UNKNOWN = 0,
-    LIFECYCLE,
-    STATUS,
-    HEALTH,
-    ERROR,
-    CONFIGURATION,
-    CAPABILITY
+    UNKNOWN = 0, LIFECYCLE, STATUS, HEALTH, ERROR, CONFIGURATION, CAPABILITY
 };
-
 } // namespace kritva::core

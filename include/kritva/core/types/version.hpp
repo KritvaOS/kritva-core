@@ -3,35 +3,30 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : version.hpp
-// Description : Semantic version representation for Kritva Core APIs and objects.
+// Description : Semantic version representation.
 //
 // Component   : Kritva Core
 // Module      : Types
 // Layer       : Core Foundation
 //
-// Requirements: CORE-TYPE-002
+// Requirements: CORE-TYP-002
 // API         : CORE-API-VERSION
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
-#pragma once
 
+#pragma once
 #include <cstdint>
 #include <string>
 
 namespace kritva::core {
-
-/// @brief Represents a semantic version using major, minor, and patch components.
 struct Version {
     std::uint32_t major{0};
     std::uint32_t minor{0};
     std::uint32_t patch{0};
-
     [[nodiscard]] std::string to_string() const;
-
     friend constexpr bool operator==(const Version&, const Version&) noexcept = default;
 };
-
 } // namespace kritva::core

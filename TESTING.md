@@ -10,7 +10,7 @@ Testing validates that Kritva Core implements documented requirements and public
 Unit Test → Contract Test → Integration Test → System Validation
 ```
 
-R0.1 primarily focuses on unit and contract testing.
+R0.2 primarily focuses on unit and contract testing.
 
 ## 3. Unit Tests
 
@@ -51,7 +51,7 @@ CORE-LIF-001
     ↓
 lifecycle_state.hpp
     ↓
-test_lifecycle_state.cpp
+lifecycle_test.cpp
 ```
 
 ## 10. Completion Criteria

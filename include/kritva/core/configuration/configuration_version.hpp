@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : configuration_version.hpp
-// Description : Version identifier for a configuration schema or instance.
+// Description : Configuration schema/instance version.
 //
 // Component   : Kritva Core
 // Module      : Configuration
@@ -13,16 +13,10 @@
 // API         : CORE-API-CONFIGURATION
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
+
 #pragma once
-
 #include "../types/version.hpp"
-
-namespace kritva::core {
-
-/// @brief Explicit configuration schema/instance version.
-using ConfigurationVersion = Version;
-
-} // namespace kritva::core
+namespace kritva::core { using ConfigurationVersion = Version; }

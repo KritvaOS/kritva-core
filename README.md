@@ -1,98 +1,40 @@
+//==============================================================================
+// Copyright (c) 2026 KritvaOS
+// SPDX-License-Identifier: Apache-2.0
+//
+// File        : README.md
+// Description : Updated project overview.
+//
+// Component   : Kritva Core
+// Module      : Documentation
+// Layer       : Core Foundation
+//
+// Requirements: CORE-DOC-001
+// API         : CORE-API-README
+//
+// Author      : KritvaOS Core Team
+// Created     : 26-09-2026
+//==============================================================================
+
+
 # Kritva Core
 
-## Open Robotic Computing Platform — Core Foundation
+Platform-independent runtime foundation for the Kritva Open Robotic Computing Platform.
 
-`kritva-core` is the platform-independent foundation of the Kritva Open Robotic Computing Platform.
+## V0.2 direction
 
-Kritva connects Physical AI to physical action. Core provides the small, stable contracts and primitives required by higher-level Kritva components and multiple compute implementations.
+Core is an API-first, platform-independent library. Platform implementations are supplied by the parent `kritvaos-community` repository.
 
-## Scope
+### Core owns
+Types, lifecycle, status, health, errors, events, capabilities, configuration, runtime contracts, messaging contracts, time abstractions and platform contracts.
 
-Core R0.1 defines foundational concepts:
-
-- Identity
-- Lifecycle
-- Status
-- Health
-- Statistics
-- Error / Fault
-- Result
-- Events
-- Capability
-- Configuration
-- Version
-- Timestamp
-- Duration
-- Metadata
-
-Core is intentionally platform-independent.
-
-## Non-Goals
-
-Core R0.1 does not implement ROS2/DDS, EtherCAT, Linux/RTOS integration, hardware drivers, motor or sensor drivers, AI inference, motion planning, cloud services, databases, or robot-specific application logic.
-
-## Repository Structure
-
-```text
-kritva-core/
-├── include/kritva/core/   # Public C++ API
-├── src/                   # Implementation
-├── tests/{unit,contract}/
-├── examples/
-├── docs/
-├── scripts/
-├── CMakeLists.txt
-├── CMakePresets.json
-├── README.md
-├── ARCHITECTURE.md
-├── REQUIREMENTS.md
-├── API.md
-├── TESTING.md
-├── AGENTS.md
-├── VERSION
-├── CHANGELOG.md
-├── LICENSE
-├── .gitignore
-├── .clang-format
-└── .editorconfig
-```
-
-## Public Include Convention
-
-```cpp
-#include <kritva/core/core.hpp>
-#include <kritva/core/types/id.hpp>
-```
-
-Namespace:
-
-```cpp
-kritva::core
-```
-
-## Engineering Model
-
-```text
-Requirement → Architecture → API → Implementation → Unit Test
-→ Contract Test → Verification
-```
+### Core does not own
+Linux/PREEMPT_RT, FreeRTOS, STM32/TI BSPs, ROS 2/DDS, EtherCAT, vendor drivers or robot algorithms.
 
 ## Build
 
-Kritva Core targets C++20 and uses CMake.
-
 ```bash
-cmake --preset debug
-cmake --build --preset debug
-ctest --test-dir build/debug --output-on-failure
+cmake -S . -B build
+cmake --build build
+ctest --test-dir build --output-on-failure
 ```
-
-See `AGENTS.md` for repository engineering rules.
-
-## Status
-
-Pre-alpha; R0.1 APIs and implementation are not yet stable.
-
-## License
-
-Apache License 2.0. See `LICENSE`.

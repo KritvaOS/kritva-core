@@ -1,0 +1,61 @@
+version: "0.2.0"
+
+policy:
+  public_api_root: include/kritva/core
+  implementation_root: src
+  tests_root: tests
+  platform_specific_code_forbidden_in_core: true
+
+domains:
+  foundation: [types, status, health, error, statistics]
+  lifecycle: [lifecycle]
+  eventing: [event]
+  capability: [capability]
+  configuration: [configuration]
+  runtime: [runtime]
+  messaging: [messaging]
+  time: [time]
+  platform_contract: [platform]
+
+files:
+  - id: KC-TIME-001
+    path: include/kritva/core/time/clock.hpp
+    type: public_header
+    purpose: Platform-neutral clock contract
+    status: baseline
+    intern_work_package: CORE-WP-TIME
+
+  - id: KC-LIF-001
+    path: include/kritva/core/lifecycle/lifecycle.hpp
+    type: public_header
+    purpose: Validated lifecycle state transitions
+    status: baseline
+    intern_work_package: CORE-WP-LIFECYCLE
+
+  - id: KC-RT-001
+    path: include/kritva/core/runtime/component.hpp
+    type: public_header
+    purpose: Lifecycle-managed component contract
+    status: skeleton
+    intern_work_package: CORE-WP-RUNTIME
+
+  - id: KC-MSG-001
+    path: include/kritva/core/messaging/message.hpp
+    type: public_header
+    purpose: Platform-neutral message envelope
+    status: skeleton
+    intern_work_package: CORE-WP-MESSAGING
+
+  - id: KC-CFG-001
+    path: include/kritva/core/configuration/configuration.hpp
+    type: public_header
+    purpose: Typed configuration and validation entry point
+    status: baseline
+    intern_work_package: CORE-WP-CONFIG
+
+rules:
+  - Core must not include Linux, FreeRTOS, STM32, TI SDK, ROS2, DDS or EtherCAT headers.
+  - Platform implementations live outside this repository.
+  - New public files require an architecture manifest update.
+  - Public API changes require review and contract tests.
+  - Platform-specific behavior must enter through explicit adapter contracts.

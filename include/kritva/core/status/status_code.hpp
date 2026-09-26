@@ -3,34 +3,34 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : status_code.hpp
-// Description : Standard operational status codes for Kritva Core.
+// Description : Operational status classification.
 //
 // Component   : Kritva Core
 // Module      : Status
 // Layer       : Core Foundation
 //
-// Requirements: CORE-STS-001
+// Requirements: CORE-STA-001
 // API         : CORE-API-STATUS
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
+
 #pragma once
-
+#include <cstdint>
 namespace kritva::core {
-
-/// @brief Result-independent operational status classification.
-enum class StatusCode {
-    UNKNOWN,
-    OK,
-    INITIALIZING,
-    READY,
-    RUNNING,
-    STOPPING,
-    STOPPED,
-    DEGRADED,
-    FAULT
-};
+   enum class StatusCode : std::uint8_t {
+       UNKNOWN,
+       OK,
+       INVALID_ARGUMENT,
+       NOT_READY,
+       BUSY,
+       TIMEOUT,
+       FAILED,
+       UNAVAILABLE,
+       UNSUPPORTED,
+       INTERNAL_ERROR
+   };
 
 } // namespace kritva::core

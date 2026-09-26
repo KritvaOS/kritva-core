@@ -3,29 +3,29 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : health_state.hpp
-// Description : Health classification independent from operational status.
+// Description : Health classification independent from status.
 //
 // Component   : Kritva Core
 // Module      : Health
 // Layer       : Core Foundation
 //
-// Requirements: CORE-HLT-001
+// Requirements: CORE-HEA-001
 // API         : CORE-API-HEALTH
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
+
 
 #pragma once
 
-namespace kritva::core {
+#include <cstdint>
 
-/// @brief Health classification; a component may be RUNNING while DEGRADED.
-enum class HealthState {
+namespace kritva::core {
+   enum class HealthState : std::uint8_t {
     UNKNOWN,
     HEALTHY,
     DEGRADED,
     UNHEALTHY
-};
-
+   };
 } // namespace kritva::core

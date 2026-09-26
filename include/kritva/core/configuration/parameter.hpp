@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : parameter.hpp
-// Description : Typed configuration parameter metadata and value abstraction.
+// Description : Typed scalar configuration parameter.
 //
 // Component   : Kritva Core
 // Module      : Configuration
@@ -13,25 +13,19 @@
 // API         : CORE-API-CONFIGURATION
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
-#pragma once
 
+#pragma once
 #include <cstdint>
 #include <string>
 #include <variant>
-
 namespace kritva::core {
-
-/// @brief Initial scalar configuration value types supported by Core.
 using ParameterValue = std::variant<bool, std::int64_t, double, std::string>;
-
-/// @brief Describes one configurable parameter.
 struct Parameter {
     std::string name;
     ParameterValue value;
     std::string description;
 };
-
 } // namespace kritva::core

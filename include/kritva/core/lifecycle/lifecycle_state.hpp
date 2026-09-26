@@ -3,33 +3,32 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : lifecycle_state.hpp
-// Description : Lifecycle states shared by Kritva Core-managed components.
+// Description : Lifecycle state enumeration.
 //
 // Component   : Kritva Core
 // Module      : Lifecycle
 // Layer       : Core Foundation
 //
-// Requirements: CORE-LC-001
+// Requirements: CORE-LIF-001
 // API         : CORE-API-LIFECYCLE
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
 #pragma once
 
+#include <cstdint>
+
 namespace kritva::core {
-
-/// @brief Standard lifecycle state of a Core-managed component.
-enum class LifecycleState {
-    UNKNOWN,
-    INITIALIZING,
-    READY,
-    RUNNING,
-    STOPPING,
-    STOPPED,
-    FAULT,
-    RECOVERING
-};
-
+   enum class LifecycleState : std::uint8_t {
+       UNKNOWN,
+       INITIALIZING,
+       READY,
+       RUNNING,
+       STOPPING,
+       STOPPED,
+       FAULT,
+       RECOVERING
+   };
 } // namespace kritva::core

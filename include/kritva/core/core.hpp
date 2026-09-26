@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : core.hpp
-// Description : Umbrella header for the public Kritva Core Foundation API.
+// Description : Public umbrella header for Kritva Core.
 //
 // Component   : Kritva Core
 // Module      : Core
@@ -13,50 +13,42 @@
 // API         : CORE-API-UMBRELLA
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
-#pragma once
 
-// Types
+#pragma once
 #include "types/id.hpp"
 #include "types/version.hpp"
 #include "types/timestamp.hpp"
 #include "types/duration.hpp"
 #include "types/metadata.hpp"
-
-// Lifecycle
 #include "lifecycle/lifecycle_state.hpp"
 #include "lifecycle/lifecycle.hpp"
-
-// Status
 #include "status/status_code.hpp"
 #include "status/status.hpp"
-
-// Health
 #include "health/health_state.hpp"
 #include "health/health.hpp"
-
-// Statistics
 #include "statistics/counter.hpp"
 #include "statistics/gauge.hpp"
 #include "statistics/statistics.hpp"
-
-// Error
 #include "error/error_code.hpp"
 #include "error/error.hpp"
 #include "error/result.hpp"
-
-// Event
 #include "event/event_type.hpp"
 #include "event/event.hpp"
-
-// Capability
 #include "capability/capability_id.hpp"
 #include "capability/capability.hpp"
 #include "capability/capability_set.hpp"
-
-// Configuration
 #include "configuration/parameter.hpp"
 #include "configuration/configuration.hpp"
 #include "configuration/configuration_version.hpp"
+#include "runtime/component.hpp"
+#include "runtime/runtime.hpp"
+#include "messaging/message.hpp"
+#include "messaging/topic.hpp"
+#include "time/clock.hpp"
+#include "time/timer.hpp"
+#include "platform/scheduler.hpp"
+#include "platform/clock.hpp"
+#include "platform/watchdog.hpp"

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : capability.hpp
-// Description : Describes a capability and its interface version.
+// Description : Capability metadata.
 //
 // Component   : Kritva Core
 // Module      : Capability
@@ -13,23 +13,18 @@
 // API         : CORE-API-CAPABILITY
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
-#pragma once
 
+#pragma once
 #include "capability_id.hpp"
 #include "../types/version.hpp"
-
 #include <string>
-
 namespace kritva::core {
-
-/// @brief Metadata describing a capability supported by a component.
 struct Capability {
     CapabilityId id{};
     std::string name;
     Version version{};
 };
-
 } // namespace kritva::core

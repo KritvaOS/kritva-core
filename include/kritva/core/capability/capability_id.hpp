@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : capability_id.hpp
-// Description : Identifier for a capability exposed by a Core-managed component.
+// Description : Capability identifier.
 //
 // Component   : Kritva Core
 // Module      : Capability
@@ -13,16 +13,10 @@
 // API         : CORE-API-CAPABILITY
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
+
 #pragma once
-
 #include "../types/id.hpp"
-
-namespace kritva::core {
-
-/// @brief Capability identifier alias using the Core Id primitive.
-using CapabilityId = Id;
-
-} // namespace kritva::core
+namespace kritva::core { using CapabilityId = Id; }

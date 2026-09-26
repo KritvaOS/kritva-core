@@ -1,0 +1,13 @@
+Area,Status,Finding
+Folder structure,PASS,Domains are cleanly separated and match Kritva Core responsibilities.
+Public API organization,PASS,include/kritva/core is coherent and umbrella header is present.
+Runtime skeleton,PASS,Component and Runtime contracts are appropriate as R0.2 skeletons.
+Messaging skeleton,PASS,MessageHeader and Topic are appropriate; transport is correctly excluded.
+Time boundary,FIXED,time::IClock now owns the Core contract; platform is an adapter.
+Timestamp semantics,FIXED,ClockDomain added to prevent ambiguity between monotonic/realtime.
+Configuration,FIXED,validate() entry point added; advanced constraints remain future work.
+Scheduler,REVIEW,"Priority, affinity and period semantics must be documented before implementation."
+Result<T>,REVIEW,Checked-access/precondition behavior should be frozen before broad adoption.
+Lifecycle,REVIEW,Transition table should be fully documented and tested.
+Documentation,FIXED,API/TESTING aligned to R0.2 and baseline review added.
+Intern readiness,PASS*,Suitable for implementation work packages after human API freeze.

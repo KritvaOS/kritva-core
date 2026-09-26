@@ -3,35 +3,29 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : gauge.hpp
-// Description : Signed gauge primitive for instantaneous statistics.
+// Description : Instantaneous signed measurement.
 //
 // Component   : Kritva Core
 // Module      : Statistics
 // Layer       : Core Foundation
 //
-// Requirements: CORE-STAT-002
+// Requirements: CORE-STS-002
 // API         : CORE-API-STATISTICS
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
+
 #pragma once
-
 #include <cstdint>
-
 namespace kritva::core {
-
-/// @brief Signed value representing an instantaneous measurement.
 class Gauge {
 public:
     using value_type = std::int64_t;
-
     constexpr void set(value_type value) noexcept { value_ = value; }
     [[nodiscard]] constexpr value_type value() const noexcept { return value_; }
-
 private:
     value_type value_{0};
 };
-
 } // namespace kritva::core

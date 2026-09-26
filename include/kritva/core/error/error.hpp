@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : error.hpp
-// Description : Structured operational error with source and timing context.
+// Description : Structured operational error.
 //
 // Component   : Kritva Core
 // Module      : Error
@@ -13,20 +13,16 @@
 // API         : CORE-API-ERROR
 //
 // Author      : KritvaOS Core Team
-// Created     : 14-09-2026
+// Created     : 26-09-2026
 //==============================================================================
 
-#pragma once
 
+#pragma once
 #include "error_code.hpp"
 #include "../types/id.hpp"
 #include "../types/timestamp.hpp"
-
 #include <string>
-
 namespace kritva::core {
-
-/// @brief Structured description of an operational failure.
 struct Error {
     ErrorCode code{ErrorCode::NONE};
     ErrorSeverity severity{ErrorSeverity::ERROR};
@@ -34,5 +30,4 @@ struct Error {
     Timestamp timestamp{};
     std::string message;
 };
-
 } // namespace kritva::core

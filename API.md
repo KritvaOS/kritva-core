@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-Public API organization for Kritva Core R0.1. The API is designed before implementation.
+Public API organization for Kritva Core R0.2. The API is designed before implementation.
 
 ## 2. Include Root
 
@@ -28,6 +28,10 @@ kritva/core/
 ├── event/{event_type.hpp,event.hpp}
 ├── capability/{capability_id.hpp,capability.hpp,capability_set.hpp}
 ├── configuration/{parameter.hpp,configuration.hpp,configuration_version.hpp}
+├── runtime/{component.hpp,runtime.hpp}
+├── messaging/{message.hpp,topic.hpp}
+├── time/{clock.hpp,timer.hpp}
+├── platform/{scheduler.hpp,clock.hpp,watchdog.hpp}
 └── core.hpp
 ```
 
@@ -46,3 +50,20 @@ Public does not automatically mean stable. Stability requires documented behavio
 ## 8. API Changes
 
 Public API changes require justification, impact analysis, updated tests, documentation, and human review when compatibility is affected.
+
+
+## 9. Architectural Dependency Direction
+
+The Core `time` domain owns the platform-neutral `IClock` contract. Platform adapters may implement that contract; Core time APIs must not depend on Linux, RTOS, PTP, or vendor clock implementations.
+
+## 10. Real-Time Contract
+
+Each API intended for a real-time path must document allocation, blocking, synchronization, execution-boundedness, and thread-safety expectations. Topic construction, configuration mutation, and other potentially allocating operations are control-plane APIs unless explicitly documented otherwise.
+
+## 11. Lifecycle Contract
+
+Lifecycle transitions are validated by the Core lifecycle implementation. The allowed transition table is documented in `ARCHITECTURE.md` and must be covered by unit/contract tests.
+
+## 12. Configuration Contract
+
+`Configuration::validate()` provides the Core validation entry point. R0.2 validates structural correctness; richer constraints such as ranges, enumerations, and required/default semantics remain a later extension.
