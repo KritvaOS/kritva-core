@@ -30,6 +30,12 @@ SCRIPT_DIR := scripts
 PYTHON := python3
 CMAKE  := cmake
 
+# Code coverage configuration.
+COVERAGE_BUILD_DIR := build-coverage
+GCOVR := gcovr
+COVERAGE_MIN_LINE ?= 0
+
+
 # Default build configuration.
 # Override from command line:
 #   make build BUILD_TYPE=Release
@@ -149,6 +155,55 @@ lint: ## Run static analysis and lint checks
 check: header-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
+
+
+#------------------------------------------------------------------------------
+# Code Coverage
+#
+# Builds Kritva Core with GCC coverage instrumentation, runs the complete
+# CTest suite, and generates a coverage report.
+#
+# Coverage is intentionally separate from the normal test target so that
+# "make test" remains fast and unchanged.
+#------------------------------------------------------------------------------
+
+.PHONY: coverage coverage-check coverage-clean
+
+coverage: ## Build, test, and generate code coverage report
+	@echo "[coverage] Configuring coverage build..."
+	$(CMAKE) -S . -B $(COVERAGE_BUILD_DIR) \
+		-DCMAKE_BUILD_TYPE=Debug \
+		-DCMAKE_CXX_FLAGS="--coverage" \
+		-DCMAKE_C_FLAGS="--coverage"
+
+	@echo "[coverage] Building $(PROJECT_NAME)..."
+	$(CMAKE) --build $(COVERAGE_BUILD_DIR) --parallel
+
+	@echo "[coverage] Running tests..."
+	cd $(COVERAGE_BUILD_DIR) && ctest --output-on-failure
+
+	@echo "[coverage] Generating coverage report..."
+	$(GCOVR) -r . \
+		--exclude 'tests/.*' \
+		--exclude 'build/.*' \
+		--exclude 'build-coverage/.*' \
+		--html-details coverage/coverage.html \
+		--txt
+
+	@echo "[coverage] Report: coverage.html"
+
+coverage-check: coverage ## Run coverage and enforce minimum line coverage
+	@echo "[coverage] Checking minimum line coverage..."
+	$(GCOVR) -r . \
+		--exclude 'tests/.*' \
+		--exclude 'build/.*' \
+		--exclude 'build-coverage/.*' \
+		--fail-under-line $(COVERAGE_MIN_LINE)
+
+coverage-clean: ## Remove coverage build and reports
+	@echo "[coverage] Cleaning coverage artifacts..."
+	rm -rf $(COVERAGE_BUILD_DIR)
+	rm -f coverage.html coverage.html.*
 
 #------------------------------------------------------------------------------
 # Install

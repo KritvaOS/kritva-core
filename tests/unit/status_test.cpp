@@ -7,11 +7,13 @@
 //
 // Component   : Kritva Core
 // Module      : Status
+// Layer       : Core Foundation
 //
 // Requirements: CORE-STATUS-*
 // API         : CORE-API-STATUS
 //
 // Author      : KritvaOS Core Team
+// Created     : 26-09-2026
 //==============================================================================
 
 #include <cassert>

@@ -1,14 +1,23 @@
 //==============================================================================
-// Kritva Core — Platform Contract Tests
+// Copyright (c) 2026 KritvaOS
 // SPDX-License-Identifier: Apache-2.0
 //
-// Requirements:
-//   CORE-PLAT-001 : IScheduler
-//   CORE-PLAT-002 : platform::IClock adapter contract
-//   CORE-PLAT-003 : IWatchdog
+// File        : platform_test.cpp
+// Description : Kritva Core — Platform Contract Tests
+//               These tests validate only the contracts exposed by the current Platform
+//               headers. No Linux/RTOS/CPU-affinity/timing/scheduling behavior is assumed.
 //
-// These tests validate only the contracts exposed by the current Platform
-// headers. No Linux/RTOS/CPU-affinity/timing/scheduling behavior is assumed.
+// Component   : Kritva Core
+// Module      : PLATFORM
+// Layer       : Core Foundation
+//
+// Requirements: CORE-PLAT-001 : IScheduler
+//               CORE-PLAT-002 : platform::IClock adapter contract
+//               CORE-PLAT-003 : IWatchdog
+// API         : CORE-TEST-PLATFORM
+//
+// Author      : KritvaOS Core Team
+// Created     : 26-09-2026
 //==============================================================================
 
 #include <cassert>

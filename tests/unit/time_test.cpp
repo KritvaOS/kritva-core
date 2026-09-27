@@ -1,13 +1,22 @@
 //==============================================================================
-// Kritva Core — Time Contract Tests
+// Copyright (c) 2026 KritvaOS
 // SPDX-License-Identifier: Apache-2.0
 //
-// Requirements:
-//   CORE-TIME-001 : IClock
-//   CORE-TIME-002 : ITimer
+// File        : time_test.cpp
+// Description : Kritva Core — Time Contract Tests
+//               These tests validate only the contracts exposed by the current Core headers.
+//               Platform-specific clock/timer behavior is intentionally outside this suite.
 //
-// These tests validate only the contracts exposed by the current Core headers.
-// Platform-specific clock/timer behavior is intentionally outside this suite.
+// Component   : Kritva Core
+// Module      : TIME
+// Layer       : Core Foundation
+//
+// Requirements: CORE-TIME-001 : IClock
+//               CORE-TIME-002 : ITimer
+// API         : CORE-TEST-TIME
+//
+// Author      : KritvaOS Core Team
+// Created     : 26-09-2026
 //==============================================================================
 
 #include <cassert>

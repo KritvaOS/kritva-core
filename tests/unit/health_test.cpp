@@ -7,11 +7,13 @@
 //
 // Component   : Kritva Core
 // Module      : Health
+// Layer       : Core Foundation
 //
 // Requirements: CORE-HEALTH-*
 // API         : CORE-API-HEALTH
 //
 // Author      : KritvaOS Core Team
+// Created     : 26-09-2026
 //==============================================================================
 
 #include <cassert>

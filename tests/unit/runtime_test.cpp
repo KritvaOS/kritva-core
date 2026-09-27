@@ -1,14 +1,23 @@
 //==============================================================================
-// Kritva Core — Runtime Contract Tests
+// Copyright (c) 2026 KritvaOS
 // SPDX-License-Identifier: Apache-2.0
 //
-// Requirements:
-//   CORE-RT-001 : Component
-//   CORE-RT-002 : Runtime
+// File        : runtime_test.cpp
+// Description : Kritva Core — Runtime Contract Tests
+//               These tests validate only the contracts exposed by the current Runtime
+//               headers. They do not impose lifecycle-transition policy or platform
+//               implementation behavior.
 //
-// These tests validate only the contracts exposed by the current Runtime
-// headers. They do not impose lifecycle-transition policy or platform
-// implementation behavior.
+// Component   : Kritva Core
+// Module      : RUNTIME
+// Layer       : Core Foundation
+//
+// Requirements: CORE-RT-001 : Component
+//               CORE-RT-002 : Runtime
+// API         : CORE-TEST-RUNTIME
+//
+// Author      : KritvaOS Core Team
+// Created     : 26-09-2026
 //==============================================================================
 
 #include <cassert>

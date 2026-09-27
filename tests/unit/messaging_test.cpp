@@ -1,14 +1,22 @@
 //==============================================================================
-// Kritva Core — Messaging Contract Tests
+// Copyright (c) 2026 KritvaOS
 // SPDX-License-Identifier: Apache-2.0
 //
-// Requirements:
-//   CORE-MSG-001 : MessageHeader
-//   CORE-MSG-002 : Topic
+// File        : messaging_test.cpp
+// Description : Kritva Core — Messaging Contract Tests
+//               These tests validate only the contracts exposed by the current Messaging
+//               headers. Transport, queues, publishers, subscribers, threading, and
+//               serialization are intentionally outside this test.
 //
-// These tests validate only the contracts exposed by the current Messaging
-// headers. Transport, queues, publishers, subscribers, threading, and
-// serialization are intentionally outside this test.
+// Component   : Kritva Core
+// Module      : MESSAGING
+// Layer       : Core Foundation
+//
+// Requirements: CORE-MSG-001 : MessageHeader, CORE-MSG-002 : Topic
+// API         : CORE-TEST-MESSAGING
+//
+// Author      : KritvaOS Core Team
+// Created     : 26-09-2026
 //==============================================================================
 
 #include <cassert>
