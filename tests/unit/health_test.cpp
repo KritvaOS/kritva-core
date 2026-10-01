@@ -9,7 +9,7 @@
 // Module      : Health
 // Layer       : Core Foundation
 //
-// Requirements: CORE-HEALTH-*
+// Requirements: CORE-HEA-001, CORE-HEA-002
 // API         : CORE-API-HEALTH
 //
 // Author      : KritvaOS Core Team

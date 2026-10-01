@@ -36,9 +36,87 @@
 - CORE-MSG-001 Define platform-neutral message identity/header.
 - CORE-TIME-001 Define platform-neutral clock abstraction.
 
+### Foundation types
+- CORE-TYP-001 Provide a strong 64-bit identity type; value 0 is the invalid identity.
+- CORE-TYP-002 Provide a Version type (major.minor.patch) with string formatting.
+- CORE-TYP-003 Provide a nanosecond-resolution Duration type.
+- CORE-TYP-004 Provide string key/value Metadata.
+- CORE-TIME-001 Provide Timestamp (nanoseconds + clock domain) and the platform-neutral clock abstraction (time::IClock). platform::IClock is a deprecated alias, not a second abstraction.
+- CORE-TIME-002 Define platform-neutral timer abstraction.
+
+### Lifecycle, status, health
+- CORE-LIF-001 Define lifecycle states.
+- CORE-STA-001 Define status codes and a Status (code + message) type.
+- CORE-HEA-001 Define health states.
+- CORE-HEA-002 Provide a Health type reporting a health state.
+
+### Statistics
+- CORE-STS-001 Provide a Counter (monotonic unsigned; not thread-safe, no allocation).
+- CORE-STS-002 Provide a Gauge (signed instantaneous value; not thread-safe, no allocation).
+- CORE-STS-003 Provide a Statistics aggregate of common operational counters and gauges.
+
+### Error and result
+- CORE-ERR-001 Define error codes and severities.
+- CORE-ERR-002 Define the Error record (code, severity, source, timestamp, message).
+- CORE-ERR-003 Reserved (unused).
+- CORE-ERR-004 Provide Result<T>/Result<void> with documented access preconditions: value() only on success, error() only on failure.
+
+### Events
+- CORE-EVT-001 Define event types.
+- CORE-EVT-002 Event carries event identity and source identity.
+- CORE-EVT-003 Event carries a timestamp and severity.
+- CORE-EVT-004 Event carries a correlation identity.
+
+### Capability and configuration
+- CORE-CAP-001 Define capability identity.
+- CORE-CAP-002 Define a Capability record.
+- CORE-CAP-003 Provide a CapabilitySet; adding an existing identity replaces it.
+- CORE-CFG-001 Define typed configuration Parameters and a Configuration container.
+- CORE-CFG-003 Define a configuration version (alias of Version).
+
+### API umbrella and messaging
+- CORE-API-001 Provide the umbrella header kritva/core/core.hpp.
+- CORE-MSG-002 Define platform-neutral topic identity.
+
 ## P1
 - Rich typed configuration constraints.
 - Publisher/subscriber transport abstraction.
 - Runtime dependency graph and component manager.
 - Lock-free/zero-copy messaging options.
 - PTP integration outside Core.
+
+## Traceability (Requirement -> Header -> Implementation -> Test)
+
+| Requirement | Public header | Implementation | Test |
+|---|---|---|---|
+| CORE-GEN-004 | include/kritva/core/ | - | tests/contract/core_contract_test.cpp |
+| CORE-API-001 | core.hpp | - | tests/contract/core_contract_test.cpp |
+| CORE-TYP-001 | types/id.hpp | header-only | tests/unit/types_test.cpp |
+| CORE-TYP-002 | types/version.hpp | src/version.cpp | tests/unit/version_test.cpp, types_test.cpp |
+| CORE-TYP-003 | types/duration.hpp | header-only | tests/unit/types_test.cpp |
+| CORE-TYP-004 | types/metadata.hpp | src/metadata.cpp | tests/unit/types_test.cpp |
+| CORE-TIME-001 | types/timestamp.hpp, time/clock.hpp | header-only | tests/unit/time_test.cpp |
+| CORE-TIME-002 | time/timer.hpp | header-only | tests/unit/time_test.cpp |
+| CORE-LIF-001 | lifecycle/lifecycle_state.hpp | - | tests/unit/lifecycle_test.cpp |
+| CORE-LIF-002, CORE-LIF-003 | lifecycle/lifecycle.hpp | src/lifecycle.cpp | tests/unit/lifecycle_test.cpp |
+| CORE-STA-001 | status/status_code.hpp, status/status.hpp | header-only | tests/unit/status_test.cpp |
+| CORE-HEA-001, CORE-HEA-002 | health/health_state.hpp, health/health.hpp | header-only | tests/unit/health_test.cpp |
+| CORE-STS-001 | statistics/counter.hpp | header-only | tests/unit/statistics_test.cpp |
+| CORE-STS-002 | statistics/gauge.hpp | header-only | tests/unit/statistics_test.cpp |
+| CORE-STS-003 | statistics/statistics.hpp | header-only | tests/unit/statistics_test.cpp |
+| CORE-ERR-001 | error/error_code.hpp | header-only | tests/unit/error_test.cpp |
+| CORE-ERR-002 | error/error.hpp | header-only | tests/unit/error_test.cpp |
+| CORE-ERR-004 | error/result.hpp | header-only | tests/unit/result_test.cpp |
+| CORE-EVT-001..004 | event/event_type.hpp, event/event.hpp | header-only | tests/unit/event_test.cpp |
+| CORE-CAP-001 | capability/capability_id.hpp | header-only | tests/unit/capability_test.cpp |
+| CORE-CAP-002 | capability/capability.hpp | header-only | tests/unit/capability_test.cpp |
+| CORE-CAP-003 | capability/capability_set.hpp | src/capability_set.cpp | tests/unit/capability_test.cpp |
+| CORE-CFG-001, CORE-CFG-002 | configuration/parameter.hpp, configuration/configuration.hpp | src/configuration.cpp | tests/unit/configuration_test.cpp |
+| CORE-CFG-003 | configuration/configuration_version.hpp | header-only | tests/unit/configuration_test.cpp |
+| CORE-RT-001 | runtime/component.hpp | header-only | tests/unit/runtime_test.cpp |
+| CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
+| CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |
+| CORE-MSG-002 | messaging/topic.hpp | header-only | tests/unit/messaging_test.cpp |
+| CORE-PLAT-001 | platform/scheduler.hpp | contract only | tests/unit/platform_test.cpp |
+| CORE-PLAT-002 | platform/clock.hpp (alias of time/clock.hpp) | contract only | tests/unit/platform_test.cpp |
+| CORE-PLAT-003 | platform/watchdog.hpp | contract only | tests/unit/platform_test.cpp |

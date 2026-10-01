@@ -9,7 +9,7 @@
 // Module      : Status
 // Layer       : Core Foundation
 //
-// Requirements: CORE-STATUS-*
+// Requirements: CORE-STA-001
 // API         : CORE-API-STATUS
 //
 // Author      : KritvaOS Core Team
