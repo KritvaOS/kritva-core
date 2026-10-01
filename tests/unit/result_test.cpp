@@ -17,6 +17,8 @@
 //==============================================================================
 
 #include <cassert>
+#include <string>
+#include <type_traits>
 #include <kritva/core/error/result.hpp>
 
 int main() {
@@ -66,6 +68,26 @@ int main() {
     assert(!static_cast<bool>(void_failure));
     assert(void_failure.error().code == ErrorCode::INVALID_ARGUMENT);
     assert(void_failure.error().message == "bad argument");
+
+    // Contract: accessors are noexcept (preconditions, never exceptions).
+    static_assert(noexcept(std::declval<const Result<int>&>().value()));
+    static_assert(noexcept(std::declval<const Result<int>&>().error()));
+    static_assert(noexcept(std::declval<const Result<void>&>().error()));
+
+    // Contract: value access through a const result.
+    const auto const_success = Result<std::string>::success("const");
+    assert(const_success.has_value());
+    assert(const_success.value() == "const");
+
+    // Contract: a failure never reports a value, a success never reports failure.
+    assert(!Result<int>::failure(error).has_value());
+    assert(Result<int>::success(0).has_value());
+    assert(Result<int>::success(0).value() == 0);  // falsy payload is still success
+
+    // Contract: Error survives copy of the Result.
+    auto copy = failure;
+    assert(!copy.has_value());
+    assert(copy.error().message == "bad argument");
 
     return 0;
 }
