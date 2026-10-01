@@ -20,6 +20,14 @@
 #pragma once
 #include <cstdint>
 namespace kritva::core {
+
+// Monotonic unsigned event counter (R0.2 contract).
+//   - Thread-safety: NOT thread-safe. Concurrent access requires external
+//     synchronization. Not an atomic and not a real-time synchronization
+//     primitive; atomic/lock-free variants may be added in a later release.
+//   - Allocation: none. Blocking: none. Complexity: O(1).
+//   - Overflow: increment() wraps modulo 2^64 (unsigned arithmetic).
+//   - Failure behavior: none; all operations are noexcept.
 class Counter {
 public:
     using value_type = std::uint64_t;

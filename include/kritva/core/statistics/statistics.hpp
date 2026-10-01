@@ -21,6 +21,8 @@
 #include "counter.hpp"
 #include "gauge.hpp"
 namespace kritva::core {
+// Aggregate of Counter/Gauge members; inherits their contract: not thread-safe
+// unless externally synchronized, no allocation, no blocking.
 struct Statistics {
     Counter sample_count;
     Counter error_count;
