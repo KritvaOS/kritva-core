@@ -18,6 +18,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <limits>
 
 #include <kritva/core/statistics/counter.hpp>
 #include <kritva/core/statistics/gauge.hpp>
@@ -190,6 +191,53 @@ int main() {
     assert(copy.error_count.value() == 0);
     assert(copy.queue_depth.value() == 128);
     assert(copy.utilization.value() == 90);
+
+    //--------------------------------------------------------------------------
+    // R0.2 contract: Counter wraps modulo 2^64 on overflow
+    //--------------------------------------------------------------------------
+
+    Counter wrap;
+    wrap.increment(std::numeric_limits<Counter::value_type>::max());
+    assert(wrap.value() == std::numeric_limits<Counter::value_type>::max());
+    wrap.increment();
+    assert(wrap.value() == 0);
+    wrap.increment(5);
+    wrap.increment(std::numeric_limits<Counter::value_type>::max());
+    assert(wrap.value() == 4);
+
+    //--------------------------------------------------------------------------
+    // R0.2 contract: Counter/Gauge are constexpr and noexcept, no allocation
+    //--------------------------------------------------------------------------
+
+    constexpr auto constexpr_counter = [] {
+        Counter c;
+        c.increment(3);
+        return c.value();
+    }();
+    static_assert(constexpr_counter == 3);
+
+    constexpr auto constexpr_gauge = [] {
+        Gauge g;
+        g.set(-7);
+        return g.value();
+    }();
+    static_assert(constexpr_gauge == -7);
+
+    static_assert(noexcept(wrap.increment()));
+    static_assert(noexcept(wrap.reset()));
+    static_assert(noexcept(Gauge{}.set(1)));
+
+    //--------------------------------------------------------------------------
+    // R0.2 contract: Gauge holds the last value set, including int64 extremes
+    //--------------------------------------------------------------------------
+
+    Gauge extreme;
+    extreme.set(std::numeric_limits<Gauge::value_type>::min());
+    assert(extreme.value() == std::numeric_limits<Gauge::value_type>::min());
+    extreme.set(std::numeric_limits<Gauge::value_type>::max());
+    assert(extreme.value() == std::numeric_limits<Gauge::value_type>::max());
+    extreme.set(0);
+    assert(extreme.value() == 0);
 
     return 0;
 }
