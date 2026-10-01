@@ -38,6 +38,15 @@ target_include_directories(kritva_core PUBLIC
 
 if(KRITVA_CORE_BUILD_TESTS)
     enable_testing()
+
+    # Tests use assert(); keep them active in Release/RelWithDebInfo builds.
+    # Applies only to targets created below, not to the kritva_core library.
+    if(MSVC)
+        add_compile_options(/UNDEBUG)
+    else()
+        add_compile_options(-UNDEBUG)
+    endif()
+
     #Add Test: tests/unit/version_test.cpp
     add_executable(kritva_core_version_test tests/unit/version_test.cpp)
     target_link_libraries(kritva_core_version_test PRIVATE kritva_core)
