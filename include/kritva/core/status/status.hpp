@@ -20,6 +20,7 @@
 #pragma once
 #include "status_code.hpp"
 #include <string>
+#include <utility>
 namespace kritva::core {
 class Status {
 public:
