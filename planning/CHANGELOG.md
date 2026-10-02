@@ -4,8 +4,10 @@
 
 ### KF-CORE-R02 — Core Contract Hardening
 
+Implemented (pending independent review):
+- Result<T> contract hardening (`df44d38`)
+
 Planned work:
-- Result<T> contract hardening
 - Status API/header cleanup
 - Statistics contract clarification
 - Scheduler contract review

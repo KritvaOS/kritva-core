@@ -13,7 +13,7 @@
 
 | Task | Status | Dependency |
 |---|---|---|
-| 001 Result<T> | IN PROGRESS | R01 |
+| 001 Result<T> | REVIEW (`df44d38`) | R01 |
 | 002 Status | PLANNED | 001 |
 | 003 Statistics | PLANNED | 002 |
 | 004 Scheduler | PLANNED | 003 |

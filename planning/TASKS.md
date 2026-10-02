@@ -4,7 +4,7 @@
 
 | ID | Task | Primary Area | Status | Commit |
 |---|---|---|---|---|
-| KF-CORE-R02-001 | Result<T> contract hardening | error/result | IN PROGRESS | — |
+| KF-CORE-R02-001 | Result<T> contract hardening | error/result | REVIEW | `df44d38` |
 | KF-CORE-R02-002 | Status API/header cleanup | status | PLANNED | — |
 | KF-CORE-R02-003 | Statistics contract clarification | statistics | PLANNED | — |
 | KF-CORE-R02-004 | Scheduler contract review | platform/scheduler | PLANNED | — |
