@@ -10,7 +10,7 @@ Accepted:
 - Statistics contract clarification (`d7d29cb`)
 
 Pending independent review:
-- Scheduler contract review (`0773857`)
+- Scheduler contract review (`0773857`, refined in `0cdffdb` after review round 1)
 
 Planned work:
 - Clock abstraction cleanup

@@ -7,7 +7,7 @@
 | KF-CORE-R02-001 | Result<T> contract hardening | error/result | ACCEPTED | `df44d38` |
 | KF-CORE-R02-002 | Status API/header cleanup | status | ACCEPTED | `d6d939d` |
 | KF-CORE-R02-003 | Statistics contract clarification | statistics | ACCEPTED | `d7d29cb` |
-| KF-CORE-R02-004 | Scheduler contract review | platform/scheduler | REVIEW | `0773857` |
+| KF-CORE-R02-004 | Scheduler contract review | platform/scheduler | REVIEW | `0773857`, `0cdffdb` |
 | KF-CORE-R02-005 | Clock abstraction cleanup | time/platform | PLANNED | — |
 | KF-CORE-R02-006 | Requirements/API traceability | requirements/docs | PLANNED | — |
 | KF-CORE-R02-007 | Foundation contract tests | tests | PLANNED | — |

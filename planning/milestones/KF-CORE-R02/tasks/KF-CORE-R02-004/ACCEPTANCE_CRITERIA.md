@@ -97,18 +97,18 @@ docs(core): clarify scheduler contract
 - Commit: `0773857` `docs(core): clarify scheduler contract` (R02-003 accepted at `213efcd`).
 - Files changed: `include/kritva/core/platform/scheduler.hpp` (documentation only; declarations unchanged), `tests/unit/platform_test.cpp`, `tests/contract/scheduler_contract.hpp` (new, header-only), `REQUIREMENTS.md` (CORE-PLAT-001), `API.md` (section 16).
 - No scheduler implementation, no pthread/RTOS/vendor code, no public signature change.
-- Contract decisions (all for reviewer confirmation; items marked * are choices, not facts of the existing code):
+- Contract decisions (superseded where noted by review round 2 below; see round 2 for the final text):
   1. TaskConfig fields: documented per field. `name` non-null, copied by the scheduler, need only live through `create_task`.
   2. Entry lifetime: non-null (`INVALID_ARGUMENT`), valid for the scheduler's lifetime, must not throw, must not call `stop()` of its own scheduler.
   3. Context: opaque, nullable, caller-owned, never dereferenced/freed by the scheduler; must outlive running tasks (until `stop()` returned).
-  4. `create_task()` only registers a STOPPED task, never starts it or calls `entry`.* Valid only while the scheduler is STOPPED; while RUNNING it returns `INVALID_STATE`.*
-  5. `start()`/`stop()` are scheduler-wide and idempotent;* `start()` is all-or-nothing;* `stop()` returns only when no entry is running;* destruction implies `stop()`.*
-  6. Priority: relative, larger = more urgent,* 0 = least urgent default; no OS mapping; above-adapter-maximum is `INVALID_ARGUMENT`, never clamped.*
-  7. CPU affinity: bit mask of logical CPUs 0..31 (32-bit limit noted); non-zero is honoured or refused (`UNSUPPORTED` / `INVALID_ARGUMENT`), never silently ignored.*
-  8. `cpu_affinity == 0` means "no constraint", not "CPU 0"; pin to CPU 0 with `0x1`.*
-  9. `TaskId`: opaque, non-zero (0 reserved),* unique per scheduler instance, never reused, valid until the scheduler is destroyed. There is no task-destroy operation (follow-up candidate, not added).
+  4. `create_task()` while STOPPED only registers an inactive task. While RUNNING: adapter policy (see round 2).
+  5. `start()`/`stop()` are scheduler-wide and idempotent; `start()` is all-or-nothing; `stop()` returns only when no entry is running.
+  6. Priority: see round 2.
+  7. CPU affinity: bit mask of logical CPUs 0..31 (R0.2 limitation); non-zero is honoured or refused, never silently ignored.
+  8. `cpu_affinity == 0` means "no constraint", not "CPU 0"; pin to CPU 0 with `0x1`.
+  9. `TaskId`: see round 2.
   10. Resource exhaustion: `RESOURCE_UNAVAILABLE`, reported through `Result`, never abort/exception; failed `create_task` creates nothing and consumes no id; failed `start` leaves the scheduler STOPPED.
-  Also: `period` 0 = aperiodic, positive = periodic, negative invalid; overrun behavior is adapter-defined.*
+  Also: `period` 0 = aperiodic, positive = periodic, negative invalid; overrun behavior is adapter-defined.
 - Tests: `FakeScheduler` in `platform_test.cpp` replaced by a conforming reference double (previous assertions retained and passing); new tests for zero-value semantics, create-does-not-start, affinity, priority rejection, exhaustion, all-or-nothing start, id rules; reusable `check_scheduler_contract()` for future adapters.
 - Build: `rm -rf build && cmake -S . -B build && cmake --build build -j$(nproc)` — 0 warnings.
 - Tests: `ctest --test-dir build` — 16/16 passed (includes `kritva_core_platform`).
@@ -116,8 +116,28 @@ docs(core): clarify scheduler contract
 - Coverage: `make coverage` — 98% overall (unchanged).
 - `scheduler.hpp` compiles standalone with `-Wall -Wextra`; header check passed; `git diff --check` clean.
 - `make format-check`/`make lint`: TODO stubs, not executed.
-- Known limitations: 32-bit affinity mask limits addressable CPUs to 32; no task-destroy/removal API; periodic overrun policy and timing accuracy are adapter-defined; the reference double is a test double and proves the contract is self-consistent, not that any real adapter conforms.
-- Human review: this clarifies public API semantics (AGENTS.md section 12); items marked * need explicit reviewer confirmation.
+- Known limitations: 32-bit affinity mask limits addressable CPUs to 32 in R0.2; no task-destroy/removal API; periodic overrun policy and timing accuracy are adapter-defined; the reference double is a test double and proves the contract is self-consistent, not that any real adapter conforms.
+- Human review: this clarifies public API semantics (AGENTS.md section 12); round 1 review applied (below).
+
+### Review round 1 — CHANGES REQUIRED (ChatGPT, on `0773857`)
+
+Required: (1) do not freeze `INVALID_STATE` for create-while-running; (2) remove Core-defined priority range/maximum; (3) do not promise TaskId never-reused; (4) distinguish INVALID_ARGUMENT vs UNSUPPORTED for affinity; (5) explain why `stop()` from an entry is prohibited; (6) do not specify destructor semantics; (7) document the 32-bit mask as an R0.2 limitation. Not to be added: `destroy_task()`, adapters, thread pool, executor, real-time policy, CPU topology.
+
+### Review round 2 — follow-up commit `0cdffdb` `fix(core): refine scheduler contract semantics`
+
+`0773857` is unchanged (not amended). Changes, one per required item:
+
+1. **create_task while RUNNING:** now an adapter policy. (a) dynamic creation supported, the task joins the running set and the adapter documents when it first runs; or (b) not supported, fails with `INVALID_STATE` atomically (no task, no id, no state change). Core does not mandate a static task set. Conformance checker accepts both; the reference double implements both via `allow_dynamic_creation`.
+2. **Priority:** implementation-independent relative value; "higher = more urgent *within one scheduler instance*"; no Core-defined range, maximum or OS mapping; adapter documents its mapping and its handling of unrepresentable values. The test double's rejection above 255 is labeled adapter policy.
+3. **TaskId:** 0 invalid; unique among currently existing tasks of one instance; valid while the task exists; reuse after a future destroy operation is implementation-defined and not promised. The consequence (no destroy operation means ids/tasks grow for the scheduler lifetime, so adapters document capacity) is stated in the header.
+4. **Affinity errors:** `INVALID_ARGUMENT` = mask invalid for the platform (selects no existing CPU; extra non-existent bits are adapter-defined); `UNSUPPORTED` = well-formed request the platform cannot provide. Test comments distinguish the two.
+5. **stop() from entry:** reason documented (synchronous scheduler-wide stop would wait on the calling task itself, deadlock); implementations return `INVALID_STATE`.
+6. **Destruction:** "destroying implies stop()" removed. Now: adapters must not release scheduler resources while any entry executes and must reach an orderly stop first; callers should stop() before destroying and before releasing any context. Core does not specify destructor behavior.
+7. **32-bit mask:** documented as an R0.2 limitation of the current `TaskConfig` type, not a long-term architectural limit; a wider form may come with KF-CORE-R04; no redesign here.
+
+Files changed in round 2: `include/kritva/core/platform/scheduler.hpp` (documentation only), `tests/contract/scheduler_contract.hpp`, `tests/unit/platform_test.cpp`, `REQUIREMENTS.md`, `API.md`. No `destroy_task()`, adapter, thread pool, executor or real-time policy added.
+
+Round 2 validation: clean-tree build 0 warnings; `ctest` 16/16; ASan+UBSan build 16/16; coverage 98%; `scheduler.hpp` standalone compile OK; header check passed; `git diff --check` clean; `format-check`/`lint` TODO stubs (not executed).
 
 ## 13. Evidence Required From Codex/Claude
 
