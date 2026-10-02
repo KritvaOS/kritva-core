@@ -224,9 +224,9 @@ coverage-clean: ## Remove coverage build and reports
 
 .PHONY: install
 
-install: build ## Install Kritva Core
+install: build ## Install Kritva Core (PREFIX=<dir> overrides the install prefix)
 	@echo "[install] Installing $(PROJECT_NAME)..."
-	$(CMAKE) --install $(BUILD_DIR)
+	$(CMAKE) --install $(BUILD_DIR) $(if $(PREFIX),--prefix $(PREFIX))
 
 #------------------------------------------------------------------------------
 # Information

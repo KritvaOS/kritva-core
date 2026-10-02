@@ -77,6 +77,7 @@
 These are process/infrastructure requirements for the repository itself. They are verified by inspection or by the checks named in the process traceability table, not by unit tests.
 - CORE-REQ-002 Maintain this requirements document and its traceability tables, audited by scripts/audit/check_traceability.py.
 - CORE-BUILD-001 Provide a CMake build (and Make convenience targets) that builds Core and runs its tests.
+- CORE-BUILD-002 Provide a CMake installation interface that installs the Kritva Core library and public headers for consumption by downstream projects (`find_package(kritva_core)` / `kritva_core::kritva_core`), without third-party dependencies.
 - CORE-TEST-001 Provide CI that builds Core and runs the CTest suite on push and pull request.
 - CORE-DOC-001 Provide a repository README describing Kritva Core.
 - CORE-ARCH-001 Document the architectural dependency boundaries (what Core owns and does not own).
@@ -146,6 +147,7 @@ Artifact and Verification hold file paths, or `inspection` where no automated ch
 | CORE-GEN-005 | CMakeLists.txt | scripts/audit/check_traceability.py | Audit requires every test source to be registered with CTest; the tests use no hardware. |
 | CORE-REQ-002 | REQUIREMENTS.md | scripts/audit/check_traceability.py | |
 | CORE-BUILD-001 | CMakeLists.txt, Makefile | inspection | |
+| CORE-BUILD-002 | CMakeLists.txt, cmake/kritva_coreConfig.cmake.in, Makefile | tests/install/run_install_test.cmake | CTest `kritva_core_install_consumer` installs to a scratch prefix, checks the layout, and builds and runs a consumer against the installed package only. |
 | CORE-TEST-001 | .github/workflows/kritva-core-ci.yml | inspection | |
 | CORE-DOC-001 | README.md | inspection | |
 | CORE-ARCH-001 | docs/architecture/boundaries.md | inspection | |

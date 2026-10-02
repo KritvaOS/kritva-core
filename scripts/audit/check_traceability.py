@@ -229,7 +229,8 @@ def main() -> int:
             errors.append(f"{t.relative_to(ROOT)}: not registered in CMakeLists.txt")
 
     # 6. CORE-GEN-003: no external dependency mechanism or forbidden include.
-    for m in FORBIDDEN_CMAKE.finditer(cmake):
+    cmake_code = "\n".join(l.split("#", 1)[0] for l in cmake.splitlines())  # ignore comments
+    for m in FORBIDDEN_CMAKE.finditer(cmake_code):
         errors.append(f"CORE-GEN-003: CMakeLists.txt uses {m.group(1)}()")
     for d in ("include", "src"):
         for f in (ROOT / d).rglob("*"):

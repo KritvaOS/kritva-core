@@ -38,3 +38,20 @@ cmake -S . -B build
 cmake --build build
 ctest --test-dir build --output-on-failure
 ```
+
+## Install and use as a library
+
+```bash
+cmake -S . -B build
+cmake --build build
+cmake --install build --prefix <prefix>      # or: make install PREFIX=<prefix>
+```
+
+Downstream CMake projects consume the installed package:
+
+```cmake
+find_package(kritva_core 0.2 CONFIG REQUIRED)   # add <prefix> to CMAKE_PREFIX_PATH
+target_link_libraries(my_target PRIVATE kritva_core::kritva_core)
+```
+
+The installed package provides the `kritva_core` library and the public headers under `include/kritva/core/`. It has no third-party dependencies. Pre-1.0, a requested version must match the installed major and minor version. In a source tree that embeds Core with `add_subdirectory`, the same `kritva_core::kritva_core` target is available.

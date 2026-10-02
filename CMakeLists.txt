@@ -9,7 +9,7 @@
 # Module      : Build
 # Layer       : Development Infrastructure
 #
-# Requirements: CORE-BUILD-001
+# Requirements: CORE-BUILD-001, CORE-BUILD-002
 # API         : CMake
 #
 # Author      : KritvaOS Core Team
@@ -18,6 +18,9 @@
 
 cmake_minimum_required(VERSION 3.24)
 project(kritva-core VERSION 0.2.0 LANGUAGES CXX)
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 option(KRITVA_CORE_BUILD_TESTS "Build Core tests" ON)
 option(KRITVA_CORE_BUILD_EXAMPLES "Build Core examples" OFF)
@@ -33,7 +36,51 @@ add_library(kritva_core
 target_compile_features(kritva_core PUBLIC cxx_std_20)
 target_include_directories(kritva_core PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+# The same namespaced name is used in the build tree and by installed consumers
+# (find_package(kritva_core) -> kritva_core::kritva_core).
+add_library(kritva_core::kritva_core ALIAS kritva_core)
+
+# Installation (CORE-BUILD-002): library, public headers, CMake package.
+set(KRITVA_CORE_CMAKE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/kritva_core)
+
+install(TARGETS kritva_core
+    EXPORT kritva_coreTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(DIRECTORY include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.hpp"
+)
+
+install(EXPORT kritva_coreTargets
+    NAMESPACE kritva_core::
+    DESTINATION ${KRITVA_CORE_CMAKE_INSTALL_DIR}
+)
+
+configure_package_config_file(
+    cmake/kritva_coreConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/kritva_coreConfig.cmake
+    INSTALL_DESTINATION ${KRITVA_CORE_CMAKE_INSTALL_DIR}
+)
+
+# Pre-1.0: a different minor version may change the API, so match the minor.
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/kritva_coreConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMinorVersion
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/kritva_coreConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/kritva_coreConfigVersion.cmake
+    DESTINATION ${KRITVA_CORE_CMAKE_INSTALL_DIR}
 )
 
 if(KRITVA_CORE_BUILD_TESTS)
@@ -131,5 +178,17 @@ if(KRITVA_CORE_BUILD_TESTS)
     add_executable(kritva_core_platform_test tests/unit/platform_test.cpp)
     target_link_libraries(kritva_core_platform_test PRIVATE kritva_core)
     add_test(NAME kritva_core_platform COMMAND kritva_core_platform_test)
+
+    #Add Test: tests/install (install the library and build a consumer against it)
+    add_test(NAME kritva_core_install_consumer
+        COMMAND ${CMAKE_COMMAND}
+            -DCORE_BUILD_DIR=${CMAKE_BINARY_DIR}
+            -DCONSUMER_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/tests/install/consumer
+            -DWORK_DIR=${CMAKE_BINARY_DIR}/install_test
+            -DCXX_COMPILER=${CMAKE_CXX_COMPILER}
+            "-DCXX_FLAGS=${CMAKE_CXX_FLAGS}"
+            -DCONFIG=$<CONFIG>
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/install/run_install_test.cmake
+    )
 
 endif()

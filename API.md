@@ -91,3 +91,7 @@ Lifecycle transitions are validated by the Core lifecycle implementation. The al
 ## 18. Requirements Traceability
 
 Every public header carries a `Requirements:` tag and appears in the traceability table in `REQUIREMENTS.md` (Requirement → Public header → Implementation → Test). Process and build-level requirements are traced separately to their artifact and verification (a file, or `inspection`). The table records only what exists; it does not imply behavior. `make traceability-check` audits it.
+
+## 19. Installation and Consumption
+
+Core installs as a CMake package (CORE-BUILD-002): `cmake --install` (or `make install PREFIX=<dir>`) installs the `kritva_core` library, the public headers under `include/kritva/core/`, and `kritva_coreConfig.cmake` / `kritva_coreConfigVersion.cmake` / `kritva_coreTargets.cmake` under `lib/cmake/kritva_core`. Consumers use `find_package(kritva_core CONFIG)` and link `kritva_core::kritva_core`, which also carries the C++20 requirement. The package has no third-party dependencies. Version compatibility is `SameMinorVersion` while Core is pre-1.0. The installed targets file does not reference the source or build tree. Tests, examples and scripts are not installed. `tests/install/` verifies the installed layout and builds a consumer against the install prefix only.

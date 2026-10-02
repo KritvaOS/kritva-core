@@ -1,0 +1,24 @@
+#==============================================================================
+# Copyright (c) 2026 KritvaOS
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : kritva_coreConfig.cmake.in
+# Description : Package configuration template for find_package(kritva_core)
+#
+# Component   : Kritva Core
+# Module      : Install
+# Layer       : Development Infrastructure
+#
+# Requirements: CORE-BUILD-002
+# API         : CMake package config
+#
+# Author      : KritvaOS Core Team
+# Created     : 02-10-2026
+#==============================================================================
+
+@PACKAGE_INIT@
+
+# Kritva Core is self-contained: it has no third-party dependencies.
+include("${CMAKE_CURRENT_LIST_DIR}/kritva_coreTargets.cmake")
+
+check_required_components(kritva_core)

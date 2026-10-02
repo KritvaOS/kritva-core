@@ -1,0 +1,27 @@
+#==============================================================================
+# Copyright (c) 2026 KritvaOS
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : CMakeLists.txt
+# Description : Minimal downstream consumer of an installed Kritva Core
+#
+# Component   : Kritva Core
+# Module      : Install Test
+# Layer       : Development Infrastructure
+#
+# Requirements: CORE-BUILD-002
+# API         : CMake consumer project
+#
+# Author      : KritvaOS Core Team
+# Created     : 02-10-2026
+#==============================================================================
+
+cmake_minimum_required(VERSION 3.24)
+project(kritva_core_install_consumer LANGUAGES CXX)
+
+# Locates the *installed* package only (CMAKE_PREFIX_PATH is set by the test).
+set(KRITVA_CORE_REQUIRE_VERSION 0.2 CACHE STRING "Kritva Core version to request")
+find_package(kritva_core ${KRITVA_CORE_REQUIRE_VERSION} CONFIG REQUIRED)
+
+add_executable(consumer main.cpp)
+target_link_libraries(consumer PRIVATE kritva_core::kritva_core)
