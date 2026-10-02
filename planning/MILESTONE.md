@@ -12,7 +12,7 @@ Established the initial platform-independent Kritva Core API contracts and found
 
 ## KF-CORE-R02 — Core Contract Hardening
 
-Status: REVIEW (all 8 tasks accepted; milestone close pending)
+Status: ACCEPTED (tag `kritva-core-r0.2` created locally; RELEASED after it is pushed)
 
 ### Objective
 
