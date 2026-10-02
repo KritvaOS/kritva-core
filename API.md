@@ -62,7 +62,7 @@ Each API intended for a real-time path must document allocation, blocking, synch
 
 ## 11. Lifecycle Contract
 
-Lifecycle transitions are validated by the Core lifecycle implementation. The allowed transition table is documented in `ARCHITECTURE.md` and must be covered by unit/contract tests.
+Lifecycle transitions are validated by the Core lifecycle implementation. The allowed transition table is documented in `ARCHITECTURE.md` ("Lifecycle transitions") and is verified exhaustively (all 64 state pairs) by `tests/contract/foundation_contract_test.cpp`.
 
 ## 12. Configuration Contract
 

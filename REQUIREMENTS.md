@@ -104,28 +104,28 @@ Requirement IDs are identifiers, not a contiguous sequence; gaps are not filled.
 |---|---|---|---|
 | CORE-GEN-004 | include/kritva/core/ | - | tests/contract/core_contract_test.cpp |
 | CORE-API-001 | core.hpp | - | tests/contract/core_contract_test.cpp |
-| CORE-TYP-001 | types/id.hpp | header-only | tests/unit/types_test.cpp |
-| CORE-TYP-002 | types/version.hpp | src/version.cpp | tests/unit/version_test.cpp, tests/unit/types_test.cpp |
-| CORE-TYP-003 | types/duration.hpp | header-only | tests/unit/types_test.cpp |
-| CORE-TYP-004 | types/metadata.hpp | src/metadata.cpp | tests/unit/types_test.cpp |
+| CORE-TYP-001 | types/id.hpp | header-only | tests/unit/types_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-TYP-002 | types/version.hpp | src/version.cpp | tests/unit/version_test.cpp, tests/unit/types_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-TYP-003 | types/duration.hpp | header-only | tests/unit/types_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-TYP-004 | types/metadata.hpp | src/metadata.cpp | tests/unit/types_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-TIME-001 | types/timestamp.hpp, time/clock.hpp | header-only | tests/unit/time_test.cpp |
 | CORE-TIME-002 | time/timer.hpp | header-only | tests/unit/time_test.cpp |
-| CORE-LIF-001 | lifecycle/lifecycle_state.hpp | - | tests/unit/lifecycle_test.cpp |
-| CORE-LIF-002, CORE-LIF-003 | lifecycle/lifecycle.hpp | src/lifecycle.cpp | tests/unit/lifecycle_test.cpp |
-| CORE-STA-001 | status/status_code.hpp, status/status.hpp | header-only | tests/unit/status_test.cpp |
-| CORE-HEA-001, CORE-HEA-002 | health/health_state.hpp, health/health.hpp | header-only | tests/unit/health_test.cpp |
-| CORE-STS-001 | statistics/counter.hpp | header-only | tests/unit/statistics_test.cpp |
-| CORE-STS-002 | statistics/gauge.hpp | header-only | tests/unit/statistics_test.cpp |
-| CORE-STS-003 | statistics/statistics.hpp | header-only | tests/unit/statistics_test.cpp |
-| CORE-ERR-001 | error/error_code.hpp | header-only | tests/unit/error_test.cpp |
-| CORE-ERR-002 | error/error.hpp | header-only | tests/unit/error_test.cpp |
-| CORE-ERR-004 | error/result.hpp | header-only | tests/unit/result_test.cpp |
-| CORE-EVT-001..004 | event/event_type.hpp, event/event.hpp | header-only | tests/unit/event_test.cpp |
-| CORE-CAP-001 | capability/capability_id.hpp | header-only | tests/unit/capability_test.cpp |
-| CORE-CAP-002 | capability/capability.hpp | header-only | tests/unit/capability_test.cpp |
-| CORE-CAP-003 | capability/capability_set.hpp | src/capability_set.cpp | tests/unit/capability_test.cpp |
-| CORE-CFG-001, CORE-CFG-002 | configuration/parameter.hpp, configuration/configuration.hpp | src/configuration.cpp | tests/unit/configuration_test.cpp |
-| CORE-CFG-003 | configuration/configuration_version.hpp | header-only | tests/unit/configuration_test.cpp |
+| CORE-LIF-001 | lifecycle/lifecycle_state.hpp | - | tests/unit/lifecycle_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-LIF-002, CORE-LIF-003 | lifecycle/lifecycle.hpp | src/lifecycle.cpp | tests/unit/lifecycle_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-STA-001 | status/status_code.hpp, status/status.hpp | header-only | tests/unit/status_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-HEA-001, CORE-HEA-002 | health/health_state.hpp, health/health.hpp | header-only | tests/unit/health_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-STS-001 | statistics/counter.hpp | header-only | tests/unit/statistics_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-STS-002 | statistics/gauge.hpp | header-only | tests/unit/statistics_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-STS-003 | statistics/statistics.hpp | header-only | tests/unit/statistics_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-ERR-001 | error/error_code.hpp | header-only | tests/unit/error_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-ERR-002 | error/error.hpp | header-only | tests/unit/error_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-ERR-004 | error/result.hpp | header-only | tests/unit/result_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-EVT-001..004 | event/event_type.hpp, event/event.hpp | header-only | tests/unit/event_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-CAP-001 | capability/capability_id.hpp | header-only | tests/unit/capability_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-CAP-002 | capability/capability.hpp | header-only | tests/unit/capability_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-CAP-003 | capability/capability_set.hpp | src/capability_set.cpp | tests/unit/capability_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-CFG-001, CORE-CFG-002 | configuration/parameter.hpp, configuration/configuration.hpp | src/configuration.cpp | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
+| CORE-CFG-003 | configuration/configuration_version.hpp | header-only | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-RT-001 | runtime/component.hpp | header-only | tests/unit/runtime_test.cpp |
 | CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
 | CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |

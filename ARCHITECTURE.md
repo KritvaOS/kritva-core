@@ -46,6 +46,23 @@ capability → CapabilityID / Capability / CapabilitySet
 configuration → Parameter / Configuration / ConfigurationVersion
 ```
 
+### Lifecycle transitions
+
+`Lifecycle` starts in `UNKNOWN`. Only the transitions below are valid; every other transition (including a transition to the current state) is rejected with `ErrorCode::INVALID_STATE` and leaves the state unchanged.
+
+| From | Allowed targets |
+|---|---|
+| `UNKNOWN` | `INITIALIZING` |
+| `INITIALIZING` | `READY`, `FAULT` |
+| `READY` | `RUNNING`, `STOPPED`, `FAULT` |
+| `RUNNING` | `STOPPING`, `FAULT` |
+| `STOPPING` | `STOPPED`, `FAULT` |
+| `STOPPED` | `INITIALIZING` |
+| `FAULT` | `RECOVERING`, `STOPPED` |
+| `RECOVERING` | `READY`, `FAULT` |
+
+This table (15 valid transitions out of 64 state pairs) is verified exhaustively by `tests/contract/foundation_contract_test.cpp`.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

@@ -57,6 +57,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_lifecycle_test PRIVATE kritva_core)
     add_test(NAME kritva_core_lifecycle COMMAND kritva_core_lifecycle_test)
 
+    #Add Test: tests/contract/foundation_contract_test.cpp
+    add_executable(kritva_core_foundation_contract_test tests/contract/foundation_contract_test.cpp)
+    target_link_libraries(kritva_core_foundation_contract_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_foundation_contract COMMAND kritva_core_foundation_contract_test)
+
     #Add Test: tests/contract/core_contract_test.cpp
     add_executable(kritva_core_contract_test tests/contract/core_contract_test.cpp)
     target_link_libraries(kritva_core_contract_test PRIVATE kritva_core)
