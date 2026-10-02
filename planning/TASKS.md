@@ -10,7 +10,7 @@
 | KF-CORE-R02-004 | Scheduler contract review | platform/scheduler | ACCEPTED | `0773857`, `0cdffdb` |
 | KF-CORE-R02-005 | Clock abstraction cleanup | time/platform | ACCEPTED | `6ed8762`, `e1e6cfb` |
 | KF-CORE-R02-006 | Requirements/API traceability | requirements/docs | ACCEPTED | `00899f9` |
-| KF-CORE-R02-007 | Foundation contract tests | tests | PLANNED | — |
+| KF-CORE-R02-007 | Foundation contract tests | tests | REVIEW | `bf2144a` |
 | KF-CORE-R02-008 | Full R0.2 validation | integration/validation | PLANNED | — |
 
 ## Acceptance Rule

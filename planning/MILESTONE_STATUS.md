@@ -19,7 +19,7 @@
 | 004 Scheduler | ACCEPTED (`0773857`, `0cdffdb`) | 003 |
 | 005 Clock | ACCEPTED (`6ed8762`, `e1e6cfb`) | 004 |
 | 006 Traceability | ACCEPTED (`00899f9`) | 005 |
-| 007 Contract Tests | PLANNED | 006 |
+| 007 Contract Tests | REVIEW (`bf2144a`) | 006 |
 | 008 Full Validation | PLANNED | 007 |
 
 ## Status Definitions
