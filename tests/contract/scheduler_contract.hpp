@@ -38,7 +38,8 @@ inline void count_entry(void* context) {
 /// Postcondition: the scheduler is STOPPED.
 ///
 /// Not checked here because they are adapter-specific: capacity exhaustion,
-/// affinity support, the priority maximum, and periodic timing.
+/// affinity support, priority mapping/range, whether create_task() is allowed
+/// while RUNNING (both outcomes are accepted), and periodic timing.
 inline void check_scheduler_contract(IScheduler& scheduler) {
     int runs = 0;
     const TaskConfig config{};
@@ -83,11 +84,19 @@ inline void check_scheduler_contract(IScheduler& scheduler) {
     assert(scheduler.start());
     assert(scheduler.start());
 
-    // create_task() while RUNNING is INVALID_STATE and creates nothing.
+    // create_task() while RUNNING is adapter policy: either dynamic creation
+    // succeeds, or it fails atomically with INVALID_STATE.
+    bool dynamic_creation = false;
     {
-        const auto r = scheduler.create_task(config, detail::count_entry, &runs);
-        assert(!r);
-        assert(r.error().code == ErrorCode::INVALID_STATE);
+        const auto r = scheduler.create_task(config, detail::count_entry, nullptr);
+        if (r) {
+            dynamic_creation = true;
+            assert(r.value() != 0);
+            assert(r.value() != first.value());
+            assert(r.value() != second.value());
+        } else {
+            assert(r.error().code == ErrorCode::INVALID_STATE);
+        }
     }
 
     // stop() is idempotent; the scheduler can be restarted; ids stay valid.
@@ -96,11 +105,14 @@ inline void check_scheduler_contract(IScheduler& scheduler) {
     assert(scheduler.start());
     assert(scheduler.stop());
 
-    // A later task never reuses an earlier id.
+    // A new task's id is valid (non-zero) and distinct from every existing
+    // task's id. (The contract has no destroy operation, so all earlier tasks
+    // still exist.)
     const auto third = scheduler.create_task(config, detail::count_entry, nullptr);
     assert(third);
     assert(third.value() != first.value());
     assert(third.value() != second.value());
+    (void)dynamic_creation;
 }
 
 } // namespace kritva::core::platform::contract

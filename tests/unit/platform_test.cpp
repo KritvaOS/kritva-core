@@ -61,8 +61,10 @@ private:
 // once, synchronously, so the tests can observe invocation.
 class FakeScheduler final : public IScheduler {
 public:
-    // Adapter-specific limits (see scheduler.hpp: priority max, affinity,
-    // capacity are adapter properties, not Core properties).
+    // Adapter-specific policy and limits (see scheduler.hpp: priority range,
+    // affinity, capacity and dynamic creation are adapter properties, not
+    // Core properties).
+    bool allow_dynamic_creation{false};  // policy (b): reject while RUNNING
     static constexpr std::uint32_t kMaxPriority = 255;
     static constexpr std::uint32_t kCpuMask = 0xF;  // logical CPUs 0..3
     std::size_t capacity{4};
@@ -76,7 +78,7 @@ public:
 
         ++create_count;
 
-        if (running) return fail(ErrorCode::INVALID_STATE);
+        if (running && !allow_dynamic_creation) return fail(ErrorCode::INVALID_STATE);
         if (entry == nullptr || config.name == nullptr ||
             config.period.nanoseconds() < 0 || config.priority > kMaxPriority) {
             return fail(ErrorCode::INVALID_ARGUMENT);
@@ -91,6 +93,7 @@ public:
         last_entry = entry;
         last_context = context;
         tasks.push_back({entry, context});
+        if (running) entry(context);  // policy (a): joins the running set
 
         return Result<TaskId>::success(next_task_id++);
     }
@@ -338,10 +341,12 @@ void test_scheduler_affinity_semantics() {
     config.cpu_affinity = 0x1;    // pin to CPU 0
     assert(scheduler.create_task(config, task_entry, nullptr));
 
-    config.cpu_affinity = 0x10;   // only a non-existent CPU
+    config.cpu_affinity = 0x10;   // malformed: selects only a non-existent CPU
     auto bad = scheduler.create_task(config, task_entry, nullptr);
     assert(!bad && bad.error().code == ErrorCode::INVALID_ARGUMENT);
 
+    // Well-formed request on a platform without affinity: UNSUPPORTED (not
+    // INVALID_ARGUMENT, which is reserved for a malformed mask).
     FakeScheduler no_affinity;
     no_affinity.affinity_supported = false;
     config.cpu_affinity = 0x1;
@@ -351,7 +356,9 @@ void test_scheduler_affinity_semantics() {
     assert(no_affinity.create_task(config, task_entry, nullptr));
 }
 
-void test_scheduler_priority_is_rejected_not_clamped() {
+// Priority range handling is adapter policy; this double documents rejecting
+// values it cannot represent. Core defines no maximum.
+void test_scheduler_adapter_priority_policy() {
     FakeScheduler scheduler;
     TaskConfig config;
     config.priority = FakeScheduler::kMaxPriority;
@@ -396,7 +403,42 @@ void test_scheduler_start_failure_is_all_or_nothing() {
     assert(runs == 0);            // no entry left running
 }
 
-void test_scheduler_ids_nonzero_and_not_reused() {
+void test_scheduler_dynamic_creation_policies() {
+    int runs = 0;
+    const TaskConfig config;
+
+    // Policy (b): rejected atomically with INVALID_STATE.
+    FakeScheduler rejecting;
+    assert(rejecting.create_task(config, task_entry, &runs));
+    assert(rejecting.start());
+    assert(runs == 1);
+    const auto r = rejecting.create_task(config, task_entry, &runs);
+    assert(!r && r.error().code == ErrorCode::INVALID_STATE);
+    assert(rejecting.running);   // state unchanged
+    assert(runs == 1);           // nothing created or run
+    assert(rejecting.stop());
+    const auto after = rejecting.create_task(config, task_entry, &runs);
+    assert(after && after.value() == 2);  // failed call consumed no id
+
+    // Policy (a): accepted; the task joins the running set.
+    FakeScheduler dynamic;
+    dynamic.allow_dynamic_creation = true;
+    runs = 0;
+    assert(dynamic.create_task(config, task_entry, &runs));
+    assert(dynamic.start());
+    assert(runs == 1);
+    const auto added = dynamic.create_task(config, task_entry, &runs);
+    assert(added && added.value() != 0);
+    assert(runs == 2);
+    assert(dynamic.running);
+
+    // The shared conformance checks accept either policy.
+    FakeScheduler dynamic_ref;
+    dynamic_ref.allow_dynamic_creation = true;
+    contract::check_scheduler_contract(dynamic_ref);
+}
+
+void test_scheduler_ids_nonzero_and_unique() {
     FakeScheduler scheduler;
     TaskConfig config;
     config.name = nullptr;  // rejected: must not consume an id
@@ -406,7 +448,7 @@ void test_scheduler_ids_nonzero_and_not_reused() {
     assert(first && first.value() != 0);
     scheduler.stop();
     const auto second = scheduler.create_task(config, task_entry, nullptr);
-    assert(second && second.value() != first.value());
+    assert(second && second.value() != 0 && second.value() != first.value());
 }
 
 // -----------------------------------------------------------------------------
@@ -504,10 +546,11 @@ int main() {
     test_scheduler_reference_conforms_to_contract();
     test_scheduler_create_does_not_start_or_run_entry();
     test_scheduler_affinity_semantics();
-    test_scheduler_priority_is_rejected_not_clamped();
+    test_scheduler_adapter_priority_policy();
+    test_scheduler_dynamic_creation_policies();
     test_scheduler_resource_exhaustion();
     test_scheduler_start_failure_is_all_or_nothing();
-    test_scheduler_ids_nonzero_and_not_reused();
+    test_scheduler_ids_nonzero_and_unique();
 
     // CORE-PLAT-003
     test_watchdog_contract_shape();
