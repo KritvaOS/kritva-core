@@ -9,8 +9,10 @@ Accepted:
 - Status API/header cleanup (`d6d939d`)
 - Statistics contract clarification (`d7d29cb`)
 
+Pending independent review:
+- Scheduler contract review (`0773857`)
+
 Planned work:
-- Scheduler contract review
 - Clock abstraction cleanup
 - Requirements/API traceability
 - Foundation contract tests
