@@ -22,6 +22,35 @@
 #include <string>
 #include <utility>
 namespace kritva::core {
+
+//------------------------------------------------------------------------------
+// Status (CORE-STA-001)
+//
+// A StatusCode plus an optional human-readable message.
+//
+// Construction:
+//   - Status()                  -> code UNKNOWN, empty message.
+//   - explicit Status(code)     -> given code, empty message.
+//   Use set_message() to attach detail. Status is copyable and movable.
+//
+// Mutability:
+//   - set_code() and set_message() mutate the object in place. The two fields
+//     are independent: neither call validates or resets the other, and an empty
+//     message is valid for any code (OK does not imply an empty message).
+//   - message() returns a reference valid until the next set_message() call or
+//     destruction/move of this Status.
+//
+// Real-time notes:
+//   - Allocation: Status(), Status(code), code(), set_code() never allocate.
+//     set_message(), copy construction/assignment may allocate (std::string).
+//     Treat those as control-plane operations.
+//   - Blocking / synchronization: none.
+//   - Thread-safety: not thread-safe. Concurrent const access is safe;
+//     any concurrent mutation needs external synchronization.
+//   - Complexity: O(1) except message copy/move, which is O(message length)
+//     for copy and O(1) for move.
+//   - Exceptions: only set_message() and copies can throw (std::bad_alloc).
+//------------------------------------------------------------------------------
 class Status {
 public:
     Status() noexcept = default;
