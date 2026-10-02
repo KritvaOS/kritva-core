@@ -11,8 +11,6 @@ Accepted:
 - Scheduler contract review (`0773857`, refined in `0cdffdb` after review round 1)
 - Clock abstraction cleanup (`6ed8762`, refined in `e1e6cfb` after review round 1)
 - Requirements/API traceability (`00899f9`)
-
-Pending independent review:
 - Foundation contract tests (`bf2144a`)
 
 Planned work:
