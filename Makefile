@@ -9,7 +9,7 @@
 # Module      : Development Infrastructure
 # Layer       : Development Infrastructure
 #
-# Requirements: BUILD-001
+# Requirements: CORE-BUILD-001
 # API         : GNU Make
 #
 # Author      : KritvaOS
@@ -118,6 +118,18 @@ header-check: ## Validate KritvaOS source headers
 		--mode tracked --strict
 
 #------------------------------------------------------------------------------
+# Requirements Traceability
+#
+# Audits REQUIREMENTS.md against headers, tests, and CMake registration.
+#------------------------------------------------------------------------------
+
+.PHONY: traceability-check
+
+traceability-check: ## Audit requirements/API/test traceability
+	@echo "[traceability] Auditing requirements traceability..."
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_traceability.py
+
+#------------------------------------------------------------------------------
 # Code Formatting
 #------------------------------------------------------------------------------
 
@@ -152,7 +164,7 @@ lint: ## Run static analysis and lint checks
 
 .PHONY: check
 
-check: header-check format-check lint ## Run all local repository checks
+check: header-check traceability-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
 

@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-EVT-001, CORE-EVT-002, CORE-EVT-003
+// Requirements: CORE-EVT-001, CORE-EVT-002, CORE-EVT-003, CORE-EVT-004
 // API         : CORE-TEST-EVENT
 //
 // Author      : KritvaOS Core Team

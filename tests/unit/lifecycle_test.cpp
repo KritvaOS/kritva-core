@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-LIF-002; CORE-LIF-003
+// Requirements: CORE-LIF-001; CORE-LIF-002; CORE-LIF-003
 // API         : CORE-TEST-LIFECYCLE
 //
 // Author      : KritvaOS Core Team

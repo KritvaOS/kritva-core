@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-GEN-004
+// Requirements: CORE-GEN-004, CORE-API-001
 // API         : CORE-TEST-CONTRACT
 //
 // Author      : KritvaOS Core Team

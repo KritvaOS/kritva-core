@@ -34,7 +34,6 @@
 - CORE-RT-001 Define lifecycle-managed component contract.
 - CORE-RT-002 Define runtime contract.
 - CORE-MSG-001 Define platform-neutral message identity/header.
-- CORE-TIME-001 Define platform-neutral clock abstraction.
 
 ### Foundation types
 - CORE-TYP-001 Provide a strong 64-bit identity type; value 0 is the invalid identity.
@@ -74,6 +73,16 @@
 - CORE-CFG-001 Define typed configuration Parameters and a Configuration container.
 - CORE-CFG-003 Define a configuration version (alias of Version).
 
+### Repository, build and documentation
+These are process/infrastructure requirements for the repository itself. They are verified by inspection or by the checks named in the process traceability table, not by unit tests.
+- CORE-REQ-002 Maintain this requirements document and its traceability tables, audited by scripts/audit/check_traceability.py.
+- CORE-BUILD-001 Provide a CMake build (and Make convenience targets) that builds Core and runs its tests.
+- CORE-TEST-001 Provide CI that builds Core and runs the CTest suite on push and pull request.
+- CORE-DOC-001 Provide a repository README describing Kritva Core.
+- CORE-ARCH-001 Document the architectural dependency boundaries (what Core owns and does not own).
+- CORE-ARCH-003 Record the R0.2 architecture audit status.
+- CORE-DEV-001 Document the bounded work-package rules for contributors.
+
 ### API umbrella and messaging
 - CORE-API-001 Provide the umbrella header kritva/core/core.hpp.
 - CORE-MSG-002 Define platform-neutral topic identity.
@@ -87,12 +96,14 @@
 
 ## Traceability (Requirement -> Header -> Implementation -> Test)
 
+Checked by `make traceability-check` (scripts/audit/check_traceability.py): every referenced requirement ID is defined exactly once, every defined ID has a row, every named file exists, every public header appears here and carries its row's ID in its `Requirements:` tag, and every test source is registered with CTest.
+
 | Requirement | Public header | Implementation | Test |
 |---|---|---|---|
 | CORE-GEN-004 | include/kritva/core/ | - | tests/contract/core_contract_test.cpp |
 | CORE-API-001 | core.hpp | - | tests/contract/core_contract_test.cpp |
 | CORE-TYP-001 | types/id.hpp | header-only | tests/unit/types_test.cpp |
-| CORE-TYP-002 | types/version.hpp | src/version.cpp | tests/unit/version_test.cpp, types_test.cpp |
+| CORE-TYP-002 | types/version.hpp | src/version.cpp | tests/unit/version_test.cpp, tests/unit/types_test.cpp |
 | CORE-TYP-003 | types/duration.hpp | header-only | tests/unit/types_test.cpp |
 | CORE-TYP-004 | types/metadata.hpp | src/metadata.cpp | tests/unit/types_test.cpp |
 | CORE-TIME-001 | types/timestamp.hpp, time/clock.hpp | header-only | tests/unit/time_test.cpp |
@@ -117,6 +128,24 @@
 | CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
 | CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |
 | CORE-MSG-002 | messaging/topic.hpp | header-only | tests/unit/messaging_test.cpp |
-| CORE-PLAT-001 | platform/scheduler.hpp | contract only | tests/unit/platform_test.cpp |
+| CORE-PLAT-001 | platform/scheduler.hpp | contract only | tests/unit/platform_test.cpp, tests/contract/scheduler_contract.hpp |
 | CORE-PLAT-002 | platform/clock.hpp (alias of time/clock.hpp) | contract only | tests/unit/platform_test.cpp |
 | CORE-PLAT-003 | platform/watchdog.hpp | contract only | tests/unit/platform_test.cpp |
+
+## Process traceability (Requirement -> Artifact -> Verification)
+
+Artifact and Verification hold file paths, or `inspection` where no automated check exists. The Note column is explanatory only. Nothing here implies behavior beyond what the artifact contains.
+
+| Requirement | Artifact | Verification | Note |
+|---|---|---|---|
+| CORE-GEN-001 | docs/architecture/boundaries.md | inspection | Boundary review; GEN-003 audit covers the dependency part. |
+| CORE-GEN-002 | CMakeLists.txt | inspection | Library target requires `cxx_std_20`. |
+| CORE-GEN-003 | CMakeLists.txt | scripts/audit/check_traceability.py | Audit rejects find_package/FetchContent/ExternalProject/add_subdirectory and ROS2/DDS/EtherCAT includes. |
+| CORE-GEN-005 | CMakeLists.txt | scripts/audit/check_traceability.py | Audit requires every test source to be registered with CTest; the tests use no hardware. |
+| CORE-REQ-002 | REQUIREMENTS.md | scripts/audit/check_traceability.py | |
+| CORE-BUILD-001 | CMakeLists.txt, Makefile | inspection | |
+| CORE-TEST-001 | .github/workflows/kritva-core-ci.yml | inspection | |
+| CORE-DOC-001 | README.md | inspection | |
+| CORE-ARCH-001 | docs/architecture/boundaries.md | inspection | |
+| CORE-ARCH-003 | docs/architecture/audit-status.md | inspection | |
+| CORE-DEV-001 | docs/development/intern-work-package.md | inspection | |

@@ -42,7 +42,7 @@ Use the repository `.clang-format`. Limit formatting changes to affected code un
 
 ## 9. Traceability
 
-Map test cases to requirement IDs where practical.
+Map test cases to requirement IDs where practical. `make traceability-check` audits the chain (REQUIREMENTS.md → header → implementation → test) and fails on undefined, duplicate, untraced, or dangling requirement IDs.
 
 Example:
 
