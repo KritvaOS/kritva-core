@@ -195,6 +195,7 @@ coverage: ## Build, test, and generate code coverage report
 	cd $(COVERAGE_BUILD_DIR) && ctest --output-on-failure
 
 	@echo "[coverage] Generating coverage report..."
+	@mkdir -p coverage
 	$(GCOVR) -r . \
 		--exclude 'tests/.*' \
 		--exclude 'build/.*' \
