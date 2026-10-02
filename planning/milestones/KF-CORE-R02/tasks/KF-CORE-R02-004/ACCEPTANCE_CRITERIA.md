@@ -18,7 +18,7 @@ The implementer must identify the authoritative requirement IDs affected by this
 
 | Requirement ID | Header/API | Implementation | Test | Evidence |
 |---|---|---|---|---|
-| CORE-PLAT-001 | `include/kritva/core/platform/scheduler.hpp` | contract only | `tests/unit/platform_test.cpp` (`kritva_core_platform`), `tests/contract/scheduler_contract.hpp` | commit `0773857`; 16/16 ctest |
+| CORE-PLAT-001 | `include/kritva/core/platform/scheduler.hpp` | contract only | `tests/unit/platform_test.cpp` (`kritva_core_platform`), `tests/contract/scheduler_contract.hpp` | commits `0773857`, `0cdffdb`; 16/16 ctest |
 
 **Acceptance:** No requirement referenced by the implementation may remain undefined.
 
@@ -90,7 +90,7 @@ The implementer must identify the authoritative requirement IDs affected by this
 docs(core): clarify scheduler contract
 ```
 
-- [x] Commit hash recorded: `0773857`.
+- [x] Commit hash recorded: `0773857` (initial), `0cdffdb` (review round 1 follow-up).
 
 ## 12a. Implementation Evidence (Claude)
 
