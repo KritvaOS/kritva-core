@@ -13,8 +13,8 @@ Accepted:
 - Requirements/API traceability (`00899f9`)
 - Foundation contract tests (`bf2144a`)
 
-Planned work:
-- Full R0.2 validation
+Pending independent review:
+- Full R0.2 validation; build fix `ea619f8` (`make coverage` in a fresh clone)
 
 ## [kritva-core-r0.1]
 
