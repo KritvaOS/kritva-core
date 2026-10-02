@@ -10,8 +10,6 @@ Accepted:
 - Statistics contract clarification (`d7d29cb`)
 - Scheduler contract review (`0773857`, refined in `0cdffdb` after review round 1)
 - Clock abstraction cleanup (`6ed8762`, refined in `e1e6cfb` after review round 1)
-
-Pending independent review:
 - Requirements/API traceability (`00899f9`)
 
 Planned work:
