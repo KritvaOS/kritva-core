@@ -21,13 +21,25 @@
 #include <cstdint>
 namespace kritva::core {
 
-// Instantaneous signed measurement (R0.2 contract).
-//   - Thread-safety: NOT thread-safe. Concurrent access requires external
-//     synchronization. Not a real-time synchronization primitive; atomic
-//     variants may be added in a later release.
-//   - Allocation: none. Blocking: none. Complexity: O(1).
-//   - Semantics: value() returns the last value passed to set(); initial 0.
-//   - Failure behavior: none; all operations are noexcept.
+//------------------------------------------------------------------------------
+// Gauge (CORE-STS-002)
+//
+// Signed instantaneous value, 0 after construction. The unit is defined by
+// whoever owns the Gauge (see Statistics for the Core-defined fields).
+//
+// Contract:
+//   - set(v) replaces the previous value with v; value() returns the last v.
+//   - Any std::int64_t is accepted and stored exactly. No clamping, range
+//     check, or arithmetic is performed, so there is no overflow behavior.
+//   - Behavior is fully deterministic.
+//
+// Real-time notes:
+//   - Allocation: none. Blocking / synchronization: none. Complexity: O(1).
+//   - Thread-safety: NOT thread-safe; same rules as Counter. A Gauge is a
+//     plain integer, not an atomic and not a synchronization primitive.
+//   - Not a hard-real-time guarantee.
+//   - Exceptions: none (all operations noexcept).
+//------------------------------------------------------------------------------
 class Gauge {
 public:
     using value_type = std::int64_t;

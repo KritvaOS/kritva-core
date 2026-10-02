@@ -19,6 +19,7 @@
 #include <cassert>
 #include <cstdint>
 #include <limits>
+#include <type_traits>
 
 #include <kritva/core/statistics/counter.hpp>
 #include <kritva/core/statistics/gauge.hpp>
@@ -238,6 +239,46 @@ int main() {
     assert(extreme.value() == std::numeric_limits<Gauge::value_type>::max());
     extreme.set(0);
     assert(extreme.value() == 0);
+
+    //--------------------------------------------------------------------------
+    // R0.2 contract: increment(0) is a no-op; reset() after wrap restarts at 0
+    //--------------------------------------------------------------------------
+
+    Counter noop;
+    noop.increment(9);
+    noop.increment(0);
+    assert(noop.value() == 9);
+    wrap.reset();
+    assert(wrap.value() == 0);
+    wrap.increment();
+    assert(wrap.value() == 1);
+
+    //--------------------------------------------------------------------------
+    // R0.2 contract: Gauge/Statistics store values as-is (no clamping)
+    //--------------------------------------------------------------------------
+
+    Statistics unclamped{};
+    unclamped.queue_depth.set(-1);
+    unclamped.utilization.set(250);
+    assert(unclamped.queue_depth.value() == -1);
+    assert(unclamped.utilization.value() == 250);
+
+    //--------------------------------------------------------------------------
+    // R0.2 contract: constexpr value-initialization and plain-value traits
+    //--------------------------------------------------------------------------
+
+    constexpr Statistics zero{};
+    static_assert(zero.sample_count.value() == 0);
+    static_assert(zero.utilization.value() == 0);
+
+    static_assert(std::is_trivially_copyable_v<Counter>);
+    static_assert(std::is_trivially_copyable_v<Gauge>);
+    static_assert(std::is_trivially_copyable_v<Statistics>);
+    static_assert(std::is_nothrow_default_constructible_v<Statistics>);
+    static_assert(std::is_nothrow_copy_constructible_v<Statistics>);
+    static_assert(!std::is_same_v<Counter::value_type, Gauge::value_type>);
+    static_assert(std::is_unsigned_v<Counter::value_type>);
+    static_assert(std::is_signed_v<Gauge::value_type>);
 
     return 0;
 }

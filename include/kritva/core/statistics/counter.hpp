@@ -21,13 +21,29 @@
 #include <cstdint>
 namespace kritva::core {
 
-// Monotonic unsigned event counter (R0.2 contract).
-//   - Thread-safety: NOT thread-safe. Concurrent access requires external
-//     synchronization. Not an atomic and not a real-time synchronization
-//     primitive; atomic/lock-free variants may be added in a later release.
-//   - Allocation: none. Blocking: none. Complexity: O(1).
-//   - Overflow: increment() wraps modulo 2^64 (unsigned arithmetic).
-//   - Failure behavior: none; all operations are noexcept.
+//------------------------------------------------------------------------------
+// Counter (CORE-STS-001)
+//
+// Monotonically increasing unsigned event count, 0 after construction.
+//
+// Contract:
+//   - increment(n) adds n; increment() adds 1; increment(0) is a no-op.
+//   - Overflow is defined: the value wraps modulo 2^64 (2^64 - 1 + 1 == 0).
+//     Consumers that need rates must compute deltas with unsigned arithmetic.
+//   - reset() sets the value to 0; it is the only operation that decreases it.
+//   - Behavior is fully deterministic: no clock, no randomness, no I/O.
+//
+// Real-time notes:
+//   - Allocation: none. Blocking / synchronization: none. Complexity: O(1).
+//   - Thread-safety: NOT thread-safe. It is a plain integer, not an atomic and
+//     not a synchronization primitive. Concurrent increment()/reset() or a
+//     concurrent read during a write is a data race (undefined behavior)
+//     unless the caller provides external synchronization, or each Counter has
+//     a single writer and readers are synchronized with it.
+//   - Not a hard-real-time guarantee: there is no bounded-latency or lock-free
+//     claim beyond "a few instructions, no calls".
+//   - Exceptions: none (all operations noexcept).
+//------------------------------------------------------------------------------
 class Counter {
 public:
     using value_type = std::uint64_t;

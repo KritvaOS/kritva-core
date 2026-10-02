@@ -51,9 +51,9 @@
 - CORE-HEA-002 Provide a Health type reporting a health state.
 
 ### Statistics
-- CORE-STS-001 Provide a Counter (monotonic unsigned; not thread-safe, no allocation).
-- CORE-STS-002 Provide a Gauge (signed instantaneous value; not thread-safe, no allocation).
-- CORE-STS-003 Provide a Statistics aggregate of common operational counters and gauges.
+- CORE-STS-001 Provide a Counter (monotonic unsigned, wraps modulo 2^64 on overflow; not thread-safe, no allocation).
+- CORE-STS-002 Provide a Gauge (signed instantaneous value stored as-is, no clamping; not thread-safe, no allocation).
+- CORE-STS-003 Provide a Statistics aggregate of common operational counters and gauges with documented field meanings (utilization is a whole percent by convention); not thread-safe, not an atomic snapshot.
 
 ### Error and result
 - CORE-ERR-001 Define error codes and severities.
