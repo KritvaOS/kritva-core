@@ -36,6 +36,14 @@ namespace kritva::core {
 //   - Violating a precondition is a programming error: it is undefined
 //     behavior in release builds and is trapped by assert() when NDEBUG is not
 //     defined. Callers must check has_value() / operator bool first.
+//   - failure(Error) has the precondition error.code != ErrorCode::NONE, so a
+//     failure never carries the "no error" code. Same trap/UB rule as above.
+//   - Copy and move: Result is copyable and movable when T is. A copy has the
+//     same outcome (success/failure) and an equal payload as its source. A
+//     moved-from Result keeps its outcome (has_value() is unchanged) but its
+//     payload (T or Error) is in a valid-but-unspecified moved-from state; it
+//     may only be destroyed or assigned to. Assignment replaces both the
+//     outcome and the payload of the destination.
 //
 // Real-time notes:
 //   - Allocation: none for Result itself; success(T)/failure(Error) allocate
@@ -48,7 +56,11 @@ namespace kritva::core {
 template<class T> class Result {
 public:
     static Result success(T value) { return Result{std::move(value), std::nullopt}; }
-    static Result failure(Error error) { return Result{std::nullopt, std::move(error)}; }
+    /// Precondition: error.code != ErrorCode::NONE.
+    static Result failure(Error error) {
+        assert(error.code != ErrorCode::NONE);
+        return Result{std::nullopt, std::move(error)};
+    }
 
     [[nodiscard]] bool has_value() const noexcept { return value_.has_value(); }
     [[nodiscard]] explicit operator bool() const noexcept { return has_value(); }
@@ -71,7 +83,11 @@ private:
 template<> class Result<void> {
 public:
     static Result success() { return Result{true, std::nullopt}; }
-    static Result failure(Error error) { return Result{false, std::move(error)}; }
+    /// Precondition: error.code != ErrorCode::NONE.
+    static Result failure(Error error) {
+        assert(error.code != ErrorCode::NONE);
+        return Result{false, std::move(error)};
+    }
 
     [[nodiscard]] bool has_value() const noexcept { return success_; }
     [[nodiscard]] explicit operator bool() const noexcept { return success_; }

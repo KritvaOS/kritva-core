@@ -59,7 +59,7 @@
 - CORE-ERR-001 Define error codes and severities.
 - CORE-ERR-002 Define the Error record (code, severity, source, timestamp, message).
 - CORE-ERR-003 Reserved (unused).
-- CORE-ERR-004 Provide Result<T>/Result<void> with documented access preconditions: value() only on success, error() only on failure.
+- CORE-ERR-004 Provide Result<T>/Result<void> with documented access preconditions: value() only on success, error() only on failure, and failure() only with a non-NONE error code. Precondition violations are asserted in debug builds and undefined behavior in release builds; moved-from Results keep their outcome with an unspecified payload.
 
 ### Events
 - CORE-EVT-001 Define event types.

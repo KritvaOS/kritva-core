@@ -19,7 +19,30 @@
 #include <cassert>
 #include <string>
 #include <type_traits>
+#include <cstdlib>
 #include <kritva/core/error/result.hpp>
+
+#if defined(__unix__) || defined(__APPLE__)
+#define KRITVA_TEST_FORK 1
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
+#ifdef KRITVA_TEST_FORK
+// Returns true if fn() terminates the process abnormally (assert -> SIGABRT).
+template<class F> static bool traps(F fn) {
+    pid_t pid = fork();
+    if (pid == 0) {
+        // Silence the assert diagnostic in the child.
+        if (!freopen("/dev/null", "w", stderr)) _exit(2);
+        fn();
+        _exit(0);
+    }
+    int status = 0;
+    waitpid(pid, &status, 0);
+    return WIFSIGNALED(status) && WTERMSIG(status) == SIGABRT;
+}
+#endif
 
 int main() {
     using namespace kritva::core;
@@ -88,6 +111,82 @@ int main() {
     auto copy = failure;
     assert(!copy.has_value());
     assert(copy.error().message == "bad argument");
+
+    // Move construction (Result<T>): destination takes outcome and payload.
+    {
+        auto src = Result<std::string>::success("moved-in");
+        Result<std::string> dst{std::move(src)};
+        assert(dst.has_value());
+        assert(dst.value() == "moved-in");
+        assert(src.has_value());  // outcome of a moved-from Result is unchanged
+
+        auto fsrc = Result<std::string>::failure(error);
+        Result<std::string> fdst{std::move(fsrc)};
+        assert(!fdst.has_value());
+        assert(fdst.error().message == "bad argument");
+        assert(!fsrc.has_value());
+    }
+
+    // Move assignment: replaces both outcome and payload (all four transitions).
+    {
+        auto dst = Result<std::string>::failure(error);
+        dst = Result<std::string>::success("now ok");
+        assert(dst.has_value() && dst.value() == "now ok");
+
+        dst = Result<std::string>::failure(error);
+        assert(!dst.has_value() && dst.error().code == ErrorCode::INVALID_ARGUMENT);
+
+        auto s2 = Result<std::string>::success("a");
+        s2 = Result<std::string>::success("b");
+        assert(s2.has_value() && s2.value() == "b");
+
+        auto f2 = Result<std::string>::failure(error);
+        Error other = error;
+        other.code = ErrorCode::TIMEOUT;
+        f2 = Result<std::string>::failure(other);
+        assert(!f2.has_value() && f2.error().code == ErrorCode::TIMEOUT);
+    }
+
+    // Copy assignment preserves the source.
+    {
+        auto src = Result<int>::success(5);
+        auto dst = Result<int>::failure(error);
+        dst = src;
+        assert(dst.has_value() && dst.value() == 5);
+        assert(src.has_value() && src.value() == 5);
+    }
+
+    // Result<void>: copy, move construction, and assignment.
+    {
+        auto vs = Result<void>::success();
+        auto vf = Result<void>::failure(error);
+        Result<void> vc{vf};
+        assert(!vc.has_value() && vc.error().message == "bad argument");
+        Result<void> vm{std::move(vf)};
+        assert(!vm.has_value() && vm.error().code == ErrorCode::INVALID_ARGUMENT);
+        vm = vs;
+        assert(vm.has_value());
+        vm = Result<void>::failure(error);
+        assert(!vm.has_value());
+    }
+
+    // Contract: Result has no default constructor (no ambiguous empty state).
+    static_assert(!std::is_default_constructible_v<Result<int>>);
+    static_assert(!std::is_default_constructible_v<Result<void>>);
+    static_assert(std::is_copy_constructible_v<Result<int>>);
+    static_assert(std::is_nothrow_move_constructible_v<Result<int>>);
+
+#ifdef KRITVA_TEST_FORK
+    // Contract: invalid access / invalid failure construction is trapped.
+    assert(traps([&] { (void)Result<int>::failure(error).value(); }));
+    assert(traps([&] { (void)Result<int>::success(1).error(); }));
+    assert(traps([&] { (void)Result<void>::success().error(); }));
+    Error none{};  // code == NONE
+    assert(traps([&] { (void)Result<int>::failure(none); }));
+    assert(traps([&] { (void)Result<void>::failure(none); }));
+    // Valid access does not trap.
+    assert(!traps([&] { (void)Result<int>::success(1).value(); }));
+#endif
 
     return 0;
 }
