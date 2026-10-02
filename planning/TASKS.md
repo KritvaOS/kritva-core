@@ -42,3 +42,9 @@ A task moves to ACCEPTED only after:
    ↓
 008 Full Validation
 ```
+
+## KF-CORE-R03-PREP — Pre-R0.3 preparation
+
+| ID | Task | Primary Area | Status | Commit |
+|---|---|---|---|---|
+| KF-CORE-R03-PREP-001 | Install and Package Core Library (`CORE-BUILD-002`) | build/install | REVIEW | `29255d5` |
