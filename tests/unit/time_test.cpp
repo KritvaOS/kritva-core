@@ -22,6 +22,7 @@
 #include <cassert>
 #include <cstdint>
 #include <type_traits>
+#include <utility>
 
 #include "kritva/core/time/clock.hpp"
 #include "kritva/core/time/timer.hpp"
@@ -165,9 +166,71 @@ void test_timer_preserves_zero_duration_value() {
     assert(timer.last_period == zero);
 }
 
+// Timestamps are not orderable or subtractable by design: this keeps mixed
+// clock domains from being compared or combined silently.
+template<class T, class = void> struct has_less : std::false_type {};
+template<class T> struct has_less<T, std::void_t<decltype(std::declval<T>() < std::declval<T>())>> : std::true_type {};
+template<class T, class = void> struct has_minus : std::false_type {};
+template<class T> struct has_minus<T, std::void_t<decltype(std::declval<T>() - std::declval<T>())>> : std::true_type {};
+
+void test_timestamp_domains_are_not_silently_comparable() {
+    static_assert(!has_less<Timestamp>::value);
+    static_assert(!has_minus<Timestamp>::value);
+    static_assert(std::is_trivially_copyable_v<Timestamp>);
+
+    const Timestamp mono{500, ClockDomain::MONOTONIC};
+    const Timestamp real{500, ClockDomain::REALTIME};
+
+    // Same nanoseconds, different domain: never equal.
+    assert(mono.nanoseconds() == real.nanoseconds());
+    assert(mono != real);
+    assert(!(mono == real));
+    // Same nanoseconds and domain: equal.
+    assert(mono == Timestamp(500, ClockDomain::MONOTONIC));
+
+    // Default is 0 ns, MONOTONIC.
+    assert(Timestamp{}.nanoseconds() == 0);
+    assert(Timestamp{}.domain() == ClockDomain::MONOTONIC);
+    // Negative nanoseconds are representable (REALTIME before its epoch).
+    assert(Timestamp(-1, ClockDomain::REALTIME).nanoseconds() == -1);
+}
+
+// An instance reports one fixed domain on every call.
+void test_clock_domain_is_stable_per_instance() {
+    const FakeClock clock(Timestamp{7, ClockDomain::REALTIME});
+    for (int i = 0; i < 3; ++i) {
+        assert(clock.now().domain() == ClockDomain::REALTIME);
+    }
+    static_assert(noexcept(std::declval<const IClock&>().now()));
+}
+
+// IClock and ITimer are independent contracts that can be implemented together
+// without conflict, and neither depends on the other.
+class ClockAndTimer final : public IClock, public ITimer {
+public:
+    [[nodiscard]] Timestamp now() const noexcept override { return Timestamp{1}; }
+    Result<void> start(Duration) override { return Result<void>::success(); }
+    Result<void> stop() override { return Result<void>::success(); }
+};
+
+void test_clock_and_timer_are_independent_contracts() {
+    ClockAndTimer both;
+    const IClock& clock = both;
+    ITimer& timer = both;
+    assert(clock.now() == Timestamp{1});
+    assert(timer.start(Duration::from_milliseconds(1)));
+    assert(timer.stop());
+    static_assert(!std::is_base_of_v<IClock, ITimer>);
+    static_assert(!std::is_base_of_v<ITimer, IClock>);
+}
+
 } // namespace
 
 int main() {
+    test_timestamp_domains_are_not_silently_comparable();
+    test_clock_domain_is_stable_per_instance();
+    test_clock_and_timer_are_independent_contracts();
+
     test_clock_contract_shape();
     test_clock_now_returns_timestamp();
     test_clock_preserves_clock_domain();

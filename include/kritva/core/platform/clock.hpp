@@ -22,11 +22,16 @@
 
 namespace kritva::core::platform {
 
-/// Compatibility/adapter alias. Platform implementations may implement
-/// kritva::core::time::IClock directly.
-// DEPRECATED compatibility alias. The canonical Core clock abstraction is
-// kritva::core::time::IClock (time/clock.hpp); this is NOT a second abstraction.
-// New code should use time::IClock. Planned removal: R0.3 or later.
+// DEPRECATED compatibility alias (CORE-PLAT-002).
+//
+// The canonical Core clock abstraction is kritva::core::time::IClock
+// (time/clock.hpp). platform::IClock is the very same type, not a second or
+// independent contract: it adds no members, no semantics, and cannot diverge.
+// Platform adapters should implement kritva::core::time::IClock directly; new
+// code should include "time/clock.hpp". The alias exists only so that code
+// written against the R0.1 platform namespace keeps compiling. No removal date
+// is set; removing it is a public API compatibility change requiring human
+// review.
 using IClock = kritva::core::time::IClock;
 
 } // namespace kritva::core::platform

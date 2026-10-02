@@ -22,11 +22,35 @@
 
 namespace kritva::core {
 
+//------------------------------------------------------------------------------
+// ClockDomain (CORE-TIME-001)
+//
+// Identifies the time base of a Timestamp. See time::IClock for the full
+// semantics.
+//   MONOTONIC - non-decreasing, unaffected by wall-clock adjustment, unspecified
+//               epoch; only differences are meaningful.
+//   REALTIME  - wall-clock time; may jump backward or forward.
+// Timestamps of different domains are incomparable.
+//------------------------------------------------------------------------------
 enum class ClockDomain : std::uint8_t {
     MONOTONIC = 0,
     REALTIME = 1,
 };
 
+//------------------------------------------------------------------------------
+// Timestamp (CORE-TIME-001)
+//
+// A point on a clock: signed nanoseconds plus the ClockDomain they belong to.
+// Default value is 0 ns in the MONOTONIC domain. Plain value type (trivially
+// copyable, no allocation, thread-safe).
+//
+// Equality compares nanoseconds AND domain, so timestamps from different
+// domains are never equal even when their nanosecond counts match. This is
+// not an ordering: Timestamp intentionally has no operator<, no <=>, and no
+// subtraction, so a monotonic and a realtime value cannot be ordered or
+// subtracted by accident. Callers doing arithmetic on nanoseconds() must check
+// domain() first.
+//------------------------------------------------------------------------------
 class Timestamp {
 public:
     constexpr Timestamp() noexcept = default;

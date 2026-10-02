@@ -182,7 +182,18 @@ void task_entry(void* context) {
 // -----------------------------------------------------------------------------
 
 void test_platform_clock_is_core_clock_alias() {
+    // platform::IClock is the same type as the canonical time::IClock, not a
+    // second contract: pointers/references convert without adaptation and the
+    // alias adds no members.
     static_assert(std::is_same_v<IClock, kritva::core::time::IClock>);
+    static_assert(std::is_same_v<platform::IClock, kritva::core::time::IClock>);
+    static_assert(sizeof(platform::IClock) == sizeof(kritva::core::time::IClock));
+
+    const FakeClock fake(Timestamp{9, ClockDomain::REALTIME});
+    const platform::IClock& via_alias = fake;
+    const kritva::core::time::IClock& via_canonical = via_alias;
+    assert(via_canonical.now() == fake.now());
+    assert(via_canonical.now().domain() == ClockDomain::REALTIME);
 }
 
 void test_platform_clock_contract() {
