@@ -7,8 +7,6 @@
 Accepted:
 - Result<T> contract hardening (`df44d38`)
 - Status API/header cleanup (`d6d939d`)
-
-Pending independent review:
 - Statistics contract clarification (`d7d29cb`)
 
 Planned work:
