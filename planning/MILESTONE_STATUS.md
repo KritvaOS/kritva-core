@@ -17,7 +17,7 @@
 | 002 Status | ACCEPTED (`d6d939d`) | 001 |
 | 003 Statistics | ACCEPTED (`d7d29cb`) | 002 |
 | 004 Scheduler | ACCEPTED (`0773857`, `0cdffdb`) | 003 |
-| 005 Clock | PLANNED | 004 |
+| 005 Clock | REVIEW (`6ed8762`) | 004 |
 | 006 Traceability | PLANNED | 005 |
 | 007 Contract Tests | PLANNED | 006 |
 | 008 Full Validation | PLANNED | 007 |
