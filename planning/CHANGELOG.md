@@ -4,7 +4,7 @@
 
 ### KF-CORE-R02 — Core Contract Hardening
 
-Implemented (pending independent review):
+Accepted:
 - Result<T> contract hardening (`df44d38`)
 
 Planned work:
