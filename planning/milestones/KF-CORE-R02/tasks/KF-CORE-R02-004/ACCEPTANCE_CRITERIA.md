@@ -160,13 +160,49 @@ Provide the following in the implementation response:
 
 Reviewer: ChatGPT
 
-- [ ] PASS
+- [x] PASS
 - [ ] CHANGES REQUIRED
 - [ ] BLOCKED
 
 Review notes:
 
-TBD
+Round 1 review identified seven scheduler-contract issues. The follow-up
+commit `0cdffdb` addresses all seven items while leaving the original
+implementation commit `0773857` unchanged.
+
+The revised contract correctly keeps scheduler policy platform-independent.
+Dynamic task creation is adapter-defined, with atomic INVALID_STATE failure
+when unsupported while running. Priority is defined as an implementation-
+independent relative value without imposing an OS-specific numeric range.
+
+TaskId semantics no longer promise permanent non-reuse. CPU-affinity errors
+distinguish INVALID_ARGUMENT from UNSUPPORTED. The prohibition on calling
+synchronous scheduler-wide stop() from a running task is documented with
+its deadlock rationale.
+
+Scheduler destruction is intentionally outside the Core contract, while
+adapters are required to stop orderly before releasing resources. The
+current 32-bit affinity mask is documented as an R0.2 limitation rather
+than a long-term architecture restriction.
+
+No scheduler implementation, executor, thread pool, destroy_task(), or
+platform-specific code was introduced.
+
+Validation evidence is sufficient:
+- Clean build: 0 warnings
+- CTest: 16/16 passed
+- ASan + UBSan: 16/16 passed
+- Coverage: 98%
+- scheduler.hpp standalone compilation: passed
+- Header check: passed
+- git diff --check: passed
+- format-check/lint: repository TODO stubs, therefore not applicable
+
+The round-1 CHANGES REQUIRED findings are resolved.
+
+Task KF-CORE-R02-004 is ACCEPTED.
+
+Reviewer Decision: PASS
 
 ## 15. Acceptance Rule
 

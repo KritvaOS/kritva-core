@@ -8,8 +8,6 @@ Accepted:
 - Result<T> contract hardening (`df44d38`)
 - Status API/header cleanup (`d6d939d`)
 - Statistics contract clarification (`d7d29cb`)
-
-Pending independent review:
 - Scheduler contract review (`0773857`, refined in `0cdffdb` after review round 1)
 
 Planned work:
