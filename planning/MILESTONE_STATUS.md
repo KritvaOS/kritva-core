@@ -20,7 +20,7 @@
 | 005 Clock | ACCEPTED (`6ed8762`, `e1e6cfb`) | 004 |
 | 006 Traceability | ACCEPTED (`00899f9`) | 005 |
 | 007 Contract Tests | ACCEPTED (`bf2144a`) | 006 |
-| 008 Full Validation | REVIEW | 007 |
+| 008 Full Validation | REVIEW (`1472b79`) | 007 |
 
 ## Status Definitions
 

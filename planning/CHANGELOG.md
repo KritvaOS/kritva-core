@@ -14,7 +14,7 @@ Accepted:
 - Foundation contract tests (`bf2144a`)
 
 Pending independent review:
-- Full R0.2 validation; build fix `ea619f8` (`make coverage` in a fresh clone)
+- Full R0.2 validation (`1472b79`); build fix `ea619f8` (`make coverage` in a fresh clone)
 
 ## [kritva-core-r0.1]
 

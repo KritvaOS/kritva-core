@@ -11,7 +11,7 @@
 | KF-CORE-R02-005 | Clock abstraction cleanup | time/platform | ACCEPTED | `6ed8762`, `e1e6cfb` |
 | KF-CORE-R02-006 | Requirements/API traceability | requirements/docs | ACCEPTED | `00899f9` |
 | KF-CORE-R02-007 | Foundation contract tests | tests | ACCEPTED | `bf2144a` |
-| KF-CORE-R02-008 | Full R0.2 validation | integration/validation | REVIEW | see `git log` (`test(core): complete R0.2 validation`) |
+| KF-CORE-R02-008 | Full R0.2 validation | integration/validation | REVIEW | `1472b79` |
 
 ## Acceptance Rule
 

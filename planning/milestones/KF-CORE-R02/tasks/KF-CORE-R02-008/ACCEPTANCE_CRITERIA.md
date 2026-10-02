@@ -95,7 +95,7 @@ The implementer must identify the authoritative requirement IDs affected by this
 test(core): complete R0.2 validation
 ```
 
-- [x] Commit hash recorded.
+- [x] Commit hash recorded: `1472b79` (validation record); build fix `ea619f8`.
 
 ## 12a. Validation Evidence (Claude)
 
