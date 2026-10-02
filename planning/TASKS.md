@@ -8,7 +8,7 @@
 | KF-CORE-R02-002 | Status API/header cleanup | status | ACCEPTED | `d6d939d` |
 | KF-CORE-R02-003 | Statistics contract clarification | statistics | ACCEPTED | `d7d29cb` |
 | KF-CORE-R02-004 | Scheduler contract review | platform/scheduler | ACCEPTED | `0773857`, `0cdffdb` |
-| KF-CORE-R02-005 | Clock abstraction cleanup | time/platform | REVIEW | `6ed8762`, `e1e6cfb` |
+| KF-CORE-R02-005 | Clock abstraction cleanup | time/platform | ACCEPTED | `6ed8762`, `e1e6cfb` |
 | KF-CORE-R02-006 | Requirements/API traceability | requirements/docs | PLANNED | — |
 | KF-CORE-R02-007 | Foundation contract tests | tests | PLANNED | — |
 | KF-CORE-R02-008 | Full R0.2 validation | integration/validation | PLANNED | — |

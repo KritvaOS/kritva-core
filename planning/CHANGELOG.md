@@ -9,8 +9,6 @@ Accepted:
 - Status API/header cleanup (`d6d939d`)
 - Statistics contract clarification (`d7d29cb`)
 - Scheduler contract review (`0773857`, refined in `0cdffdb` after review round 1)
-
-Pending independent review:
 - Clock abstraction cleanup (`6ed8762`, refined in `e1e6cfb` after review round 1)
 
 Planned work:

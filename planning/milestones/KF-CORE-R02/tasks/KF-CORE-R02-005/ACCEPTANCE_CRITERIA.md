@@ -146,13 +146,45 @@ Provide the following in the implementation response:
 
 Reviewer: ChatGPT
 
-- [ ] PASS
+- [x] PASS
 - [ ] CHANGES REQUIRED
 - [ ] BLOCKED
 
 Review notes:
 
-TBD
+Round 1 identified one contract-wording issue: the statement that IClock
+implementations "should be safe for concurrent now() calls" conflicted with
+the adapter-defined thread-safety rule. Follow-up commit `e1e6cfb` resolves
+it while leaving implementation commit `6ed8762` unchanged.
+
+time::IClock is the canonical Core clock contract. Each clock instance has
+one fixed domain; MONOTONIC and REALTIME semantics are explicit; Timestamp
+has no implicit ordering or subtraction, so cross-domain use is not silently
+permitted. Same domain is necessary but not sufficient for comparison.
+
+IClock imposes no universal thread-safety guarantee. Thread-safety is
+adapter-defined, and callers must follow the adapter's documented guarantee.
+
+platform::IClock remains only a compatibility alias / migration path, with no
+[[deprecated]] attribute and no scheduled removal. Timers, scheduling, and
+callbacks remain separate contracts. No OS-specific clock implementation was
+added to Core.
+
+Validation evidence is sufficient:
+- Clean build: 0 warnings
+- CTest: 16/16 passed
+- ASan + UBSan: 16/16 passed
+- Header check: passed
+- git diff --check: passed
+- Coverage (98%) and standalone header compilation remain valid for the
+  unchanged code; not rerun after the documentation-only correction
+- format-check/lint: repository TODO stubs, therefore not applicable
+
+Requirement traceability for CORE-TIME-001 and CORE-PLAT-002 is recorded.
+
+Task KF-CORE-R02-005 is ACCEPTED.
+
+Reviewer Decision: PASS
 
 ## 15. Acceptance Rule
 
