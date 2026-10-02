@@ -18,7 +18,7 @@ The implementer must identify the authoritative requirement IDs affected by this
 
 | Requirement ID | Header/API | Implementation | Test | Evidence |
 |---|---|---|---|---|
-| CORE-TIME-001, CORE-PLAT-002 | `include/kritva/core/time/clock.hpp`, `types/timestamp.hpp`, `platform/clock.hpp` (alias) | header-only | `tests/unit/time_test.cpp` (`kritva_core_time`), `tests/unit/platform_test.cpp` (`kritva_core_platform`) | commit `6ed8762`; 16/16 ctest |
+| CORE-TIME-001, CORE-PLAT-002 | `include/kritva/core/time/clock.hpp`, `types/timestamp.hpp`, `platform/clock.hpp` (alias) | header-only | `tests/unit/time_test.cpp` (`kritva_core_time`), `tests/unit/platform_test.cpp` (`kritva_core_platform`) | commits `6ed8762`, `e1e6cfb`; 16/16 ctest |
 
 **Acceptance:** No requirement referenced by the implementation may remain undefined.
 
@@ -88,7 +88,7 @@ The implementer must identify the authoritative requirement IDs affected by this
 refactor(core): canonicalize clock abstraction
 ```
 
-- [x] Commit hash recorded: `6ed8762`.
+- [x] Commit hash recorded: `6ed8762` (initial), `e1e6cfb` (review round 1 follow-up).
 
 ## 12a. Implementation Evidence (Claude)
 
@@ -102,7 +102,7 @@ refactor(core): canonicalize clock abstraction
   4. Each `IClock` instance has one fixed `ClockDomain` for its lifetime.* MONOTONIC: non-decreasing, unspecified epoch, only differences meaningful. REALTIME: wall clock, may step; adapter documents the epoch.
   5. Timestamps of different domains are incomparable. `Timestamp::operator==` already includes the domain; `Timestamp` has no `<`, `<=>` or `-`, which is now documented as intentional and locked by tests. No new helper API was added.
   6. Same domain is necessary but not sufficient for comparison (two MONOTONIC clocks on different devices need not share an epoch).*
-  7. `now()` is `const noexcept`; allocation/blocking/latency/thread-safety are adapter properties (implementations *should* be safe for concurrent `now()` and must document otherwise);* no hard-real-time claim.
+  7. `now()` is `const noexcept`; allocation/blocking/latency/thread-safety are adapter properties (round 2 below: thread-safety is adapter-defined, not a Core guarantee); no hard-real-time claim.
   8. Timers/scheduling/callbacks are not part of `IClock`; `ITimer` stays an independent contract (test locks that neither derives from the other and that one class can implement both).
 - Tests added: no `<`/`-` on `Timestamp` (SFINAE static_asserts), trivially-copyable, cross-domain inequality with identical nanoseconds, defaults and negative ns, per-instance domain stability and `now()` noexcept, alias identity via references, clock+timer co-implementation.
 - Build: `rm -rf build && cmake -S . -B build && cmake --build build -j$(nproc)` — 0 warnings.
@@ -112,6 +112,18 @@ refactor(core): canonicalize clock abstraction
 - `time/clock.hpp`, `platform/clock.hpp`, `types/timestamp.hpp` each compile standalone with `-Wall -Wextra`; header check passed; `git diff --check` clean.
 - `make format-check`/`make lint`: TODO stubs, not executed.
 - Known limitations: no runtime check can detect domain mixing by callers who use `nanoseconds()` directly; the contract can only document it. Epoch/source identity within a domain is not representable in `Timestamp`. Items marked * are choices needing reviewer confirmation (public API semantics, AGENTS.md section 12).
+
+### Review round 1 — CHANGES REQUIRED (ChatGPT, on `6ed8762`)
+
+All design decisions approved (fixed domain per instance, compatibility alias without `[[deprecated]]`, removal of the R0.3 removal promise, Timestamp domain behavior, known `nanoseconds()` limitation). One wording correction required: "implementations should be safe for concurrent `now()` calls" conflicts with "thread-safety belongs to the adapter" and must not become an implicit Core-wide guarantee.
+
+### Review round 2 — follow-up commit `e1e6cfb` `fix(core): clarify IClock thread-safety is adapter-defined`
+
+`6ed8762` is unchanged (not amended). `time/clock.hpp` now states: thread-safety is adapter-defined; `IClock` imposes no universal guarantee; an adapter that supports concurrent `now()` documents that guarantee, one that does not documents the restriction; callers must not assume concurrent `now()` is safe. `API.md` and `REQUIREMENTS.md` (CORE-TIME-001) match. Per review, `platform::IClock` is now described as a compatibility alias / migration path with no removal date (comment wording only; no `[[deprecated]]`). No implementation or test change.
+
+Files changed in round 2: `include/kritva/core/time/clock.hpp`, `include/kritva/core/platform/clock.hpp` (comments only), `API.md`, `REQUIREMENTS.md`.
+
+Round 2 validation: clean build 0 warnings; `ctest --output-on-failure` 16/16; ASan+UBSan build 16/16; `make header-check` passed; `git diff --check` clean.
 
 ## 13. Evidence Required From Codex/Claude
 
