@@ -22,7 +22,7 @@
 
 namespace kritva::core::platform {
 
-// DEPRECATED compatibility alias (CORE-PLAT-002).
+// Compatibility alias / migration path (CORE-PLAT-002).
 //
 // The canonical Core clock abstraction is kritva::core::time::IClock
 // (time/clock.hpp). platform::IClock is the very same type, not a second or

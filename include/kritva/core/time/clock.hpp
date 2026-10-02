@@ -55,8 +55,11 @@ namespace kritva::core::time {
 //   - now() is const and noexcept: it must not throw. Whether it allocates,
 //     blocks, or has bounded latency is an adapter property that the adapter
 //     documents; Core makes no hard-real-time claim.
-//   - Implementations should be safe for concurrent now() calls from multiple
-//     threads and must document it if they are not.
+//   - Thread-safety is adapter-defined. IClock itself imposes no universal
+//     thread-safety guarantee. An adapter that supports concurrent calls to
+//     now() shall document that guarantee; an adapter that does not shall
+//     document the restriction. Callers must not assume concurrent now() is
+//     safe on an arbitrary IClock unless the adapter says so.
 //
 // Out of scope: timers, scheduling and callbacks (see ITimer, IScheduler).
 //------------------------------------------------------------------------------

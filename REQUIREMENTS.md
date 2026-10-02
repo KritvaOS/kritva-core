@@ -41,7 +41,7 @@
 - CORE-TYP-002 Provide a Version type (major.minor.patch) with string formatting.
 - CORE-TYP-003 Provide a nanosecond-resolution Duration type.
 - CORE-TYP-004 Provide string key/value Metadata.
-- CORE-TIME-001 Provide Timestamp (nanoseconds + clock domain) and the platform-neutral clock abstraction (time::IClock). time::IClock is the canonical clock contract; each clock instance has one fixed domain (MONOTONIC: non-decreasing, unspecified epoch; REALTIME: wall clock that may step). Timestamps from different domains are incomparable: equality includes the domain and Timestamp has no ordering or subtraction. platform::IClock is a deprecated compatibility alias of the same type, not a second abstraction.
+- CORE-TIME-001 Provide Timestamp (nanoseconds + clock domain) and the platform-neutral clock abstraction (time::IClock). time::IClock is the canonical clock contract; each clock instance has one fixed domain (MONOTONIC: non-decreasing, unspecified epoch; REALTIME: wall clock that may step). Timestamps from different domains are incomparable: equality includes the domain and Timestamp has no ordering or subtraction. platform::IClock is a compatibility alias of the same type, not a second abstraction. Thread-safety of now() is adapter-defined.
 - CORE-TIME-002 Define platform-neutral timer abstraction.
 
 ### Lifecycle, status, health
