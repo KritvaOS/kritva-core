@@ -14,7 +14,7 @@
 | Task | Status | Dependency |
 |---|---|---|
 | 001 Result<T> | ACCEPTED (`df44d38`) | R01 |
-| 002 Status | PLANNED | 001 |
+| 002 Status | REVIEW (`d6d939d`) | 001 |
 | 003 Statistics | PLANNED | 002 |
 | 004 Scheduler | PLANNED | 003 |
 | 005 Clock | PLANNED | 004 |

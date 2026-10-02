@@ -8,7 +8,7 @@ Accepted:
 - Result<T> contract hardening (`df44d38`)
 
 Planned work:
-- Status API/header cleanup
+- Status API/header cleanup (`d6d939d`, pending independent review)
 - Statistics contract clarification
 - Scheduler contract review
 - Clock abstraction cleanup

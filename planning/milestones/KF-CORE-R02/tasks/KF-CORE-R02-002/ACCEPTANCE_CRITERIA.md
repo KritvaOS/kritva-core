@@ -18,77 +18,89 @@ The implementer must identify the authoritative requirement IDs affected by this
 
 | Requirement ID | Header/API | Implementation | Test | Evidence |
 |---|---|---|---|---|
-| TBD | TBD | TBD | TBD | TBD |
+| CORE-STA-001 | `include/kritva/core/status/status_code.hpp`, `status.hpp` | header-only | `tests/unit/status_test.cpp` (`kritva_core_status`) | commit `d6d939d`; 16/16 ctest |
 
 **Acceptance:** No requirement referenced by the implementation may remain undefined.
 
 ## 4. Functional Acceptance
 
-- [ ] AC-001: `status_code.hpp` remains the authoritative status-code enumeration.
-- [ ] AC-002: `status.hpp` must explicitly include every standard header needed by its declarations/implementation.
-- [ ] AC-003: Status construction and mutation semantics must be clear.
-- [ ] AC-004: Thread-safety/mutability assumptions must be documented.
-- [ ] AC-005: Do not expand the status taxonomy unless required to fix an identified contract gap.
-- [ ] AC-006: Do not redesign Status around exceptions.
+- [x] AC-001: `status_code.hpp` remains the authoritative status-code enumeration.
+- [x] AC-002: `status.hpp` must explicitly include every standard header needed by its declarations/implementation.
+- [x] AC-003: Status construction and mutation semantics must be clear.
+- [x] AC-004: Thread-safety/mutability assumptions must be documented.
+- [x] AC-005: Do not expand the status taxonomy unless required to fix an identified contract gap.
+- [x] AC-006: Do not redesign Status around exceptions.
 
 ## 5. Test Acceptance
 
-- [ ] TEST-001: Default status
-- [ ] TEST-002: Each defined StatusCode
-- [ ] TEST-003: Construction with code/detail where supported
-- [ ] TEST-004: Mutation/accessor behavior
-- [ ] TEST-005: Header self-containment compile test if the repository uses such tests
+- [x] TEST-001: Default status
+- [x] TEST-002: Each defined StatusCode
+- [x] TEST-003: Construction with code/detail where supported
+- [x] TEST-004: Mutation/accessor behavior
+- [x] TEST-005: Header self-containment compile test if the repository uses such tests
 
 ## 6. Regression Acceptance
 
-- [ ] All known regression tests pass.
-- [ ] `ctest --test-dir build --output-on-failure` passes.
-- [ ] No previously passing test is removed or disabled without explicit review.
+- [x] All known regression tests pass.
+- [x] `ctest --test-dir build --output-on-failure` passes.
+- [x] No previously passing test is removed or disabled without explicit review.
 
 ## 7. Build Acceptance
 
-- [ ] Clean configure succeeds.
-- [ ] Clean build succeeds.
-- [ ] No new compiler errors.
-- [ ] No new unexplained compiler warnings.
+- [x] Clean configure succeeds.
+- [x] Clean build succeeds.
+- [x] No new compiler errors.
+- [x] No new unexplained compiler warnings.
 
 ## 8. Coverage Acceptance
 
-- [ ] Coverage is generated/reviewed if configured.
-- [ ] New logic has appropriate test coverage.
-- [ ] Any material uncovered branch is documented.
+- [x] Coverage is generated/reviewed if configured.
+- [x] New logic has appropriate test coverage.
+- [x] Any material uncovered branch is documented.
 
 ## 9. Sanitizer / Static Analysis Acceptance
 
-- [ ] Required configured sanitizer runs pass.
-- [ ] Required configured static analysis passes.
-- [ ] Any existing unrelated finding is explicitly identified rather than hidden.
+- [x] Required configured sanitizer runs pass.
+- [x] Required configured static analysis passes.
+- [x] Any existing unrelated finding is explicitly identified rather than hidden.
 
 ## 10. Scope Acceptance
 
-- [ ] No Runtime Manager implementation added.
-- [ ] No platform-specific implementation added to Core.
-- [ ] No unrelated refactoring.
-- [ ] Public API changes are limited to this task's contract needs.
+- [x] No Runtime Manager implementation added.
+- [x] No platform-specific implementation added to Core.
+- [x] No unrelated refactoring.
+- [x] Public API changes are limited to this task's contract needs.
 
 ## 11. Documentation Acceptance
 
-- [ ] Relevant API/requirements documentation updated.
-- [ ] Requirement IDs are traceable.
-- [ ] No documentation contradicts the implementation.
+- [x] Relevant API/requirements documentation updated.
+- [x] Requirement IDs are traceable.
+- [x] No documentation contradicts the implementation.
 
 ## 12. Git Acceptance
 
-- [ ] Working tree was clean before implementation.
-- [ ] Diff reviewed.
-- [ ] Commit contains only this task's logical changes.
-- [ ] Exact commit message used:
+- [x] Working tree was clean before implementation.
+- [x] Diff reviewed.
+- [x] Commit contains only this task's logical changes.
+- [x] Exact commit message used:
 
 ```text
 fix(core): clean up Status API contract
 ```
 
-- [ ] Commit hash recorded.
+- [x] Commit hash recorded: `d6d939d`.
+
+## 12a. Implementation Evidence (Claude)
+
+- Commit: `d6d939d` `fix(core): clean up Status API contract` (R02-001 accepted at `ce8a21c`).
+- Files changed: `include/kritva/core/status/status_code.hpp`, `include/kritva/core/status/status.hpp`, `tests/unit/status_test.cpp`, `API.md`.
+- Scope decisions: no taxonomy change, no new members, no behavior change. Existing includes were already complete (`<cstdint>`, `<string>`, `<utility>`); verified by compiling each header standalone with `-Wall -Wextra`. Changes are contract documentation (code semantics, construction, mutability, allocation, thread-safety) and tests.
+- Build: `rm -rf build && cmake -S . -B build && cmake --build build -j$(nproc)` — 0 warnings.
+- Tests: `ctest --test-dir build` — 16/16 passed (includes `kritva_core_status`).
+- Sanitizers: separate Debug build `-fsanitize=address,undefined` — 16/16 passed.
+- Coverage: `make coverage` — 98% overall (unchanged); `status.hpp` 100%.
+- Header check passed; `git diff --check` clean. `make format-check`/`make lint` are TODO stubs (not executed).
+- Known limitations: `StatusCode` numeric values are documented as not stable for persistence; `Status` retains independent code/message (no OK-implies-empty-message rule) by design.
 
 ## 13. Evidence Required From Codex/Claude
 
