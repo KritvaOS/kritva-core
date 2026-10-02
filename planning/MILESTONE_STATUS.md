@@ -15,7 +15,7 @@
 |---|---|---|
 | 001 Result<T> | ACCEPTED (`df44d38`) | R01 |
 | 002 Status | ACCEPTED (`d6d939d`) | 001 |
-| 003 Statistics | PLANNED | 002 |
+| 003 Statistics | REVIEW (`d7d29cb`) | 002 |
 | 004 Scheduler | PLANNED | 003 |
 | 005 Clock | PLANNED | 004 |
 | 006 Traceability | PLANNED | 005 |
