@@ -28,7 +28,7 @@
 - CORE-LIF-002 Define lifecycle transition behavior.
 - CORE-LIF-003 Reject invalid lifecycle transitions.
 - CORE-CFG-002 Provide a validation path for configuration.
-- CORE-PLAT-001 Define scheduler platform contract.
+- CORE-PLAT-001 Define scheduler platform contract: TaskConfig field semantics (priority is relative and order-only, cpu_affinity is a bit mask where 0 means unconstrained, period 0 means aperiodic), non-owning context and entry lifetime, create_task registers stopped tasks, idempotent start/stop, opaque non-zero never-reused TaskId, and reported (not thrown) resource exhaustion.
 - CORE-PLAT-002 Define clock platform contract.
 - CORE-PLAT-003 Define watchdog platform contract.
 - CORE-RT-001 Define lifecycle-managed component contract.

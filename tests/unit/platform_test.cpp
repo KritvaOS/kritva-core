@@ -21,13 +21,18 @@
 //==============================================================================
 
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
+#include <limits>
 #include <type_traits>
 #include <string>
+#include <vector>
 
 #include "kritva/core/platform/clock.hpp"
 #include "kritva/core/platform/scheduler.hpp"
 #include "kritva/core/platform/watchdog.hpp"
+
+#include "../contract/scheduler_contract.hpp"
 
 using namespace kritva::core;
 using namespace kritva::core::platform;
@@ -51,30 +56,66 @@ private:
     Timestamp timestamp_{};
 };
 
+// Reference scheduler that conforms to the IScheduler contract (scheduler.hpp).
+// It is a test double, not an implementation: `start()` runs each task's entry
+// once, synchronously, so the tests can observe invocation.
 class FakeScheduler final : public IScheduler {
 public:
+    // Adapter-specific limits (see scheduler.hpp: priority max, affinity,
+    // capacity are adapter properties, not Core properties).
+    static constexpr std::uint32_t kMaxPriority = 255;
+    static constexpr std::uint32_t kCpuMask = 0xF;  // logical CPUs 0..3
+    std::size_t capacity{4};
+    bool affinity_supported{true};
+    std::size_t fail_start_at{static_cast<std::size_t>(-1)};  // task index
+
     Result<TaskId> create_task(
         const TaskConfig& config,
         void (*entry)(void*),
         void* context) override {
 
         ++create_count;
+
+        if (running) return fail(ErrorCode::INVALID_STATE);
+        if (entry == nullptr || config.name == nullptr ||
+            config.period.nanoseconds() < 0 || config.priority > kMaxPriority) {
+            return fail(ErrorCode::INVALID_ARGUMENT);
+        }
+        if (config.cpu_affinity != 0) {
+            if (!affinity_supported) return fail(ErrorCode::UNSUPPORTED);
+            if ((config.cpu_affinity & kCpuMask) == 0) return fail(ErrorCode::INVALID_ARGUMENT);
+        }
+        if (tasks.size() >= capacity) return fail(ErrorCode::RESOURCE_UNAVAILABLE);
+
         last_config = config;
         last_entry = entry;
         last_context = context;
+        tasks.push_back({entry, context});
 
         return Result<TaskId>::success(next_task_id++);
     }
 
     Result<void> start() override {
         ++start_count;
+        if (running) return Result<void>::success();  // idempotent
+
+        for (std::size_t i = 0; i < tasks.size(); ++i) {
+            if (i == fail_start_at) {
+                // All-or-nothing: roll back tasks already started.
+                started_then_stopped += i;
+                Error error;
+                error.code = ErrorCode::RESOURCE_UNAVAILABLE;
+                return Result<void>::failure(error);
+            }
+        }
+        for (const auto& task : tasks) task.entry(task.context);
         running = true;
         return Result<void>::success();
     }
 
     Result<void> stop() override {
         ++stop_count;
-        running = false;
+        running = false;  // idempotent
         return Result<void>::success();
     }
 
@@ -86,7 +127,18 @@ public:
     std::uint32_t create_count{0};
     std::uint32_t start_count{0};
     std::uint32_t stop_count{0};
+    std::size_t started_then_stopped{0};
     bool running{false};
+
+private:
+    struct Task { void (*entry)(void*); void* context; };
+    std::vector<Task> tasks;
+
+    static Result<TaskId> fail(ErrorCode code) {
+        Error error;
+        error.code = code;
+        return Result<TaskId>::failure(error);
+    }
 };
 
 class FakeWatchdog final : public IWatchdog {
@@ -243,6 +295,120 @@ void test_scheduler_polymorphic_access() {
     assert(scheduler.stop());
 }
 
+
+// Documented defaults and the meaning of the zero values.
+void test_scheduler_zero_value_semantics() {
+    const TaskConfig config;
+    // cpu_affinity == 0 means "no constraint", period == 0 means aperiodic,
+    // priority == 0 is the least urgent level (scheduler.hpp).
+    assert(config.cpu_affinity == 0);
+    assert(config.period.nanoseconds() == 0);
+    assert(config.priority == 0);
+}
+
+void test_scheduler_reference_conforms_to_contract() {
+    FakeScheduler scheduler;
+    contract::check_scheduler_contract(scheduler);
+    assert(!scheduler.running);
+}
+
+void test_scheduler_create_does_not_start_or_run_entry() {
+    FakeScheduler scheduler;
+    int runs = 0;
+    const TaskConfig config;
+
+    assert(scheduler.create_task(config, task_entry, &runs));
+    assert(runs == 0);
+    assert(!scheduler.running);
+
+    assert(scheduler.start());
+    assert(runs == 1);
+    assert(scheduler.start());   // idempotent: entry not started again
+    assert(runs == 1);
+    assert(scheduler.stop());
+    assert(scheduler.stop());    // idempotent
+}
+
+void test_scheduler_affinity_semantics() {
+    FakeScheduler scheduler;
+    TaskConfig config;
+
+    config.cpu_affinity = 0;      // no constraint
+    assert(scheduler.create_task(config, task_entry, nullptr));
+    config.cpu_affinity = 0x1;    // pin to CPU 0
+    assert(scheduler.create_task(config, task_entry, nullptr));
+
+    config.cpu_affinity = 0x10;   // only a non-existent CPU
+    auto bad = scheduler.create_task(config, task_entry, nullptr);
+    assert(!bad && bad.error().code == ErrorCode::INVALID_ARGUMENT);
+
+    FakeScheduler no_affinity;
+    no_affinity.affinity_supported = false;
+    config.cpu_affinity = 0x1;
+    auto unsupported = no_affinity.create_task(config, task_entry, nullptr);
+    assert(!unsupported && unsupported.error().code == ErrorCode::UNSUPPORTED);
+    config.cpu_affinity = 0;      // zero is always acceptable
+    assert(no_affinity.create_task(config, task_entry, nullptr));
+}
+
+void test_scheduler_priority_is_rejected_not_clamped() {
+    FakeScheduler scheduler;
+    TaskConfig config;
+    config.priority = FakeScheduler::kMaxPriority;
+    assert(scheduler.create_task(config, task_entry, nullptr));
+    config.priority = FakeScheduler::kMaxPriority + 1;
+    auto r = scheduler.create_task(config, task_entry, nullptr);
+    assert(!r && r.error().code == ErrorCode::INVALID_ARGUMENT);
+    config.priority = std::numeric_limits<std::uint32_t>::max();
+    assert(!scheduler.create_task(config, task_entry, nullptr));
+}
+
+void test_scheduler_resource_exhaustion() {
+    FakeScheduler scheduler;
+    scheduler.capacity = 2;
+    const TaskConfig config;
+
+    const auto a = scheduler.create_task(config, task_entry, nullptr);
+    const auto b = scheduler.create_task(config, task_entry, nullptr);
+    assert(a && b);
+
+    const auto full = scheduler.create_task(config, task_entry, nullptr);
+    assert(!full);
+    assert(full.error().code == ErrorCode::RESOURCE_UNAVAILABLE);
+
+    // The failed call consumed no id and left the scheduler usable.
+    assert(scheduler.start());
+    assert(scheduler.stop());
+}
+
+void test_scheduler_start_failure_is_all_or_nothing() {
+    FakeScheduler scheduler;
+    scheduler.fail_start_at = 1;
+    int runs = 0;
+    const TaskConfig config;
+    assert(scheduler.create_task(config, task_entry, &runs));
+    assert(scheduler.create_task(config, task_entry, &runs));
+
+    const auto r = scheduler.start();
+    assert(!r);
+    assert(r.error().code == ErrorCode::RESOURCE_UNAVAILABLE);
+    assert(!scheduler.running);   // remains STOPPED
+    assert(runs == 0);            // no entry left running
+}
+
+void test_scheduler_ids_nonzero_and_not_reused() {
+    FakeScheduler scheduler;
+    TaskConfig config;
+    config.name = nullptr;  // rejected: must not consume an id
+    assert(!scheduler.create_task(config, task_entry, nullptr));
+    config.name = "t";
+    const auto first = scheduler.create_task(config, task_entry, nullptr);
+    assert(first && first.value() != 0);
+    scheduler.stop();
+    const auto second = scheduler.create_task(config, task_entry, nullptr);
+    assert(second && second.value() != first.value());
+}
+
 // -----------------------------------------------------------------------------
 // CORE-PLAT-003 — Watchdog
 // -----------------------------------------------------------------------------
@@ -334,6 +500,14 @@ int main() {
     test_scheduler_create_task_returns_distinct_ids();
     test_scheduler_start_stop();
     test_scheduler_polymorphic_access();
+    test_scheduler_zero_value_semantics();
+    test_scheduler_reference_conforms_to_contract();
+    test_scheduler_create_does_not_start_or_run_entry();
+    test_scheduler_affinity_semantics();
+    test_scheduler_priority_is_rejected_not_clamped();
+    test_scheduler_resource_exhaustion();
+    test_scheduler_start_failure_is_all_or_nothing();
+    test_scheduler_ids_nonzero_and_not_reused();
 
     // CORE-PLAT-003
     test_watchdog_contract_shape();
