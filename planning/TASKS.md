@@ -47,4 +47,4 @@ A task moves to ACCEPTED only after:
 
 | ID | Task | Primary Area | Status | Commit |
 |---|---|---|---|---|
-| KF-CORE-R03-PREP-001 | Install and Package Core Library (`CORE-BUILD-002`) | build/install | REVIEW | `29255d5` |
+| KF-CORE-R03-PREP-001 | Install and Package Core Library (`CORE-BUILD-002`) | build/install | ACCEPTED | `29255d5` |

@@ -54,10 +54,52 @@
 
 Reviewer: ChatGPT
 
-- [ ] PASS
+- [x] PASS
 - [ ] CHANGES REQUIRED
 - [ ] BLOCKED
 
 Review notes:
 
-TBD
+KF-CORE-R03-PREP-001 implementation commit `29255d5` (evidence `bbbb9e9`)
+was reviewed against the task requirements and submitted validation evidence.
+
+Kritva Core is installable as a CMake package and consumable by an external
+downstream project. Package `kritva_core`, target `kritva_core::kritva_core`
+and the CMake project `kritva-core` are intentionally distinct; the exported
+package, target and documentation are consistent. The package name is approved.
+
+The pre-1.0 SameMinorVersion policy (0.2.x accepted; 0.1, 0.3 and 9.x
+rejected) is approved and is verified by the test. It shall be reviewed when
+Kritva Core reaches 1.0.
+
+The installation/consumer integration test installs, configures, builds, links
+and runs an external consumer against the installed package only, covering both
+library and header-only use. Mutation checks (header install removed, package
+files removed, version policy loosened) are detected. Build-tree references in
+the exported targets are rejected. Tests, examples and scripts are not
+installed.
+
+The traceability audit passes with CORE-BUILD-002 (50 requirements, 49 traced,
+1 reserved/exempt, 0 errors). Ignoring CMake comments in the forbidden-
+dependency check is approved because a real find_package() still fails it.
+
+The `make install` default prefix remains the CMake default (/usr/local);
+PREFIX=<dir> is a development/CI convenience. No change is required.
+
+Out of scope and left as future work: shared-library packaging, a platform/
+compiler matrix, an uninstall target, and distribution packaging
+(Debian/RPM/Conan/vcpkg).
+
+Validation evidence is sufficient:
+- CTest: 18/18 passed (Debug), 18/18 Release
+- ASan + UBSan: 18/18 passed
+- -Werror strict build: passed
+- Coverage: 98%
+- make check: passed
+- git diff --check: passed
+- No Core source changes; no third-party dependencies
+
+Task KF-CORE-R03-PREP-001 is ACCEPTED.
+
+Reviewer Decision: PASS
+

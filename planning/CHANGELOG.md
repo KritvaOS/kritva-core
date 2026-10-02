@@ -16,7 +16,7 @@ Accepted:
 
 ### Post-R0.2 preparation
 
-Pending independent review:
+Accepted:
 - KF-CORE-R03-PREP-001 — Install and package Core library (`29255d5`)
 
 ## [kritva-core-r0.1]
