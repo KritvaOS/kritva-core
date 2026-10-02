@@ -12,8 +12,6 @@ Accepted:
 - Clock abstraction cleanup (`6ed8762`, refined in `e1e6cfb` after review round 1)
 - Requirements/API traceability (`00899f9`)
 - Foundation contract tests (`bf2144a`)
-
-Pending independent review:
 - Full R0.2 validation (`1472b79`); build fix `ea619f8` (`make coverage` in a fresh clone)
 
 ## [kritva-core-r0.1]

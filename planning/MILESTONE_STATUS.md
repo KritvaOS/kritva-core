@@ -5,7 +5,7 @@
 | Milestone | Status | Progress | Review | Release |
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` |
-| KF-CORE-R02 | IN PROGRESS | 7 / 8 tasks accepted | PENDING | — |
+| KF-CORE-R02 | REVIEW (milestone close pending) | 8 / 8 tasks accepted | PENDING | — |
 | KF-CORE-R03 | PLANNED | 0% | — | — |
 | KF-CORE-R04 | PLANNED | 0% | — | — |
 
@@ -20,7 +20,7 @@
 | 005 Clock | ACCEPTED (`6ed8762`, `e1e6cfb`) | 004 |
 | 006 Traceability | ACCEPTED (`00899f9`) | 005 |
 | 007 Contract Tests | ACCEPTED (`bf2144a`) | 006 |
-| 008 Full Validation | REVIEW (`1472b79`) | 007 |
+| 008 Full Validation | ACCEPTED (`1472b79`) | 007 |
 
 ## Status Definitions
 
