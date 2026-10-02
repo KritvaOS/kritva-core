@@ -98,6 +98,8 @@ These are process/infrastructure requirements for the repository itself. They ar
 
 Checked by `make traceability-check` (scripts/audit/check_traceability.py): every referenced requirement ID is defined exactly once, every defined ID has a row, every named file exists, every public header appears here and carries its row's ID in its `Requirements:` tag, and every test source is registered with CTest.
 
+Requirement IDs are identifiers, not a contiguous sequence; gaps are not filled. An ID defined as `Reserved` (currently only CORE-ERR-003) is intentionally exempt from tracing: it has no header or test by design, and the audit skips it.
+
 | Requirement | Public header | Implementation | Test |
 |---|---|---|---|
 | CORE-GEN-004 | include/kritva/core/ | - | tests/contract/core_contract_test.cpp |
