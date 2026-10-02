@@ -5,7 +5,7 @@
 | Milestone | Status | Progress | Review | Release |
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` (referenced; tag not present in Git, see R0.2 Milestone Gate note) |
-| KF-CORE-R02 | ACCEPTED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` (local tag; not yet pushed) |
+| KF-CORE-R02 | RELEASED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` |
 | KF-CORE-R03 | PLANNED | 0% | — | — |
 | KF-CORE-R04 | PLANNED | 0% | — | — |
 
@@ -28,7 +28,7 @@ Status: ACCEPTED
 Tasks: 8 / 8 accepted
 Release version: 0.2.0
 Release commit: `46af52c`
-Release tag: `kritva-core-r0.2` (annotated, on `46af52c`; created locally, not yet pushed)
+Release tag: `kritva-core-r0.2` (annotated, on `46af52c`; pushed to origin, tag object `71431e4`)
 
 Validation:
 - 17/17 tests passed
