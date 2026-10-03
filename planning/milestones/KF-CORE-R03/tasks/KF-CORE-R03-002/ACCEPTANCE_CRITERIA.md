@@ -172,15 +172,27 @@ Focused post-review corrections must use a separate `fix(core): ...` commit.
 
 | Item | Result |
 |---|---|
-| Implementation complete | ☐ |
-| Unit tests complete | ☐ |
-| Integration/regression tests complete | ☐ |
-| Validation gates complete | ☐ |
-| Registry API reviewed | ☐ |
-| Ownership/lifetime reviewed | ☐ |
-| Architecture constraints satisfied | ☐ |
-| Reviewer decision | **PASS / CHANGES REQUIRED / BLOCKED** |
-| Reviewer | __________________ |
-| Date | __________________ |
+| Implementation complete | ☑ |
+| Unit tests complete | ☑ |
+| Integration/regression tests complete | ☑ |
+| Validation gates complete | ☑ |
+| Registry API reviewed | ☑ |
+| Ownership/lifetime reviewed | ☑ |
+| Architecture constraints satisfied | ☑ |
+| Reviewer decision | **PASS** |
+| Reviewer | ChatGPT |
+| Date | 03-10-2026 |
 
-Final acceptance remains subject to the combined R03 Foundation API Review after R03-003.
+Accepted commits: `7ae9a32` `feat(core): add component registry` (evidence `4649910`). No corrective implementation commit was required.
+
+Frozen decisions for subsequent R03 work:
+- `ComponentId` is the registry identity/key.
+- The registry is strictly non-owning.
+- Duplicate registration does not replace the existing component and returns `INVALID_ARGUMENT`, with the error source identifying the conflicting `ComponentId`.
+- `components()` returns a snapshot; enumeration is deterministic ascending `ComponentId`; registration order is not observable.
+- The registry does not control component lifecycle and does not perform dependency management.
+- There is no unregister operation in R03.
+- Registered components must outlive registry use.
+- The R03-001 API (`ComponentId`, `ComponentInfo`, `Component`) remains frozen; changes require architecture review.
+
+**Reviewer Decision: PASS — KF-CORE-R03-002 is ACCEPTED.** Final acceptance of the foundation remains subject to the combined R03 Foundation API Review after R03-003.
