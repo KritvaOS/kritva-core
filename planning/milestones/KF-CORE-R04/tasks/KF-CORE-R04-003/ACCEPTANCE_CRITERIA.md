@@ -111,12 +111,14 @@ Primary commit: `67114bb` `feat(core): define clock and timer platform contracts
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: `67114bb` (evidence `e40e77c`)
+
+Reviewer notes: the breaking `ITimer::start(period, mode, callback)` change is consistent with design decision Q2 and keeps activation atomic; the three proposed contract statements are APPROVED (no `ClockDomain` in `ITimer`; a restart is a fresh activation; `start()`/`stop()` from the timer's own callback fail with `INVALID_STATE`); the two surviving mutants are equivalent. Short/non-blocking callbacks remain timer-service guidance, not a property of the generic `Callback`. Reviewer could not inspect the local commit remotely and evaluated the supplied evidence.
+
+**Reviewer Decision: PASS — KF-CORE-R04-003 is ACCEPTED.**

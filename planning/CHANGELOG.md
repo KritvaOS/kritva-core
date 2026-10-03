@@ -66,8 +66,6 @@ Accepted:
 Accepted:
 - KF-CORE-R04-001 — Platform Adapter Boundary & Context (`d1c5f13`)
 - KF-CORE-R04-002 — Scheduler Contract Hardening (`eb06fa0`)
-
-Pending independent review:
 - KF-CORE-R04-003 — Clock & Timer Contract (`67114bb`)
 
 
