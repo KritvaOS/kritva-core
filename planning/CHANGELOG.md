@@ -14,6 +14,9 @@ Foundation tasks defined:
 Foundation gate:
 - R03 Foundation API Review after R03-003.
 
+Pending independent review:
+- KF-CORE-R03-004 — Runtime Manager (`e4d3a9b`)
+
 Runtime gates:
 - R03 Runtime Contract Review after R03-006.
 - R03 Integration Freeze after R03-007.
