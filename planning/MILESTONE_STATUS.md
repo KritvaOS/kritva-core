@@ -60,7 +60,7 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 | Task | Status | Dependency | Primary Commit |
 |---|---|---|---|
 | KF-CORE-R03-001 Component Contract & Identity | ACCEPTED (`655c1dd`, `35efee1`, `9a98ab3`) | R02 | `feat(core): define component runtime contract` |
-| KF-CORE-R03-002 Component Registry | PLANNED | R03-001 accepted | `feat(core): add component registry` |
+| KF-CORE-R03-002 Component Registry | REVIEW (`7ae9a32`) | R03-001 accepted | `feat(core): add component registry` |
 | KF-CORE-R03-003 Dependency Management | PLANNED | R03-001 + R03-002 accepted | `feat(core): add runtime dependency management` |
 | R03 Foundation API Review | PENDING | R03-001..003 accepted | — |
 | KF-CORE-R03-004 Runtime Manager | PLANNED | Foundation API Review PASS | `feat(core): add runtime manager` |
