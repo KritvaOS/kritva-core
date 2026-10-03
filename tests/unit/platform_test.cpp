@@ -513,19 +513,6 @@ void test_watchdog_stop() {
     assert(!watchdog.running);
 }
 
-void test_watchdog_zero_timeout_transport() {
-    // The current IWatchdog contract does not define timeout validation.
-    // Therefore this only verifies that Duration(0) is accepted by the
-    // interface and transported to the implementation.
-    FakeWatchdog watchdog;
-
-    const Duration zero = Duration::from_nanoseconds(0);
-    const Result<void> result = watchdog.start(zero);
-
-    assert(result);
-    assert(watchdog.last_timeout == zero);
-}
-
 void test_watchdog_polymorphic_access() {
     FakeWatchdog implementation;
     IWatchdog& watchdog = implementation;
@@ -568,7 +555,6 @@ int main() {
     test_watchdog_start();
     test_watchdog_kick();
     test_watchdog_stop();
-    test_watchdog_zero_timeout_transport();
     test_watchdog_polymorphic_access();
 
     return 0;

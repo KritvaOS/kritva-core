@@ -236,6 +236,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_timer_contract_test PRIVATE kritva_core)
     add_test(NAME kritva_core_timer_contract COMMAND kritva_core_timer_contract_test)
 
+    #Add Test: tests/unit/watchdog_contract_test.cpp
+    add_executable(kritva_core_watchdog_contract_test tests/unit/watchdog_contract_test.cpp)
+    target_link_libraries(kritva_core_watchdog_contract_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_watchdog_contract COMMAND kritva_core_watchdog_contract_test)
+
     #Add Test: tests/unit/messaging_test.cpp
     add_executable(kritva_core_messaging_test tests/unit/messaging_test.cpp)
     target_link_libraries(kritva_core_messaging_test PRIVATE kritva_core)

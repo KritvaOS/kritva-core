@@ -129,6 +129,8 @@ Core defines contracts for platform services (scheduler, clock, timer, watchdog,
 
 The timer contract (`time::ITimer`, `start(period, mode, callback)`) measures elapsed monotonic time independently of `IClock`; Core contains no timer implementation. See API.md section 27 and CORE-PLAT-006.
 
+The watchdog contract (`platform::IWatchdog`) defines STOPPED/RUNNING behavior for start, kick and stop; the expiry action is adapter-defined and never triggers Runtime recovery. See API.md section 28 and CORE-PLAT-007.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
