@@ -40,6 +40,7 @@ Accepted:
 - R08 Integration Freeze — PASS / HONORED (production freeze point `bdb4b93`; evidence `e1051a0`)
 
 Pending independent review:
+- KF-CORE-R08-006 — Configuration Boundary & Regression Validation (`94fad8e`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
