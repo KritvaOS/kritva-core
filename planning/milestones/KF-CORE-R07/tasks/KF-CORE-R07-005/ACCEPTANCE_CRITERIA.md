@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-005 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): add component operational reference harness` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -101,8 +101,14 @@ Primary commit: `0b1bd1d` `test(core): add component operational reference harne
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `0b1bd1d` (evidence `2d60432`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: test-only (no production diff since the freeze point `16654e9`); reusable harness on public contracts only; conformance checks that detect broken variants; observation, reporting and statistics updates interleaved with lifecycle, failure and reset leave the Runtime identical to a run with no observation; the Runtime never consumes Status, Health, statistics or sinks; the observe() survivor is covered by the R07-001 suite. Numbering approved: `CORE-OPS-007` Runtime boundary (R07-006), `CORE-OPS-008` integrator policy (R07-003), `CORE-OPS-009` harness (R07-005), `CORE-OPS-010` release validation (R07-007). `CORE-OPS-009` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-005 is ACCEPTED.**
