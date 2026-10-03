@@ -123,4 +123,15 @@ Working tree clean after every commit; the candidate commit is `f598fef`; this e
 - The release commit and tag `kritva-core-r0.3` are decided at the R03 Release Gate; nothing is tagged or pushed.
 
 ## 4. Reviewer Sign-off
-Only the independent architect/reviewer records PASS / CHANGES REQUIRED / BLOCKED.
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 03-10-2026 |
+| Decision | **PASS** |
+
+Validated candidate: `f598fef` (fresh-clone validation); validation record `407df6b` `test(core): complete R03 runtime validation`.
+
+Reviewer notes: the production-change audit is empty after the Integration Freeze; the version/package validation proves the installed package reports 0.3.0 and that deliberately wrong expectations fail; the install-consumer failure/recovery addition (`f598fef`) closes the gap between validating the in-tree runtime and the installed package. Non-blocking follow-ups, to be recorded as post-R0.3 cleanup rather than reopening the frozen implementation: the `make lint` / `make format-check` stubs (deferred tooling), the unused `<chrono>` include, and the stale root `implementation.md` (not authoritative). **Release tag decision:** `kritva-core-r0.3` tags the final release-record commit that records the Release Gate, not `f598fef`; the exact SHA is determined only after that commit exists. The Release Gate commit contains only release-state documentation (milestone/gate records, status, changelogs), no implementation, API, behavior, lint or formatting changes.
+
+**Reviewer Decision: PASS — KF-CORE-R03-008 is ACCEPTED.**

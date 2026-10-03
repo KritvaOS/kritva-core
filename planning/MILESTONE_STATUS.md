@@ -6,7 +6,7 @@
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` (referenced; tag not present in Git, see R0.2 Milestone Gate note) |
 | KF-CORE-R02 | RELEASED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` |
-| KF-CORE-R03 | IN PROGRESS | 7 / 8 tasks accepted | Runtime Contract Review PENDING | — |
+| KF-CORE-R03 | IN PROGRESS | 8 / 8 tasks accepted | Runtime Contract Review PENDING | — |
 | KF-CORE-R04 | PLANNED | 0% | — | — |
 
 ## R02 Task Status
@@ -69,7 +69,7 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 | R03 Runtime Contract Review | PASS / FROZEN | R03-004..006 accepted | 03-10-2026 |
 | KF-CORE-R03-007 Runtime Integration Tests | ACCEPTED (`9d1c7d1`) | Runtime Contract Review PASS | `test(core): add runtime integration contracts` |
 | R03 Integration Freeze | PASS / ACTIVE | R03-007 accepted | 03-10-2026 |
-| KF-CORE-R03-008 Final Validation | REVIEW (candidate `f598fef`) | Integration Freeze PASS | `test(core): complete R03 runtime validation` |
+| KF-CORE-R03-008 Final Validation | ACCEPTED (`407df6b`; candidate `f598fef`) | Integration Freeze PASS | `test(core): complete R03 runtime validation` |
 | R03 Release Gate | PENDING | R03-008 accepted | — |
 
 ## R03 Acceptance Gates
