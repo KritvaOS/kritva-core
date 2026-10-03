@@ -71,6 +71,9 @@ Accepted:
 - R04 Platform API Review — PASS / FROZEN (evidence `380ade3`)
 - KF-CORE-R04-005 — Platform Capability & Adapter Contract (`f7231c1`)
 
+Pending independent review:
+- KF-CORE-R04-006 — Platform Conformance Tests (`460de87`)
+
 
 R0.4 planning activated after the R0.3 release.
 
