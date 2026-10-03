@@ -246,6 +246,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_platform_adapter_test PRIVATE kritva_core)
     add_test(NAME kritva_core_platform_adapter COMMAND kritva_core_platform_adapter_test)
 
+    #Add Test: tests/unit/platform_conformance_test.cpp (runs the reusable suite in tests/platform/)
+    add_executable(kritva_core_platform_conformance_test tests/unit/platform_conformance_test.cpp)
+    target_link_libraries(kritva_core_platform_conformance_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_platform_conformance COMMAND kritva_core_platform_conformance_test)
+
     #Add Test: tests/unit/messaging_test.cpp
     add_executable(kritva_core_messaging_test tests/unit/messaging_test.cpp)
     target_link_libraries(kritva_core_messaging_test PRIVATE kritva_core)

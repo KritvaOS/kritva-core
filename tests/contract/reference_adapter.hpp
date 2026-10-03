@@ -30,7 +30,7 @@
 namespace kritva::core::platform::contract {
 
 /// A fixed clock used by the reference adapter.
-class ReferenceClock final : public time::IClock {
+class ReferenceClock : public time::IClock {
 public:
     [[nodiscard]] Timestamp now() const noexcept override { return Timestamp{1, ClockDomain::MONOTONIC}; }
 };
@@ -38,7 +38,7 @@ public:
 /// A conforming IPlatformAdapter. Which services it provides is chosen at
 /// construction; each service the adapter provides is owned by the adapter, the
 /// others report nullptr. Capabilities are whatever the test hands in.
-class ReferenceAdapter final : public IPlatformAdapter {
+class ReferenceAdapter : public IPlatformAdapter {
 public:
     struct Provides { bool scheduler{true}, clock{true}, timer{true}, watchdog{true}; };
 

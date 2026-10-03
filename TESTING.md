@@ -20,6 +20,10 @@ Validate individual Core types and behaviors: IDs, versions, time, lifecycle, st
 
 Contract tests consume public headers from `include/kritva/core/` and verify documented behavior rather than implementation details.
 
+### Platform conformance suite (R0.4)
+
+`tests/platform/` is a reusable, header-only conformance suite for platform adapters (CORE-PLAT-009). A future external adapter includes `tests/platform/adapter_conformance.hpp` (or one service header), builds an `Environment` whose `let_time_pass` sleeps or advances its fake clock, constructs a fresh service or adapter, and runs `check_scheduler`, `check_clock`, `check_timer`, `check_watchdog` or `check_platform_adapter`; failures are collected in a `Report`. The suite uses only public Core headers and the standard library, needs no hardware, network or vendor SDK, and checks only mandatory Core semantics: choices the contracts leave to the adapter are accepted in every permitted form and a feature an adapter cannot provide is a recorded skip, not a failure. It cannot observe a hardware watchdog's expiry action or timing accuracy. `tests/unit/platform_conformance_test.cpp` validates the suite itself: it must pass for the reference adapters under different adapter policies and reject deliberately faulty scheduler, timer, watchdog, clock and adapter doubles.
+
 ## 5. Required Categories
 
 Each applicable API should test normal behavior, boundary conditions, invalid input, failure behavior, recovery behavior, compatibility assumptions, and thread-safety assumptions where applicable.

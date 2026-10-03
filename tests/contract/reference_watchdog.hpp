@@ -29,7 +29,7 @@ namespace kritva::core::platform::contract {
 /// watchdog: elapsed time is simulated by advance(). The expiry action is
 /// adapter-defined, so the reference only records that expiry happened.
 /// Adapter-defined behavior is configured through Policy.
-class ReferenceWatchdog final : public IWatchdog {
+class ReferenceWatchdog : public IWatchdog {
 public:
     struct Policy {
         std::int64_t min_timeout_ns{1'000'000};

@@ -29,7 +29,7 @@ namespace kritva::core::time::contract {
 /// elapsed time is simulated by advance(), which makes the contract rules
 /// observable without threads or an operating system. Adapter-defined behavior
 /// (resolution, supported modes, maximum period) is configured through Policy.
-class ReferenceTimer final : public ITimer {
+class ReferenceTimer : public ITimer {
 public:
     struct Policy {
         std::int64_t resolution_ns{1'000'000};        // periods below this are UNSUPPORTED

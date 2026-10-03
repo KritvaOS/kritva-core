@@ -33,7 +33,7 @@ namespace kritva::core::platform::contract {
 /// contract rules observable without threads or an operating system. Adapter-defined
 /// behavior (capacity, dynamic creation, priority range, affinity) is configured
 /// through Policy so tests can show both sides of each adapter policy.
-class ReferenceScheduler final : public IScheduler {
+class ReferenceScheduler : public IScheduler {
 public:
     struct Policy {
         std::size_t capacity{4};
