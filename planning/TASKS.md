@@ -28,7 +28,7 @@
 | KF-CORE-R03-003 | Dependency Management | runtime/dependency | ACCEPTED (`795fb94`) | `feat(core): add runtime dependency management` |
 | KF-CORE-R03-004 | Runtime Manager | runtime/manager | ACCEPTED (`e4d3a9b`, `40e33e9`, `25eb914`) | `feat(core): add runtime manager` |
 | KF-CORE-R03-005 | Runtime Lifecycle | runtime/lifecycle | ACCEPTED (`e2b660d`, `a4f2a65`, `eac011f`) | `feat(core): implement runtime lifecycle orchestration` |
-| KF-CORE-R03-006 | Runtime Failure & Recovery | runtime/error-recovery | REVIEW (`ee3d55d`) | `feat(core): define runtime failure handling` |
+| KF-CORE-R03-006 | Runtime Failure & Recovery | runtime/error-recovery | REVIEW (`ee3d55d`, `d651677`) | `feat(core): define runtime failure handling` |
 | KF-CORE-R03-007 | Runtime Integration Tests | tests/integration | PLANNED | `test(core): add runtime integration contracts` |
 | KF-CORE-R03-008 | Full R03 Validation | integration/validation | PLANNED | `test(core): complete R03 runtime validation` |
 

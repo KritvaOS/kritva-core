@@ -65,7 +65,7 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 | R03 Foundation API Review | PASS / FROZEN | R03-001..003 accepted | 03-10-2026 |
 | KF-CORE-R03-004 Runtime Manager | ACCEPTED (`e4d3a9b`, `40e33e9`, `25eb914`) | Foundation API Review PASS | `feat(core): add runtime manager` |
 | KF-CORE-R03-005 Runtime Lifecycle | ACCEPTED (`e2b660d`, `a4f2a65`, `eac011f`) | R03-004 accepted | `feat(core): implement runtime lifecycle orchestration` |
-| KF-CORE-R03-006 Runtime Failure & Recovery | REVIEW (`ee3d55d`) | R03-005 accepted | `feat(core): define runtime failure handling` |
+| KF-CORE-R03-006 Runtime Failure & Recovery | REVIEW (`ee3d55d`, `d651677`) | R03-005 accepted | `feat(core): define runtime failure handling` |
 | R03 Runtime Contract Review | PENDING | R03-004..006 accepted | — |
 | KF-CORE-R03-007 Runtime Integration Tests | PLANNED | Runtime Contract Review PASS | `test(core): add runtime integration contracts` |
 | R03 Integration Freeze | PENDING | R03-007 accepted | — |

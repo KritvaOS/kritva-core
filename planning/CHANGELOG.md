@@ -15,7 +15,7 @@ Foundation gate:
 - R03 Foundation API Review after R03-003.
 
 Pending independent review:
-- KF-CORE-R03-006 — Runtime Failure & Recovery (`ee3d55d`)
+- KF-CORE-R03-006 — Runtime Failure & Recovery (`ee3d55d`, follow-up `d651677`)
 
 Runtime gates:
 - R03 Runtime Contract Review after R03-006.

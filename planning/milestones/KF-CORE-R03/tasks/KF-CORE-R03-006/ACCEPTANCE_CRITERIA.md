@@ -194,6 +194,16 @@ Debug, Release, ASan/UBSan, TSan where configured, `-Werror`, `-fanalyzer`, `mak
 - Final `git status --short`: clean after the commit.
 - Known limitations / out of scope: no recovery directly to READY (needs a new Component operation, an architecture-review matter); no events or logging; `fault_error()` and `statistics()` expose references without synchronization; no thread safety; no real-time claim.
 
+### 8b. Review round 1 — CHANGES REQUIRED (ChatGPT, on `ee3d55d`; documentation/traceability only)
+
+Architecture approved with no production change requested: `reset()` as the explicit recovery ending in `STOPPED` and no `RECOVERING` state; two cleanup passes in reverse dependency order; failed cleanup keeps `FAULT` and the original `fault_error()`; the runtime-owned statistics semantics; runtime-owned per-component progress tracking; no retry; no health-triggered recovery. `reset()` never retries the failed component operation (a hard R03 contract). Required change and resolution (implementation commit `ee3d55d` unchanged):
+
+1. **Define `CORE-RT-008` and trace to it** — `d651677` `docs(core): define runtime failure handling requirement`: `CORE-RT-008` is defined in `REQUIREMENTS.md` covering failure propagation and original-error preservation, the FAULT transition, `fault_error()` semantics, FAULT rejecting everything except `reset()`, `reset()` as the only recovery ending in STOPPED with no RECOVERING, no retry of the failed operation, two-pass reverse cleanup, per-component progress tracking, failed cleanup preserving the original fault and the progress, resumable cleanup without repeating successes, the new-attempt rule (`initialize()`), statistics semantics, no health-triggered recovery and no background recovery. `runtime_manager.hpp/.cpp` carry `CORE-RT-006, CORE-RT-007, CORE-RT-008`; `runtime_failure_test.cpp` carries `CORE-RT-008`; the `CORE-RT-007` row no longer lists the failure test; a new `CORE-RT-008` row traces header, source and failure test. Traceability: 56 requirements, 55 traced, 0 errors.
+2. **`fault_error()` pointer lifetime** (required clarification): non-null exactly while the runtime is in FAULT; it points at runtime-owned storage that stays valid until a successful `reset()` clears it or the runtime is destroyed (a failed `reset()` keeps it unchanged); `nullptr` otherwise; it must not be retained beyond that. Documented in `runtime_manager.hpp`, `API.md`, `ARCHITECTURE.md` and `CORE-RT-008`.
+3. **Statistics clarification:** `sample_count` counts component lifecycle invocations that actually returned success, not merely attempted calls; `error_count` counts those that returned failure (including cleanup).
+
+Re-validation: production diff is comment/documentation only (no non-comment change in `include/` or `src/`); `ctest` 24/24 (Debug), ASan+UBSan 24/24, strict `-Werror` build clean; `make check` passes (56 requirements, 55 traced, 0 errors); `git diff --check` clean; working tree clean; frozen foundation files untouched.
+
 ## 9. Reviewer Sign-off
 
 Only the independent architecture reviewer records PASS / CHANGES REQUIRED / BLOCKED.
