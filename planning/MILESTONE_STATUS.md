@@ -168,7 +168,7 @@ Release: Kritva Core R0.4, version 0.4.0; release candidate `e7df87c`; release-r
 |---|---|---|---|
 | KF-CORE-R05-001 | Platform Context & Service Access Model | ACCEPTED (c5910e7) | R0.4 released |
 | KF-CORE-R05-002 | Platform Service Requirement Model | ACCEPTED (f9d6007) | R0.4 released |
-| KF-CORE-R05-003 | Explicit Platform Service Consumption | PLANNED | R0.4 released |
+| KF-CORE-R05-003 | Explicit Platform Service Consumption | REVIEW (f8cd523) | R0.4 released |
 | KF-CORE-R05-004 | Runtime–Platform Lifecycle Boundary | PLANNED | R0.4 released |
 | KF-CORE-R05-005 | Reference Platform Integration | PLANNED | R0.4 released |
 | KF-CORE-R05-006 | Platform Integration & Runtime Tests | PLANNED | R0.4 released |
