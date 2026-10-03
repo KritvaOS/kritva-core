@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-007 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): complete R0.7 operational validation` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -144,8 +144,14 @@ Working tree clean after every commit; the candidate commit is `d83e1ba`; this e
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `86dfcb9` (release candidate `d83e1ba`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: fresh-clone validation of the clean candidate, the full quality matrix (Debug/Release, ASan+UBSan, TSan, strict, `-fanalyzer`, randomized order), traceability 90/89/0, coverage 618/625 with the uncovered lines accounted for, the installed-package consumer including all three R0.7 additions and version enforcement, isolation and dependency scans, and an empty production diff since the freeze point `16654e9` are accepted. The reviewer noted that its connector could not resolve the abbreviated local candidate SHA, so the verdict relies on the supplied evidence (the commits were local-only). `CORE-OPS-010` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-007 is ACCEPTED.**

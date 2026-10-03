@@ -39,9 +39,9 @@ Accepted:
 - KF-CORE-R07-005 — Reference Operational Harness & Contract Tests (`0b1bd1d`; evidence `2d60432`)
 - KF-CORE-R07-006 — Runtime/Component Operational Integration (`3f524cd`; evidence `ceffe92`)
 - R07 Integration Freeze — PASS / HONORED (production freeze point `16654e9`; evidence `142a32e`)
+- KF-CORE-R07-007 — Full R0.7 Validation (`86dfcb9`; candidate `d83e1ba`)
 
 Pending independent review:
-- KF-CORE-R07-007 — Full R0.7 Validation (candidate `d83e1ba`)
 
 ### Release record
 
