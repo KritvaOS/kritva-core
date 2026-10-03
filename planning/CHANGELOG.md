@@ -68,6 +68,9 @@ Accepted:
 - KF-CORE-R04-002 — Scheduler Contract Hardening (`eb06fa0`)
 - KF-CORE-R04-003 — Clock & Timer Contract (`67114bb`)
 
+Pending independent review:
+- KF-CORE-R04-004 — Watchdog Contract (`4af4756`)
+
 
 R0.4 planning activated after the R0.3 release.
 
