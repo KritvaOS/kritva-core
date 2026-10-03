@@ -17,7 +17,7 @@
 #==============================================================================
 
 cmake_minimum_required(VERSION 3.24)
-project(kritva-core VERSION 0.2.0 LANGUAGES CXX)
+project(kritva-core VERSION 0.3.0 LANGUAGES CXX)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -224,6 +224,7 @@ if(KRITVA_CORE_BUILD_TESTS)
             -DCONSUMER_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/tests/install/consumer
             -DWORK_DIR=${CMAKE_BINARY_DIR}/install_test
             -DCXX_COMPILER=${CMAKE_CXX_COMPILER}
+            -DEXPECTED_VERSION=${PROJECT_VERSION}
             "-DCXX_FLAGS=${CMAKE_CXX_FLAGS}"
             -DCONFIG=$<CONFIG>
             -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/install/run_install_test.cmake

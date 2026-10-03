@@ -10,7 +10,7 @@ Testing validates that Kritva Core implements documented requirements and public
 Unit Test → Contract Test → Integration Test → System Validation
 ```
 
-R0.2 primarily focuses on unit and contract testing.
+R0.2 focused on unit and contract testing. R0.3 adds runtime integration tests (`tests/integration/`) that exercise Component, ComponentRegistry, DependencyGraph and RuntimeManager together through public APIs, and an install-and-consume test (`tests/install/`).
 
 ## 3. Unit Tests
 

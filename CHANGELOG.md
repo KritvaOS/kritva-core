@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.3.0 — Runtime Foundation (KF-CORE-R03)
+
+Platform-independent, synchronous runtime foundation on top of the R0.2 contracts. No scheduler, executor,
+threads, platform implementation or logging backend was added.
+
+### Runtime
+- `runtime::Component` now has an immutable identity and metadata (`ComponentId`, `ComponentInfo`), a
+  documented lifecycle contract reusing the Core lifecycle table, attributable errors and a non-owning
+  ownership model. **Breaking:** a component must be constructed with a `ComponentInfo`.
+- `ComponentRegistry`: deterministic, non-owning registry keyed by `ComponentId`; duplicates rejected;
+  enumeration in ascending `ComponentId` order.
+- `DependencyGraph`: dependencies by `ComponentId`; self, duplicate and cycle-closing edges rejected so the
+  graph is always acyclic; deterministic dependency order with a lowest-`ComponentId` tie-break.
+- `RuntimeManager`: concrete implementation of the unchanged `runtime::Runtime` interface. Topology is
+  validated and fixed by the first successful `initialize()`. `configure`, `initialize` and `start` run in
+  dependency order, `stop` and `shutdown` in reverse; the first failing component ends the sequence and its
+  own error is returned unchanged; a failed initialize, start or stop moves the runtime to `FAULT`;
+  `reset()` is the only, explicit, caller-driven recovery (two reverse-order cleanup passes, ends in
+  `STOPPED`, never retries the failed operation); the runtime tracks per-component progress itself and owns a
+  `Statistics`. No automatic retry, health-driven recovery or background activity.
+
+### Build and validation
+- The library installs as a CMake package (`find_package(kritva_core 0.3)`, `kritva_core::kritva_core`).
+- New requirements `CORE-RT-003` to `CORE-RT-010`, traced; the traceability audit now also checks version
+  consistency and the absence of threading/logging headers in production sources.
+- New unit, contract and integration tests, including a seeded model-based test; validated from a fresh clone
+  with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and 98% line coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are
+  placeholders).
+
 ## 0.2.0 — Core Contract Hardening (KF-CORE-R02)
 
 Contract-hardening release of the Kritva Core foundation. No Runtime Manager,

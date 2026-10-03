@@ -20,8 +20,14 @@ cmake_minimum_required(VERSION 3.24)
 project(kritva_core_install_consumer LANGUAGES CXX)
 
 # Locates the *installed* package only (CMAKE_PREFIX_PATH is set by the test).
-set(KRITVA_CORE_REQUIRE_VERSION 0.2 CACHE STRING "Kritva Core version to request")
+set(KRITVA_CORE_REQUIRE_VERSION 0.3 CACHE STRING "Kritva Core version to request")
+set(KRITVA_CORE_EXPECT_VERSION "" CACHE STRING "Exact version the installed package must report")
 find_package(kritva_core ${KRITVA_CORE_REQUIRE_VERSION} CONFIG REQUIRED)
+
+# The installed package must report the intended version, not merely satisfy the request.
+if(NOT KRITVA_CORE_EXPECT_VERSION STREQUAL "" AND NOT kritva_core_VERSION VERSION_EQUAL KRITVA_CORE_EXPECT_VERSION)
+  message(FATAL_ERROR "installed kritva_core is ${kritva_core_VERSION}, expected ${KRITVA_CORE_EXPECT_VERSION}")
+endif()
 
 add_executable(consumer main.cpp)
 target_link_libraries(consumer PRIVATE kritva_core::kritva_core)

@@ -38,9 +38,9 @@ int main() {
     const Status status(StatusCode::OK);
     if (status.code() != StatusCode::OK) return 4;
 
-    if ((Version{0, 2, 0}).to_string() != "0.2.0") return 5;
+    if ((Version{0, 3, 0}).to_string() != "0.3.0") return 5;
 
-    // Compiled library code added after R0.2: the component registry.
+    // Compiled runtime library code: the component registry.
     using namespace kritva::core::runtime;
     class Stub final : public Component {
     public:

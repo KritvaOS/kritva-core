@@ -20,11 +20,11 @@
 # the installed layout, then configures, builds, and runs a minimal consumer
 # against the installed package only (the source tree is never on its path).
 #
-# Inputs (-D): CORE_BUILD_DIR, CONSUMER_SOURCE_DIR, WORK_DIR, CXX_COMPILER,
+# Inputs (-D): CORE_BUILD_DIR, CONSUMER_SOURCE_DIR, WORK_DIR, CXX_COMPILER, EXPECTED_VERSION,
 #              CXX_FLAGS (propagated so sanitizer/coverage builds still link),
 #              CONFIG (build configuration; empty for single-config).
 
-foreach(var CORE_BUILD_DIR CONSUMER_SOURCE_DIR WORK_DIR CXX_COMPILER)
+foreach(var CORE_BUILD_DIR CONSUMER_SOURCE_DIR WORK_DIR CXX_COMPILER EXPECTED_VERSION)
   if(NOT DEFINED ${var} OR "${${var}}" STREQUAL "")
     message(FATAL_ERROR "run_install_test.cmake: ${var} is required")
   endif()
@@ -70,6 +70,14 @@ file(GLOB_RECURSE target_files "${prefix}/lib*/cmake/kritva_core/kritva_coreTarg
 if(NOT config_files OR NOT version_files OR NOT target_files)
   message(FATAL_ERROR "installed CMake package files missing under ${prefix}")
 endif()
+# The installed package must report the project's version (not merely satisfy a consumer).
+file(READ "${version_files}" version_text)
+if(NOT version_text MATCHES "PACKAGE_VERSION \"${EXPECTED_VERSION}\"")
+  message(FATAL_ERROR "installed kritva_coreConfigVersion.cmake does not report version ${EXPECTED_VERSION}")
+endif()
+string(REGEX MATCH "^([0-9]+)\\.([0-9]+)" _mm "${EXPECTED_VERSION}")
+set(core_major "${CMAKE_MATCH_1}")
+set(core_minor "${CMAKE_MATCH_2}")
 file(GLOB_RECURSE stray "${prefix}/*_test*" "${prefix}/*.cpp")
 if(stray)
   message(FATAL_ERROR "unexpected files installed: ${stray}")
@@ -85,7 +93,7 @@ endif()
 # 4. Configure, build and run a consumer against the installed package only.
 run_step(configure "${CMAKE_COMMAND}" -S "${CONSUMER_SOURCE_DIR}" -B "${consumer_build}"
   "-DCMAKE_PREFIX_PATH=${prefix}" "-DCMAKE_CXX_COMPILER=${CXX_COMPILER}"
-  "-DCMAKE_CXX_FLAGS=${CXX_FLAGS}")
+  "-DCMAKE_CXX_FLAGS=${CXX_FLAGS}" "-DKRITVA_CORE_EXPECT_VERSION=${EXPECTED_VERSION}")
 run_step(build "${CMAKE_COMMAND}" --build "${consumer_build}" ${config_args})
 file(GLOB_RECURSE consumer_exe "${consumer_build}/consumer")
 if(NOT consumer_exe)
@@ -93,17 +101,27 @@ if(NOT consumer_exe)
 endif()
 run_step(run "${consumer_exe}")
 
-# 5. Version compatibility: same minor (0.2) is accepted; a different minor
-#    (0.1, 0.3) or major (9.0) is refused (SameMinorVersion, pre-1.0 policy).
-foreach(request 0.2 0.1 0.3 9.0)
+# 5. Version compatibility (SameMinorVersion, pre-1.0): the installed major.minor is accepted;
+#    the previous and next minor and another major are refused. Requests are derived from
+#    EXPECTED_VERSION so the test follows the project version.
+math(EXPR next_minor "${core_minor} + 1")
+set(accepted "${core_major}.${core_minor}" "${EXPECTED_VERSION}")
+set(refused "${core_major}.${next_minor}" "9.0")
+if(core_minor GREATER 0)
+  math(EXPR previous_minor "${core_minor} - 1")
+  list(APPEND refused "${core_major}.${previous_minor}")
+endif()
+foreach(request IN LISTS accepted refused)
   execute_process(
     COMMAND "${CMAKE_COMMAND}" -S "${CONSUMER_SOURCE_DIR}" -B "${WORK_DIR}/consumer-version-${request}"
             "-DCMAKE_PREFIX_PATH=${prefix}" "-DCMAKE_CXX_COMPILER=${CXX_COMPILER}"
             "-DCMAKE_CXX_FLAGS=${CXX_FLAGS}" "-DKRITVA_CORE_REQUIRE_VERSION=${request}"
+            "-DKRITVA_CORE_EXPECT_VERSION=${EXPECTED_VERSION}"
     RESULT_VARIABLE version_rc OUTPUT_QUIET ERROR_QUIET)
-  if(request STREQUAL "0.2" AND NOT version_rc EQUAL 0)
+  list(FIND accepted "${request}" is_accepted)
+  if(NOT is_accepted EQUAL -1 AND NOT version_rc EQUAL 0)
     message(FATAL_ERROR "find_package refused compatible version request ${request}")
-  elseif(NOT request STREQUAL "0.2" AND version_rc EQUAL 0)
+  elseif(is_accepted EQUAL -1 AND version_rc EQUAL 0)
     message(FATAL_ERROR "find_package accepted incompatible version request ${request}")
   endif()
 endforeach()
