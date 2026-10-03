@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.5.0 — Platform Runtime Integration Foundation (KF-CORE-R05)
+
+A controlled, platform-independent way for integrator-written code to consume externally owned platform services,
+on top of the unchanged R0.4 contracts and R0.3 runtime. R0.5 does not implement a concrete Linux, PREEMPT_RT, RTOS,
+MCU, vendor, Nexus or Edge platform, adds no service registry or locator, and adds no thread, executor or background
+execution. All R0.5 production API is additive.
+
+### Platform integration
+- `platform::PlatformContext` (`platform/context.hpp`): a small, copyable, non-owning view over one
+  `IPlatformAdapter` (nullable, so `RuntimeManager::platform()` can be passed directly). It owns nothing, caches
+  nothing and holds one pointer; copying it neither extends the adapter's lifetime nor transfers ownership.
+  Service and capability queries forward to the adapter; capability identity alone decides.
+- Explicit consumption: `require_scheduler()`, `require_clock()`, `require_timer()` and `require_watchdog()` return
+  the adapter-owned service or `UNSUPPORTED`; they only query. Platform service errors are never translated.
+- `platform/requirements.hpp`: declarative `PlatformRequirements` (required/optional services and capabilities,
+  duplicates rejected by identity, atomically), a structured `PlatformRequirementReport`, `evaluate()` and
+  `check_required()`; no platform name or version is ever consulted.
+- Runtime/platform lifecycle separation (contract text and tests, no behavior change): the Runtime never starts,
+  stops, ticks, reads or recovers platform services and is unaffected by anything the platform does; a platform
+  failure becomes a Runtime failure only through an integrator-written component, as an ordinary component failure.
+
+### Build and validation
+- New requirements `CORE-PLAT-012` to `CORE-PLAT-018`, traced. The audit also forbids test-only support in
+  production sources, the production target and the install rules; a CTest compiles every production translation
+  unit with only `include/` on the include path.
+- A test-only reference platform (selectable services and capabilities, deterministic atomic fault injection, call
+  logs, controllable time, lifetime observation) and a Runtime/platform integration suite that proves a platform
+  failure is exactly an ordinary component failure for every service method, attempt and error code, and that the
+  Runtime is identical with and without a platform.
+- Validated from a fresh clone with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and 98% line coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are placeholders).
+- The scheduler CPU affinity mask is 32 bits; widening it would be a separately reviewed change.
+- The conformance suite's single-check mutation strictness is documented as a known gap (see R04-006).
+- A `PlatformContext` must not outlive its adapter (documented undefined behavior; the context is non-owning by design).
+
 ## 0.4.0 — Platform Abstraction (KF-CORE-R04)
 
 Platform contracts and integration boundaries on top of the unchanged R0.3 runtime. R0.4 does not implement a

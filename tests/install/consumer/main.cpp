@@ -51,7 +51,7 @@ int main() {
     const Status status(StatusCode::OK);
     if (status.code() != StatusCode::OK) return 4;
 
-    if ((Version{0, 4, 0}).to_string() != "0.4.0") return 5;
+    if ((Version{0, 5, 0}).to_string() != "0.5.0") return 5;
 
     // Compiled runtime library code: the component registry.
     using namespace kritva::core::runtime;
@@ -129,5 +129,28 @@ int main() {
     const auto late = platform_manager.attach_platform(adapter);
     if (late || late.error().code != ErrorCode::INVALID_STATE) return 35;    // closed once the topology is fixed
     if (platform_manager.platform() != &adapter) return 36;
+
+    // Platform context, requirements and explicit service consumption (R0.5) through the installed headers and library.
+    const platform::PlatformContext context(platform_manager.platform());    // built from the Runtime's nullable pointer
+    if (!context.attached() || context.info() == nullptr || context.info()->name != "bare") return 37;
+    for (const auto service : {platform::PlatformService::SCHEDULER, platform::PlatformService::CLOCK,
+                               platform::PlatformService::TIMER, platform::PlatformService::WATCHDOG}) {
+        if (context.supports(service)) return 38;
+    }
+    const auto scheduler = context.require_scheduler();
+    if (scheduler || scheduler.error().code != ErrorCode::UNSUPPORTED) return 39;     // an unavailable service is UNSUPPORTED
+    if (context.require_watchdog().has_value()) return 40;
+    if (context.has_capability(CapabilityId{100})) return 41;
+    const platform::PlatformContext unattached(static_cast<platform::IPlatformAdapter*>(nullptr));
+    if (unattached.attached() || unattached.require_timer().has_value()) return 42;
+    platform::PlatformRequirements requirements;
+    if (!requirements.add_service(platform::PlatformService::CLOCK, platform::Requirement::OPTIONAL)) return 43;
+    if (!requirements.add_capability(CapabilityId{100}, platform::Requirement::OPTIONAL)) return 44;
+    if (requirements.add_service(platform::PlatformService::CLOCK, platform::Requirement::REQUIRED)) return 45;   // a duplicate, by identity
+    if (!platform::check_required(requirements, context)) return 46;                  // only optional items are missing
+    if (!platform::evaluate(requirements, context).satisfied() || platform::evaluate(requirements, context).complete()) return 47;
+    if (!requirements.add_service(platform::PlatformService::SCHEDULER, platform::Requirement::REQUIRED)) return 48;
+    const auto needed = platform::check_required(requirements, context);
+    if (needed || needed.error().code != ErrorCode::UNSUPPORTED) return 49;           // a required service is missing
     return 0;
 }
