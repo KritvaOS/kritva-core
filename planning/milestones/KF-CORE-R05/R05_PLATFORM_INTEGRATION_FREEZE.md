@@ -52,7 +52,7 @@ R05-005 and R05-006 are ACCEPTED (`8362103`, `d66eda6`). The reference platform 
 
 Carried forward: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; a `PlatformContext` outliving its adapter is documented undefined behavior (non-owning view by design). The only remaining work is R05-007 (validation, release metadata 0.5.0) and the Release Gate; neither may change production API.
 
-Reviewer decision: PENDING
+Reviewer decision: **PASS / HONORED** (05-10-2026)
 
 ## Decision
 
@@ -63,6 +63,22 @@ Possible outcomes:
 - BLOCKED
 
 Reviewer: ChatGPT architecture/review gate.
+
+## Reviewer Decision
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 05-10-2026 |
+| Decision | **PASS / HONORED** |
+
+**Production freeze point: `f23777b`** (last production-tree change, comment-only); last functional production change `f8cd523`. R05-005 `7f30626` and R05-006 `fe04d35` changed tests and audit tooling only; R05-006 accepted at `d66eda6`; evidence `cf6e617`; Platform API Review baseline `ea6ae16`. `git diff ea6ae16 HEAD -- include src` is empty: production API and behavior are unchanged after the freeze.
+
+Frozen: `PlatformContext` (with `require_*()`), `PlatformRequirements`, `PlatformRequirementReport`, `evaluate()`, `check_required()`, the Runtime/platform lifecycle-separation contract, and the test-only reference platform and isolation guards. R05-007 is validation and release metadata only; the production API must not be redesigned or expanded.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; a `PlatformContext` outliving its adapter is documented undefined behavior.
+
+**Reviewer Decision: PASS / HONORED — KF-CORE-R05 Platform Integration Freeze is ACCEPTED.**
 
 ## Post-Freeze Rule
 
