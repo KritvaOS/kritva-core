@@ -15,7 +15,7 @@ Foundation gate:
 - R03 Foundation API Review after R03-003.
 
 Pending independent review:
-- KF-CORE-R03-005 — Runtime Lifecycle (`e2b660d`)
+- KF-CORE-R03-005 — Runtime Lifecycle (`e2b660d`, follow-ups `a4f2a65`, `eac011f`)
 
 Runtime gates:
 - R03 Runtime Contract Review after R03-006.
