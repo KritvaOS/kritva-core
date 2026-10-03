@@ -28,6 +28,13 @@ Proposed requirement domain: `CORE-CFG-004..013`.
 Planned effort: 22–31 ED; actual effort not yet recorded.
 
 
+### KF-CORE-R08 — Component Configuration Implementation
+
+Accepted:
+
+Pending independent review:
+- KF-CORE-R08-001 — Component Configuration Contract & Lifecycle Semantics (`605516b`)
+
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
 Architecture confirmed after R0.7 Design Consult and Scope Confirmation.
