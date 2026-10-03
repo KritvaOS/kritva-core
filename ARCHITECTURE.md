@@ -76,7 +76,7 @@ A runtime `Component` (`runtime/component.hpp`) has an immutable identity (`Comp
 | `shutdown()` | `UNKNOWN`, `STOPPED` | state unchanged (idempotent) | none |
 | `shutdown()` | `FAULT` | `STOPPED` | `FAULT` to `STOPPED` |
 
-An operation invalid for the current state fails with `INVALID_STATE` and changes nothing. A valid `initialize()`, `start()` or `stop()` that fails moves the component to `FAULT` and returns the cause; a failed `shutdown()` leaves the state unchanged. `FAULT` is left only by `shutdown()`; recovery semantics are defined by KF-CORE-R03-006. Every `Error` a component returns has `source` equal to the component id. Transient states are not observable once an operation returns. See `include/kritva/core/runtime/component.hpp`.
+An operation invalid for the current state fails with `INVALID_STATE` and changes nothing. A valid `initialize()`, `start()` or `stop()` that fails moves the component to `FAULT` and returns the cause; a failed `shutdown()` leaves the state unchanged. `FAULT` is left only by `shutdown()`; recovery semantics are defined by KF-CORE-R03-006. Every `Error` returned by an operation of an instantiated component has `source` equal to the component id (errors from `ComponentInfo::create()` occur before a component exists and are exempt). Transient states are not observable once an operation returns. See `include/kritva/core/runtime/component.hpp`.
 
 ## 4. Platform Independence
 

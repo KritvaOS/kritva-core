@@ -101,8 +101,10 @@ namespace kritva::core::runtime {
 //   - Failures are reported only through Result<void>; operations do not throw
 //     (they are not noexcept in the interface because implementations may
 //     allocate, but a conforming implementation must not let exceptions escape).
-//   - Every Error returned by a component carries source == info().id(), so a
-//     failure is attributable and inspectable without extra context. Use
+//   - Every Error returned by an operation of an instantiated Component carries
+//     source == info().id(), so a failure is attributable and inspectable
+//     without extra context. (Errors from ComponentInfo::create() occur before
+//     a component exists and are exempt: their source is not set.) Use
 //     ErrorCode::INVALID_STATE for invalid operations, ErrorCode::INVALID_ARGUMENT
 //     or ErrorCode::CONFIGURATION_ERROR for a rejected configuration, and the
 //     most specific Core ErrorCode otherwise.
