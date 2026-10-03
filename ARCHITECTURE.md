@@ -145,6 +145,8 @@ Runtime and platform lifecycles are separate (CORE-PLAT-015): the integrator own
 
 R0.6 adds `runtime::ComponentContext` (CORE-CTX-001): the explicit, non-owning context of an integrator-written Component, a copyable value of two pointers (the component's immutable `ComponentInfo` and the R0.5 `PlatformContext`), immutable after construction, with no registry, no ownership and no path to a broader authority. The Runtime never creates, holds or passes it. See API.md section 35.
 
+The context's access policy (CORE-CTX-002) is a closed, typed set of side-effect-free queries: the four `require_*()` service queries (the R0.5 availability error is attributed to the component when the context is bound), `supports()`, `has_capability()` and `attribute()`, which replaces only an Error's source. There is no generic or by-name access and no path to a broader authority. See API.md section 36.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

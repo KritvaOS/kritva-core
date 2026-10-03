@@ -256,6 +256,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_component_context_test PRIVATE kritva_core)
     add_test(NAME kritva_core_component_context COMMAND kritva_core_component_context_test)
 
+    #Add Test: tests/unit/component_context_access_test.cpp
+    add_executable(kritva_core_component_context_access_test tests/unit/component_context_access_test.cpp)
+    target_link_libraries(kritva_core_component_context_access_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_component_context_access COMMAND kritva_core_component_context_access_test)
+
     #Add Test: tests/unit/reference_platform_test.cpp (the test-only reference platform in tests/platform/)
     add_executable(kritva_core_reference_platform_test tests/unit/reference_platform_test.cpp)
     target_link_libraries(kritva_core_reference_platform_test PRIVATE kritva_core)
