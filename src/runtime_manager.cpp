@@ -52,6 +52,13 @@ Result<void> RuntimeManager::add_dependency(ComponentId dependent, ComponentId d
     return graph_.add_dependency(dependent, dependency);  // result returned unchanged
 }
 
+Result<void> RuntimeManager::attach_platform(platform::IPlatformAdapter& adapter) {
+    if (topology_fixed_) return setup_closed("attach_platform");
+    if (platform_ != nullptr) return Result<void>::failure(Error{ErrorCode::INVALID_STATE, ErrorSeverity::ERROR, {}, {}, "attach_platform: a platform adapter is already attached"});
+    platform_ = &adapter;                                   // stored only; the adapter is never called
+    return Result<void>::success();
+}
+
 Result<std::vector<ComponentId>> RuntimeManager::component_order() const {
     return graph_.order(registry_);                       // the only ordering algorithm
 }

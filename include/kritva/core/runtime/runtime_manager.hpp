@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-006, CORE-RT-007, CORE-RT-008
+// Requirements: CORE-RT-006, CORE-RT-007, CORE-RT-008, CORE-PLAT-010
 // API         : CORE-API-RUNTIME
 //
 // Author      : KritvaOS Core Team
@@ -29,6 +29,8 @@
 #include <map>
 #include <optional>
 #include <vector>
+namespace kritva::core::platform { class IPlatformAdapter; }   // forward declaration only: no platform header enters the Runtime
+
 namespace kritva::core::runtime {
 
 //------------------------------------------------------------------------------
@@ -188,6 +190,45 @@ namespace kritva::core::runtime {
 //   synchronous; the transient INITIALIZING and STOPPING states are never
 //   observable after a call returns.
 //
+// PLATFORM ATTACHMENT (R0.4, CORE-PLAT-010)
+//   The only R0.4 addition to this frozen class: a setup-time, non-owning
+//   reference to the integrator's platform adapter (platform/adapter.hpp), so the
+//   integrator can reach its platform through the Runtime it already passes
+//   around. Nothing in the Runtime's behavior depends on it.
+//   - attach_platform(adapter) is a SETUP operation like register_component():
+//     valid until the first successful initialize() has fixed the topology, after
+//     which it fails with ErrorCode::INVALID_STATE and changes nothing. A second
+//     attach_platform() while an adapter is attached also fails with INVALID_STATE
+//     and changes nothing: an attached adapter is never silently replaced and
+//     there is no detach. The adapter is optional; a Runtime without one behaves
+//     exactly as before.
+//   - platform() returns the attached adapter, or nullptr when none is attached.
+//     The pointer is non-owning and stays valid as long as the adapter does.
+//   - OWNERSHIP AND LIFETIME: the integrator owns the adapter and every service it
+//     exposes. The Runtime stores one non-owning reference, never owns, copies,
+//     moves or destroys the adapter, and destroying the Runtime never touches it.
+//     The adapter must outlive any use of platform() and of the Runtime that
+//     holds the reference. There is no singleton, global adapter, registry or
+//     service locator.
+//   - NO PROBING, NO SIDE EFFECTS: attach_platform() does not call any member of
+//     the adapter (not info(), supports(), scheduler(), clock(), timer(),
+//     watchdog() or capabilities()) and neither does any other Runtime operation.
+//     configure(), initialize(), start(), stop(), shutdown() and reset() never
+//     start, stop or kick a scheduler, timer or watchdog, never read a clock and
+//     never create a thread or task. States, invocation order, errors, fault
+//     handling, recovery and statistics are identical with and without an
+//     attached adapter.
+//   - A platform failure reaches the Runtime only through a Component that the
+//     integrator wrote: a Component that uses platform() and returns a failed
+//     Result is handled by the Runtime like any other component failure (its
+//     Error propagated unchanged, FAULT, explicit reset()). A watchdog expiry
+//     never enters the Runtime and never triggers recovery; a Runtime FAULT never
+//     starts or stops a watchdog. Connecting them is an integrator decision.
+//   - Real time and threads: attach_platform() and platform() are setup/query
+//     operations that allocate only to build the Error of a failed attach, and
+//     make no thread-safety or real-time claim (callers serialize all calls, as
+//     for every RuntimeManager operation).
+//
 // THREADING, ALLOCATION, REAL TIME
 //   - Synchronous and single-threaded: no thread, executor or timer is created
 //     and no thread-safety guarantee is made; callers serialize all calls.
@@ -208,6 +249,13 @@ public:
 
     /// True once initialize() has succeeded; setup is then closed for good.
     [[nodiscard]] bool topology_fixed() const noexcept { return topology_fixed_; }
+
+    /// Attach the integrator's platform adapter (non-owning). Setup only; see PLATFORM
+    /// ATTACHMENT above. INVALID_STATE after the topology is fixed or if one is attached.
+    Result<void> attach_platform(platform::IPlatformAdapter& adapter);
+
+    /// The attached adapter, or nullptr. Non-owning.
+    [[nodiscard]] platform::IPlatformAdapter* platform() const noexcept { return platform_; }
 
     /// DependencyGraph::order() over the registered components.
     [[nodiscard]] Result<std::vector<ComponentId>> component_order() const;
@@ -264,6 +312,7 @@ private:
     std::map<ComponentId, Stage> stage_;  // per-component progress in this live period
     std::optional<Error> fault_;       // the Error that caused FAULT; cleared by reset()
     Statistics statistics_;
+    platform::IPlatformAdapter* platform_{nullptr};   // non-owning; never dereferenced by the Runtime
 };
 
 } // namespace kritva::core::runtime

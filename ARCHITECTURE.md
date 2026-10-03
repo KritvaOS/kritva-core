@@ -133,6 +133,8 @@ The watchdog contract (`platform::IWatchdog`) defines STOPPED/RUNNING behavior f
 
 The platform adapter contract (`platform::IPlatformAdapter`) reports a platform's identity (`PlatformInfo`: name and version), which of the four services it provides (non-owning pointers, `nullptr` meaning unsupported) and its capabilities (an owned `CapabilitySet` snapshot). Core ships no adapter, registry or singleton; the integrator owns the adapter. See API.md section 29 and CORE-PLAT-008.
 
+The Runtime-platform boundary (CORE-PLAT-010) is one optional, additive pair on `RuntimeManager`: `attach_platform()` (setup only, never replaces) and `platform()`. The Runtime stores a non-owning reference and never calls the adapter or any platform service, so its behavior is identical with and without one; the integrator owns the adapter, and platform failures and watchdog expiry reach the Runtime only through integrator-written components. See API.md section 30.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
