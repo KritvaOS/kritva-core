@@ -173,11 +173,14 @@ Primary commit: `8031c47` `feat(core): define component execution context` (API 
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `8031c47` (evidence `557589d`; design decisions `d9dd8a9`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: the implementation matches the amended R06 architecture: additive only, two non-owning pointers, immutable after construction with copy and move assignment deleted (confirmed as the correct reading of 'no rebinding'), temporary `ComponentInfo` refused, const-reference `platform()`, no context amplification, zero adapter calls from construction, copying and shape queries, 23/23 mutants detected. `CORE-CTX-001` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-001 is ACCEPTED.**

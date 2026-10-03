@@ -81,7 +81,7 @@ Planning package prepared for the next proposed milestone:
 
 Scope and API design confirmed by the independent reviewer on 05-10-2026 (`R06_DESIGN_DECISIONS.md` D09–D15); implementation in progress.
 
-Pending independent review:
+Accepted:
 - KF-CORE-R06-001 — Component Execution Context & Ownership Model (`8031c47`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
