@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-006
+// Requirements: CORE-RT-006, CORE-RT-007
 // API         : CORE-API-RUNTIME
 //
 // Author      : KritvaOS Core Team

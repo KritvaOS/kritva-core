@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-006
+// Requirements: CORE-RT-007
 // API         : CORE-TEST-RUNTIME-LIFECYCLE
 //
 // Author      : KritvaOS Core Team
