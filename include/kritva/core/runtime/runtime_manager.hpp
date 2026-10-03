@@ -25,7 +25,9 @@
 #include "../error/result.hpp"
 #include "../configuration/configuration.hpp"
 #include "../lifecycle/lifecycle.hpp"
-#include <set>
+#include "../statistics/statistics.hpp"
+#include <map>
+#include <optional>
 #include <vector>
 namespace kritva::core::runtime {
 
@@ -108,27 +110,78 @@ namespace kritva::core::runtime {
 //   - The Runtime invokes only the operation being orchestrated and never reads
 //     or changes a component's state itself.
 //
-//   FAILURE BOUNDARY (detailed recovery and reset are KF-CORE-R03-006)
+//   FAILURE PROPAGATION (KF-CORE-R03-006)
 //   - The first component whose operation fails ends the sequence: remaining
 //     components are NOT invoked, nothing is retried, and no completed step is
-//     rolled back or compensated. The component's own Error is returned
-//     UNCHANGED (code, severity, source = that component's id, message).
-//   - configure() and shutdown() failures leave the Runtime state unchanged.
-//   - Shutdown progress is preserved across a failed shutdown(): components
-//     shut down before the failure stay recorded as shut down, and the failing
-//     component and every component after it in reverse order are still
-//     pending. Calling shutdown() again retries exactly those, in reverse order
-//     (the failing component first), and never repeats a successful shutdown.
-//     Example, reverse order D, C, B, A: first call D ok, C ok, B fails (A not
-//     invoked); retry invokes B then A only. There is no rollback.
+//     rolled back by the operation itself. The component's own Error is returned
+//     UNCHANGED (code, severity, source = that component's id, message); the
+//     Runtime never replaces it with a generic Runtime error.
+//   - Progress is recorded by the Runtime itself, per component and per live
+//     period (never read from Component::lifecycle_state()): none, initialized,
+//     started, stopped, faulted, shut down. A component whose operation FAILED is
+//     recorded as faulted, never as having completed; by the Component contract
+//     it is then in FAULT.
+//   - configure() and shutdown() failures leave the Runtime state unchanged. For
+//     shutdown(), progress is preserved: a retry resumes with the failing
+//     component and never repeats a successful shutdown (reverse order D, C, B,
+//     A: D ok, C ok, B fails; the retry invokes B then A only).
 //   - A failure in initialize(), start() or stop() moves the Runtime to FAULT
-//     (the Core table allows INITIALIZING/READY/RUNNING/STOPPING -> FAULT). In
-//     FAULT every operation, including shutdown(), fails with INVALID_STATE
-//     and invokes nothing: leaving FAULT is defined by R03-006. Components that
-//     completed the operation before the failure keep their state, and the
-//     failing component is in its own Component-contract state (normally FAULT).
-//   - Nothing is retried or recovered automatically, and no timer, watchdog,
-//     thread or background work exists.
+//     (the Core table allows INITIALIZING/READY/RUNNING/STOPPING -> FAULT) and
+//     records that Error as the fault, observable through fault_error() until
+//     reset() succeeds. In FAULT every operation except reset() (including
+//     shutdown()) fails with INVALID_STATE and invokes nothing.
+//
+//   RECOVERY (explicit, caller-driven)
+//   - reset() is the only way out of FAULT and only the caller can invoke it:
+//     nothing retries, supervises or recovers automatically, and component
+//     health is never consulted. It is valid only in FAULT (any other state:
+//     INVALID_STATE, no effect, nothing invoked). It performs the cleanup the
+//     recorded progress requires, each step once, always in REVERSE dependency
+//     order:
+//       pass 1  stop() every component recorded initialized or started
+//               (a component that already stopped, faulted or was never invoked
+//               is not stopped);
+//       pass 2  shutdown() every component recorded stopped or faulted
+//               (a faulted component leaves FAULT by shutdown(), as the
+//               Component contract allows only that).
+//     Components never invoked in this live period are untouched. On success the
+//     Runtime moves FAULT -> STOPPED (an edge of the Core table), the live period
+//     ends, and fault_error() becomes null. The failed operation itself is NOT
+//     retried by reset().
+//   - A cleanup failure ends reset() with that component's own Error unchanged;
+//     the Runtime stays FAULT, fault_error() still reports the ORIGINAL failure,
+//     and the progress made is kept: a failed stop() records the component as
+//     faulted, so the next reset() shuts it down instead of stopping it again,
+//     and a successful step is never repeated. Each explicit reset() performs
+//     each remaining cleanup step once.
+//   - After reset() the caller may call initialize() again. That is a NEW,
+//     explicit attempt (a new live period starting from the beginning of the
+//     forward order) and is the only way to retry a failed lifecycle operation.
+//   - FAULT -> RECOVERING -> READY exists in the Core lifecycle table but is NOT
+//     used: the Component contract has no operation that produces it, and
+//     inventing one is an architecture-review matter.
+//
+//   STATISTICS (a runtime-owned Statistics, R02 semantics)
+//   - statistics() returns the manager's own Statistics. It is updated only
+//     inside the call that causes the event: sample_count counts successful
+//     component lifecycle invocations, error_count counts failed component
+//     invocations (including cleanup), retry_count is never incremented (the
+//     Runtime never retries), and drop_count, queue_depth and utilization are
+//     not used. It is plain data, not an atomic snapshot, never used for
+//     synchronization or recovery decisions, and not thread-safe.
+//
+//   ERROR, FAULT, HEALTH, WARNING, DIAGNOSTIC, EVENT, MESSAGE
+//   - Error: a failed Result (Error with code, source and message).
+//   - Fault state: the Runtime lifecycle state FAULT, entered only through an
+//     Error returned by initialize/start/stop; left only through reset().
+//   - Health (HealthState): what a component reports about itself; independent of
+//     the Runtime's fault state, never consulted by the Runtime and never a
+//     trigger for any action. DEGRADED is not a warning.
+//   - Warning: there is no warning API; operations succeed or fail.
+//   - Diagnostic: structured values only (the returned Error, fault_error(),
+//     statistics(), state()); there is no logging.
+//   - Event and message: Core-internal state events and application data are
+//     separate concepts; the Runtime emits neither.
 //
 //   state() reports the state after the last completed operation. Operations are
 //   synchronous; the transient INITIALIZING and STOPPING states are never
@@ -165,6 +218,16 @@ public:
     /// Configure every component, in dependency order, with the same Configuration.
     Result<void> configure(const Configuration& configuration);
 
+    /// Explicit recovery: clean up after a failure and leave FAULT for STOPPED.
+    /// Valid only in FAULT. See RECOVERY above.
+    Result<void> reset();
+
+    /// The Error that moved the Runtime to FAULT, or nullptr when not faulted.
+    [[nodiscard]] const Error* fault_error() const noexcept { return fault_ ? &*fault_ : nullptr; }
+
+    /// The runtime-owned statistics (see STATISTICS above).
+    [[nodiscard]] const Statistics& statistics() const noexcept { return statistics_; }
+
     // --- runtime::Runtime ---------------------------------------------------
     Result<void> initialize() override;
     Result<void> start() override;
@@ -173,11 +236,16 @@ public:
     [[nodiscard]] LifecycleState state() const noexcept override { return lifecycle_.state(); }
 
 private:
-    enum class Step { CONFIGURE, INITIALIZE, START, STOP };
+    enum class Step { CONFIGURE, INITIALIZE, START, STOP, SHUTDOWN };
+    /// What the Runtime itself has seen each component complete in this live period.
+    enum class Stage { NONE, INITIALIZED, STARTED, STOPPED, FAULTED, SHUT_DOWN };
 
     Result<void> invalid_state(const char* operation) const;
     Result<void> setup_closed(const char* operation) const;
     void transition(LifecycleState target);
+    void enter_fault(const Error& error);
+    /// Invoke `step` on one component, updating statistics and its recorded stage.
+    Result<void> call(ComponentId id, Step step, const Configuration* configuration);
     /// Invoke `step` on each component of `ids`, forward or reverse, stopping at
     /// the first failure and returning that component's error unchanged.
     Result<void> run(const std::vector<ComponentId>& ids, Step step, bool reverse,
@@ -189,7 +257,9 @@ private:
     std::vector<ComponentId> order_;   // validated forward order, set when the topology is fixed
     bool topology_fixed_{false};
     bool components_live_{false};      // initialized and not yet fully shut down
-    std::set<ComponentId> shut_down_;  // components whose shutdown succeeded in this live period
+    std::map<ComponentId, Stage> stage_;  // per-component progress in this live period
+    std::optional<Error> fault_;       // the Error that caused FAULT; cleared by reset()
+    Statistics statistics_;
 };
 
 } // namespace kritva::core::runtime

@@ -78,5 +78,7 @@ int main() {
     if (manager.register_component(stub)) return 16;                         // topology is fixed
     if (!manager.start() || manager.state() != LifecycleState::RUNNING) return 17;
     if (!manager.stop() || !manager.shutdown()) return 18;                   // orchestrates the stub component
+    if (manager.reset()) return 19;                                          // reset is only valid in FAULT
+    if (manager.statistics().sample_count.value() == 0) return 20;           // runtime-owned statistics
     return 0;
 }

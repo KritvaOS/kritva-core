@@ -197,6 +197,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_runtime_lifecycle_test PRIVATE kritva_core)
     add_test(NAME kritva_core_runtime_lifecycle COMMAND kritva_core_runtime_lifecycle_test)
 
+    #Add Test: tests/unit/runtime_failure_test.cpp
+    add_executable(kritva_core_runtime_failure_test tests/unit/runtime_failure_test.cpp)
+    target_link_libraries(kritva_core_runtime_failure_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_runtime_failure COMMAND kritva_core_runtime_failure_test)
+
     #Add Test: tests/unit/messaging_test.cpp
     add_executable(kritva_core_messaging_test tests/unit/messaging_test.cpp)
     target_link_libraries(kritva_core_messaging_test PRIVATE kritva_core)
