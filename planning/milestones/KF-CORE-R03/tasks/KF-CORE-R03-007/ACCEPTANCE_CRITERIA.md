@@ -150,4 +150,15 @@ Acceptance of R03-007 activates the **R03 Integration Freeze**. From that point,
 - Known limitations: the model mirrors the documented contract and the reference component, so it checks implementation consistency with the frozen contract, not that the contract is optimal; no threads, platform or hardware are exercised by design.
 
 ## 7. Reviewer Sign-off
-Only the independent architect/reviewer records PASS / CHANGES REQUIRED / BLOCKED.
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 03-10-2026 |
+| Decision | **PASS** |
+
+Accepted commit: `9d1c7d1` `test(core): add runtime integration contracts`; evidence `1da11e2`, `2a858da`. No production API or implementation change; no corrective commit required.
+
+Reviewer notes: the 400-topology x 40-operation model-based test is particularly strong evidence (result code and source, invocation trace, runtime state, topology freeze state, `fault_error()`, statistics and every component state compared after every operation). The single surviving mutation (removing `components_live_ = false` in `reset()`) is correctly identified as equivalent. `CORE-RT-009` is deliberately defined after acceptance, not during implementation: the test temporarily references `CORE-RT-006`, `CORE-RT-007` and `CORE-RT-008`.
+
+**Reviewer Decision: PASS — KF-CORE-R03-007 is ACCEPTED. The R03 Integration Freeze is now ACTIVE.**
