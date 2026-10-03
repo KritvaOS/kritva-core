@@ -101,4 +101,8 @@ R03 establishes:
 
 R03 remains platform independent. It does not introduce ROS2/DDS, EtherCAT implementation, vendor HAL/BSP, hardware drivers, AI/CV/SLAM, motion planning, robot skills, or OS-specific runtime execution.
 
+## KF-CORE-R04 — Platform Abstraction
 
+Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.4` created locally on the release-record commit; RELEASED after it is pushed)
+
+R0.4 establishes platform contracts and integration boundaries; it does not implement a concrete Linux, RTOS, MCU, vendor, Nexus, or Edge platform adapter. See `planning/milestones/KF-CORE-R04/MILESTONE.md` and `R04_RELEASE_GATE.md`.
