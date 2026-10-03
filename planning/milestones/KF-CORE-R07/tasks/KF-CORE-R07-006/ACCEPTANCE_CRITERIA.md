@@ -90,6 +90,24 @@ test(core): add component operational integration tests
 - commit SHA
 - explicit mapping from each acceptance criterion to objective evidence
 
+## Implementor Evidence
+
+Primary commit: `3f524cd` `test(core): add component operational integration tests`. **Test-only:** `git diff 16654e9 HEAD -- include src` is empty (API frozen at `6b1296f`, harness accepted at `0b1bd1d`). Changes: `tests/integration/component_operational_integration_test.cpp` (new), `CMakeLists.txt`, `REQUIREMENTS.md` (`CORE-OPS-007` + row), `API.md` section 43, `TESTING.md`.
+
+- Public APIs only (RuntimeManager, Component, observe(), IComponentStatistics, ComponentEventReporter, IEventSink, the test-only harness and the test-only reference platform). No private access, no hardware.
+- Tests (`kritva_core_component_operational_integration`, 9 functions), mapped to the acceptance criteria:
+  1. **Lifecycle identical with and without operational reporting (seeded differential):** 150 seeds × 40 steps, random topologies, registration orders, injected failures and explicit resets; baseline = plain reference components; six operational variants (observation only; reporting and worst Status/Health/statistics only; both between steps; components acting inside their own operations; everything; everything with a sink that rejects every call). Every variant gives a transcript **identical** to the baseline (results, states, topology, faults, Runtime statistics, component invocation traces), and a RuntimeProbe taken around each piece of operational activity is unchanged (asserted in the hooks).
+  2. **The Runtime consumes nothing operational:** over 100 seeds, through every operation, failure, fault and reset, the sink got 0 calls and no component's `status()`, `health()` or provider was read; no component statistic was adjusted or reset.
+  3. **Status/Health do not alter Runtime state:** 25 rounds of worst reports in RUNNING change nothing; normal stop and shutdown follow; Runtime error_count stays 0. **A FAULT ends only by the explicit reset():** HEALTHY everywhere and a flood of events of every type and severity neither clear nor deepen it, nothing is retried (only sink calls appear after the fault in the shared ordered log), reset() then works and a new explicit initialize() succeeds (R0.3-compatible fault/reset semantics).
+  4. **Events do not command and do not replace failures:** an ERROR/CRITICAL event reported from a failing start() leaves the Runtime's fault as the operation's Error (TIMEOUT, source = the component) and the event adds no Runtime error.
+  5. **Order:** events reported inside operations appear in dependency order 1,2,3 on start and reverse 3,2,1 on stop, independent of registration order.
+  6. **Statistics stay distinct:** component counters of 5,000,000/77 do not influence the Runtime's own count (error_count exactly 1, a failed call) and are never reset or adjusted; the provider was read once, by the observer.
+  7. **No adapter/service ownership or platform lifecycle:** with a reference platform attached, observation, reporting and worst-case driving make no service call and no adapter query (call log empty, adapter_queries 0), and attachment stays closed afterwards.
+  8. The reusable conformance checks hold for a component that lives through a Runtime and change nothing in it.
+- Mutation evidence (Runtime production mutants, 10 tried, each reverted): a component's health or status altering a start, an error count, a sample/error count, or shutdown; automatic reset after a fault when a component reports HEALTHY; a stop or start run in the wrong order — **all consequential mutants detected**; two mutants were no-ops by construction (equivalent) and a reversed initialize order is not an operational concern and is killed by the existing R0.3 suites (4 of 51 tests fail), not by this file.
+- Regression: ctest 51/51 in Release, ASan+UBSan, strict `-Werror` (0 warnings), TSan, Debug; GCC `-fanalyzer` clean (including the new integration test); coverage 618/625; `make check`, traceability 89 requirements, 88 traced, 0 errors (`CORE-OPS-007` defined with a row); `git diff --check` clean.
+- Out of scope confirmed: no production change, no platform lifecycle, no concrete platform.
+
 ## Reviewer Decision
 
 - [ ] PASS

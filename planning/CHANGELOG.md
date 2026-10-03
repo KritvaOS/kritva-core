@@ -39,6 +39,7 @@ Accepted:
 - KF-CORE-R07-005 — Reference Operational Harness & Contract Tests (`0b1bd1d`; evidence `2d60432`)
 
 Pending independent review:
+- KF-CORE-R07-006 — Runtime/Component Operational Integration (`3f524cd`)
 
 ### Release record
 

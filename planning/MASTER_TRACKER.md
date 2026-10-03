@@ -77,7 +77,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | 2–3 ED | R07-003 | ACCEPTED (16654e9) | API review input |
 | R07 Component Operational API Review | Freeze public operational API | 1 ED | R07-001..004 | PASS / FROZEN (`6b1296f`) | **PASS / FROZEN** |
 | KF-CORE-R07-005 | Reference Operational Harness & Contract Tests | 3–4 ED | API Review PASS/FROZEN | ACCEPTED (0b1bd1d) | Contract tests |
-| KF-CORE-R07-006 | Runtime/Component Operational Integration | 3–4 ED | R07-005 | PLANNED | Integration Freeze |
+| KF-CORE-R07-006 | Runtime/Component Operational Integration | 3–4 ED | R07-005 | REVIEW (3f524cd) | Integration Freeze |
 | R07 Integration Freeze | Freeze production operational behavior | 0.5 ED | R07-006 | PLANNED | **PENDING** |
 | KF-CORE-R07-007 | Full R0.7 Validation | 2–3 ED | Integration Freeze | PLANNED | Release Gate input |
 | R07 Release Gate | Release 0.7.0 | 1 ED | R07-007 | PLANNED | **PENDING** |

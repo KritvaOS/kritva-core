@@ -90,7 +90,7 @@ R06 Release Gate
 | KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | statistics | ACCEPTED (16654e9) | 2–3 ED |
 | R07 Component Operational API Review | Freeze public operational API | architecture | PASS / FROZEN (`6b1296f`) | 1 ED |
 | KF-CORE-R07-005 | Reference Operational Harness & Contract Tests | tests/operational | ACCEPTED (0b1bd1d) | 3–4 ED |
-| KF-CORE-R07-006 | Runtime/Component Operational Integration | tests/integration | PLANNED | 3–4 ED |
+| KF-CORE-R07-006 | Runtime/Component Operational Integration | tests/integration | REVIEW (3f524cd) | 3–4 ED |
 | R07 Integration Freeze | Freeze production operational behavior | architecture | PLANNED | 0.5 ED |
 | KF-CORE-R07-007 | Full R0.7 Validation | integration/validation | PLANNED | 2–3 ED |
 | R07 Release Gate | Release 0.7.0 | release | PLANNED | 1 ED |
