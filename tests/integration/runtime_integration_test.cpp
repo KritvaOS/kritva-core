@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-006, CORE-RT-007, CORE-RT-008
+// Requirements: CORE-RT-009
 // API         : CORE-TEST-RUNTIME-INTEGRATION
 //
 // Author      : KritvaOS Core Team

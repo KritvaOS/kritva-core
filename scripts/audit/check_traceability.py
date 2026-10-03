@@ -28,6 +28,8 @@ Errors (exit status 1):
     in its row (Requirements: tag)
   * a tests/ *_test.cpp file is not registered in CMakeLists.txt
   * CORE-GEN-003: external dependency mechanisms or forbidden includes found
+  * CORE-RT-010: threading/logging/IO headers in include/ or src/, or VERSION and the
+    CMake project version disagree
 
 Warnings (do not fail): no test in a row carries one of the row's IDs in its
 Requirements: tag.
@@ -50,6 +52,8 @@ SCAN_DIRS = ["include", "src", "tests", "scripts", "docs", ".github", ".githooks
 SCAN_FILES = ["README.md", "API.md", "ARCHITECTURE.md", "TESTING.md", "CMakeLists.txt",
               "CMakePresets.json", "Makefile", "AGENTS.md", "CHANGELOG.md"]
 FORBIDDEN_INCLUDE = re.compile(r'#\s*include\s*[<"][^>"]*(rclcpp|rcl/|ros/|dds/|fastdds|fastrtps|ecrt|ethercat|soem)', re.I)
+RUNTIME_FORBIDDEN_INCLUDE = re.compile(
+    r'#\s*include\s*<(thread|mutex|shared_mutex|condition_variable|future|atomic|semaphore|barrier|latch|stop_token|iostream|fstream|cstdio)>')
 FORBIDDEN_CMAKE = re.compile(r"\b(find_package|FetchContent_\w+|ExternalProject_\w+|add_subdirectory)\s*\(", re.I)
 
 errors: list[str] = []
@@ -237,6 +241,21 @@ def main() -> int:
             if f.suffix in {".hpp", ".cpp", ".h"}:
                 for m in FORBIDDEN_INCLUDE.finditer(f.read_text()):
                     errors.append(f"CORE-GEN-003: {f.relative_to(ROOT)} includes forbidden dependency: {m.group(0)}")
+
+    # 7. CORE-RT-010: production sources use no threading or logging/IO headers.
+    for d in ("include", "src"):
+        for f in (ROOT / d).rglob("*"):
+            if f.suffix in {".hpp", ".cpp", ".h"}:
+                for m in RUNTIME_FORBIDDEN_INCLUDE.finditer(f.read_text()):
+                    errors.append(f"CORE-RT-010: {f.relative_to(ROOT)} includes a threading/logging header: {m.group(0)}")
+
+    # 8. CORE-RT-010: release version metadata agrees.
+    version = (ROOT / "VERSION").read_text().strip()
+    project = re.search(r"project\(\s*kritva-core\s+VERSION\s+([0-9][0-9.]*)", cmake)
+    if not project:
+        errors.append("CORE-RT-010: CMakeLists.txt project() has no VERSION")
+    elif project.group(1) != version:
+        errors.append(f"CORE-RT-010: VERSION ({version}) differs from CMake project version ({project.group(1)})")
 
     for w in warnings:
         print(f"[traceability] WARNING: {w}")
