@@ -62,6 +62,11 @@ Accepted:
 Accepted:
 - KF-CORE-R03-PREP-001 — Install and package Core library (`29255d5`)
 
+### KF-CORE-R05 — Platform Runtime Integration Foundation
+
+Pending independent review:
+- KF-CORE-R05-001 — Platform Context & Service Access Model (`c5910e7`)
+
 ### KF-CORE-R04 — Platform Abstraction Planning
 
 Accepted:

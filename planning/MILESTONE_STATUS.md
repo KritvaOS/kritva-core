@@ -161,3 +161,15 @@ All eight R0.4 tasks are ACCEPTED on implementation evidence and independent rev
 ### R0.4 Release Gate
 Status: PASS (04-10-2026)
 Release: Kritva Core R0.4, version 0.4.0; release candidate `e7df87c`; release-record commit `b31108d`; tag `kritva-core-r0.4` (annotated, published). Record: `planning/milestones/KF-CORE-R04/R04_RELEASE_GATE.md`.
+
+## R0.5 Task Status
+
+| ID | Task | Status | Dependency |
+|---|---|---|---|
+| KF-CORE-R05-001 | Platform Context & Service Access Model | REVIEW (c5910e7) | R0.4 released |
+| KF-CORE-R05-002 | Platform Service Requirement Model | PLANNED | R0.4 released |
+| KF-CORE-R05-003 | Explicit Platform Service Consumption | PLANNED | R0.4 released |
+| KF-CORE-R05-004 | Runtime–Platform Lifecycle Boundary | PLANNED | R0.4 released |
+| KF-CORE-R05-005 | Reference Platform Integration | PLANNED | R0.4 released |
+| KF-CORE-R05-006 | Platform Integration & Runtime Tests | PLANNED | R0.4 released |
+| KF-CORE-R05-007 | Full R0.5 Validation | PLANNED | R0.4 released |
