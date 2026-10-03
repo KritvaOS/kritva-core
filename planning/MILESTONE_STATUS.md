@@ -219,6 +219,6 @@ Release: Kritva Core R0.6, version 0.6.0; release candidate `b473e5d`; tag `krit
 | R07 Component Operational API Review | PASS / FROZEN (`6b1296f`) | R07-001..004 | 1 ED |
 | KF-CORE-R07-005 | ACCEPTED (0b1bd1d) | API Review PASS/FROZEN | 3–4 ED |
 | KF-CORE-R07-006 | ACCEPTED (3f524cd) | R07-005 | 3–4 ED |
-| R07 Integration Freeze | REVIEW | R07-006 | 0.5 ED |
+| R07 Integration Freeze | PASS / HONORED (`142a32e`) | R07-006 | 0.5 ED |
 | KF-CORE-R07-007 | PLANNED | Integration Freeze PASS/HONORED | 2–3 ED |
 | R07 Release Gate | PLANNED | R07-007 | 1 ED |

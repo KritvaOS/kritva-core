@@ -48,3 +48,19 @@ R07-005 and R07-006 are ACCEPTED (`6ecbf31`, `4cfa291`). The operational integra
 ### Open issues (none blocking)
 
 Carried forward: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; a context, reporter or provider used after what it refers to is destroyed is documented undefined behavior (non-owning by design). The only remaining work is R07-007 (validation, release metadata 0.7.0) and the Release Gate; neither may change production API.
+
+## Reviewer Decision
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 05-10-2026 |
+| Decision | **PASS / HONORED** |
+
+**Production freeze point: `16654e9`** (R07-004, the last production change). R07-005 `0b1bd1d` and R07-006 `3f524cd` changed tests and documentation only; R07-006 accepted at `4cfa291`; evidence `142a32e`; Component Operational API Review baseline `5021172` (evidence `6b1296f`). `git diff 16654e9 HEAD -- include src` is empty: production code and API are unchanged after the freeze.
+
+Frozen: the three R0.7 public headers and the Runtime/Component semantics they must not change, plus the test-only harness and isolation guards. R07-007 may update release metadata, requirements/traceability, validation artifacts and documentation only; the production API must not be modified except through an explicit architecture-review exception.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; the documented non-owning lifetime rule.
+
+**Reviewer Decision: PASS / HONORED — KF-CORE-R07 Integration Freeze is ACCEPTED.**
