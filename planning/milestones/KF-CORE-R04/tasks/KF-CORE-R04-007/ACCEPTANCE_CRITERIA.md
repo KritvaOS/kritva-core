@@ -113,12 +113,14 @@ Primary commit: `36c5cb8` `feat(core): define runtime platform integration bound
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: `36c5cb8` (evidence `2d4f3b4`)
+
+Reviewer notes: all five design choices are APPROVED (a second `attach_platform()` is `INVALID_STATE` and never replaces; the same adapter twice is `INVALID_STATE`; a failed attach leaves nothing attached; a failed `initialize()` leaves attachment open; the forward declaration keeps platform headers out of the Runtime interface). The Runtime remembers the attached adapter but never operates platform services and is not a service locator; `platform()` gives access to the adapter and the integrator or its components obtain services from it. The production diff is restricted to `runtime_manager.hpp` and `runtime_manager.cpp`. No further production API changes unless R04-008 validation finds a concrete defect. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R04-007 is ACCEPTED.**
