@@ -169,7 +169,7 @@ See `planning/milestones/KF-CORE-R07/` for the complete architecture, scope, tas
 
 ## KF-CORE-R08 — Component Configuration Foundation
 
-Status: PLANNED — architecture and scope confirmed; implementation not started.
+Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.8` created locally on the release-record commit; RELEASED after it is pushed)
 
 ### Objective
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-PLANNED — architecture and scope confirmed; implementation not started.
+ACCEPTED (release gate PASS; tag `kritva-core-r0.8` created locally on the release-record commit; RELEASED after it is pushed)
 
 ## Objective
 
