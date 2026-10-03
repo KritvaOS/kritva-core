@@ -90,9 +90,21 @@ An operation invalid for the current state fails with `INVALID_STATE` and change
 
 `runtime::Runtime` (`runtime/runtime.hpp`, `CORE-RT-002`) is the authoritative runtime contract and is unchanged. `runtime::RuntimeManager` (`runtime/runtime_manager.hpp`) is its concrete, synchronous, platform-independent implementation; there is no second Runtime abstraction. It composes a `ComponentRegistry` and a `DependencyGraph`, owns no component, and creates no thread, executor, scheduler or timer.
 
-Setup (`register_component()`, `add_dependency()`) forwards to the registry and graph and returns their results unchanged. The first successful `initialize()` validates the topology with `DependencyGraph::order()` (the only ordering algorithm, so lowest-`ComponentId` tie-break and dependencies first) and then fixes the topology for the life of the manager: later setup fails with `INVALID_STATE`. A failed validation returns the graph's `CONFIGURATION_ERROR` unchanged and leaves the runtime `UNKNOWN` with setup still open.
+**Topology.** Setup (`register_component()`, `add_dependency()`) forwards to the registry and graph and returns their results unchanged. The first successful `initialize()` validates the topology with `DependencyGraph::order()` (the only ordering algorithm: dependencies first, lowest-`ComponentId` tie-break) and then fixes it for the life of the manager: later setup fails with `INVALID_STATE`. A failed validation returns the graph's `CONFIGURATION_ERROR` unchanged, leaves the runtime `UNKNOWN` with setup still open, and invokes no component.
 
-The runtime follows the Component operation table for its own state only: `initialize` from `UNKNOWN`/`STOPPED` to `READY`; `start` from `READY` to `RUNNING`; `stop` from `READY`/`RUNNING` to `STOPPED`; `shutdown` a no-op in `UNKNOWN`/`STOPPED`; anything else fails with `INVALID_STATE` and changes nothing. In this task the runtime calls no component; ordered component invocation is KF-CORE-R03-005 and failure/recovery is KF-CORE-R03-006.
+**Lifecycle orchestration.** Each operation first checks the runtime's own state (the Component operation table); an invalid call fails with `INVALID_STATE`, changes nothing and invokes no component. Otherwise it invokes the corresponding Component operation once per component:
+
+| Operation | Valid from | Component call | Order | On success |
+|---|---|---|---|---|
+| `configure(cfg)` | `UNKNOWN`, `STOPPED` | `configure` | forward | state unchanged |
+| `initialize` | `UNKNOWN`, `STOPPED` | `initialize` | forward | `READY` |
+| `start` | `READY` | `start` | forward | `RUNNING` |
+| `stop` | `READY`, `RUNNING` | `stop` | reverse | `STOPPED` |
+| `shutdown` | `UNKNOWN`, `STOPPED` | `shutdown` | reverse | state unchanged |
+
+Forward is dependency order; reverse is exactly the reverse sequence, so dependents are torn down before dependencies. The runtime state changes only after the whole sequence succeeded: it is never `READY` or `RUNNING` before every component has succeeded. `shutdown()` invokes components only while they are live (initialized and not yet shut down), so repeated calls never invoke a component twice. `configure()` does not initialize, start, change the runtime state or fix the topology.
+
+**Failure boundary.** The first failing component ends the sequence: later components are not invoked, nothing is retried, and nothing is rolled back. That component's own `Error` is returned unchanged (code, source, message). A failed `configure()` or `shutdown()` leaves the runtime state unchanged; a failed `initialize()`, `start()` or `stop()` moves the runtime to `FAULT`, in which every operation fails with `INVALID_STATE` until recovery and reset are defined (KF-CORE-R03-006). No automatic retry, watchdog, timer or background work exists.
 
 ## 4. Platform Independence
 

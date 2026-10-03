@@ -76,5 +76,7 @@ int main() {
     if (!manager.initialize()) return 14;
     if (manager.state() != LifecycleState::READY || !manager.topology_fixed()) return 15;
     if (manager.register_component(stub)) return 16;                         // topology is fixed
+    if (!manager.start() || manager.state() != LifecycleState::RUNNING) return 17;
+    if (!manager.stop() || !manager.shutdown()) return 18;                   // orchestrates the stub component
     return 0;
 }

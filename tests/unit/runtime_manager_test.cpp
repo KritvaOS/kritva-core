@@ -239,7 +239,7 @@ void test_runtime_does_not_own_components() {
     }                                                                    // runtime destroyed
     assert(!destroyed_a && !destroyed_b);                                // never deleted
     assert(a->info().id() == ComponentId{1} && b->info().id() == ComponentId{2});   // still usable
-    assert(a->calls == 0 && b->calls == 0);                              // and never driven (R03-005)
+    assert(a->calls == 4 && b->calls == 4);                              // initialize/start/stop/shutdown once each (R03-005)
     a.reset();
     assert(destroyed_a && !destroyed_b);                                 // the owner decides
     b.reset();
@@ -378,14 +378,16 @@ void test_order_is_independent_of_registration_and_edge_insertion_order() {
 // Lifecycle boundary (AC-06): no component is ever called by R03-004
 // -----------------------------------------------------------------------------
 
-void test_runtime_never_drives_components() {
+// R03-004 boundary kept: setup, failed validation and invalid calls invoke no component.
+void test_setup_failed_validation_and_invalid_calls_invoke_no_component() {
     std::vector<std::unique_ptr<ReferenceComponent>> owned;
     RuntimeManager runtime;
-    for (std::uint64_t id = 1; id <= 4; ++id) { owned.push_back(make_component(id)); assert(runtime.register_component(*owned.back())); }
-    assert(runtime.add_dependency(ComponentId{1}, ComponentId{2}) && runtime.add_dependency(ComponentId{3}, ComponentId{2}));
-    assert(runtime.initialize() && runtime.start());
-    assert(runtime.stop() && runtime.initialize() && runtime.start() && runtime.stop() && runtime.shutdown());
-    assert(!runtime.start());                                            // an invalid call, too
+    for (std::uint64_t id = 1; id <= 3; ++id) { owned.push_back(make_component(id)); assert(runtime.register_component(*owned.back())); }
+    assert(runtime.add_dependency(ComponentId{1}, ComponentId{2}) && runtime.add_dependency(ComponentId{3}, ComponentId{9}));  // 9 missing
+    assert(!runtime.add_dependency(ComponentId{1}, ComponentId{2}));     // rejected setup
+    assert(!runtime.initialize());                                       // failed validation
+    assert(!runtime.start() && !runtime.stop());                         // invalid in UNKNOWN
+    assert(runtime.shutdown());                                          // never initialized: nothing to release
     assert(lifecycle_calls(owned) == 0);
     for (const auto& c : owned) assert(c->lifecycle_state() == LifecycleState::UNKNOWN);
 }
@@ -403,6 +405,6 @@ int main() {
     test_missing_dependency_is_rejected_and_leaves_runtime_not_running();
     test_unregistered_dependent_is_rejected();
     test_order_is_independent_of_registration_and_edge_insertion_order();
-    test_runtime_never_drives_components();
+    test_setup_failed_validation_and_invalid_calls_invoke_no_component();
     return 0;
 }

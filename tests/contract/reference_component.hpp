@@ -21,6 +21,7 @@
 #include <cassert>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include <kritva/core/core.hpp>
 
@@ -39,6 +40,7 @@ public:
 
     Result<void> configure(const Configuration& configuration) override {
         ++configure_calls;
+        record("configure");
         if (state() != LifecycleState::UNKNOWN && state() != LifecycleState::STOPPED) {
             return invalid_state("configure");
         }
@@ -53,6 +55,7 @@ public:
 
     Result<void> initialize() override {
         ++initialize_calls;
+        record("initialize");
         if (state() != LifecycleState::UNKNOWN && state() != LifecycleState::STOPPED) {
             return invalid_state("initialize");
         }
@@ -64,6 +67,7 @@ public:
 
     Result<void> start() override {
         ++start_calls;
+        record("start");
         if (state() != LifecycleState::READY) return invalid_state("start");
         if (fail_next_start != ErrorCode::NONE) return fault(fail_next_start, "start failed");
         go(LifecycleState::RUNNING);
@@ -72,6 +76,7 @@ public:
 
     Result<void> stop() override {
         ++stop_calls;
+        record("stop");
         if (state() != LifecycleState::READY && state() != LifecycleState::RUNNING) {
             return invalid_state("stop");
         }
@@ -83,6 +88,7 @@ public:
 
     Result<void> shutdown() override {
         ++shutdown_calls;
+        record("shutdown");
         const LifecycleState s = state();
         if (s != LifecycleState::UNKNOWN && s != LifecycleState::STOPPED && s != LifecycleState::FAULT) {
             return invalid_state("shutdown");
@@ -104,6 +110,9 @@ public:
     }
     [[nodiscard]] CapabilitySet capabilities() const override { return capabilities_; }
 
+    /// Optional shared invocation trace: each operation call appends "<id>:<operation>".
+    std::vector<std::string>* trace{nullptr};
+
     // Failure injection (one-shot) and call counters, public for test convenience.
     ErrorCode fail_next_configure{ErrorCode::NONE};
     ErrorCode fail_next_initialize{ErrorCode::NONE};
@@ -114,6 +123,9 @@ public:
     bool configured{false};
 
 private:
+    void record(const char* operation) {
+        if (trace != nullptr) trace->push_back(std::to_string(info().id().value()) + ":" + operation);
+    }
     [[nodiscard]] LifecycleState state() const noexcept { return lifecycle_.state(); }
 
     Result<void> fail(ErrorCode code, std::string message) {
