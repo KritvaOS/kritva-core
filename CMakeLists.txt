@@ -236,6 +236,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_component_context_integration_test PRIVATE kritva_core)
     add_test(NAME kritva_core_component_context_integration COMMAND kritva_core_component_context_integration_test)
 
+    #Add Test: tests/integration/component_operational_integration_test.cpp (Runtime + operational components + sink + reference platform)
+    add_executable(kritva_core_component_operational_integration_test tests/integration/component_operational_integration_test.cpp)
+    target_link_libraries(kritva_core_component_operational_integration_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_component_operational_integration COMMAND kritva_core_component_operational_integration_test)
+
     #Add Test: tests/unit/platform_context_test.cpp
     add_executable(kritva_core_platform_context_test tests/unit/platform_context_test.cpp)
     target_link_libraries(kritva_core_platform_context_test PRIVATE kritva_core)
