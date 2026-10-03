@@ -66,8 +66,6 @@ Accepted:
 
 Accepted:
 - KF-CORE-R05-001 — Platform Context & Service Access Model (`c5910e7`)
-
-Pending independent review:
 - KF-CORE-R05-002 — Platform Service Requirement Model (`f9d6007`)
 
 ### KF-CORE-R04 — Platform Abstraction Planning

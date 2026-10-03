@@ -7,7 +7,7 @@ R0.2, R0.3 and R0.4 remain recorded as released historical milestones.
 | ID | Task | Primary Area | Status | Primary Commit |
 |---|---|---|---|---|
 | KF-CORE-R05-001 | Platform Context & Service Access Model | platform/context | ACCEPTED | `feat(core): add platform context` |
-| KF-CORE-R05-002 | Platform Service Requirement Model | platform/requirements | REVIEW | `feat(core): define platform service requirements` |
+| KF-CORE-R05-002 | Platform Service Requirement Model | platform/requirements | ACCEPTED | `feat(core): define platform service requirements` |
 | KF-CORE-R05-003 | Explicit Platform Service Consumption | platform/services | PLANNED | `feat(core): define explicit platform service consumption` |
 | KF-CORE-R05-004 | Runtime–Platform Lifecycle Boundary | runtime/platform | PLANNED | `feat(core): preserve runtime platform lifecycle boundary` |
 | KF-CORE-R05-005 | Reference Platform Integration | tests/platform | PLANNED | `test(core): add platform integration reference harness` |

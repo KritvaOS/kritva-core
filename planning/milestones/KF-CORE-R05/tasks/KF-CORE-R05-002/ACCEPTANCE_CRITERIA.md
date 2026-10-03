@@ -131,14 +131,17 @@ Primary commit: `f9d6007` `feat(core): define platform service requirements` (R0
 - Regression: `ctest` 34/34 in Debug, Release, ASan+UBSan, strict `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Werror`, TSan (ASLR off); whole existing suite unchanged and green; build 0 warnings; GCC `-fanalyzer` clean; coverage 98% (514/520): `context.hpp` 12/12 and `requirements.hpp` 50/51, the single uncovered line being the exception-unwind closing brace of `evaluate()` (the same kind as `component_registry.cpp:55`), plus the same five baseline lines (a first run showed an unexercised `scheduler` message case, which a test now covers); `make check` passes with traceability 68 requirements, 67 traced, 0 errors; `git diff --check` clean. Prohibited-dependency scan clean (the header includes only Core headers).
 - Out of scope confirmed: no platform-specific capability inference, no service locator, no automatic service startup/shutdown, no hardware capability inventory.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `f9d6007` (evidence `2de3a5e`) |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: the additive requirement model is accepted: identity-based duplicate detection with atomic rejection, `supports()` / `CapabilitySet::contains()` as the only matching rules, no name or version inference (mutation-tested), deterministic declaration-order reporting, an authoritative structured report, and a side-effect-free evaluation (30/30 mutants detected). The single uncovered line is an exception-unwind closing brace, not behavioral coverage, and is not an acceptance blocker. `CORE-PLAT-013` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R05-002 is ACCEPTED.**
+
