@@ -71,7 +71,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 |---|---|---:|---|---|---|
 | R07 Design Consult | Operational model and architectural boundary | 2–3 ED | R0.6 released | APPROVED | Scope input |
 | R07 Scope Confirmation | Confirm scope and exclusions | 1 ED | Design Consult | APPROVED | Implementation authorization input |
-| KF-CORE-R07-001 | Component Operational Observation Contract | 3–4 ED | Scope Confirmation | PLANNED | Operational contract |
+| KF-CORE-R07-001 | Component Operational Observation Contract | 3–4 ED | Scope Confirmation | REVIEW (6849a73) | Operational contract |
 | KF-CORE-R07-002 | Component Status & Health Reporting Contract | 2–3 ED | R07-001 | PLANNED | Reporting contract |
 | KF-CORE-R07-003 | Component Operational Event Contract | 3–4 ED | R07-002 | PLANNED | Event contract |
 | KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | 2–3 ED | R07-003 | PLANNED | API review input |

@@ -28,6 +28,13 @@ Explicit exclusions:
 R0.7 implementation has not started. `KF-CORE-R07-001` is the next implementation task after task-specific acceptance criteria are issued.
 
 
+### KF-CORE-R07 — Component Operational Implementation
+
+Accepted:
+
+Pending independent review:
+- KF-CORE-R07-001 — Component Operational Observation Contract (`6849a73`)
+
 ### Release record
 
 - R06 Release Gate — PASS. Kritva Core R0.6 / version 0.6.0; release candidate `b473e5d`; tag `kritva-core-r0.6` on the documentation-only release-record commit (annotated, pushed to origin; tag object `fb9d631`).

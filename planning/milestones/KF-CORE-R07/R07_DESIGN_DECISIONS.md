@@ -29,3 +29,16 @@ This record consolidates the R0.7 Design Consult and Scope Confirmation decision
 ## R07-003 Specific Decision
 
 Operational event reporting is explicit and integrator-owned at the sink boundary. Core does not buffer, retry, persist or asynchronously dispatch Events.
+
+## Implementation API Consult (05-10-2026)
+
+Independent reviewer decision: AMENDMENTS — APPROVED. Surface: `runtime::ComponentObservation` + free `observe(const Component&, const IComponentStatistics* = nullptr)` (R07-001); contract and conformance of the existing `Status`/`Health` with no new production types (R07-002); `IEventSink` + non-owning `ComponentEventReporter` (R07-003); optional `IComponentStatistics`, not a base of `Component` (R07-004). `component.hpp` stays byte-identical; the Runtime gets no observation API.
+
+| ID | Amendment |
+|---|---|
+| A1 | Accessor order is documented and tested: `info().id()`, `lifecycle_state()`, `status()`, `health()`, then `statistics()` when a provider is supplied; the observation never refers into the component. |
+| A2 | Event source integrity: source_id zero is stamped with the component id; equal is forwarded unchanged; non-zero and different is `INVALID_ARGUMENT` with no sink call (never silently overwritten); unbound is `INVALID_STATE`; the sink's `Result` is returned unchanged. |
+| A3 | `statistics` semantics: null provider is `std::nullopt`; non-null is an engaged copy of what the provider returned (no further meaning). |
+| A4 | Purity wording: the observation contract applies to conforming implementations; `observe()` itself adds no side effect but invokes virtual const accessors Core cannot police. |
+| A5 | Event sink lifetime: non-owning and integrator-managed; the sink must outlive every reporter that can invoke it. |
+| A6 | `IComponentStatistics` carries no component identity; the caller pairs it with its component. |

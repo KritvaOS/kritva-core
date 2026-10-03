@@ -91,6 +91,17 @@ feat(core): define component operational observation contract
 - commit SHA
 - explicit mapping from each acceptance criterion to objective evidence
 
+## Implementor Evidence
+
+Primary commit: `6849a73` `feat(core): define component operational observation contract` (API consult with amendments A1–A6 recorded in `R07_DESIGN_DECISIONS.md`). **Purely additive:** two new public headers and one include in `core.hpp`; `git diff HEAD~1 -- src` is empty; `component.hpp`, `ComponentContext`, `RuntimeManager` and every R0.2–R0.6 header are byte-identical.
+
+- API: `runtime::ComponentObservation` (aggregate value: `id`, `lifecycle`, `status`, `health`, `std::optional<Statistics> statistics`) and free `observe(const Component&, const IComponentStatistics* = nullptr)`; `IComponentStatistics` (`runtime/component_statistics.hpp`, one pure `statistics() const`) is an optional interface that is **not** a base of `Component` (no `statistics()` added, no RTTI, no identity in the interface; its contract is completed by R07-004).
+- Contract text (CORE-OPS-001, CORE-OPS-006): component authority and no Core mirror/cache; detached owning value; null provider gives nullopt, non-null gives an engaged copy; documented accessor order (`info().id()`, `lifecycle_state()`, `status()`, `health()`, `statistics()`), once each, nothing else; purity is a contract on conforming implementations (A4); no cross-property atomicity; determinism; allocation (string copies only), control plane, no real-time claim, no error path, exceptions propagate; no Runtime polling, event, export or logging. Status/Health independence text is stated here and formalized and tested in R07-002.
+- Tests (`kritva_core_component_observation`, 11 functions): shape (copyable aggregate, optional interface not a base of Component, observe takes a const Component); default observation; reported values; **exact accessor order and count via a spy** (without and with a provider; `capabilities()` never called); statistics null/engaged/all-zero-engaged and field values; detachment (a later change to component or provider does not alter an earlier observation; a fresh observation sees the new truth); the observation outlives a destroyed component (200-char strings, ASan clean); no effect on the component (no lifecycle operation, state unchanged, provider unchanged); determinism; provider not tied to the component; observing a Runtime-registered component leaves Runtime state and statistics unchanged.
+- Mutation evidence (10 mutants, each reverted, **10/10 detected**): accessor order swapped, lifecycle/id/status/health dropped, statistics engaged for a null provider, provider read twice, status read twice, `capabilities()` added, default statistics engaged.
+- Regression: ctest 46/46 in Release, ASan+UBSan, strict `-Werror` (0 warnings), TSan (ASLR off); Debug 46/46; GCC `-fanalyzer` clean; coverage 604/611 (the new header's only uncovered line is the exception-unwind closing brace of `observe()`, the same class as `evaluate()`); `make check` passes, traceability 82 requirements, 81 traced, 0 errors (CORE-OPS-001, CORE-OPS-006 defined with rows; the two new public headers are in the table); `git diff --check` clean.
+- Out of scope confirmed: no new state machine, no Runtime observation API, no event emission, no background execution, no platform code.
+
 ## Reviewer Decision
 
 - [ ] PASS

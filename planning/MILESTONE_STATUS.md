@@ -204,3 +204,21 @@ Release: Kritva Core R0.5, version 0.5.0; release candidate `5fb5e69`; release-r
 Status: PASS (05-10-2026)
 
 Release: Kritva Core R0.6, version 0.6.0; release candidate `b473e5d`; tag `kritva-core-r0.6` (annotated, on release-record commit `a4c41aa`; pushed to origin). Record: `planning/milestones/KF-CORE-R06/R06_RELEASE_GATE.md`.
+
+
+## R0.7 Task Status
+
+| ID | Status | Dependency | Est. Effort |
+|---|---|---|---:|
+| R07 Design Consult | APPROVED | R0.6 released | 2–3 ED |
+| R07 Scope Confirmation | APPROVED | Design Consult | 1 ED |
+| KF-CORE-R07-001 | REVIEW (6849a73) | Scope Confirmation | 3–4 ED |
+| KF-CORE-R07-002 | PLANNED | R07-001 | 2–3 ED |
+| KF-CORE-R07-003 | PLANNED | R07-002 | 3–4 ED |
+| KF-CORE-R07-004 | PLANNED | R07-003 | 2–3 ED |
+| R07 Component Operational API Review | PLANNED | R07-001..004 | 1 ED |
+| KF-CORE-R07-005 | PLANNED | API Review PASS/FROZEN | 3–4 ED |
+| KF-CORE-R07-006 | PLANNED | R07-005 | 3–4 ED |
+| R07 Integration Freeze | PLANNED | R07-006 | 0.5 ED |
+| KF-CORE-R07-007 | PLANNED | Integration Freeze PASS/HONORED | 2–3 ED |
+| R07 Release Gate | PLANNED | R07-007 | 1 ED |
