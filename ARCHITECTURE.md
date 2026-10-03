@@ -151,6 +151,8 @@ Injection (CORE-CTX-003) is by construction only: the integrator builds a compon
 
 Operational observation (CORE-OPS-001, CORE-OPS-006): R0.7 adds a read-only, detached `runtime::ComponentObservation` produced by `observe()` from a component's own accessors, with an optional Component-owned `IComponentStatistics` provider. The Component stays authoritative, Core keeps no mirror, no new state machine and no Runtime polling exist, and no frozen header changes. See API.md section 39.
 
+Operational events (CORE-OPS-005, CORE-OPS-008): a component may explicitly report an `Event` through a copyable, non-owning `ComponentEventReporter` to an integrator-owned `IEventSink`; one synchronous call, the sink's `Result` unchanged, no buffering, retry or dispatch, and an event never commands the Runtime. See API.md section 41.
+
 Requirement binding (CORE-CTX-004): `ComponentContext::evaluate()` and `check_required()` apply the R0.5 requirement model to the context's platform view, unchanged, with the Core availability error attributed to the component when bound. The context stores no requirements; matching is by identity only. See API.md section 38.
 
 The component context harness (CORE-CTX-005) is test-only: a reference component that runs scripted plans through its context and reusable contract checks for any context; it never enters production code (audit and isolation CTest).

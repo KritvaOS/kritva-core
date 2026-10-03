@@ -54,6 +54,7 @@
 #include "runtime/component_context.hpp"
 #include "runtime/component_statistics.hpp"
 #include "runtime/component_observation.hpp"
+#include "runtime/component_events.hpp"
 #include "messaging/message.hpp"
 #include "messaging/topic.hpp"
 #include "time/clock.hpp"
