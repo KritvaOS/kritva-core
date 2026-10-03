@@ -127,16 +127,15 @@ Do not mark a task ACCEPTED based only on compilation. Acceptance requires evide
 ## R03 Final Gates
 
 ### Runtime Contract Review
-Status: PENDING
+Status: PASS / FROZEN (03-10-2026)
 Entry: R03-004, R03-005 and R03-006 accepted.
-Action: freeze Runtime Manager, lifecycle, failure/recovery, diagnostics and statistics semantics before R03-007.
+Action: froze Runtime Manager, lifecycle, failure/recovery, diagnostics and statistics semantics before R03-007. Record: `planning/milestones/KF-CORE-R03/R03_RUNTIME_CONTRACT_REVIEW.md`.
 
 ### Integration Freeze
-Status: PENDING
+Status: PASS / HONORED (03-10-2026)
 Entry: R03-007 accepted.
-Action: freeze production API and accepted runtime semantics before R03-008.
+Action: froze the production API and accepted runtime semantics before R03-008; the production diff from the Runtime Contract Review commit `8ec7861` to the release candidate `f598fef` is empty. Record: `planning/milestones/KF-CORE-R03/R03_INTEGRATION_FREEZE.md`.
 
 ### Release Gate
-Status: PENDING
-Entry: R03-008 accepted.
-Action: final independent acceptance and authorization of `kritva-core-r0.3`.
+Status: PASS (03-10-2026)
+Release: Kritva Core R0.3, version 0.3.0; release candidate `f598fef`; release-record commit `cc16ec9`; tag `kritva-core-r0.3` (annotated, published). Record: `planning/milestones/KF-CORE-R03/R03_RELEASE_GATE.md`.
