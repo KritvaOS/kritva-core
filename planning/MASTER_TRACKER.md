@@ -71,7 +71,7 @@ R0.2–R0.5 are retained as historical milestones. The current repository does n
 
 | ID | Task | Est. | Dependency | Status | Gate |
 |---|---|---:|---|---|---|
-| KF-CORE-R06-001 | Component Execution Context & Ownership Model | 3–4 ED | R0.5 released | PLANNED | API scope review |
+| KF-CORE-R06-001 | Component Execution Context & Ownership Model | 3–4 ED | R0.5 released | REVIEW (8031c47) | API scope review |
 | KF-CORE-R06-002 | Operational Context Services & Access Policy | 3–4 ED | R06-001 | PLANNED | Contract review |
 | KF-CORE-R06-003 | Context Injection Without Runtime Lifecycle Change | 3–4 ED | R06-002 | PLANNED | Integration contract |
 | KF-CORE-R06-004 | Context Requirements & Capability Binding | 2–3 ED | R06-002 | PLANNED | API review input |

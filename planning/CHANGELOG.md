@@ -79,7 +79,10 @@ Planning package prepared for the next proposed milestone:
 - Full R0.6 Validation
 - Release Gate
 
-R0.6 remains an architecture proposal until independently reviewed. No R0.6 implementation or release is authorized by this planning update.
+Scope and API design confirmed by the independent reviewer on 05-10-2026 (`R06_DESIGN_DECISIONS.md` D09–D15); implementation in progress.
+
+Pending independent review:
+- KF-CORE-R06-001 — Component Execution Context & Ownership Model (`8031c47`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
 
