@@ -53,7 +53,7 @@ Freeze:
 
 ## Decision
 
-Status: PLANNED
+Status: SUBMITTED (evidence: `R04_PLATFORM_API_REVIEW_EVIDENCE.md`)
 
 Possible outcomes:
 - PASS / FROZEN
