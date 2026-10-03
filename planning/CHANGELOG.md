@@ -35,6 +35,7 @@ Accepted:
 - KF-CORE-R07-002 — Component Status & Health Reporting Contract (`61e0067`; evidence `8d9e4b0`)
 
 Pending independent review:
+- KF-CORE-R07-003 — Component Operational Event Contract (`56ff226`)
 
 ### Release record
 
