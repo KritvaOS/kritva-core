@@ -71,35 +71,14 @@ Milestone → Task → Acceptance Criteria → Implementation → Unit Tests →
 
 ## Current State
 
-R0.6 is released and closed:
+R0.7 is released and closed:
 
-- `kritva-core-r0.6`
-- version `0.6.0`
-- release-record commit `a4c41aa`
+- `kritva-core-r0.7`
+- version `0.7.0`
+- release-record commit `424984f`
 - remote verification: PASS / RELEASED / SYNCHRONIZED / CLOSED
 
-R0.2, R0.3, R0.4 and R0.5 are also released and closed.
+R0.2 to R0.6 are also released and closed. R0.7 added read-only Component operational observation, Component-owned Status/Health/optional statistics semantics and explicit Event reporting to integrator-owned sinks, with the Runtime lifecycle unchanged and `kritva-core` still platform independent.
 
-R0.5 added the platform runtime integration foundation (`PlatformContext`, requirements and explicit service consumption). R0.6 added the non-owning `runtime::ComponentContext` for integrator-written Components, with the Runtime lifecycle unchanged and `kritva-core` still platform independent.
+See `MASTER_TRACKER.md` and `milestones/KF-CORE-R07/`.
 
-See `MASTER_TRACKER.md` and `milestones/KF-CORE-R06/`.
-
-## Current R0.7 State
-
-R0.6 is released and closed at version 0.6.0. R0.7 is now the current planned milestone.
-
-### KF-CORE-R07 — Component Operational Foundation
-
-Status: PLANNED — ARCHITECTURE CONFIRMED; implementation not started.
-
-Architecture decision:
-- Component operational information remains Component-owned.
-- Existing Status, Health, Statistics and Event concepts are preferred over parallel abstractions.
-- No new operational state machine is introduced.
-- Observation is read-only and side-effect free.
-- Component statistics are optional; they are not mandatory on the base Component interface.
-- Operational Events are explicitly reported to integrator-owned sinks; no Core EventBus is introduced.
-- Runtime remains lifecycle authority and does not automatically poll, interpret or react to operational information.
-- No Core-owned background execution, telemetry/logging backend, automatic recovery, or platform-specific operational framework is introduced.
-
-Implementation authorization starts with R07-001 after its task package and acceptance criteria are issued.

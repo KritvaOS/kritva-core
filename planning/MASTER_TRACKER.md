@@ -41,15 +41,14 @@ Estimated effort is established before implementation. Actual/observed effort is
 
 | Metric | Current state |
 |---|---|
-| Latest released milestone | **KF-CORE-R06** |
-| Latest released version | **0.6.0** |
-| Latest release tag | `kritva-core-r0.6` |
-| Latest release commit | `a4c41aa` |
+| Latest released milestone | **KF-CORE-R07** |
+| Latest released version | **0.7.0** |
+| Latest release tag | `kritva-core-r0.7` |
+| Latest release commit | `424984f` |
 | Remote verification | **PASS / RELEASED / SYNCHRONIZED / CLOSED** |
-| Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6 |
-| Current active milestone | **KF-CORE-R07 — Component Operational Foundation** |
-| R06 implementation status | RELEASED / CLOSED |
-| R07 planning status | **ARCHITECTURE CONFIRMED / IMPLEMENTATION NOT STARTED** |
+| Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7 |
+| Current active milestone | None — R0.7 released and closed; next milestone not yet planned |
+| R07 implementation status | RELEASED / CLOSED |
 | Open release blockers | 0 |
 | API freeze active | No |
 | Concrete platform implementation in `kritva-core` | No |
@@ -80,7 +79,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | KF-CORE-R07-006 | Runtime/Component Operational Integration | 3–4 ED | R07-005 | ACCEPTED (3f524cd) | Integration Freeze |
 | R07 Integration Freeze | Freeze production operational behavior | 0.5 ED | R07-006 | PASS / HONORED (`142a32e`) | **PASS / HONORED** |
 | KF-CORE-R07-007 | Full R0.7 Validation | 2–3 ED | Integration Freeze | ACCEPTED `86dfcb9` (candidate d83e1ba) | Release Gate input |
-| R07 Release Gate | Release 0.7.0 | 1 ED | R07-007 | PASS (tag pending push) | **PASS** |
+| R07 Release Gate | Release 0.7.0 | 1 ED | R07-007 | PASS / RELEASED (`424984f`) | **PASS** |
 
 **R07 working estimate: 20–28 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.
 

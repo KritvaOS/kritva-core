@@ -118,7 +118,7 @@ See `planning/milestones/KF-CORE-R06/` for the R0.6 architecture, task package, 
 
 ## KF-CORE-R07 — Component Operational Foundation
 
-Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.7` created locally on the release-record commit; RELEASED after it is pushed)
+Status: RELEASED (`kritva-core-r0.7` -> `424984f`, published to origin)
 
 ### Objective
 

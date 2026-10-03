@@ -10,7 +10,7 @@
 | KF-CORE-R04 | RELEASED | 8 / 8 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.4` (annotated tag on release-record commit `b31108d`; tag object `9e1bc7b`; pushed to origin) |
 | KF-CORE-R05 | RELEASED | 7 / 7 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.5` (annotated tag on release-record commit `adf8ac2`; tag object `aecb045`; pushed to origin) |
 | KF-CORE-R06 | RELEASED | 7 / 7 tasks accepted | Component API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.6` (annotated tag on release-record commit `a4c41aa`; tag object `fb9d631`; pushed to origin) |
-| KF-CORE-R07 | ACCEPTED (release tag pending push) | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | Target `kritva-core-r0.7` / version 0.7.0 |
+| KF-CORE-R07 | RELEASED | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.7` (annotated tag on release-record commit `424984f`; tag object `4aa3fab`; pushed to origin) | Target `kritva-core-r0.7` / version 0.7.0 |
 
 ## R02 Task Status
 
@@ -227,4 +227,4 @@ Release: Kritva Core R0.6, version 0.6.0; release candidate `b473e5d`; tag `krit
 
 Status: PASS (05-10-2026)
 
-Release: Kritva Core R0.7, version 0.7.0; release candidate `d83e1ba`; tag `kritva-core-r0.7` (annotated, on the release-record commit; push pending). Record: `planning/milestones/KF-CORE-R07/R07_RELEASE_GATE.md`.
+Release: Kritva Core R0.7, version 0.7.0; release candidate `d83e1ba`; tag `kritva-core-r0.7` (annotated, on release-record commit `424984f`; pushed to origin). Record: `planning/milestones/KF-CORE-R07/R07_RELEASE_GATE.md`.
