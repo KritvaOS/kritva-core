@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-001 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define component configuration contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -104,4 +104,14 @@ Primary commit: `605516b` `feat(core): define component configuration contract` 
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `605516b` (evidence `bb3752a`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: no production type, signature or behavior change (one contract-text block in `configuration.hpp`; `component.hpp`, `runtime_manager.hpp`, `component_context.hpp`, `parameter.hpp`, `configuration_version.hpp` and `src/` byte-identical to R0.7); the eight-state eligibility, no-effect invalid-state behavior (including the unconsumed injected failure proving the ordering), state preservation, Runtime behavior, caller-thread synchrony and the absence of any dynamic API are accepted; 11/11 mutants detected. `CORE-CFG-004` and `CORE-CFG-011` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-001 is ACCEPTED.**

@@ -31,9 +31,9 @@ Planned effort: 22–31 ED; actual effort not yet recorded.
 ### KF-CORE-R08 — Component Configuration Implementation
 
 Accepted:
+- KF-CORE-R08-001 — Component Configuration Contract & Lifecycle Semantics (`605516b`; evidence `bb3752a`)
 
 Pending independent review:
-- KF-CORE-R08-001 — Component Configuration Contract & Lifecycle Semantics (`605516b`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
