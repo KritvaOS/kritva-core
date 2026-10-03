@@ -266,6 +266,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_component_context_injection_test PRIVATE kritva_core)
     add_test(NAME kritva_core_component_context_injection COMMAND kritva_core_component_context_injection_test)
 
+    #Add Test: tests/unit/component_context_requirements_test.cpp
+    add_executable(kritva_core_component_context_requirements_test tests/unit/component_context_requirements_test.cpp)
+    target_link_libraries(kritva_core_component_context_requirements_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_component_context_requirements COMMAND kritva_core_component_context_requirements_test)
+
     #Add Test: tests/unit/reference_platform_test.cpp (the test-only reference platform in tests/platform/)
     add_executable(kritva_core_reference_platform_test tests/unit/reference_platform_test.cpp)
     target_link_libraries(kritva_core_reference_platform_test PRIVATE kritva_core)

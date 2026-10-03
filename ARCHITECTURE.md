@@ -149,6 +149,8 @@ The context's access policy (CORE-CTX-002) is a closed, typed set of side-effect
 
 Injection (CORE-CTX-003) is by construction only: the integrator builds a component's `ComponentContext` from the component's own identity and a platform view, and the component stores it. The Runtime never creates, holds, passes or probes a context, `Component` and `RuntimeManager` are unchanged, and Runtime behavior is identical with and without contexts. See API.md section 37.
 
+Requirement binding (CORE-CTX-004): `ComponentContext::evaluate()` and `check_required()` apply the R0.5 requirement model to the context's platform view, unchanged, with the Core availability error attributed to the component when bound. The context stores no requirements; matching is by identity only. See API.md section 38.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

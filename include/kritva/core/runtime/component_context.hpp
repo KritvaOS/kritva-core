@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-CTX-001, CORE-CTX-002, CORE-CTX-003
+// Requirements: CORE-CTX-001, CORE-CTX-002, CORE-CTX-003, CORE-CTX-004
 // API         : CORE-API-COMPONENT-CONTEXT
 //
 // Author      : KritvaOS Core Team
@@ -21,6 +21,7 @@
 #include "component_id.hpp"
 #include "component_info.hpp"
 #include "../platform/context.hpp"
+#include "../platform/requirements.hpp"
 #include "../error/result.hpp"
 namespace kritva::core::runtime {
 
@@ -147,6 +148,41 @@ namespace kritva::core::runtime {
 //     started, stopped or recovered by the Runtime or by Core; its lifetime is its
 //     owner's, which must be shorter than the identity's and the adapter's.
 //
+//
+// REQUIREMENT BINDING (CORE-CTX-004)
+//   A component states what it needs with the R0.5 platform::PlatformRequirements
+//   (platform/requirements.hpp) and checks it against its context:
+//     evaluate(requirements)        the R0.5 platform::PlatformRequirementReport,
+//                                   UNCHANGED: platform::evaluate(requirements,
+//                                   platform()). It never fails, treats an
+//                                   unattached platform as providing nothing, and
+//                                   is the authoritative structured result.
+//     check_required(requirements)  the R0.5 platform::check_required(requirements,
+//                                   platform()): success when no REQUIRED item is
+//                                   missing (optional items never matter),
+//                                   otherwise ErrorCode::UNSUPPORTED naming the
+//                                   first missing required declaration. When the
+//                                   context is BOUND that error carries source =
+//                                   the component's ComponentId (the same rule as
+//                                   require_*(), so the component can return it
+//                                   directly as its own failed Result); its code,
+//                                   severity, timestamp and message are exactly
+//                                   R0.5's, and an unbound context returns the R0.5
+//                                   error unchanged.
+//   BINDING, NOT STORING. The context stores no requirements: it is stateless
+//   (still two pointers) and every call takes the requirements as an argument, so
+//   the component keeps its own PlatformRequirements (declared with the R0.5
+//   add_service()/add_capability(), whose INVALID_ARGUMENT rules and atomicity
+//   are unchanged) wherever it likes. Matching stays by service and capability
+//   IDENTITY only: never the platform's name or version, never a capability's
+//   name or version, never a string. Evaluating is a query: PlatformContext's
+//   rules apply (supports() once per declared service, capabilities() at most
+//   once), nothing is started, stopped, configured or created, and neither the
+//   requirements, the context, the adapter nor the Runtime changes. The same
+//   requirements and the same platform give the same answer. Checking
+//   requirements does not make the Runtime check them: when and whether a
+//   component checks (typically in initialize()) is the component's own decision.
+//
 // NO CONTEXT AMPLIFICATION
 //   The context never returns, directly or indirectly, a broader authority than
 //   it was given: no RuntimeManager, ComponentRegistry, other Component,
@@ -209,6 +245,16 @@ public:
 
     /// True when the platform reports a capability with this identity (identity alone decides).
     [[nodiscard]] bool has_capability(CapabilityId id) const { return platform_.has_capability(id); }
+
+    /// The R0.5 report of what `requirements` still lacks on this platform, unchanged. A query.
+    [[nodiscard]] platform::PlatformRequirementReport evaluate(const platform::PlatformRequirements& requirements) const {
+        return platform::evaluate(requirements, platform_);
+    }
+
+    /// R0.5 check_required: success when no REQUIRED item is missing, else UNSUPPORTED (attributed to the component when bound).
+    [[nodiscard]] Result<void> check_required(const platform::PlatformRequirements& requirements) const {
+        return attributed(platform::check_required(requirements, platform_));
+    }
 
     /// `error` with ONLY its source replaced by this component's id; unchanged when unbound.
     [[nodiscard]] Error attribute(Error error) const noexcept {
