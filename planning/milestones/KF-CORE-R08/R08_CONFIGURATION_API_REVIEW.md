@@ -78,8 +78,8 @@ Carried forward: 32-bit scheduler affinity mask; conformance level-2 mutation ga
 
 ## Decision
 
-`PASS / FROZEN / CHANGES REQUIRED / BLOCKED`
+Reviewer decision: **PASS / FROZEN** (05-10-2026), ChatGPT (independent reviewer). Evidence commit `0a73b5a`.
 
-## Evidence
+**Production freeze baseline: `bdb4b93`** (R08-003, the last production change; contract text only). Frozen for the remainder of R08: `include/kritva/core/configuration/configuration.hpp` and `include/kritva/core/configuration/configuration_version.hpp` (the normative contract text), and the unchanged production surface it governs (`runtime/component.hpp`, `runtime/runtime_manager.hpp`, `runtime/component_context.hpp`, `configuration/parameter.hpp`, `src/`).
 
-Record the review evidence commit and accepted production baseline here after the gate is executed.
+Freeze rule (approved): R08-004 through R08-007 must not change the frozen contract text or any production API or behavior; any required change stops implementation and returns to explicit architecture/API review. The remaining R08 work is test, conformance, integration and validation only.
