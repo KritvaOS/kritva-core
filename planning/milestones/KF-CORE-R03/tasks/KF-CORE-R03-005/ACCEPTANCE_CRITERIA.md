@@ -208,7 +208,17 @@ Re-validation after both commits: `ctest` 23/23 (Debug), Release 23/23, ASan+UBS
 
 ## 9. Reviewer Sign-off
 
-Only the independent architecture reviewer records PASS / CHANGES REQUIRED / BLOCKED.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 03-10-2026 |
+| Decision | **PASS** |
+
+Accepted commits: `e2b660d` `feat(core): implement runtime lifecycle orchestration` (unchanged), `a4f2a65` `fix(core): preserve runtime shutdown progress`, `eac011f` `docs(core): define runtime lifecycle requirement`; evidence `4cc3731`, `f2ea3fb`.
+
+Frozen lifecycle behavior entering R03-006: `configure` (forward order, state unchanged, does not fix the topology); `initialize` (validate and fix the topology, forward order, failure to FAULT); `start` (forward order, failure to FAULT); `stop` (reverse order, failure to FAULT); `shutdown` (reverse order, preserves successful shutdown progress, failure leaves the state unchanged); FAULT (all operations rejected; recovery deferred to R03-006). The per-live-period progress model is the frozen basis for R03-006, which builds explicit recovery on it rather than redesigning the lifecycle tracking.
+
+**Reviewer Decision: PASS — KF-CORE-R03-005 is ACCEPTED.**
 
 ## 10. Git Commit
 
