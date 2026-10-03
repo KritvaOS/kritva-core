@@ -169,11 +169,14 @@ Primary commit: `adb0e08` `feat(core): define component context injection bounda
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `adb0e08` (evidence `71f1a22`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: construction-time injection is additive and explicit (`ComponentContext(const Component&, ...)`, temporaries refused); `src/`, the `Component` lifecycle signatures and `RuntimeManager` are unchanged; the Runtime never creates, stores, passes, finds or probes a context and made no adapter call (all 60 observed calls were the components' own queries); the differential over every service combination with every platform method failing is identical to the plain-component baseline; 17/17 mutants detected. `CORE-CTX-003` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-003 is ACCEPTED.**

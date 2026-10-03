@@ -84,8 +84,6 @@ Scope and API design confirmed by the independent reviewer on 05-10-2026 (`R06_D
 Accepted:
 - KF-CORE-R06-001 — Component Execution Context & Ownership Model (`8031c47`)
 - KF-CORE-R06-002 — Operational Context Services & Access Policy (`072b713`)
-
-Pending independent review:
 - KF-CORE-R06-003 — Context Injection Without Runtime Lifecycle Change (`adb0e08`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
