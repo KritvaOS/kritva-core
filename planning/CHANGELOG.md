@@ -36,6 +36,7 @@ Accepted:
 - KF-CORE-R07-003 — Component Operational Event Contract (`56ff226`; evidence `871b878`)
 
 Pending independent review:
+- KF-CORE-R07-004 — Component Statistics Ownership & Observation Contract (`16654e9`)
 
 ### Release record
 

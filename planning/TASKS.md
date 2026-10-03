@@ -87,7 +87,7 @@ R06 Release Gate
 | KF-CORE-R07-001 | Component Operational Observation Contract | runtime/observation | ACCEPTED (6849a73) | 3–4 ED |
 | KF-CORE-R07-002 | Component Status & Health Reporting Contract | status/health | ACCEPTED (61e0067) | 2–3 ED |
 | KF-CORE-R07-003 | Component Operational Event Contract | event | ACCEPTED (56ff226) | 3–4 ED |
-| KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | statistics | PLANNED | 2–3 ED |
+| KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | statistics | REVIEW (16654e9) | 2–3 ED |
 | R07 Component Operational API Review | Freeze public operational API | architecture | PLANNED | 1 ED |
 | KF-CORE-R07-005 | Reference Operational Harness & Contract Tests | tests/operational | PLANNED | 3–4 ED |
 | KF-CORE-R07-006 | Runtime/Component Operational Integration | tests/integration | PLANNED | 3–4 ED |

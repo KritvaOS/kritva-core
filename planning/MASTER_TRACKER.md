@@ -74,7 +74,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | KF-CORE-R07-001 | Component Operational Observation Contract | 3–4 ED | Scope Confirmation | ACCEPTED (6849a73) | Operational contract |
 | KF-CORE-R07-002 | Component Status & Health Reporting Contract | 2–3 ED | R07-001 | ACCEPTED (61e0067) | Reporting contract |
 | KF-CORE-R07-003 | Component Operational Event Contract | 3–4 ED | R07-002 | ACCEPTED (56ff226) | Event contract |
-| KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | 2–3 ED | R07-003 | PLANNED | API review input |
+| KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | 2–3 ED | R07-003 | REVIEW (16654e9) | API review input |
 | R07 Component Operational API Review | Freeze public operational API | 1 ED | R07-001..004 | PLANNED | **PENDING** |
 | KF-CORE-R07-005 | Reference Operational Harness & Contract Tests | 3–4 ED | API Review PASS/FROZEN | PLANNED | Contract tests |
 | KF-CORE-R07-006 | Runtime/Component Operational Integration | 3–4 ED | R07-005 | PLANNED | Integration Freeze |
