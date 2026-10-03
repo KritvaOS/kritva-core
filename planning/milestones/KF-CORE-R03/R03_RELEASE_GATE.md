@@ -79,7 +79,7 @@ Only the independent architect/reviewer records the final gate decision.
 
 | Gate | Decision | Release Commit | Tag | Reviewer | Date |
 |---|---|---|---|---|---|
-| R03 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.3`) | `kritva-core-r0.3` (annotated, local; not pushed) | ChatGPT | 03-10-2026 |
+| R03 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.3`) | `kritva-core-r0.3` (annotated, on `cc16ec9`, pushed to origin) | ChatGPT | 03-10-2026 |
 
 ## Recorded release
 
@@ -88,6 +88,6 @@ Only the independent architect/reviewer records the final gate decision.
 - Release candidate: `f598fef` (fresh-clone validation; validation record `407df6b`; R03-008 accepted at `ebe79f0`)
 - Decision: **PASS**
 - Release tag: `kritva-core-r0.3`, annotated, on the documentation-only release-record commit that records this gate (not on `f598fef`). That commit changes only release-state documentation (this record, `MILESTONE_STATUS.md`, `MILESTONE.md`, the planning `CHANGELOG.md`); no implementation, API or behavior change.
-- Push: not performed; requires explicit authorization. When authorized, push the branch and the tag together.
+- Push: performed by the user; `origin/main` and the tag `kritva-core-r0.3` (tag object `0dfccab`, target `cc16ec9`) are published.
 
 Deferred as post-R0.3 work or documented caveats (none block the release): `make lint` and `make format-check` tooling (still TODO stubs), the unused `<chrono>` include in `types/duration.hpp`, the stale root `implementation.md`, the historical `kritva-core-r0.1` tag discrepancy, no recovery directly to READY, the raw `fault_error()` pointer, the single shared `Configuration` for all components, and no thread-safety or real-time guarantee.

@@ -4,7 +4,7 @@
 
 ### Release record
 
-- R03 Release Gate — PASS. Kritva Core R0.3 / version 0.3.0; release candidate `f598fef`; tag `kritva-core-r0.3` on the documentation-only release-record commit (annotated, local; push pending).
+- R03 Release Gate — PASS. Kritva Core R0.3 / version 0.3.0; release candidate `f598fef`; tag `kritva-core-r0.3` on the documentation-only release-record commit `cc16ec9` (annotated, pushed to origin).
 
 ### KF-CORE-R03 — Runtime Foundation Planning
 
