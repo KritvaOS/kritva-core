@@ -149,6 +149,8 @@ The context's access policy (CORE-CTX-002) is a closed, typed set of side-effect
 
 Injection (CORE-CTX-003) is by construction only: the integrator builds a component's `ComponentContext` from the component's own identity and a platform view, and the component stores it. The Runtime never creates, holds, passes or probes a context, `Component` and `RuntimeManager` are unchanged, and Runtime behavior is identical with and without contexts. See API.md section 37.
 
+Configuration (R0.8, CORE-CFG-004): `Component::configure()` is the one configuration path; it is valid only from UNKNOWN and STOPPED, fails with INVALID_STATE and no effect elsewhere, never changes the lifecycle state and has no dynamic counterpart. Core holds no configuration store. See API.md section 44.
+
 Operational observation (CORE-OPS-001, CORE-OPS-006): R0.7 adds a read-only, detached `runtime::ComponentObservation` produced by `observe()` from a component's own accessors, with an optional Component-owned `IComponentStatistics` provider. The Component stays authoritative, Core keeps no mirror, no new state machine and no Runtime polling exist, and no frozen header changes. See API.md section 39.
 
 Operational events (CORE-OPS-005, CORE-OPS-008): a component may explicitly report an `Event` through a copyable, non-owning `ComponentEventReporter` to an integrator-owned `IEventSink`; one synchronous call, the sink's `Result` unchanged, no buffering, retry or dispatch, and an event never commands the Runtime. See API.md section 41.
