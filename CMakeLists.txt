@@ -236,6 +236,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_platform_requirements_test PRIVATE kritva_core)
     add_test(NAME kritva_core_platform_requirements COMMAND kritva_core_platform_requirements_test)
 
+    #Add Test: tests/unit/platform_service_test.cpp
+    add_executable(kritva_core_platform_service_test tests/unit/platform_service_test.cpp)
+    target_link_libraries(kritva_core_platform_service_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_platform_service COMMAND kritva_core_platform_service_test)
+
     #Add Test: tests/unit/platform_boundary_test.cpp
     add_executable(kritva_core_platform_boundary_test tests/unit/platform_boundary_test.cpp)
     target_link_libraries(kritva_core_platform_boundary_test PRIVATE kritva_core)

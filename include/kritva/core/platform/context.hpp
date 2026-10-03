@@ -9,7 +9,7 @@
 // Module      : Platform Contract
 // Layer       : Core Foundation
 //
-// Requirements: CORE-PLAT-012
+// Requirements: CORE-PLAT-012, CORE-PLAT-014
 // API         : CORE-API-PLATFORM
 //
 // Author      : KritvaOS Core Team
@@ -20,6 +20,8 @@
 #include "adapter.hpp"
 #include "../capability/capability_id.hpp"
 #include "../capability/capability_set.hpp"
+#include "../error/result.hpp"
+#include <string>
 namespace kritva::core::platform {
 
 //------------------------------------------------------------------------------
@@ -79,6 +81,44 @@ namespace kritva::core::platform {
 //   queries do not instantiate hardware, activate a feature or change Runtime
 //   behavior.
 //
+//
+// EXPLICIT SERVICE CONSUMPTION (CORE-PLAT-014)
+//   require_scheduler(), require_clock(), require_timer() and require_watchdog()
+//   are the explicit way to consume a platform service. Each returns a
+//   Result<T*>:
+//     success  the adapter-owned, non-owning, non-null service pointer (the same
+//              pointer the matching accessor returns)
+//     failure  ErrorCode::UNSUPPORTED with ErrorSeverity::ERROR and no component
+//              source, when the context is unattached or the adapter does not
+//              provide the service. The message says which service and whether
+//              no platform is attached or the platform does not provide it; the
+//              code, not the message, is the contract.
+//   Requiring a service is a query: it never starts, stops, configures, creates
+//   or owns anything, never opens hardware, and has no side effect. An
+//   unavailable service is a normal, deterministic result of the platform the
+//   integrator chose, never an exception and never an abort. Check several needs
+//   at once, before using any, with PlatformRequirements and check_required()
+//   (platform/requirements.hpp).
+//
+//   After a successful require_*() the caller uses the service directly, through
+//   its own contract (platform/scheduler.hpp, time/clock.hpp, time/timer.hpp,
+//   platform/watchdog.hpp), exactly as for an adapter's accessor:
+//   - SERVICE ERRORS ARE NEVER TRANSLATED. Core wraps, rewrites and adds nothing:
+//     an Error a service returns keeps its code, severity and message. The only
+//     error Core itself produces here is the UNSUPPORTED above.
+//   - A Component that propagates a platform Error through one of its lifecycle
+//     operations sets the Error's source to its own ComponentId, as every Error
+//     returned by a Component operation does (runtime/component.hpp), and leaves
+//     the code and message unchanged; the Runtime then propagates it unchanged
+//     (R0.3 failure semantics). Core offers no error-wrapping helper.
+//   - Callback, context-lifetime and re-entry rules are exactly those of the
+//     service contracts (R0.4): obtaining a service through a context changes
+//     none of them, and a callback re-entering its own service through a
+//     pointer obtained here is treated as it is for any other pointer.
+//   - Nothing is started or stopped implicitly: the service's state is whatever
+//     the integrator or adapter made it; destroying or copying the context
+//     leaves it untouched.
+//
 // THREADS, ALLOCATION, REAL TIME
 //   A context holds no state of its own beyond one pointer and is as
 //   thread-safe as the adapter it forwards to (adapter-defined). Only
@@ -109,10 +149,22 @@ public:
     /// The adapter's capability snapshot (empty when unattached), owned by the caller.
     [[nodiscard]] CapabilitySet capabilities() const { return adapter_ ? adapter_->capabilities() : CapabilitySet{}; }
 
+    /// Explicit consumption: the adapter-owned service, or UNSUPPORTED when unattached or unsupported.
+    [[nodiscard]] Result<IScheduler*> require_scheduler() const { return require(scheduler(), "scheduler"); }
+    [[nodiscard]] Result<time::IClock*> require_clock() const { return require(clock(), "clock"); }
+    [[nodiscard]] Result<time::ITimer*> require_timer() const { return require(timer(), "timer"); }
+    [[nodiscard]] Result<IWatchdog*> require_watchdog() const { return require(watchdog(), "watchdog"); }
+
     /// True when the adapter reports a capability with this identity.
     [[nodiscard]] bool has_capability(CapabilityId id) const { return capabilities().contains(id); }
 
 private:
+    template<class Service> Result<Service*> require(Service* service, const char* name) const {
+        if (service != nullptr) return Result<Service*>::success(service);
+        return Result<Service*>::failure(Error{ErrorCode::UNSUPPORTED, ErrorSeverity::ERROR, {}, {},
+            std::string("platform service is not available: ") + name + (adapter_ == nullptr ? " (no platform is attached)" : " (not provided by the platform)")});
+    }
+
     IPlatformAdapter* adapter_{nullptr};   // non-owning; the integrator owns the adapter
 };
 } // namespace kritva::core::platform

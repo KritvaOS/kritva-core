@@ -139,6 +139,8 @@ R0.5 adds `platform::PlatformContext` (CORE-PLAT-012): a copyable, non-owning vi
 
 Platform requirements (CORE-PLAT-013) are declarative: `PlatformRequirements` lists required and optional services and capabilities by identity, and `evaluate()`/`check_required()` compare them with a `PlatformContext` without side effects. Capability identity alone decides; no platform name or version is ever consulted. See API.md section 32.
 
+Explicit consumption (CORE-PLAT-014): `PlatformContext::require_scheduler()/require_clock()/require_timer()/require_watchdog()` return the adapter-owned service or `UNSUPPORTED`; they only query, start and stop nothing, and platform service errors are never translated by Core (a Component that propagates one sets its own source). See API.md section 33.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
