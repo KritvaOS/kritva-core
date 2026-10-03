@@ -33,4 +33,4 @@ Nothing else in `include/` or `src/` changed since the Platform API Review: the 
 
 None blocking. Carried forward: 32-bit scheduler affinity mask (documented limitation, frozen); level-2 mutation strictness gap of the conformance suite (documented in R04-006); `make lint` / `make format-check` deferred stubs. The only production change still permitted by the milestone is the additive `RuntimeManager::attach_platform` / `platform()` of R04-007, which needs its own review.
 
-Reviewer decision: PENDING
+Reviewer decision: **PASS / HONORED** (04-10-2026; see `R04_PLATFORM_INTEGRATION_FREEZE.md`)

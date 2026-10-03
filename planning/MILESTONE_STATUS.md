@@ -151,7 +151,7 @@ Release: Kritva Core R0.3, version 0.3.0; release candidate `f598fef`; release-r
 | R04 Platform API Review | PASS / FROZEN (`380ade3`) | R04-004 |
 | KF-CORE-R04-005 | Platform Capability & Adapter Contract | ACCEPTED (f7231c1) | Platform API Review |
 | KF-CORE-R04-006 | Platform Conformance Tests | ACCEPTED (460de87) | R04-005 |
-| R04 Platform Integration Freeze | PLANNED | R04-006 |
+| R04 Platform Integration Freeze | PASS / HONORED (`84046b0`) | R04-006 |
 | KF-CORE-R04-007 | Runtime–Platform Integration Boundary | PLANNED | Platform Integration Freeze |
 | KF-CORE-R04-008 | Full R0.4 Validation | PLANNED | R04-007 |
 | R04 Release Gate | PLANNED | R04-008 |
