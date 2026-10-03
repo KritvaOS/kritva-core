@@ -61,3 +61,4 @@
 #include "platform/watchdog.hpp"
 #include "platform/adapter.hpp"
 #include "platform/context.hpp"
+#include "platform/requirements.hpp"

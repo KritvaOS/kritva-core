@@ -137,6 +137,8 @@ The Runtime-platform boundary (CORE-PLAT-010) is one optional, additive pair on 
 
 R0.5 adds `platform::PlatformContext` (CORE-PLAT-012): a copyable, non-owning view over one `IPlatformAdapter` for integrator-written code. It owns nothing, is not a registry or service locator, and forwards service and capability queries to the adapter on demand; the integrator keeps ownership and the adapter must outlive every context. See API.md section 31.
 
+Platform requirements (CORE-PLAT-013) are declarative: `PlatformRequirements` lists required and optional services and capabilities by identity, and `evaluate()`/`check_required()` compare them with a `PlatformContext` without side effects. Capability identity alone decides; no platform name or version is ever consulted. See API.md section 32.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
