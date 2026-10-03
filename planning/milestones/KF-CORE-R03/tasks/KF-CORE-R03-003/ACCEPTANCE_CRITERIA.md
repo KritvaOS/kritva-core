@@ -183,15 +183,24 @@ Focused post-review corrections must use a separate `fix(core): ...` commit.
 
 | Item | Result |
 |---|---|
-| Implementation complete | ☐ |
-| Unit tests complete | ☐ |
-| Integration/regression tests complete | ☐ |
-| Validation gates complete | ☐ |
-| Dependency API reviewed | ☐ |
-| Ordering semantics reviewed | ☐ |
-| Architecture constraints satisfied | ☐ |
-| Reviewer decision | **PASS / CHANGES REQUIRED / BLOCKED** |
-| Reviewer | __________________ |
-| Date | __________________ |
+| Implementation complete | ☑ |
+| Unit tests complete | ☑ |
+| Integration/regression tests complete | ☑ |
+| Validation gates complete | ☑ |
+| Dependency API reviewed | ☑ |
+| Ordering semantics reviewed | ☑ |
+| Architecture constraints satisfied | ☑ |
+| Reviewer decision | **PASS** |
+| Reviewer | ChatGPT |
+| Date | 03-10-2026 |
 
-Final acceptance is followed by the R03 Foundation API Review.
+Accepted commits: `795fb94` `feat(core): add runtime dependency management` (evidence `7e2a53b`). No corrective implementation commit was required.
+
+Approved decisions (now frozen going into the R03 Foundation API Review):
+- The tie-break among simultaneously eligible components is the lowest `ComponentId` (an approved deviation from the original "registration order" wording, because the accepted registry makes registration order unobservable). R03-004 must not introduce another implicit ordering rule.
+- The graph is standalone: it uses the registry only in `order()` and is never bound to one.
+- Cycles are rejected when the edge is added, so a successfully built graph is always acyclic; failed mutations are atomic.
+- Missing registered components are detected in `order()` with `CONFIGURATION_ERROR` (source = the dependent); no new error code.
+- `order()` returns `ComponentId`s, never `Component*`; the graph stores ids only and never owns or calls components.
+
+**Reviewer Decision: PASS — KF-CORE-R03-003 is ACCEPTED.** The R03 Foundation API Review is the next gate; R03-004 is blocked until it passes.
