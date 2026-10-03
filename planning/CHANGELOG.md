@@ -70,6 +70,9 @@ Accepted:
 - KF-CORE-R04-004 — Watchdog Contract (`4af4756`)
 - R04 Platform API Review — PASS / FROZEN (evidence `380ade3`)
 
+Pending independent review:
+- KF-CORE-R04-005 — Platform Capability & Adapter Contract (`f7231c1`)
+
 
 R0.4 planning activated after the R0.3 release.
 
