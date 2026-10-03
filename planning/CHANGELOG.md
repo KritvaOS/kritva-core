@@ -34,6 +34,7 @@ Accepted:
 - KF-CORE-R08-001 — Component Configuration Contract & Lifecycle Semantics (`605516b`; evidence `bb3752a`)
 
 Pending independent review:
+- KF-CORE-R08-002 — Configuration Ownership & Atomic Application (`6efeaac`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
