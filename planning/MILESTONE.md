@@ -66,7 +66,7 @@ See `planning/milestones/KF-CORE-R05/` for the complete proposal and task accept
 
 ## KF-CORE-R06 — Component Execution Context
 
-Status: PLANNED — Architecture Proposal
+Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.6` created locally on the release-record commit; RELEASED after it is pushed)
 
 ### Objective
 
@@ -74,7 +74,7 @@ Provide integrator-written Components with one explicit, deterministic, non-owni
 
 ### R0.6 Scope Status
 
-R0.6 is an architecture proposal only. Implementation authorization begins only after the architecture/design review confirms the direction and the R06 task package is accepted for execution.
+R0.6 is implemented and accepted (R06-001..007, Component API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS). Version 0.6.0; release candidate `b473e5d`.
 
 ### Task Order
 
