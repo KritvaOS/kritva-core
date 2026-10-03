@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.8.0 — Component Configuration Foundation (KF-CORE-R08)
+
+A precise, platform-independent contract around the existing configuration path: `Configuration`,
+`ConfigurationVersion`, `Component::configure(const Configuration&)` and `RuntimeManager::configure()`. R0.8 adds no
+dynamic reconfiguration, no parameter server, persistence, event or background activity, no new lifecycle state, no
+new `ErrorCode` and no change to `Component`, `RuntimeManager` or `ComponentContext`. R0.8 adds **no production type,
+signature or behavior**: the production change is the normative contract text in two configuration headers.
+
+### Contract
+- **Lifecycle eligibility:** `configure()` is valid only from `UNKNOWN` and `STOPPED`; from `READY`, `RUNNING` and `FAULT`
+  it fails with `INVALID_STATE` and has no other effect. A successful or rejected `configure()` never changes the
+  lifecycle state; `RuntimeManager::configure()` follows the same rule and never enters `FAULT`. There is no
+  `CONFIGURED`/`RECONFIGURING` state and no `reconfigure()`, `set_parameter()`, `get_parameter()` or `configuration()`.
+- **Ownership:** the caller owns the `Configuration` (const reference, valid only for the call); a conforming component
+  copies what it keeps and retains no address, reference or pointer into it; Core stores and caches nothing and the
+  Runtime forwards the caller's own object.
+- **Atomic application:** all-or-nothing; on any failure the previously accepted configuration (or the initial state) is
+  unchanged and the lifecycle state is unchanged. There is no cross-component transaction or Runtime rollback.
+- **Validation boundary:** Core owns structural validation (`Configuration::validate()`, one invariant enforced at
+  `set()`); the component owns semantic validation. Errors use the existing codes: `INVALID_STATE`, `INVALID_ARGUMENT`,
+  `CONFIGURATION_ERROR`, returned unchanged by the Runtime.
+- **`ConfigurationVersion`** is the schema/contract compatibility version (an alias of `Version`), not a revision,
+  counter, transaction id or history; compatibility is the component's policy.
+- **Runtime forwarding:** the same caller object reaches every component exactly once in dependency order, stopping at
+  the first failure with that component's `Error` unchanged, no retry and no rollback, whether or not the topology is
+  fixed; configuration is independent of Status, Health, `FAULT`, `ComponentContext` and the platform.
+
+### Build and validation
+- New requirements `CORE-CFG-004` to `CORE-CFG-013`, traced.
+- A test-only configuration harness (a contract-following component with 22 deliberately broken variants, reusable
+  contract and Runtime-forwarding checks), a seeded Runtime differential (200 seeds) and a compile-time snapshot of the
+  frozen configuration boundary that detects any signature, enumerator or reconfiguration/revision drift.
+- Validated from a fresh clone with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are placeholders).
+- The scheduler CPU affinity mask is 32 bits; widening it would be a separately reviewed change.
+- The conformance suite's single-check mutation strictness is documented as a known gap (see R04-006).
+- A context, reporter, statistics provider or retained configuration pointer must not outlive what it refers to
+  (documented undefined behavior; they are non-owning by design).
+
 ## 0.7.0 — Component Operational Foundation (KF-CORE-R07)
 
 A narrow, platform-independent way to observe a Component's operational information and to report its occurrences,
