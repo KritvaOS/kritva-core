@@ -169,6 +169,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_runtime_test PRIVATE kritva_core)
     add_test(NAME kritva_core_runtime COMMAND kritva_core_runtime_test)
 
+    #Add Test: tests/unit/component_test.cpp
+    add_executable(kritva_core_component_test tests/unit/component_test.cpp)
+    target_link_libraries(kritva_core_component_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_component COMMAND kritva_core_component_test)
+
     #Add Test: tests/unit/messaging_test.cpp
     add_executable(kritva_core_messaging_test tests/unit/messaging_test.cpp)
     target_link_libraries(kritva_core_messaging_test PRIVATE kritva_core)

@@ -22,6 +22,7 @@
 
 #include <cassert>
 #include <type_traits>
+#include <utility>
 
 #include "kritva/core/runtime/component.hpp"
 #include "kritva/core/runtime/runtime.hpp"
@@ -35,8 +36,17 @@ namespace {
 // Component test double
 // -----------------------------------------------------------------------------
 
+// A Component now carries an immutable identity (CORE-RT-001, KF-CORE-R03-001).
+ComponentInfo make_info() {
+    auto info = ComponentInfo::create(ComponentId{1}, "fake-component");
+    assert(info.has_value());
+    return std::move(info).value();
+}
+
 class FakeComponent final : public Component {
 public:
+    FakeComponent() : Component(make_info()) {}
+
     Result<void> configure(const Configuration& configuration) override {
         ++configure_count;
         configured = true;

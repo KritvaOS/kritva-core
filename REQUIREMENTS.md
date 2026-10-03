@@ -31,7 +31,7 @@
 - CORE-PLAT-001 Define scheduler platform contract: TaskConfig field semantics (priority is implementation-independent and relative with no Core-defined range, cpu_affinity is a bit mask where 0 means unconstrained, period 0 means aperiodic), non-owning context and entry lifetime, create_task registers inactive tasks while stopped with dynamic creation while running left to the adapter, idempotent start/stop, opaque TaskId with 0 invalid and unique among existing tasks, and atomic reported (not thrown) failures.
 - CORE-PLAT-002 Define clock platform contract.
 - CORE-PLAT-003 Define watchdog platform contract.
-- CORE-RT-001 Define lifecycle-managed component contract.
+- CORE-RT-001 Define the platform-independent lifecycle-managed component contract: immutable component identity (ComponentId, valid iff non-zero) and metadata (ComponentInfo: id, non-empty name, version) fixed at construction; explicit lifecycle operation semantics that reuse the Core lifecycle states and transition table (no new state); Result/Error integration in which every returned Error is attributable (source is the component id); non-owning lifetime (Core never owns, copies or moves components); and no universal thread-safety or real-time guarantee.
 - CORE-RT-002 Define runtime contract.
 - CORE-MSG-001 Define platform-neutral message identity/header.
 
@@ -127,7 +127,7 @@ Requirement IDs are identifiers, not a contiguous sequence; gaps are not filled.
 | CORE-CAP-003 | capability/capability_set.hpp | src/capability_set.cpp | tests/unit/capability_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-CFG-001, CORE-CFG-002 | configuration/parameter.hpp, configuration/configuration.hpp | src/configuration.cpp | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-CFG-003 | configuration/configuration_version.hpp | header-only | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
-| CORE-RT-001 | runtime/component.hpp | header-only | tests/unit/runtime_test.cpp |
+| CORE-RT-001 | runtime/component.hpp, runtime/component_id.hpp, runtime/component_info.hpp | header-only | tests/unit/runtime_test.cpp, tests/unit/component_test.cpp, tests/contract/component_contract.hpp |
 | CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
 | CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |
 | CORE-MSG-002 | messaging/topic.hpp | header-only | tests/unit/messaging_test.cpp |

@@ -43,6 +43,8 @@
 #include "configuration/parameter.hpp"
 #include "configuration/configuration.hpp"
 #include "configuration/configuration_version.hpp"
+#include "runtime/component_id.hpp"
+#include "runtime/component_info.hpp"
 #include "runtime/component.hpp"
 #include "runtime/runtime.hpp"
 #include "messaging/message.hpp"
