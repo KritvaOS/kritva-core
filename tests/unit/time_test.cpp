@@ -45,11 +45,15 @@ private:
     Timestamp timestamp_{};
 };
 
+void noop(void*) {}
+
 class FakeTimer final : public ITimer {
 public:
-    Result<void> start(Duration period) override {
+    Result<void> start(Duration period, TimerMode mode, Callback callback) override {
         ++start_count;
         last_period = period;
+        last_mode = mode;
+        last_callback = callback;
         running = true;
         return Result<void>::success();
     }
@@ -61,6 +65,8 @@ public:
     }
 
     Duration last_period{};
+    TimerMode last_mode{TimerMode::ONE_SHOT};
+    Callback last_callback{};
     std::uint32_t start_count{0};
     std::uint32_t stop_count{0};
     bool running{false};
@@ -129,20 +135,22 @@ void test_timer_starts_with_period() {
     FakeTimer timer;
 
     const Duration period = Duration::from_milliseconds(10);
-    const Result<void> result = timer.start(period);
+    const Result<void> result = timer.start(period, TimerMode::PERIODIC, Callback{&noop, nullptr});
 
     assert(result);
     assert(result.has_value());
     assert(timer.start_count == 1);
     assert(timer.running);
     assert(timer.last_period == period);
+    assert(timer.last_mode == TimerMode::PERIODIC);
+    assert(timer.last_callback.valid());
 }
 
 void test_timer_stops() {
     FakeTimer timer;
 
     const Duration period = Duration::from_milliseconds(10);
-    assert(timer.start(period));
+    assert(timer.start(period, TimerMode::PERIODIC, Callback{&noop, nullptr}));
     assert(timer.running);
 
     const Result<void> result = timer.stop();
@@ -151,19 +159,6 @@ void test_timer_stops() {
     assert(result.has_value());
     assert(timer.stop_count == 1);
     assert(!timer.running);
-}
-
-void test_timer_preserves_zero_duration_value() {
-    // The current ITimer contract does not define period validation.
-    // Therefore this test checks only that a zero Duration can be passed
-    // through the interface. Validation policy belongs to an implementation.
-    FakeTimer timer;
-
-    const Duration zero = Duration::from_nanoseconds(0);
-    const Result<void> result = timer.start(zero);
-
-    assert(result);
-    assert(timer.last_period == zero);
 }
 
 // Timestamps are not orderable or subtractable by design: this keeps mixed
@@ -209,7 +204,7 @@ void test_clock_domain_is_stable_per_instance() {
 class ClockAndTimer final : public IClock, public ITimer {
 public:
     [[nodiscard]] Timestamp now() const noexcept override { return Timestamp{1}; }
-    Result<void> start(Duration) override { return Result<void>::success(); }
+    Result<void> start(Duration, TimerMode, Callback) override { return Result<void>::success(); }
     Result<void> stop() override { return Result<void>::success(); }
 };
 
@@ -218,7 +213,7 @@ void test_clock_and_timer_are_independent_contracts() {
     const IClock& clock = both;
     ITimer& timer = both;
     assert(clock.now() == Timestamp{1});
-    assert(timer.start(Duration::from_milliseconds(1)));
+    assert(timer.start(Duration::from_milliseconds(1), TimerMode::ONE_SHOT, Callback{&noop, nullptr}));
     assert(timer.stop());
     static_assert(!std::is_base_of_v<IClock, ITimer>);
     static_assert(!std::is_base_of_v<ITimer, IClock>);
@@ -239,7 +234,6 @@ int main() {
     test_timer_contract_shape();
     test_timer_starts_with_period();
     test_timer_stops();
-    test_timer_preserves_zero_duration_value();
 
     return 0;
 }

@@ -61,6 +61,10 @@ namespace kritva::core::time {
 //     document the restriction. Callers must not assume concurrent now() is
 //     safe on an arbitrary IClock unless the adapter says so.
 //
+// Timers: a timer (time/timer.hpp) measures elapsed time on a monotonic base
+// and is independent of IClock and of the REALTIME domain; it carries no
+// ClockDomain.
+//
 // Out of scope: timers, scheduling and callbacks (see ITimer, IScheduler).
 //------------------------------------------------------------------------------
 class IClock {
