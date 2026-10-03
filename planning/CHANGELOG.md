@@ -38,6 +38,7 @@ Accepted:
 - R07 Component Operational API Review — PASS / FROZEN (evidence `6b1296f`)
 
 Pending independent review:
+- KF-CORE-R07-005 — Reference Operational Harness & Contract Tests (`0b1bd1d`)
 
 ### Release record
 
