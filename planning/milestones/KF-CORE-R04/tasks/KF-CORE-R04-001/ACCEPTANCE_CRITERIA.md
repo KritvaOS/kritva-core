@@ -111,12 +111,12 @@ Primary commit: `d1c5f13` `feat(core): define platform adapter boundary`; design
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commit: `d1c5f13` `feat(core): define platform adapter boundary`; evidence `5130b89`. No changes required.
+
+**Reviewer Decision: PASS — KF-CORE-R04-001 is ACCEPTED.** R04-002, R04-003 and R04-004 are authorized, each reviewed independently.
