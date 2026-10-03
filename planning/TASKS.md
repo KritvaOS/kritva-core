@@ -49,7 +49,7 @@ R05 Release Gate
 | R06 Component API Review | Freeze public context/API | architecture | PASS / FROZEN | 1 ED |
 | KF-CORE-R06-005 | Reference Context Harness & Contract Tests | tests/context | ACCEPTED | 3–4 ED |
 | KF-CORE-R06-006 | Runtime/Component Context Integration Tests | tests/integration | ACCEPTED | 3–4 ED |
-| R06 Integration Freeze | Freeze production behavior | architecture | PLANNED | 0.5 ED |
+| R06 Integration Freeze | Freeze production behavior | architecture | PASS / HONORED | 0.5 ED |
 | KF-CORE-R06-007 | Full R0.6 Validation | integration/validation | PLANNED | 2–3 ED |
 | R06 Release Gate | Release 0.6.0 | release | PLANNED | 1 ED |
 

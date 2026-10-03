@@ -89,6 +89,7 @@ Accepted:
 - R06 Component API Review — PASS / FROZEN (evidence `06207c7`)
 - KF-CORE-R06-005 — Reference Context Harness & Contract Tests (`c7f7b46`)
 - KF-CORE-R06-006 — Runtime/Component Context Integration Tests (`2fd5424`)
+- R06 Integration Freeze — PASS / HONORED (production freeze point `5b755af`; evidence `769ac8d`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
 

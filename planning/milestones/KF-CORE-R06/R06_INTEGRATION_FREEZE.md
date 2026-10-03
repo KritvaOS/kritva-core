@@ -55,8 +55,20 @@ R06-005 and R06-006 are ACCEPTED (`0c419ab`, `d0794b5`). The component/context i
 
 Carried forward: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; a context used after what it refers to is destroyed is documented undefined behavior (non-owning by design). The only remaining work is R06-007 (validation, release metadata 0.6.0) and the Release Gate; neither may change production API.
 
-Reviewer decision: PENDING
+Reviewer decision: **PASS / HONORED** (05-10-2026)
 
-## Decision
+## Reviewer Decision
 
-PASS / HONORED / CHANGES REQUIRED / BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 05-10-2026 |
+| Decision | **PASS / HONORED** |
+
+**Production freeze point: `5b755af`** (R06-004, the last production change). R06-005 `c7f7b46` and R06-006 `2fd5424` changed tests only; R06-006 accepted at `d0794b5`; evidence `769ac8d`; Component API Review baseline `06207c7`. `git diff 06207c7 HEAD -- include src` is empty: production code and API are unchanged after the freeze.
+
+Frozen: `runtime::ComponentContext` (as frozen at the Component API Review) together with the Runtime/Component semantics it must not change, and the test-only harness and isolation guards. R06-007 is validation and release metadata only; the production API must not be redesigned or expanded.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; the documented non-owning lifetime rule.
+
+**Reviewer Decision: PASS / HONORED — KF-CORE-R06 Integration Freeze is ACCEPTED.**
