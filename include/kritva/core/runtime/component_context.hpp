@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-CTX-001, CORE-CTX-002
+// Requirements: CORE-CTX-001, CORE-CTX-002, CORE-CTX-003
 // API         : CORE-API-COMPONENT-CONTEXT
 //
 // Author      : KritvaOS Core Team
@@ -17,6 +17,7 @@
 //==============================================================================
 
 #pragma once
+#include "component.hpp"
 #include "component_id.hpp"
 #include "component_info.hpp"
 #include "../platform/context.hpp"
@@ -115,6 +116,37 @@ namespace kritva::core::runtime {
 //   returns the original error unchanged. It is noexcept: it takes the Error by
 //   value (any copy happens at the call) and changes one field.
 //
+//
+// INJECTION (CORE-CTX-003)
+//   A component obtains its context by CONSTRUCTION, and only by construction:
+//   the integrator builds the context from the component's own identity and a
+//   platform view (from an adapter, or from runtime::RuntimeManager::platform())
+//   and the component stores it, usually as a const member initialized in its own
+//   constructor:
+//
+//       Worker(ComponentInfo info, platform::PlatformContext platform)
+//           : Component(std::move(info)), context_(*this, platform) {}
+//
+//   ComponentContext(const Component&, platform::PlatformContext = {}) is that
+//   spelling: it uses component.info(), which is valid as soon as the Component
+//   base is constructed and stays valid until the component is destroyed. A
+//   temporary Component would dangle and is refused at compile time.
+//
+//   Nothing else injects, finds, creates or passes a context:
+//   - The Runtime never creates, stores, passes or probes a ComponentContext. There
+//     is no RuntimeManager member for it, no automatic injection and no
+//     registration hook, and RuntimeManager::attach_platform()/platform() keep their
+//     R0.4/R0.5 meaning (the integrator may build a platform view from platform()).
+//   - The Component base class is unchanged: it has no context member and its
+//     lifecycle operations keep exactly their R0.3 signatures; a component's
+//     context is its own private business.
+//   - Because the Runtime never sees the context, Runtime ordering, failure
+//     propagation, fail-fast, FAULT, reset() and statistics are exactly those of
+//     R0.3 whether or not components hold contexts, and whatever they do with them.
+//   - The context carries no lifecycle: it is not created, destroyed, configured,
+//     started, stopped or recovered by the Runtime or by Core; its lifetime is its
+//     owner's, which must be shorter than the identity's and the adapter's.
+//
 // NO CONTEXT AMPLIFICATION
 //   The context never returns, directly or indirectly, a broader authority than
 //   it was given: no RuntimeManager, ComponentRegistry, other Component,
@@ -135,6 +167,13 @@ public:
     /// Bound to `info` (which must outlive the context) and to the platform view `platform`.
     explicit ComponentContext(const ComponentInfo& info, platform::PlatformContext platform = {}) noexcept
         : info_(&info), platform_(platform) {}
+
+    /// Bound to the identity of `component` (which must outlive the context): the construction-time injection.
+    explicit ComponentContext(const Component& component, platform::PlatformContext platform = {}) noexcept
+        : ComponentContext(component.info(), platform) {}
+
+    /// A temporary component would dangle: refused at compile time.
+    ComponentContext(const Component&&, platform::PlatformContext = {}) = delete;
 
     /// A temporary identity would dangle: refused at compile time.
     ComponentContext(const ComponentInfo&&, platform::PlatformContext = {}) = delete;

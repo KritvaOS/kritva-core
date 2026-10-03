@@ -147,6 +147,8 @@ R0.6 adds `runtime::ComponentContext` (CORE-CTX-001): the explicit, non-owning c
 
 The context's access policy (CORE-CTX-002) is a closed, typed set of side-effect-free queries: the four `require_*()` service queries (the R0.5 availability error is attributed to the component when the context is bound), `supports()`, `has_capability()` and `attribute()`, which replaces only an Error's source. There is no generic or by-name access and no path to a broader authority. See API.md section 36.
 
+Injection (CORE-CTX-003) is by construction only: the integrator builds a component's `ComponentContext` from the component's own identity and a platform view, and the component stores it. The Runtime never creates, holds, passes or probes a context, `Component` and `RuntimeManager` are unchanged, and Runtime behavior is identical with and without contexts. See API.md section 37.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

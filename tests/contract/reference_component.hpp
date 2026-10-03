@@ -34,7 +34,7 @@ namespace kritva::core::runtime::contract {
 ///
 /// Failure injection: set `fail_next_*` before calling an operation; that single
 /// call fails with the given ErrorCode after the operation was otherwise valid.
-class ReferenceComponent final : public Component {
+class ReferenceComponent : public Component {
 public:
     explicit ReferenceComponent(ComponentInfo info) : Component(std::move(info)) {}
 

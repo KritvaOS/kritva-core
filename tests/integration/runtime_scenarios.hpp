@@ -59,11 +59,15 @@ struct World {
     std::vector<std::unique_ptr<contract::ReferenceComponent>> components;
     RuntimeManager runtime;
 
-    World(const Script& script, platform::IPlatformAdapter* adapter) {
+    /// Builds one component from its info; the default builds a plain ReferenceComponent.
+    using Factory = std::function<std::unique_ptr<contract::ReferenceComponent>(ComponentInfo)>;
+
+    World(const Script& script, platform::IPlatformAdapter* adapter, const Factory& make = {}) {
         components.resize(script.n);
         for (std::uint64_t id : script.registration) {
             auto info = ComponentInfo::create(ComponentId{id}, "c");
-            components[id - 1] = std::make_unique<contract::ReferenceComponent>(std::move(info).value());
+            components[id - 1] = make ? make(std::move(info).value())
+                                      : std::make_unique<contract::ReferenceComponent>(std::move(info).value());
             components[id - 1]->trace = &trace;
             assert(runtime.register_component(*components[id - 1]));
         }
