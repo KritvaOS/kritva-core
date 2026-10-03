@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.4.0 — Platform Abstraction (KF-CORE-R04)
+
+Platform contracts and integration boundaries on top of the unchanged R0.3 runtime. R0.4 does not implement a
+concrete Linux, RTOS, MCU, vendor, Nexus or Edge platform adapter, and adds no thread, executor or background
+execution.
+
+### Platform contracts
+- `Callback` (`types/callback.hpp`): function plus opaque, non-owning, caller-owned context. Platform boundary
+  rules (`platform/boundary.hpp`): adapters live outside Core, the integrator owns adapters and services, no
+  singleton or service locator, failures through `Result`/`Error` with defined meanings, atomic failure,
+  adapter-defined thread safety, no real-time guarantee.
+- `platform::IScheduler` hardened (task ids, atomic creation, idempotent start and stop, no entry after stop,
+  adapter-defined priority, affinity and capacity). Signatures unchanged; the 32-bit affinity mask is a
+  documented limitation.
+- **Breaking:** `time::ITimer::start(Duration)` is now `start(Duration period, TimerMode mode, Callback
+  callback)` (`ONE_SHOT`/`PERIODIC`); synchronous idempotent `stop()`; no clock domain on timers. `time::IClock`
+  remains canonical and `platform::IClock` remains an alias.
+- `platform::IWatchdog` hardened (STOPPED/RUNNING, `start`, `kick`, `stop` semantics; expiry is
+  adapter-defined and never triggers Runtime recovery). Signatures unchanged.
+- `platform::IPlatformAdapter`, `PlatformInfo`, `PlatformService`: identity, service discovery (non-owning
+  pointers, `nullptr` meaning unsupported, non-virtual `supports()`) and capability snapshot.
+
+### Runtime
+- Additive, optional `RuntimeManager::attach_platform()` and `platform()`: setup-only, non-owning, never
+  replaces, never probes; the Runtime never calls the adapter, so behavior is identical with and without one
+  (proven by a differential test). No R0.3 signature or semantic changed.
+
+### Build and validation
+- New requirements `CORE-PLAT-004` to `CORE-PLAT-011`, traced; the audit also forbids operating-system and
+  vendor headers in production sources. Public-header self-containment is checked by the build.
+- Reusable platform conformance suite in `tests/platform/` for future external adapters, validated against
+  conforming adapters under different adapter policies and 69 deliberately faulty doubles.
+- Validated from a fresh clone with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and 98% line coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are
+  placeholders).
+- The scheduler CPU affinity mask is 32 bits; widening it would be a separately reviewed change.
+- The conformance suite's single-check mutation strictness is documented as a known gap (see R04-006).
+
 ## 0.3.0 — Runtime Foundation (KF-CORE-R03)
 
 Platform-independent, synchronous runtime foundation on top of the R0.2 contracts. No scheduler, executor,

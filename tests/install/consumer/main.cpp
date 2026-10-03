@@ -25,6 +25,19 @@
 #include <string>
 #include <utility>
 
+// A minimal platform adapter (no services, no capabilities) implemented against the installed contract.
+class BareAdapter final : public kritva::core::platform::IPlatformAdapter {
+public:
+    [[nodiscard]] const kritva::core::platform::PlatformInfo& info() const noexcept override { return info_; }
+    [[nodiscard]] kritva::core::platform::IScheduler* scheduler() const noexcept override { return nullptr; }
+    [[nodiscard]] kritva::core::time::IClock* clock() const noexcept override { return nullptr; }
+    [[nodiscard]] kritva::core::time::ITimer* timer() const noexcept override { return nullptr; }
+    [[nodiscard]] kritva::core::platform::IWatchdog* watchdog() const noexcept override { return nullptr; }
+    [[nodiscard]] kritva::core::CapabilitySet capabilities() const override { return {}; }
+private:
+    kritva::core::platform::PlatformInfo info_{"bare", kritva::core::Version{1, 0, 0}};
+};
+
 int main() {
     using namespace kritva::core;
 
@@ -38,7 +51,7 @@ int main() {
     const Status status(StatusCode::OK);
     if (status.code() != StatusCode::OK) return 4;
 
-    if ((Version{0, 3, 0}).to_string() != "0.3.0") return 5;
+    if ((Version{0, 4, 0}).to_string() != "0.4.0") return 5;
 
     // Compiled runtime library code: the component registry.
     using namespace kritva::core::runtime;
@@ -99,5 +112,22 @@ int main() {
     if (!faulty.reset() || faulty.state() != LifecycleState::STOPPED || faulty.fault_error() != nullptr) return 25;
     if (faulty.statistics().error_count.value() != 1) return 26;
     if (!faulty.initialize() || !faulty.start()) return 27;                  // a new explicit attempt
+
+    // Platform adapter boundary (R0.4) through the installed headers and library.
+    BareAdapter adapter;
+    RuntimeManager platform_manager;
+    if (platform_manager.platform() != nullptr) return 28;                   // optional: nothing attached by default
+    if (!platform_manager.attach_platform(adapter)) return 29;
+    if (platform_manager.platform() != &adapter) return 30;
+    if (platform_manager.attach_platform(adapter)) return 31;                // never replaced, not even by itself
+    for (const auto service : {platform::PlatformService::SCHEDULER, platform::PlatformService::CLOCK,
+                               platform::PlatformService::TIMER, platform::PlatformService::WATCHDOG}) {
+        if (adapter.supports(service)) return 32;                            // nullptr means unsupported
+    }
+    if (platform_manager.platform()->info().name != "bare") return 33;
+    if (!platform_manager.register_component(stub) || !platform_manager.initialize()) return 34;
+    const auto late = platform_manager.attach_platform(adapter);
+    if (late || late.error().code != ErrorCode::INVALID_STATE) return 35;    // closed once the topology is fixed
+    if (platform_manager.platform() != &adapter) return 36;
     return 0;
 }

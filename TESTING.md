@@ -10,7 +10,7 @@ Testing validates that Kritva Core implements documented requirements and public
 Unit Test → Contract Test → Integration Test → System Validation
 ```
 
-R0.2 focused on unit and contract testing. R0.3 adds runtime integration tests (`tests/integration/`) that exercise Component, ComponentRegistry, DependencyGraph and RuntimeManager together through public APIs, and an install-and-consume test (`tests/install/`).
+R0.2 focused on unit and contract testing. R0.3 adds runtime integration tests (`tests/integration/`) that exercise Component, ComponentRegistry, DependencyGraph and RuntimeManager together through public APIs, and an install-and-consume test (`tests/install/`). R0.4 adds platform contract tests (`tests/unit/*_contract_test.cpp`, `tests/unit/platform_adapter_test.cpp`) built on reference test doubles (`tests/contract/reference_*.hpp`), the reusable platform conformance suite (`tests/platform/`, see below) and the Runtime-platform differential test (`tests/integration/runtime_platform_test.cpp`).
 
 ## 3. Unit Tests
 
