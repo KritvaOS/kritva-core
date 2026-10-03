@@ -74,6 +74,9 @@ Accepted:
 - R04 Platform Integration Freeze — PASS / HONORED (platform API frozen at `f7231c1`; evidence `84046b0`)
 - KF-CORE-R04-007 — Runtime–Platform Integration Boundary (`36c5cb8`)
 
+Pending independent review:
+- KF-CORE-R04-008 — Full R0.4 Validation (candidate `e7df87c`)
+
 
 R0.4 planning activated after the R0.3 release.
 
