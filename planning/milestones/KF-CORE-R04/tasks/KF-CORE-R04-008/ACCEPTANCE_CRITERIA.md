@@ -149,12 +149,14 @@ Working tree clean after every commit; the candidate commit is `e7df87c`; this e
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: validated candidate `e7df87c` (fresh clone); validation record `f0669eb` `test(core): complete R04 platform validation`
+
+Reviewer notes: validation was performed from a fresh clone; the production diff since the freeze is limited to the authorized R04-007 Runtime attachment; the moved `runtime_manager.cpp` unreachable-return line is not a coverage regression; the non-blocking follow-ups (lint/format-check stubs, 32-bit scheduler affinity, level-2 conformance mutation gap, unused `<chrono>` include, stale root `implementation.md`) do not reopen R04. **Release tag decision:** `kritva-core-r0.4` tags the final release-record commit that records the Release Gate, not `e7df87c`; the exact SHA is determined only after that commit exists. The Release Gate commit contains only release-state documentation, no implementation, API, behavior, lint or formatting changes.
+
+**Reviewer Decision: PASS — KF-CORE-R04-008 is ACCEPTED.**
