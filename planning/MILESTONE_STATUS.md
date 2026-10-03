@@ -6,7 +6,7 @@
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` (referenced; tag not present in Git, see R0.2 Milestone Gate note) |
 | KF-CORE-R02 | RELEASED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` |
-| KF-CORE-R03 | IN PROGRESS | 6 / 8 tasks accepted | — | — |
+| KF-CORE-R03 | IN PROGRESS | 6 / 8 tasks accepted | Runtime Contract Review PENDING | — |
 | KF-CORE-R04 | PLANNED | 0% | — | — |
 
 ## R02 Task Status
@@ -67,9 +67,9 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 | KF-CORE-R03-005 Runtime Lifecycle | ACCEPTED (`e2b660d`, `a4f2a65`, `eac011f`) | R03-004 accepted | `feat(core): implement runtime lifecycle orchestration` |
 | KF-CORE-R03-006 Runtime Failure & Recovery | ACCEPTED (`ee3d55d`, `d651677`) | R03-005 accepted | `feat(core): define runtime failure handling` |
 | R03 Runtime Contract Review | PENDING | R03-004..006 accepted | — |
-| KF-CORE-R03-007 Runtime Integration Tests | PLANNED | Runtime Contract Review PASS | `test(core): add runtime integration contracts` |
+| KF-CORE-R03-007 Runtime Integration Tests | PLANNED / BLOCKED | Runtime Contract Review PASS | `test(core): add runtime integration contracts` |
 | R03 Integration Freeze | PENDING | R03-007 accepted | — |
-| KF-CORE-R03-008 Final Validation | PLANNED | Integration Freeze | `test(core): complete R03 runtime validation` |
+| KF-CORE-R03-008 Final Validation | PLANNED / BLOCKED | Integration Freeze PASS | `test(core): complete R03 runtime validation` |
 | R03 Release Gate | PENDING | R03-008 accepted | — |
 
 ## R03 Acceptance Gates
@@ -122,3 +122,21 @@ All tasks accepted, full validation green, independent review PASS, documentatio
 - RELEASED: milestone accepted and tagged.
 
 Do not mark a task ACCEPTED based only on compilation. Acceptance requires evidence and independent review.
+
+
+## R03 Final Gates
+
+### Runtime Contract Review
+Status: PENDING
+Entry: R03-004, R03-005 and R03-006 accepted.
+Action: freeze Runtime Manager, lifecycle, failure/recovery, diagnostics and statistics semantics before R03-007.
+
+### Integration Freeze
+Status: PENDING
+Entry: R03-007 accepted.
+Action: freeze production API and accepted runtime semantics before R03-008.
+
+### Release Gate
+Status: PENDING
+Entry: R03-008 accepted.
+Action: final independent acceptance and authorization of `kritva-core-r0.3`.

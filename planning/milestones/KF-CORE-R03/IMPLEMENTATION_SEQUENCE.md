@@ -72,15 +72,19 @@ Freeze runtime, lifecycle, error, diagnostic and statistics semantics before int
 
 ### R03-007
 
-Add end-to-end runtime integration tests using reference components and no hardware/network dependencies.
+Add end-to-end runtime integration tests using reference components and no hardware/network dependencies. The task consumes the frozen Runtime Contract and introduces no production runtime behavior.
 
 ### Integration Freeze
 
-No production API changes after R03-007 unless explicitly approved as an architecture-level correction.
+After R03-007 acceptance, freeze the production API and accepted runtime semantics. Any production API/behavior change returns to architecture review.
 
 ### R03-008
 
-Execute final validation only. This task must not introduce new runtime functionality.
+Execute final release-candidate validation only. This task must not introduce new runtime functionality. Validate the frozen candidate from a clean build through install-consumer, traceability, sanitizers, static analysis and coverage.
+
+### R03 Release Gate
+
+After R03-008 acceptance, independently verify all R03 exit criteria and authorize the annotated `kritva-core-r0.3` release tag. Tag creation is not part of R03-008.
 
 ## Implementation Rules
 

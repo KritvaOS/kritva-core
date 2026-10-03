@@ -12,7 +12,7 @@ These IDs are planning proposals. They become authoritative only after the corre
 | CORE-RT-007 | Runtime lifecycle is deterministic and dependency aware | R03-005 |
 | CORE-RT-008 | Runtime failure propagation and explicit recovery/reset are deterministic without implicit automatic retry | R03-006 |
 | CORE-RT-009 | Platform-independent runtime integration tests cover registration, dependency, lifecycle and failure behavior | R03-007 |
-| CORE-RT-010 | R03 runtime behavior passes build, test, sanitizer, traceability and regression gates | R03-008 |
+| CORE-RT-010 | R03 runtime candidate passes final build, test, sanitizer, traceability, regression and release-candidate validation gates | R03-008 |
 
 ## Numbering reconciliation (against authoritative `REQUIREMENTS.md`, commit `655c1dd`)
 

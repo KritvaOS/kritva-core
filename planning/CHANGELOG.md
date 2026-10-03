@@ -28,6 +28,9 @@ Accepted:
 - KF-CORE-R03-006 — Runtime Failure & Recovery (`ee3d55d`, follow-up `d651677`)
 - R03 Foundation API Review — PASS / FROZEN (Component, Registry, DependencyGraph contracts frozen; `CORE-RT-002` Runtime interface remains authoritative for R03-004)
 - R03-004–006 acceptance criteria prepared: Runtime Manager, Runtime Lifecycle, Runtime Failure & Recovery.
+- R03-007 acceptance package prepared: Runtime Integration Tests.
+- R03-008 acceptance package prepared: Full R03 Validation.
+- R03 Runtime Contract Review, Integration Freeze and R03 Release Gate criteria documented.
 - R03-004 is READY; R03-005 and R03-006 remain blocked by task dependencies.
 - Runtime Contract Review remains mandatory after R03-006.
 

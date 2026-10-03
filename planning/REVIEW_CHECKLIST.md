@@ -90,6 +90,45 @@ Apply after R03-007:
 - [ ] Any required API change returned to architecture review.
 - [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
 
+
+## R03 Runtime Integration Review
+Apply to R03-007:
+- [ ] Runtime Contract Review is PASS/FROZEN.
+- [ ] End-to-end Component + Registry + DependencyGraph + RuntimeManager scenarios pass.
+- [ ] Registration/dependency insertion permutations remain deterministic.
+- [ ] Successful lifecycle, failure and reset/recovery paths are integrated.
+- [ ] No production API added solely for testing.
+- [ ] CORE-RT-009 traceability is complete.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R03 Final Validation Review
+Apply to R03-008:
+- [ ] Integration Freeze is PASS.
+- [ ] Clean Debug/Release builds pass.
+- [ ] Complete regression passes.
+- [ ] ASan/UBSan pass.
+- [ ] TSan passes where configured.
+- [ ] Strict `-Werror` passes.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage reviewed against the R03 baseline.
+- [ ] CORE-RT-010 traceability is complete.
+- [ ] Install-consumer passes.
+- [ ] Prohibited dependency/header scan passes.
+- [ ] Working tree is clean.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R03 Release Gate
+Apply after R03-008:
+- [ ] All eight R03 tasks accepted.
+- [ ] Foundation API Review PASS/FROZEN.
+- [ ] Runtime Contract Review PASS/FROZEN.
+- [ ] Integration Freeze PASS.
+- [ ] Final validation PASS.
+- [ ] Requirements/API/docs reconciled.
+- [ ] Release version/tag target verified.
+- [ ] Annotated `kritva-core-r0.3` tag authorized only after PASS.
+- [ ] Final release decision recorded.
+
 ## Documentation
 - [ ] Public contract documentation is updated.
 - [ ] REQUIREMENTS.md is consistent.

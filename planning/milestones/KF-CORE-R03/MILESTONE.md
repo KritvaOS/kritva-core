@@ -4,7 +4,7 @@
 
 IN PROGRESS
 
-Current progress: 3 / 8 tasks accepted
+Current progress: 6 / 8 tasks accepted
 
 ## Objective
 
@@ -100,4 +100,4 @@ The Foundation API Review passed and froze the Component, Registry, and Dependen
 - No automatic retry, watchdog, background worker, or timer-driven recovery.
 - Health is distinct from error/warning semantics.
 
-The Runtime Contract Review after R03-006 freezes these runtime semantics before R03-007.
+The Runtime Contract Review after R03-006 freezes these runtime semantics before R03-007. R03-007 then establishes the end-to-end integration contract; acceptance activates the Integration Freeze. R03-008 performs release-candidate validation only; the Release Gate authorizes the R03 tag.

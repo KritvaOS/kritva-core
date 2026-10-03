@@ -25,6 +25,10 @@ planning/
         ├── IMPLEMENTATION_SEQUENCE.md
         ├── REQUIREMENTS_PROPOSAL.md
         ├── R03_FOUNDATION_API_REVIEW.md
+        ├── R03_FOUNDATION_API_REVIEW_EVIDENCE.md
+        ├── R03_RUNTIME_CONTRACT_REVIEW.md
+        ├── R03_INTEGRATION_FREEZE.md
+        ├── R03_RELEASE_GATE.md
         └── tasks/
             ├── KF-CORE-R03-001/
             │   ├── TASK.md
@@ -32,7 +36,14 @@ planning/
             ├── KF-CORE-R03-002/
             │   ├── TASK.md
             │   └── ACCEPTANCE_CRITERIA.md
-            └── KF-CORE-R03-003/
+            ├── KF-CORE-R03-003/
+            ├── KF-CORE-R03-004/
+            ├── KF-CORE-R03-005/
+            ├── KF-CORE-R03-006/
+            ├── KF-CORE-R03-007/
+            │   ├── TASK.md
+            │   └── ACCEPTANCE_CRITERIA.md
+            └── KF-CORE-R03-008/
                 ├── TASK.md
                 └── ACCEPTANCE_CRITERIA.md
 ```
@@ -53,4 +64,4 @@ Project-level `TASKS.md` and `REVIEW_CHECKLIST.md` are authoritative. Do not cre
 
 ## Current R03 State
 
-The R03 Foundation API Review has passed. R03-001 through R03-003 are accepted. R03-004 Runtime Manager is READY; R03-005 and R03-006 are blocked by their task dependencies. See `milestones/KF-CORE-R03/` for the authoritative milestone planning package.
+The R03 Foundation API Review has passed. R03-001 through R03-006 are accepted. The next gate is the R03 Runtime Contract Review; R03-007 is blocked until that gate passes, and R03-008 is blocked by the Integration Freeze. See `milestones/KF-CORE-R03/` for the authoritative milestone planning package.

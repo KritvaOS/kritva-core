@@ -53,7 +53,11 @@ The R03 Runtime Contract Review must PASS before R03-007 is finalized.
 
 ### After R03-007
 
-The R03 Integration Freeze applies. Production API changes require explicit architecture review.
+The R03 Integration Freeze applies. Production API/semantic changes require explicit architecture review.
+
+### After R03-008
+
+The R03 Release Gate reviews the final candidate before tag creation.
 
 ## Milestone Release
 
