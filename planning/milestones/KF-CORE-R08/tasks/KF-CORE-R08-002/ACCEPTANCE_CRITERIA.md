@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-002 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define configuration ownership and atomic application` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -104,4 +104,14 @@ Primary commit: `6efeaac` `feat(core): define configuration ownership and atomic
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `6efeaac` (evidence `6aab91b`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: no production type, signature or behavior change (second contract-text block in `configuration.hpp`); caller ownership, non-retention, copy independence, `get()` pointer lifetime, no Core store or `configuration()` accessor, all-or-nothing application including a first-ever failure, no cross-component rollback, and fixed-topology forwarding accepted; 6/6 broken components and 3/3 production mutants detected after the targeted closure. The reviewer noted its connector could not resolve the abbreviated local SHA, so the verdict relies on the supplied evidence. `CORE-CFG-005` and `CORE-CFG-006` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-002 is ACCEPTED.**
