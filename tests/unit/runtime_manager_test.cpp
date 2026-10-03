@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-002
+// Requirements: CORE-RT-006
 // API         : CORE-TEST-RUNTIME-MANAGER
 //
 // Author      : KritvaOS Core Team
