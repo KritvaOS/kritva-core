@@ -32,9 +32,9 @@ R0.7 implementation has not started. `KF-CORE-R07-001` is the next implementatio
 
 Accepted:
 - KF-CORE-R07-001 — Component Operational Observation Contract (`6849a73`; evidence `6518240`)
+- KF-CORE-R07-002 — Component Status & Health Reporting Contract (`61e0067`; evidence `8d9e4b0`)
 
 Pending independent review:
-- KF-CORE-R07-002 — Component Status & Health Reporting Contract (`61e0067`)
 
 ### Release record
 

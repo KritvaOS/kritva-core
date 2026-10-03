@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-002 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define component status and health reporting contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -104,8 +104,14 @@ Primary commit: `61e0067` `feat(core): define component status and health report
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `61e0067` (evidence `8d9e4b0`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: no new production type or API (contract text only); full lifecycle × status × health × text space, detached snapshots, no derivation or normalization, the Runtime never reads Status/Health, UNHEALTHY never triggers recovery, a Runtime FAULT or reset never rewrites Health, identical failure handling for every reported Health, and the closed mutation survivor accepted. `CORE-OPS-002` and `CORE-OPS-003` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-002 is ACCEPTED.**
