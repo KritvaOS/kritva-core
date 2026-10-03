@@ -69,8 +69,6 @@ Accepted:
 - KF-CORE-R04-003 — Clock & Timer Contract (`67114bb`)
 - KF-CORE-R04-004 — Watchdog Contract (`4af4756`)
 - R04 Platform API Review — PASS / FROZEN (evidence `380ade3`)
-
-Pending independent review:
 - KF-CORE-R04-005 — Platform Capability & Adapter Contract (`f7231c1`)
 
 

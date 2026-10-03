@@ -149,7 +149,7 @@ Release: Kritva Core R0.3, version 0.3.0; release candidate `f598fef`; release-r
 | KF-CORE-R04-003 | Clock & Timer Contract | ACCEPTED (67114bb) | R04-001 |
 | KF-CORE-R04-004 | Watchdog Contract | ACCEPTED (4af4756) | R04-001 |
 | R04 Platform API Review | PASS / FROZEN (`380ade3`) | R04-004 |
-| KF-CORE-R04-005 | Platform Capability & Adapter Contract | REVIEW (f7231c1) | Platform API Review |
+| KF-CORE-R04-005 | Platform Capability & Adapter Contract | ACCEPTED (f7231c1) | Platform API Review |
 | KF-CORE-R04-006 | Platform Conformance Tests | PLANNED | R04-005 |
 | R04 Platform Integration Freeze | PLANNED | R04-006 |
 | KF-CORE-R04-007 | Runtime–Platform Integration Boundary | PLANNED | Platform Integration Freeze |

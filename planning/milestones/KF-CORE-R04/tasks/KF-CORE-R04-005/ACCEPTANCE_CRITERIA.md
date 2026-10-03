@@ -112,12 +112,14 @@ Primary commit: `f7231c1` (`feat(core): define platform capability contract`; Pl
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: `f7231c1` (evidence `700671c`)
+
+Reviewer notes: the three design choices are APPROVED (`capabilities()` returns an owned by-value snapshot; const accessors return mutable non-owning service pointers; `info()` is virtual and returns a reference valid for the adapter's life). The non-virtual `supports()` derived from the accessors structurally enforces `supports(S) == false` iff `accessor(S) == nullptr`. `RuntimeManager::attach_platform` correctly remains for R04-007. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R04-005 is ACCEPTED.**
