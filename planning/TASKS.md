@@ -25,7 +25,7 @@
 |---|---|---|---|---|
 | KF-CORE-R03-001 | Component Contract & Identity | runtime/component | ACCEPTED (`655c1dd`) | `feat(core): define component runtime contract` |
 | KF-CORE-R03-002 | Component Registry | runtime/registry | ACCEPTED (`7ae9a32`) | `feat(core): add component registry` |
-| KF-CORE-R03-003 | Dependency Management | runtime/dependency | PLANNED | `feat(core): add runtime dependency management` |
+| KF-CORE-R03-003 | Dependency Management | runtime/dependency | REVIEW (`795fb94`) | `feat(core): add runtime dependency management` |
 | KF-CORE-R03-004 | Runtime Manager | runtime/manager | PLANNED | `feat(core): add runtime manager` |
 | KF-CORE-R03-005 | Runtime Lifecycle | runtime/lifecycle | PLANNED | `feat(core): implement runtime lifecycle orchestration` |
 | KF-CORE-R03-006 | Runtime Failure & Recovery | runtime/error-recovery | PLANNED | `feat(core): define runtime failure handling` |

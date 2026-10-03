@@ -23,6 +23,9 @@ Accepted:
 - KF-CORE-R03-001 — Component Contract & Identity (`655c1dd`, `35efee1`, `9a98ab3`)
 - KF-CORE-R03-002 — Component Registry (`7ae9a32`)
 
+Pending independent review:
+- KF-CORE-R03-003 — Dependency Management (`795fb94`)
+
 Cross-cutting R03 policy review includes Error, Warning, Info/diagnostic messaging, Event versus message, Statistics update semantics, and logging boundary.
 
 ### KF-CORE-R02 — Core Contract Hardening
