@@ -86,6 +86,7 @@ Accepted:
 - KF-CORE-R06-002 — Operational Context Services & Access Policy (`072b713`)
 - KF-CORE-R06-003 — Context Injection Without Runtime Lifecycle Change (`adb0e08`)
 - KF-CORE-R06-004 — Context Requirements & Capability Binding (`5b755af`)
+- R06 Component API Review — PASS / FROZEN (evidence `06207c7`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
 

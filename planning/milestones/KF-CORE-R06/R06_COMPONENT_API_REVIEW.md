@@ -17,19 +17,19 @@ Freeze the R06 Component Context public contract before integration implementati
 
 ## Review checklist
 
-- [ ] Context ownership/lifetime is explicit.
-- [ ] Context is not a service registry/locator.
-- [ ] No Core-owned platform-service lifecycle exists.
-- [ ] Existing `PlatformContext` remains authoritative for platform access.
-- [ ] Context injection does not alter Runtime lifecycle semantics.
-- [ ] Error propagation remains deterministic.
-- [ ] Capability identity semantics are reused.
-- [ ] No platform name/version inference.
-- [ ] No breaking change is hidden.
-- [ ] API is additive or explicitly architecture-approved.
-- [ ] Public API self-containment passes.
-- [ ] Contract/mutation evidence is sufficient.
-- [ ] PASS / CHANGES REQUIRED / BLOCKED is recorded.
+- [x] Context ownership/lifetime is explicit.
+- [x] Context is not a service registry/locator.
+- [x] No Core-owned platform-service lifecycle exists.
+- [x] Existing `PlatformContext` remains authoritative for platform access.
+- [x] Context injection does not alter Runtime lifecycle semantics.
+- [x] Error propagation remains deterministic.
+- [x] Capability identity semantics are reused.
+- [x] No platform name/version inference.
+- [x] No breaking change is hidden.
+- [x] API is additive or explicitly architecture-approved.
+- [x] Public API self-containment passes.
+- [x] Contract/mutation evidence is sufficient.
+- [x] PASS / CHANGES REQUIRED / BLOCKED is recorded.
 
 ## Freeze rule
 
@@ -76,5 +76,21 @@ A copyable value of exactly two non-owning pointers (a `const ComponentInfo*` an
 
 Carried forward: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; a context (like `PlatformContext`) used after what it refers to is destroyed is documented undefined behavior (non-owning by design). R06-005 and R06-006 build the reference harness and integration tests on this API and are not part of this freeze.
 
-Reviewer decision: PENDING
+Reviewer decision: **PASS / FROZEN** (05-10-2026)
+
+## Reviewer Decision
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 05-10-2026 |
+| Decision | **PASS / FROZEN** |
+
+Gate record: R06-001 `8031c47`, R06-002 `072b713`, R06-003 `adb0e08`, R06-004 `5b755af` (accepted at `cdc55b7`); API decisions D09–D15 `d9dd8a9`; evidence `06207c7`. Production diff against `kritva-core-r0.5`: one new header and one include; `src/` unchanged.
+
+**Frozen R06 API:** `runtime::ComponentContext` as defined in the evidence above: two non-owning pointers, construction-time injection only, immutable after construction (assignment deleted), the closed access surface, `attribute()` as source attribution only, the bound-context attribution of the Core availability error, and the stateless R0.5 requirement binding. R06-005 onward must not change this production API except through an explicit architecture-review exception.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; the documented non-owning lifetime rule (a context used after what it refers to is destroyed is undefined behavior).
+
+**Reviewer Decision: PASS / FROZEN — KF-CORE-R06 Component API Review gate is ACCEPTED.**
 

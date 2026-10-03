@@ -46,7 +46,7 @@ R05 Release Gate
 | KF-CORE-R06-002 | Operational Context Services & Access Policy | context/services | ACCEPTED | 3–4 ED |
 | KF-CORE-R06-003 | Context Injection Without Runtime Lifecycle Change | runtime/component | ACCEPTED | 3–4 ED |
 | KF-CORE-R06-004 | Context Requirements & Capability Binding | context/requirements | ACCEPTED | 2–3 ED |
-| R06 Component API Review | Freeze public context/API | architecture | PLANNED | 1 ED |
+| R06 Component API Review | Freeze public context/API | architecture | PASS / FROZEN | 1 ED |
 | KF-CORE-R06-005 | Reference Context Harness & Contract Tests | tests/context | PLANNED | 3–4 ED |
 | KF-CORE-R06-006 | Runtime/Component Context Integration Tests | tests/integration | PLANNED | 3–4 ED |
 | R06 Integration Freeze | Freeze production behavior | architecture | PLANNED | 0.5 ED |
