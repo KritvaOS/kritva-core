@@ -71,8 +71,6 @@ Accepted:
 - KF-CORE-R05-004 — Runtime–Platform Lifecycle Boundary (`f23777b`)
 - R05 Platform API Review — PASS / FROZEN (evidence `05d981e`)
 - KF-CORE-R05-005 — Reference Platform Integration (`7f30626`)
-
-Pending independent review:
 - KF-CORE-R05-006 — Platform Integration & Runtime Tests (`fe04d35`)
 
 ### KF-CORE-R04 — Platform Abstraction Planning

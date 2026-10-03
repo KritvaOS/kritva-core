@@ -130,14 +130,17 @@ Primary commit: `fe04d35` `test(core): add platform runtime integration tests` (
 - Regression: `ctest` 39/39 in Debug, Release, ASan+UBSan, strict `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Werror`, TSan (ASLR off); the whole existing suite, including the R0.3 runtime group and the R0.4/R0.5 platform tests, is unchanged and green; build 0 warnings; GCC `-fanalyzer` clean; coverage 98% (565/571, unchanged); `make check` passes with traceability 72 requirements, 71 traced, 0 errors; `git diff --check` clean; dependency scan clean.
 - Out of scope confirmed: no private access, no new production API, no hardware, no concrete platform.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `fe04d35` (evidence `f3085d3`) |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: no production code or API change; public APIs only; the 72-case equivalence of a platform failure with an ordinary component failure, the 16-combination availability and gating matrices, the seeded differential model with every platform method failing, fault/reset/recovery, statistics (a failed call counts as an error and never as a sample), watchdog and callback independence, attachment rules and integrator ownership are accepted; the survivors that concerned Runtime integration were closed by added assertions. `CORE-PLAT-017` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R05-006 is ACCEPTED.**
+

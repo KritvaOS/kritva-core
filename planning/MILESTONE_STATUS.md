@@ -172,5 +172,5 @@ Release: Kritva Core R0.4, version 0.4.0; release candidate `e7df87c`; release-r
 | KF-CORE-R05-004 | Runtime–Platform Lifecycle Boundary | ACCEPTED (f23777b) | R0.4 released |
 | R05 Platform API Review | PASS / FROZEN (`05d981e`) | R05-004 |
 | KF-CORE-R05-005 | Reference Platform Integration | ACCEPTED (7f30626) | R0.4 released |
-| KF-CORE-R05-006 | Platform Integration & Runtime Tests | REVIEW (fe04d35) | R0.4 released |
+| KF-CORE-R05-006 | Platform Integration & Runtime Tests | ACCEPTED (fe04d35) | R0.4 released |
 | KF-CORE-R05-007 | Full R0.5 Validation | PLANNED | R0.4 released |
