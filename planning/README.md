@@ -62,12 +62,12 @@ Project-level `TASKS.md` and `REVIEW_CHECKLIST.md` are authoritative. Do not cre
 
 ## Current State
 
-R0.3 is released and closed:
+R0.4 is released and closed:
 
-- `kritva-core-r0.3`
-- version 0.3.0
-- release-record commit `cc16ec9`
+- `kritva-core-r0.4`
+- version 0.4.0
+- release-record commit `b31108d`
 
-The next planned milestone is **KF-CORE-R04 — Platform Abstraction**.
+R0.3 (`kritva-core-r0.3`, `cc16ec9`) and earlier milestones are also released and closed.
 
 R0.4 defines platform contracts and integration boundaries while keeping `kritva-core` platform independent. Linux, RTOS, vendor BSP/HAL, EtherCAT, ROS2/DDS and hardware-specific implementations remain outside Core.

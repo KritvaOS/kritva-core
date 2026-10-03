@@ -103,6 +103,6 @@ R03 remains platform independent. It does not introduce ROS2/DDS, EtherCAT imple
 
 ## KF-CORE-R04 — Platform Abstraction
 
-Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.4` created locally on the release-record commit; RELEASED after it is pushed)
+Status: RELEASED (`kritva-core-r0.4` -> `b31108d`, published to origin)
 
 R0.4 establishes platform contracts and integration boundaries; it does not implement a concrete Linux, RTOS, MCU, vendor, Nexus, or Edge platform adapter. See `planning/milestones/KF-CORE-R04/MILESTONE.md` and `R04_RELEASE_GATE.md`.

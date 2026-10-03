@@ -2,7 +2,7 @@
 
 ## Status
 
-ACCEPTED (release gate PASS; tag `kritva-core-r0.4` created locally on the release-record commit; RELEASED after it is pushed)
+RELEASED (`kritva-core-r0.4` -> `b31108d`, published to origin)
 
 ## Objective
 

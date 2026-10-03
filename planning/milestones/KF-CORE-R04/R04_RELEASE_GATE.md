@@ -58,7 +58,7 @@ Only the independent architect/reviewer records the final gate decision.
 
 | Gate | Decision | Release Commit | Tag | Reviewer | Date |
 |---|---|---|---|---|---|
-| R04 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.4`) | `kritva-core-r0.4` (annotated, on the release-record commit; created locally, push pending) | ChatGPT | 04-10-2026 |
+| R04 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.4`) | `kritva-core-r0.4` (annotated, on release-record commit `b31108d`, tag object `9e1bc7b`, pushed to origin) | ChatGPT | 04-10-2026 |
 
 ## Recorded release
 
@@ -70,6 +70,6 @@ Only the independent architect/reviewer records the final gate decision.
 - Tasks accepted: R04-001 `d1c5f13`, R04-002 `eb06fa0`, R04-003 `67114bb`, R04-004 `4af4756`, R04-005 `f7231c1`, R04-006 `460de87`, R04-007 `36c5cb8`, R04-008 `f0669eb`.
 - Decision: **PASS**
 - Release tag: `kritva-core-r0.4`, annotated, on the documentation-only release-record commit that records this gate (not on `e7df87c`). That commit changes only release-state documentation (this record, `MILESTONE_STATUS.md`, the milestone files and the planning `CHANGELOG.md`); no implementation, API, behavior, lint or formatting change.
-- Push: to be performed by the user; after publication the remote branch and the annotated tag object are verified and recorded.
+- Push: performed by the user; `git ls-remote` confirms `refs/heads/main` and the peeled tag `kritva-core-r0.4^{}` at `b31108d`, and the tag object `9e1bc7b`.
 
 Deferred as post-R0.4 work or documented caveats (none block the release): `make lint` and `make format-check` tooling (still TODO stubs), the 32-bit scheduler CPU affinity mask, the single-check mutation strictness gap of the conformance suite, the unused `<chrono>` include in `types/duration.hpp`, the stale root `implementation.md`, and the absence of any concrete platform adapter (outside Core by design).
