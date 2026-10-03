@@ -37,6 +37,7 @@ Accepted:
 - R08 Configuration API Review — PASS / FROZEN (production freeze baseline `bdb4b93`; evidence `0a73b5a`)
 
 Pending independent review:
+- KF-CORE-R08-004 — Reference Configuration Harness & Contract Tests (`f4b6de4`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
