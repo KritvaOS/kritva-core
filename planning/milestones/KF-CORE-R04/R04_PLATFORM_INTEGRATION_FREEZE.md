@@ -26,7 +26,7 @@ After this gate, no production platform API or platform semantic change is permi
 
 ## Decision
 
-Status: PLANNED
+Status: SUBMITTED (evidence: `R04_PLATFORM_INTEGRATION_FREEZE_EVIDENCE.md`)
 
 Possible outcomes:
 - PASS / HONORED
