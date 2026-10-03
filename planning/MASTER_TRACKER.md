@@ -47,8 +47,9 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Latest release commit | `424984f` |
 | Remote verification | **PASS / RELEASED / SYNCHRONIZED / CLOSED** |
 | Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7 |
-| Current active milestone | None — R0.7 released and closed; next milestone not yet planned |
+| Current active milestone | **KF-CORE-R08** — planned / implementation not started |
 | R07 implementation status | RELEASED / CLOSED |
+| R08 planning status | APPROVED / implementation not started |
 | Open release blockers | 0 |
 | API freeze active | No |
 | Concrete platform implementation in `kritva-core` | No |
@@ -63,6 +64,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Platform Runtime | R0.5 | Platform runtime integration foundation | 7 | RELEASED | 7/7 | Historical | R0.4 | Platform API Review + Integration Freeze + Release Gate | 0.5.0 |
 | Component Context | R0.6 | Controlled component execution context without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 20–27 ED | R0.5 | Component API Review + Integration Freeze + Validation + Release Gate | 0.6.0 |
 | Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 24–32 ED (estimate; actual not recorded) | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
+| Component Configuration | **R0.8** | Component Configuration foundation | 7 | PLANNED | 0/7 | 22–31 ED | R0.7 released | Design Consult + Scope Confirmation + Configuration API Review + Integration Freeze + Release Gate | 0.8.0 target |
 
 ## R0.7 Task Tracker
 
@@ -124,6 +126,67 @@ R07 Integration Freeze
 R07-007 Full Validation
         ↓
 R07 Release Gate
+```
+
+
+## R0.8 Task Tracker
+
+| ID | Task | Est. | Dependency | Status | Gate |
+|---|---|---:|---|---|---|
+| R08 Design Consult | Configuration model and architectural boundary | 2–3 ED | R0.7 released | APPROVED | Scope input |
+| R08 Scope Confirmation | Confirm milestone scope and exclusions | 1 ED | Design Consult | APPROVED | Implementation authorization input |
+| KF-CORE-R08-001 | Component Configuration Contract & Lifecycle Semantics | 2–3 ED | Scope Confirmation | PLANNED | Configuration contract |
+| KF-CORE-R08-002 | Configuration Ownership & Atomic Application | 2–3 ED | R08-001 | PLANNED | Ownership/atomicity contract |
+| KF-CORE-R08-003 | Configuration Version & Validation Contract | 2–3 ED | R08-002 | PLANNED | API review input |
+| R08 Configuration API Review | Freeze public configuration semantics | 1 ED | R08-001..003 | PLANNED | API freeze |
+| KF-CORE-R08-004 | Reference Configuration Harness & Contract Tests | 3–4 ED | API Review PASS/FROZEN | PLANNED | Contract tests |
+| KF-CORE-R08-005 | Runtime/Component Configuration Integration | 3–4 ED | R08-004 | PLANNED | Integration Freeze input |
+| R08 Integration Freeze | Freeze production configuration behavior | 0.5 ED | R08-005 | PLANNED | Production freeze |
+| KF-CORE-R08-006 | Configuration Boundary & Regression Validation | 2–3 ED | Integration Freeze PASS/HONORED | PLANNED | Validation |
+| KF-CORE-R08-007 | Full R0.8 Validation & Release Candidate | 2–3 ED | R08-006 | PLANNED | Release Gate input |
+| R08 Release Gate | Release 0.8.0 | 1 ED | R08-007 | PLANNED | Release |
+
+**R08 working estimate: 22–31 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.
+
+## R0.8 Architecture Decisions
+
+1. Configuration is a detached control-plane input to the existing `Component::configure()` operation.
+2. Configuration is valid only from `UNKNOWN` and `STOPPED` in R0.8; no dynamic reconfiguration API is introduced.
+3. Caller owns the input value; Component owns accepted/applied semantic state; Core owns the generic contract only.
+4. Failed configuration cannot partially apply and leaves lifecycle state unchanged.
+5. Core structural validation and Component semantic validation remain distinct.
+6. `ConfigurationVersion` is a schema/contract compatibility version, not a runtime revision/history counter.
+7. Runtime forwards configuration in dependency order without interpreting, persisting, retrying or rolling back.
+8. Configuration failure is independent of Runtime FAULT, Status and Health.
+9. ComponentContext remains unchanged and configuration-neutral.
+10. Dynamic control, parameter services, persistence, remote configuration and robotics-specific semantics remain deferred.
+
+## R0.8 Dependency Graph
+
+```text
+R08 Design Consult
+        ↓
+R08 Scope Confirmation
+        ↓
+R08-001 Configuration Contract
+        ↓
+R08-002 Ownership & Atomic Application
+        ↓
+R08-003 Version & Validation
+        ↓
+R08 Configuration API Review
+        ↓
+R08-004 Reference Harness
+        ↓
+R08-005 Runtime Integration
+        ↓
+R08 Integration Freeze
+        ↓
+R08-006 Boundary & Regression Validation
+        ↓
+R08-007 Full Validation / Release Candidate
+        ↓
+R08 Release Gate
 ```
 
 ## Mandatory Quality Gates
@@ -188,7 +251,7 @@ And for milestone validation:
 
 R0.7 is fully released and closed (`kritva-core-r0.7`, version 0.7.0, release-record commit `424984f`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
 
-No next milestone is planned yet.
+R0.8 is the current planned milestone. Design Consult and Scope Confirmation are APPROVED; implementation has not started.
 
 ## Deferred Known Issues
 
@@ -201,4 +264,4 @@ These remain deferred unless explicitly brought into scope:
 - unused `<chrono>` include in `types/duration.hpp`
 - stale root `implementation.md`
 
-Deferred issues must not silently enter R0.7 implementation scope.
+Deferred issues must not silently enter R0.8 implementation scope.

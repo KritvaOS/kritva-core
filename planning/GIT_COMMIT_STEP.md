@@ -207,3 +207,46 @@ After all R07 implementation tasks are accepted:
 6. Create a documentation-only release-record commit.
 7. Create the annotated `kritva-core-r0.7` tag only after PASS.
 8. Independently verify remote `main`, tag object and peeled tag.
+
+
+## R08 Commit Messages
+
+| Task | Exact implementation commit |
+|---|---|
+| KF-CORE-R08-001 | `feat(core): define component configuration contract` |
+| KF-CORE-R08-002 | `feat(core): define configuration ownership and atomic application` |
+| KF-CORE-R08-003 | `feat(core): define configuration version and validation contract` |
+| KF-CORE-R08-004 | `test(core): add configuration reference harness` |
+| KF-CORE-R08-005 | `test(core): add configuration runtime integration tests` |
+| KF-CORE-R08-006 | `test(core): validate configuration boundary and regression` |
+| KF-CORE-R08-007 | `test(core): complete R0.8 configuration validation` |
+
+### R08 Architecture Gates
+
+- R08 Design Consult — APPROVED.
+- R08 Scope Confirmation — APPROVED.
+- R08 Configuration API Review must PASS/FROZEN before R08-004.
+- R08 Integration Freeze applies after R08-005 and before R08-006/R08-007.
+- R08 Release Gate reviews R08-007 before version/tag creation.
+
+### R08 Commit Rules
+
+- One logical task has one primary implementation commit.
+- The exact task commit message in the acceptance criteria is authoritative.
+- Do not amend accepted task commits.
+- Corrective changes after review use a focused follow-up commit.
+- No unrelated changes.
+- A later task must not silently alter an earlier accepted public API or semantic contract.
+- Public API/semantic changes after the R08 Configuration API Review require an explicit architecture-review return.
+
+### R08 Release Procedure
+
+After all R08 implementation tasks are accepted:
+
+1. Update `MILESTONE_STATUS.md`, `MASTER_TRACKER.md`, `TASKS.md` and `CHANGELOG.md`.
+2. Verify `VERSION` and CMake version.
+3. Run clean Debug/Release and complete validation matrix.
+4. Perform the independent R08 Release Gate review.
+5. Create a documentation-only release-record commit.
+6. Create the annotated `kritva-core-r0.8` tag only after PASS.
+7. Independently verify remote `main`, tag object and peeled tag.

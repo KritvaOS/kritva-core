@@ -418,3 +418,87 @@ Apply during R07 architecture review and before R07-001 implementation authoriza
 - [ ] Annotated `kritva-core-r0.7` tag is authorized only after PASS.
 - [ ] Remote main/tag/peeled tag independently verified.
 - [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.
+
+
+## R08 Component Configuration Foundation Review
+
+Apply during R08 architecture review and task acceptance:
+
+- [ ] Existing `Configuration`, `ConfigurationVersion`, `Component::configure()` and `RuntimeManager::configure()` concepts are reused rather than duplicated.
+- [ ] `configure()` is valid only from `UNKNOWN` and `STOPPED` for R0.8.
+- [ ] No new lifecycle state or dynamic reconfiguration API exists.
+- [ ] Successful configuration leaves lifecycle state unchanged.
+- [ ] Failed configuration leaves lifecycle state unchanged.
+- [ ] Configuration input is caller-owned and detached from the Component after the call.
+- [ ] Partial configuration application on failure is prohibited and tested.
+- [ ] Component owns accepted/applied semantic configuration; Core holds no mirrored truth.
+- [ ] Core structural validation and Component semantic validation remain separate.
+- [ ] `ConfigurationVersion` means schema/contract compatibility version only.
+- [ ] No generic runtime configuration revision/history API is introduced.
+- [ ] Runtime forwards configuration deterministically and does not interpret parameter meaning.
+- [ ] Runtime does not retry, rollback or enter FAULT because configuration failed.
+- [ ] Status and Health remain independent from configuration failure.
+- [ ] ComponentContext remains unchanged.
+- [ ] No configuration broker, persistence layer, event bus, background worker or remote-control subsystem is added.
+- [ ] No platform/vendor/OS/ROS2/DDS/EtherCAT dependency enters production Core.
+- [ ] Mutation testing covers contract-sensitive configuration behavior.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R08 Configuration API Review Gate
+
+- [ ] R08-001 through R08-003 accepted.
+- [ ] Configuration lifecycle semantics are frozen.
+- [ ] Ownership/detachment semantics are frozen.
+- [ ] Atomic failure/non-partial application semantics are frozen.
+- [ ] Validation and version semantics are frozen.
+- [ ] Runtime configuration boundary is frozen.
+- [ ] No dynamic reconfiguration API is present.
+- [ ] Public-header self-containment passes.
+- [ ] Focused contract/mutation evidence is sufficient.
+- [ ] Existing regression suite remains green.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+- [ ] On PASS, production configuration API/semantics are FROZEN.
+
+## R08 Integration Freeze
+
+- [ ] R08-004 and R08-005 accepted.
+- [ ] Runtime configuration forwarding and failure semantics are validated with public APIs.
+- [ ] Configuration causes no Runtime lifecycle transition.
+- [ ] Configuration failure causes no automatic rollback/retry/recovery.
+- [ ] Configuration does not automatically drive Status or Health.
+- [ ] ComponentContext remains unchanged.
+- [ ] No configuration service/event/persistence infrastructure exists in production Core.
+- [ ] Deterministic ordering remains invariant under registration/dependency permutations.
+- [ ] Production diff from the API Review freeze point contains no unapproved semantic changes.
+- [ ] PASS / HONORED / CHANGES REQUIRED / BLOCKED recorded.
+
+## R08 Final Validation Review
+
+- [ ] R08 Integration Freeze is PASS/HONORED.
+- [ ] Fresh-clone Debug/Release builds pass.
+- [ ] Complete CTest regression passes.
+- [ ] ASan/UBSan pass.
+- [ ] TSan passes where configured.
+- [ ] Strict warning build passes.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage meets the R08 policy.
+- [ ] Traceability audit passes.
+- [ ] Install consumer passes.
+- [ ] Production isolation/dependency audit passes.
+- [ ] Public-header self-containment passes.
+- [ ] No dynamic configuration/parameter infrastructure has leaked into Core.
+- [ ] Working tree is clean.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R08 Release Gate
+
+- [ ] R08-001 through R08-007 accepted.
+- [ ] R08 Configuration API Review PASS/FROZEN.
+- [ ] R08 Integration Freeze PASS/HONORED.
+- [ ] Fresh-clone validation PASS.
+- [ ] Requirements/API/planning documentation reconciled.
+- [ ] Version and CMake metadata agree at 0.8.0.
+- [ ] Release record is documentation-only.
+- [ ] Annotated `kritva-core-r0.8` tag is authorized only after PASS.
+- [ ] Remote `main`, tag object and peeled tag are independently verified.
+- [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.

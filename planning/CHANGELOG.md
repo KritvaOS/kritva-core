@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+## KF-CORE-R08 — Component Configuration Foundation Planning
+
+Architecture and scope confirmed. R0.8 planning package prepared; implementation not started.
+
+R0.8 scope:
+- Component configuration lifecycle eligibility and state-preservation semantics
+- Configuration ownership and detached-value behavior
+- Atomic/non-partial configuration application
+- Core structural versus Component semantic validation boundary
+- `ConfigurationVersion` schema/contract compatibility semantics
+- Runtime configuration forwarding and failure isolation
+- Reference configuration harness and Runtime integration tests
+- Integration Freeze, full validation and Release Gate
+
+R0.8 exclusions:
+- Dynamic reconfiguration / `reconfigure()` / parameter server
+- Configuration persistence, remote configuration or configuration broker
+- Configuration transactions/rollback and configuration event infrastructure
+- ComponentContext expansion
+- Runtime lifecycle redesign or automatic recovery
+- Platform/ROS2/DDS/EtherCAT/vendor-specific configuration implementation
+
+Proposed requirement domain: `CORE-CFG-004..013`.
+Planned effort: 22–31 ED; actual effort not yet recorded.
+
+
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
 Architecture confirmed after R0.7 Design Consult and Scope Confirmation.

@@ -11,6 +11,7 @@
 | KF-CORE-R05 | RELEASED | 7 / 7 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.5` (annotated tag on release-record commit `adf8ac2`; tag object `aecb045`; pushed to origin) |
 | KF-CORE-R06 | RELEASED | 7 / 7 tasks accepted | Component API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.6` (annotated tag on release-record commit `a4c41aa`; tag object `fb9d631`; pushed to origin) |
 | KF-CORE-R07 | RELEASED | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.7` (annotated tag on release-record commit `424984f`; tag object `4aa3fab`; pushed to origin) | Target `kritva-core-r0.7` / version 0.7.0 |
+| KF-CORE-R08 | PLANNED | 0 / 7 implementation tasks | Design Consult APPROVED; Scope Confirmation APPROVED | Not released | Target `kritva-core-r0.8` / version 0.8.0 |
 
 ## R02 Task Status
 
@@ -228,3 +229,29 @@ Release: Kritva Core R0.6, version 0.6.0; release candidate `b473e5d`; tag `krit
 Status: PASS (05-10-2026)
 
 Release: Kritva Core R0.7, version 0.7.0; release candidate `d83e1ba`; tag `kritva-core-r0.7` (annotated, on release-record commit `424984f`; pushed to origin). Record: `planning/milestones/KF-CORE-R07/R07_RELEASE_GATE.md`.
+
+
+## KF-CORE-R08 Task Status
+
+| Task | Status | Dependency | Est. Effort |
+|---|---|---|---:|
+| R08 Design Consult | APPROVED | R0.7 released | 2–3 ED |
+| R08 Scope Confirmation | APPROVED | Design Consult | 1 ED |
+| KF-CORE-R08-001 | PLANNED | Scope Confirmation | 2–3 ED |
+| KF-CORE-R08-002 | PLANNED | R08-001 | 2–3 ED |
+| KF-CORE-R08-003 | PLANNED | R08-002 | 2–3 ED |
+| R08 Configuration API Review | PLANNED | R08-001..003 | 1 ED |
+| KF-CORE-R08-004 | PLANNED | API Review PASS/FROZEN | 3–4 ED |
+| KF-CORE-R08-005 | PLANNED | R08-004 | 3–4 ED |
+| R08 Integration Freeze | PLANNED | R08-005 | 0.5 ED |
+| KF-CORE-R08-006 | PLANNED | Integration Freeze PASS/HONORED | 2–3 ED |
+| KF-CORE-R08-007 | PLANNED | R08-006 | 2–3 ED |
+| R08 Release Gate | PLANNED | R08-007 | 1 ED |
+
+### R0.8 Scope Summary
+
+R0.8 establishes a precise, platform-independent Component Configuration Contract around the existing Configuration and `configure()` path. It explicitly excludes dynamic reconfiguration, parameter services, persistence, remote configuration, configuration transactions/rollback, configuration event infrastructure, ComponentContext expansion, Runtime lifecycle changes, automatic recovery and robotics-specific configuration semantics.
+
+### R0.8 Quality Baseline
+
+The R0.7 release candidate baseline is 51/51 CTest, 98.9% line coverage, Debug/Release clean, sanitizers/strict/analyzer clean, traceability clean, public-header self-containment and install-consumer validation. R0.8 preserves this quality model; the exact final test count will increase as R08 tests are added.

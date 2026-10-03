@@ -165,3 +165,59 @@ R07 Release Gate
 ```
 
 See `planning/milestones/KF-CORE-R07/` for the complete architecture, scope, task acceptance and gate package.
+
+
+## KF-CORE-R08 — Component Configuration Foundation
+
+Status: PLANNED — architecture and scope confirmed; implementation not started.
+
+### Objective
+
+Establish a precise, platform-independent Component Configuration Contract around the existing `Configuration`, `ConfigurationVersion`, `Component::configure()` and `RuntimeManager::configure()` path while preserving the R0.3 Runtime lifecycle model, R0.6 ComponentContext boundary and R0.7 operational separation.
+
+### Task Order
+
+```text
+R08 Design Consult
+        ↓
+R08 Scope Confirmation
+        ↓
+R08-001 Component Configuration Contract & Lifecycle Semantics
+        ↓
+R08-002 Configuration Ownership & Atomic Application
+        ↓
+R08-003 Configuration Version & Validation Contract
+        ↓
+R08 Configuration API Review
+        ↓
+R08-004 Reference Configuration Harness & Contract Tests
+        ↓
+R08-005 Runtime/Component Configuration Integration
+        ↓
+R08 Integration Freeze
+        ↓
+R08-006 Configuration Boundary & Regression Validation
+        ↓
+R08-007 Full R0.8 Validation & Release Candidate
+        ↓
+R08 Release Gate
+```
+
+### Architectural Rules
+
+- Configuration is a detached control-plane value.
+- `configure()` is valid only in `UNKNOWN` and `STOPPED` for R0.8.
+- Configuration failure is state-preserving and non-partial.
+- Component owns applied semantic configuration; Core owns generic contract only.
+- `ConfigurationVersion` means schema/contract compatibility version.
+- Runtime forwards configuration and does not interpret, retry, rollback or persist it.
+- Configuration failure is independent of Runtime FAULT, Status and Health.
+- `ComponentContext` remains unchanged.
+- No dynamic reconfiguration, parameter server, persistence, remote configuration, event infrastructure or robotics-specific parameter framework.
+- No concrete platform implementation enters `kritva-core`.
+
+### Planned Effort
+
+22–31 ED estimate; actual effort not yet recorded.
+
+See `planning/milestones/KF-CORE-R08/` for the complete architecture, scope, task acceptance package and gate records.

@@ -1,6 +1,6 @@
 # Kritva Core — Master Task Register
 
-R0.2, R0.3, R0.4, R0.5 and R0.6 are recorded as released historical milestones. R0.7 is the current planned architecture milestone.
+R0.2 through R0.7 are recorded as released historical milestones. R0.8 is the current planned architecture milestone.
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
@@ -129,7 +129,82 @@ R0.7 establishes a narrow, platform-independent Component operational observatio
 
 R0.7 does not add `statistics()` to the mandatory `runtime::Component` base interface by default. Component statistics are an optional operational contract defined by R07-004.
 
-## Acceptance Rule
+## KF-CORE-R08 — Component Configuration Foundation (Architecture Confirmed)
+
+| ID | Task | Primary Area | Status | Est. Effort |
+|---|---|---|---|---:|
+| R08 Design Consult | Configuration model and architectural boundary | architecture | APPROVED | 2–3 ED |
+| R08 Scope Confirmation | Confirm milestone scope and exclusions | architecture | APPROVED | 1 ED |
+| KF-CORE-R08-001 | Component Configuration Contract & Lifecycle Semantics | runtime/component | PLANNED | 2–3 ED |
+| KF-CORE-R08-002 | Configuration Ownership & Atomic Application | configuration/runtime/component | PLANNED | 2–3 ED |
+| KF-CORE-R08-003 | Configuration Version & Validation Contract | configuration | PLANNED | 2–3 ED |
+| R08 Configuration API Review | Freeze public configuration semantics | architecture | PLANNED | 1 ED |
+| KF-CORE-R08-004 | Reference Configuration Harness & Contract Tests | tests/configuration | PLANNED | 3–4 ED |
+| KF-CORE-R08-005 | Runtime/Component Configuration Integration | tests/integration | PLANNED | 3–4 ED |
+| R08 Integration Freeze | Freeze production configuration behavior | architecture | PLANNED | 0.5 ED |
+| KF-CORE-R08-006 | Configuration Boundary & Regression Validation | integration/validation | PLANNED | 2–3 ED |
+| KF-CORE-R08-007 | Full R0.8 Validation & Release Candidate | integration/validation/release | PLANNED | 2–3 ED |
+| R08 Release Gate | Release 0.8.0 | release | PLANNED | 1 ED |
+
+## R08 Dependency Graph
+
+```text
+R08 Design Consult
+        ↓
+R08 Scope Confirmation
+        ↓
+R08-001 Configuration Contract
+        ↓
+R08-002 Ownership & Atomic Application
+        ↓
+R08-003 Version & Validation
+        ↓
+R08 Configuration API Review
+        ↓
+R08-004 Reference Harness
+        ↓
+R08-005 Runtime Integration
+        ↓
+R08 Integration Freeze
+        ↓
+R08-006 Boundary & Regression Validation
+        ↓
+R08-007 Full Validation / Release Candidate
+        ↓
+R08 Release Gate
+```
+
+### R0.8 Scope Decision
+
+R0.8 establishes a precise, platform-independent Component Configuration Contract around the existing `Configuration`, `ConfigurationVersion`, `Component::configure()` and `RuntimeManager::configure()` path. It does not introduce dynamic reconfiguration, parameter services, persistence, remote configuration, configuration transactions/rollback, configuration event infrastructure, ComponentContext expansion, Runtime lifecycle changes, automatic recovery, platform implementations or robotics-specific parameter semantics.
+
+### R0.8 Architectural Rules
+
+1. Configuration is a detached control-plane value supplied synchronously to `Component::configure()`.
+2. Configuration is valid only in `UNKNOWN` and `STOPPED`; no dynamic reconfiguration is introduced.
+3. Caller owns the supplied Configuration; Component owns its accepted/applied semantic state.
+4. Failed configuration is non-partial and leaves Component lifecycle state unchanged.
+5. `Configuration::validate()` remains the generic structural validation boundary; Component validates domain-specific semantics.
+6. `ConfigurationVersion` means schema/contract compatibility version, not runtime revision/history.
+7. Runtime forwards configuration in established dependency order and does not interpret, retry, rollback or persist it.
+8. Configuration failure does not enter Runtime `FAULT` and does not automatically change Status or Health.
+9. `ComponentContext` remains unchanged.
+10. No configuration broker, persistence layer, event bus, background worker or concrete platform implementation enters Core.
+
+### Acceptance Rule
+
+A task moves to ACCEPTED only after:
+
+1. implementation is complete;
+2. required focused unit/contract tests pass;
+3. required integration tests pass;
+4. the complete existing regression suite passes;
+5. required quality checks pass;
+6. objective evidence is supplied;
+7. independent review passes.
+
+API freeze gates are mandatory.
+
 
 A task moves to ACCEPTED only after:
 
