@@ -9,6 +9,7 @@
 | KF-CORE-R03 | RELEASED | 8 / 8 tasks accepted | Foundation API Review, Runtime Contract Review and Release Gate PASS; Integration Freeze honored | `kritva-core-r0.3` (annotated tag on release-record commit `cc16ec9`; tag object `0dfccab`; pushed to origin) |
 | KF-CORE-R04 | RELEASED | 8 / 8 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.4` (annotated tag on release-record commit `b31108d`; tag object `9e1bc7b`; pushed to origin) |
 | KF-CORE-R05 | RELEASED | 7 / 7 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.5` (annotated tag on release-record commit `adf8ac2`; tag object `aecb045`; pushed to origin) |
+| KF-CORE-R06 | PLANNED | 0 / 7 tasks | Architecture proposal; implementation not authorized | 0.6.0 (target; not approved) |
 
 ## R02 Task Status
 
@@ -180,3 +181,25 @@ Release: Kritva Core R0.4, version 0.4.0; release candidate `e7df87c`; release-r
 ### R0.5 Release Gate
 Status: PASS (05-10-2026)
 Release: Kritva Core R0.5, version 0.5.0; release candidate `5fb5e69`; release-record commit `adf8ac2`; tag `kritva-core-r0.5` (annotated, published). Record: `planning/milestones/KF-CORE-R05/R05_RELEASE_GATE.md`.
+
+
+## R0.6 Task Status
+
+| ID | Status | Dependency | Est. Effort |
+|---|---|---|---:|
+| KF-CORE-R06-001 | PLANNED | R0.5 released | 3–4 ED |
+| KF-CORE-R06-002 | PLANNED | R06-001 | 3–4 ED |
+| KF-CORE-R06-003 | PLANNED | R06-002 | 3–4 ED |
+| KF-CORE-R06-004 | PLANNED | R06-002, R06-003 | 2–3 ED |
+| R06 Component API Review | PLANNED | R06-001..004 | 1 ED |
+| KF-CORE-R06-005 | PLANNED | Component API Review PASS/FROZEN | 3–4 ED |
+| KF-CORE-R06-006 | PLANNED | R06-005 | 3–4 ED |
+| R06 Integration Freeze | PLANNED | R06-006 | 0.5 ED |
+| KF-CORE-R06-007 | PLANNED | Integration Freeze PASS/HONORED | 2–3 ED |
+| R06 Release Gate | PLANNED | R06-007 | 1 ED |
+
+### R0.6 Status
+
+Status: PLANNED — ARCHITECTURE PROPOSAL
+
+R0.6 is not implementation-authorized until the independent architecture/design review confirms the proposed Component Execution Context direction.

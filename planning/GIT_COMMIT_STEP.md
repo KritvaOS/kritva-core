@@ -135,3 +135,32 @@ Example:
 git tag -a kritva-core-r0.4 -m "Kritva Core R0.4"
 git show kritva-core-r0.4
 ```
+
+
+## R05 and R06 Commit Messages
+
+R05 task commits:
+
+| Task | Exact implementation commit |
+|---|---|
+| KF-CORE-R05-001 | `feat(core): add platform context` |
+| KF-CORE-R05-002 | `feat(core): define platform service requirements` |
+| KF-CORE-R05-003 | `feat(core): define explicit platform service consumption` |
+| KF-CORE-R05-004 | `feat(core): preserve runtime platform lifecycle boundary` |
+| KF-CORE-R05-005 | `test(core): add platform integration reference harness` |
+| KF-CORE-R05-006 | `test(core): add platform runtime integration tests` |
+| KF-CORE-R05-007 | `test(core): complete R0.5 validation` |
+
+R06 proposed task commits:
+
+| Task | Exact implementation commit |
+|---|---|
+| KF-CORE-R06-001 | `feat(core): define component execution context` |
+| KF-CORE-R06-002 | `feat(core): define operational context access policy` |
+| KF-CORE-R06-003 | `feat(core): define component context injection boundary` |
+| KF-CORE-R06-004 | `feat(core): bind context requirements and capabilities` |
+| KF-CORE-R06-005 | `test(core): add component context reference harness` |
+| KF-CORE-R06-006 | `test(core): add component context integration tests` |
+| KF-CORE-R06-007 | `test(core): complete R0.6 validation` |
+
+R06 is an architecture proposal. These commit messages become implementation-authoritative only after the R06 architecture/design review authorizes implementation.

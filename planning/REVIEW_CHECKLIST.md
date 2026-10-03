@@ -256,3 +256,81 @@ Apply to R04-008:
 - [ ] Follow-up fixes use focused commits.
 - [ ] Accepted history is not rewritten.
 - [ ] Milestone tag created only after final acceptance.
+
+
+## R06 Component Execution Context Review
+
+Apply during R06 architecture/design review and before R06-001 implementation authorization:
+
+- [ ] R0.5 `IPlatformAdapter` and `PlatformContext` remain authoritative.
+- [ ] Component context ownership/lifetime is explicit.
+- [ ] Context is non-owning unless a reviewed contract says otherwise.
+- [ ] No generic service registry, locator, singleton, global or thread-local context.
+- [ ] Context access has no hidden lifecycle side effects.
+- [ ] Approved operational services are explicitly enumerated and deterministic.
+- [ ] Platform capability identity semantics are reused.
+- [ ] No platform name/version inference.
+- [ ] No raw `IPlatformAdapter*` is exposed as a general Component interface.
+- [ ] Runtime lifecycle semantics remain unchanged unless explicitly approved.
+- [ ] Component lifecycle signature changes, if any, are explicitly reviewed before implementation.
+- [ ] Error propagation preserves the established Result/Error contract.
+- [ ] Public API is self-contained and documented.
+- [ ] No platform/vendor/OS dependency enters production Core.
+- [ ] No Core-owned background execution or automatic recovery.
+- [ ] Test plan covers ownership, lifetime, side effects, failure and determinism.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R06 Component API Review Gate
+
+- [ ] R06-001 through R06-004 accepted.
+- [ ] All proposed public contracts are internally consistent.
+- [ ] `PlatformContext` remains authoritative for platform access.
+- [ ] No hidden lifecycle or ownership path exists.
+- [ ] Unit/contract tests and mutation evidence are sufficient.
+- [ ] Full regression remains green.
+- [ ] Traceability and dependency audits pass.
+- [ ] Public-header self-containment passes.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+- [ ] On PASS, API is FROZEN.
+
+## R06 Integration Freeze
+
+- [ ] R06-005 and R06-006 accepted.
+- [ ] Integration tests use public APIs only.
+- [ ] Runtime lifecycle ordering and failure/reset semantics remain unchanged.
+- [ ] No Core-owned platform-service lifecycle exists.
+- [ ] No hidden context ownership exists.
+- [ ] No test-only production hook exists.
+- [ ] No unresolved production API changes.
+- [ ] Production diff from the API freeze point is clean unless explicitly approved.
+- [ ] PASS / HONORED / CHANGES REQUIRED / BLOCKED recorded.
+
+## R06 Final Validation Review
+
+- [ ] Integration Freeze is PASS/HONORED.
+- [ ] Fresh-clone Debug/Release builds pass.
+- [ ] Complete CTest regression passes.
+- [ ] ASan/UBSan pass.
+- [ ] TSan passes where configured.
+- [ ] Strict warning build passes.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage reviewed against baseline.
+- [ ] Traceability audit passes.
+- [ ] Install consumer passes.
+- [ ] Prohibited dependency/isolation audit passes.
+- [ ] Public-header self-containment passes.
+- [ ] Working tree is clean.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R06 Release Gate
+
+- [ ] R06-001 through R06-007 accepted.
+- [ ] Component API Review PASS/FROZEN.
+- [ ] Integration Freeze PASS/HONORED.
+- [ ] Fresh-clone validation PASS.
+- [ ] Requirements/API/planning documentation reconciled.
+- [ ] Version and CMake metadata agree.
+- [ ] Release record is documentation-only.
+- [ ] Annotated `kritva-core-r0.6` tag is authorized only after PASS.
+- [ ] Remote main/tag/peeled tag are independently verified.
+- [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.

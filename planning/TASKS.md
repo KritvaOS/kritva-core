@@ -1,6 +1,6 @@
 # Kritva Core — Master Task Register
 
-R0.2, R0.3 and R0.4 remain recorded as released historical milestones.
+R0.2, R0.3, R0.4 and R0.5 remain recorded as released historical milestones.
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
@@ -38,12 +38,51 @@ R05-007
 R05 Release Gate
 ```
 
+## KF-CORE-R06 — Component Execution Context (Architecture Proposal)
+
+| ID | Task | Primary Area | Status | Est. Effort |
+|---|---|---|---|---:|
+| KF-CORE-R06-001 | Component Execution Context & Ownership Model | context | PLANNED | 3–4 ED |
+| KF-CORE-R06-002 | Operational Context Services & Access Policy | context/services | PLANNED | 3–4 ED |
+| KF-CORE-R06-003 | Context Injection Without Runtime Lifecycle Change | runtime/component | PLANNED | 3–4 ED |
+| KF-CORE-R06-004 | Context Requirements & Capability Binding | context/requirements | PLANNED | 2–3 ED |
+| R06 Component API Review | Freeze public context/API | architecture | PLANNED | 1 ED |
+| KF-CORE-R06-005 | Reference Context Harness & Contract Tests | tests/context | PLANNED | 3–4 ED |
+| KF-CORE-R06-006 | Runtime/Component Context Integration Tests | tests/integration | PLANNED | 3–4 ED |
+| R06 Integration Freeze | Freeze production behavior | architecture | PLANNED | 0.5 ED |
+| KF-CORE-R06-007 | Full R0.6 Validation | integration/validation | PLANNED | 2–3 ED |
+| R06 Release Gate | Release 0.6.0 | release | PLANNED | 1 ED |
+
+## R06 Dependency Graph
+
+```text
+R06-001
+   ↓
+R06-002
+   ↓
+R06-003
+   ↓
+R06-004
+   ↓
+R06 Component API Review
+   ↓
+R06-005
+   ↓
+R06-006
+   ↓
+R06 Integration Freeze
+   ↓
+R06-007
+   ↓
+R06 Release Gate
+```
+
 ## Acceptance Rule
 
 A task moves to ACCEPTED only after:
 
 1. implementation is complete;
-2. required focused unit tests pass;
+2. required focused unit/contract tests pass;
 3. required integration tests pass;
 4. the complete existing regression suite passes;
 5. required quality checks pass;

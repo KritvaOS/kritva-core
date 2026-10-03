@@ -63,6 +63,24 @@ Accepted:
 Accepted:
 - KF-CORE-R03-PREP-001 — Install and package Core library (`29255d5`)
 
+
+
+### KF-CORE-R06 — Component Execution Context Planning
+
+Planning package prepared for the next proposed milestone:
+- Component Execution Context and ownership model
+- Operational context service access policy
+- Context injection without Runtime lifecycle change
+- Context requirement/capability binding
+- Component API Review / Freeze
+- Reference context contract harness
+- Runtime/Component integration tests
+- Integration Freeze
+- Full R0.6 Validation
+- Release Gate
+
+R0.6 remains an architecture proposal until independently reviewed. No R0.6 implementation or release is authorized by this planning update.
+
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
 
 Accepted:
