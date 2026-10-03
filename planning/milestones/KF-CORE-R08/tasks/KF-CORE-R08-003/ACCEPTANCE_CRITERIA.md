@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-003 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define configuration version and validation contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -105,4 +105,14 @@ Primary commit: `bdb4b93` `feat(core): define configuration version and validati
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `bdb4b93` (evidence `0ea3ea3`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: no production type, signature or behavior change (contract text in `configuration.hpp` and `configuration_version.hpp`); the two-owner validation boundary with `validate()` as the single structural entry point and no new check, the unchanged `ErrorCode` set and mapping, `ConfigurationVersion` as schema/contract compatibility version only, no revision or history API and component-owned compatibility policy accepted; 12/12 mutants detected. `CORE-CFG-007` and `CORE-CFG-008` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-003 is ACCEPTED.**

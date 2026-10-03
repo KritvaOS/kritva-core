@@ -239,7 +239,7 @@ Release: Kritva Core R0.7, version 0.7.0; release candidate `d83e1ba`; tag `krit
 | R08 Scope Confirmation | APPROVED | Design Consult | 1 ED |
 | KF-CORE-R08-001 | ACCEPTED (605516b) | Scope Confirmation | 2–3 ED |
 | KF-CORE-R08-002 | ACCEPTED (6efeaac) | R08-001 | 2–3 ED |
-| KF-CORE-R08-003 | REVIEW (bdb4b93) | R08-002 | 2–3 ED |
+| KF-CORE-R08-003 | ACCEPTED (bdb4b93) | R08-002 | 2–3 ED |
 | R08 Configuration API Review | PLANNED | R08-001..003 | 1 ED |
 | KF-CORE-R08-004 | PLANNED | API Review PASS/FROZEN | 3–4 ED |
 | KF-CORE-R08-005 | PLANNED | R08-004 | 3–4 ED |

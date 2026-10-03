@@ -137,7 +137,7 @@ R0.7 does not add `statistics()` to the mandatory `runtime::Component` base inte
 | R08 Scope Confirmation | Confirm milestone scope and exclusions | architecture | APPROVED | 1 ED |
 | KF-CORE-R08-001 | Component Configuration Contract & Lifecycle Semantics | runtime/component | ACCEPTED (605516b) | 2–3 ED |
 | KF-CORE-R08-002 | Configuration Ownership & Atomic Application | configuration/runtime/component | ACCEPTED (6efeaac) | 2–3 ED |
-| KF-CORE-R08-003 | Configuration Version & Validation Contract | configuration | REVIEW (bdb4b93) | 2–3 ED |
+| KF-CORE-R08-003 | Configuration Version & Validation Contract | configuration | ACCEPTED (bdb4b93) | 2–3 ED |
 | R08 Configuration API Review | Freeze public configuration semantics | architecture | PLANNED | 1 ED |
 | KF-CORE-R08-004 | Reference Configuration Harness & Contract Tests | tests/configuration | PLANNED | 3–4 ED |
 | KF-CORE-R08-005 | Runtime/Component Configuration Integration | tests/integration | PLANNED | 3–4 ED |

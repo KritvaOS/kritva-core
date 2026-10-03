@@ -33,9 +33,9 @@ Planned effort: 22–31 ED; actual effort not yet recorded.
 Accepted:
 - KF-CORE-R08-001 — Component Configuration Contract & Lifecycle Semantics (`605516b`; evidence `bb3752a`)
 - KF-CORE-R08-002 — Configuration Ownership & Atomic Application (`6efeaac`; evidence `6aab91b`)
+- KF-CORE-R08-003 — Configuration Version & Validation Contract (`bdb4b93`; evidence `0ea3ea3`)
 
 Pending independent review:
-- KF-CORE-R08-003 — Configuration Version & Validation Contract (`bdb4b93`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
