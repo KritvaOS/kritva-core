@@ -41,6 +41,7 @@ Accepted:
 - KF-CORE-R08-006 — Configuration Boundary & Regression Validation (`94fad8e`; evidence `644bdf8`)
 
 Pending independent review:
+- KF-CORE-R08-007 — Full R0.8 Validation & Release Candidate (candidate `1e7ba2b`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
