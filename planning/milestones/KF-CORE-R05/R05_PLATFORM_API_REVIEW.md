@@ -82,4 +82,20 @@ Baseline: R05-001 `c5910e7`, R05-002 `f9d6007`, R05-003 `f8cd523`, R05-004 `f237
 
 Carried forward from R0.4: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; `make lint` and `make format-check` stubs. New: `PlatformContext` is documented as unsafe to use after its adapter is destroyed (no detection is possible by design). R05-005 and R05-006 build the reference platform and integration tests on this API and are not part of this freeze.
 
-Reviewer decision: PENDING
+Reviewer decision: **PASS / FROZEN** (05-10-2026)
+
+## Reviewer Decision
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 05-10-2026 |
+| Decision | **PASS / FROZEN** |
+
+Gate record: R05-001 `c5910e7`, R05-002 `f9d6007`, R05-003 `f8cd523`, R05-004 `f23777b` (accepted at `798b906`); API decisions Q1–Q9 `ef1ad34`; evidence `05d981e`.
+
+**Frozen R05 platform API:** `PlatformContext` (including `require_scheduler()`, `require_clock()`, `require_timer()`, `require_watchdog()`), `PlatformRequirements`, `PlatformRequirementReport`, `evaluate()`, `check_required()`, and the R05 Runtime/platform lifecycle-separation contract. No further API redesign during R05-005 through R05-007 unless a genuine blocking defect is found; any correction is a controlled exception to the freeze and is reviewed explicitly.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; and the documented undefined behavior if a `PlatformContext` outlives its adapter, a consequence of the deliberately non-owning view that is not a reason to introduce ownership or reference counting.
+
+**Reviewer Decision: PASS / FROZEN — KF-CORE-R05 Platform API Review gate is ACCEPTED.**

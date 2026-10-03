@@ -69,6 +69,7 @@ Accepted:
 - KF-CORE-R05-002 — Platform Service Requirement Model (`f9d6007`)
 - KF-CORE-R05-003 — Explicit Platform Service Consumption (`f8cd523`)
 - KF-CORE-R05-004 — Runtime–Platform Lifecycle Boundary (`f23777b`)
+- R05 Platform API Review — PASS / FROZEN (evidence `05d981e`)
 
 ### KF-CORE-R04 — Platform Abstraction Planning
 
