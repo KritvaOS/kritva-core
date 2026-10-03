@@ -12,7 +12,7 @@ R0.2, R0.3 and R0.4 remain recorded as released historical milestones.
 | KF-CORE-R05-004 | Runtime–Platform Lifecycle Boundary | runtime/platform | ACCEPTED | `feat(core): preserve runtime platform lifecycle boundary` |
 | KF-CORE-R05-005 | Reference Platform Integration | tests/platform | ACCEPTED | `test(core): add platform integration reference harness` |
 | KF-CORE-R05-006 | Platform Integration & Runtime Tests | tests/integration | ACCEPTED | `test(core): add platform runtime integration tests` |
-| KF-CORE-R05-007 | Full R0.5 Validation | integration/validation | PLANNED | `test(core): complete R0.5 validation` |
+| KF-CORE-R05-007 | Full R0.5 Validation | integration/validation | REVIEW | `test(core): complete R0.5 validation` |
 
 ## R05 Dependency Graph
 
