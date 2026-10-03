@@ -43,4 +43,4 @@ R04-001 (`d1c5f13`), R04-002 (`eb06fa0`), R04-003 (`67114bb`), R04-004 (`4af4756
 
 None blocking. Carried forward: 32-bit scheduler affinity mask (documented limitation; widening would be a separate reviewed change); `make lint` and `make format-check` remain deferred stubs (as in R0.3); the platform-capability adapter contract (R04-005) and conformance suites (R04-006) are the next tasks and are not part of this freeze.
 
-Reviewer decision: PENDING
+Reviewer decision: **PASS / FROZEN** (04-10-2026; see `R04_PLATFORM_API_REVIEW.md`)

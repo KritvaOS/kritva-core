@@ -53,7 +53,7 @@ Freeze:
 
 ## Decision
 
-Status: SUBMITTED (evidence: `R04_PLATFORM_API_REVIEW_EVIDENCE.md`)
+Status: PASS / FROZEN (evidence: `R04_PLATFORM_API_REVIEW_EVIDENCE.md`, commit `380ade3`)
 
 Possible outcomes:
 - PASS / FROZEN
@@ -61,3 +61,17 @@ Possible outcomes:
 - BLOCKED
 
 Reviewer: ChatGPT architecture/review gate.
+
+## Reviewer Decision
+
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS / FROZEN** |
+
+Frozen baseline: R04-001 through R04-004 as accepted (`d1c5f13`, `eb06fa0`, `67114bb`, `4af4756`); the R0.3 Runtime is byte-identical to `kritva-core-r0.3`.
+
+Reviewer notes: the 32-bit scheduler affinity limitation is retained in the frozen API record so that R04-005 does not silently expand the scheduler contract; R04-005 and R04-006 consume the frozen contracts and do not modify them casually; `make lint` / `make format-check` stubs are deferred tooling, not an API defect.
+
+**Reviewer Decision: PASS / FROZEN — KF-CORE-R04 Platform API Review gate is ACCEPTED.**
