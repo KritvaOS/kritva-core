@@ -31,9 +31,9 @@ R0.7 implementation has not started. `KF-CORE-R07-001` is the next implementatio
 ### KF-CORE-R07 — Component Operational Implementation
 
 Accepted:
+- KF-CORE-R07-001 — Component Operational Observation Contract (`6849a73`; evidence `6518240`)
 
 Pending independent review:
-- KF-CORE-R07-001 — Component Operational Observation Contract (`6849a73`)
 
 ### Release record
 

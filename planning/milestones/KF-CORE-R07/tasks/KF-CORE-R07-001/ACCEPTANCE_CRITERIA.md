@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-001 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define component operational observation contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -104,8 +104,14 @@ Primary commit: `6849a73` `feat(core): define component operational observation 
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `6849a73` (evidence `6518240`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: additive headers only, no `src` change and no change to `Component`, `ComponentContext` or `RuntimeManager`; detached owning `ComponentObservation`; exact accessor order/count, null versus engaged statistics, detachment, lifetime safety, no Runtime impact, determinism and 10/10 mutation detection accepted; consult amendments A1–A6 incorporated; the exception-unwind line is consistent with earlier accepted treatment. `CORE-OPS-001` and `CORE-OPS-006` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-001 is ACCEPTED.**
