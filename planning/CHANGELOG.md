@@ -29,6 +29,9 @@ Accepted:
 - R03 Runtime Contract Review — PASS / FROZEN (RuntimeManager lifecycle and failure/recovery contracts frozen)
 - KF-CORE-R03-007 — Runtime Integration Tests (`9d1c7d1`)
 - R03 Integration Freeze — PASS / ACTIVE
+
+Pending independent review:
+- KF-CORE-R03-008 — Full R03 Validation (candidate `f598fef`; `CORE-RT-009`/`CORE-RT-010` defined, 0.3.0 release metadata)
 - R03 Foundation API Review — PASS / FROZEN (Component, Registry, DependencyGraph contracts frozen; `CORE-RT-002` Runtime interface remains authoritative for R03-004)
 - R03-004–006 acceptance criteria prepared: Runtime Manager, Runtime Lifecycle, Runtime Failure & Recovery.
 - R03-007 acceptance package prepared: Runtime Integration Tests.

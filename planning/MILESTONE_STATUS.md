@@ -69,7 +69,7 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 | R03 Runtime Contract Review | PASS / FROZEN | R03-004..006 accepted | 03-10-2026 |
 | KF-CORE-R03-007 Runtime Integration Tests | ACCEPTED (`9d1c7d1`) | Runtime Contract Review PASS | `test(core): add runtime integration contracts` |
 | R03 Integration Freeze | PASS / ACTIVE | R03-007 accepted | 03-10-2026 |
-| KF-CORE-R03-008 Final Validation | PLANNED / BLOCKED | Integration Freeze PASS | `test(core): complete R03 runtime validation` |
+| KF-CORE-R03-008 Final Validation | REVIEW (candidate `f598fef`) | Integration Freeze PASS | `test(core): complete R03 runtime validation` |
 | R03 Release Gate | PENDING | R03-008 accepted | — |
 
 ## R03 Acceptance Gates
