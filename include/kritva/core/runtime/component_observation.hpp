@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-OPS-001, CORE-OPS-006
+// Requirements: CORE-OPS-001, CORE-OPS-002, CORE-OPS-003, CORE-OPS-006
 // API         : CORE-API-RUNTIME
 //
 // Author      : KritvaOS Core Team
@@ -48,7 +48,7 @@ namespace kritva::core::runtime {
 //   authoritative for lifecycle orchestration and for its own statistics; it
 //   neither produces nor consumes ComponentObservation.
 //
-// STATUS AND HEALTH (contract completed by R07-002)
+// STATUS AND HEALTH (CORE-OPS-002, CORE-OPS-003)
 //   - Status() and Health() are value snapshots: independent copies, valid
 //     forever, never referring into the component.
 //   - Lifecycle, Status and Health are INDEPENDENT. Core imposes no relation
@@ -57,6 +57,10 @@ namespace kritva::core::runtime {
 //     lifecycle is FAULT, Status NOT_READY while RUNNING). An empty Status message or
 //     Health detail is valid for every code or state. Core never validates,
 //     normalizes, derives or reconciles one from another.
+//   - Ownership: the Component owns and reports its own Status and Health; the
+//     Runtime does not read them, set them, reset them or react to them (it never
+//     calls status() or health() at all), and a Runtime reset() does not rewrite a
+//     component's reported Health.
 //   - Health is component-reported INFORMATION. It is independent of a Runtime
 //     FAULT (which is a lifecycle state caused by a failed initialize/start/
 //     stop) and is never interpreted by Core as a recovery, restart, retry or

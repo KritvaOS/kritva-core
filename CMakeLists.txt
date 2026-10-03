@@ -281,6 +281,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_component_observation_test PRIVATE kritva_core)
     add_test(NAME kritva_core_component_observation COMMAND kritva_core_component_observation_test)
 
+    #Add Test: tests/unit/component_status_health_test.cpp
+    add_executable(kritva_core_component_status_health_test tests/unit/component_status_health_test.cpp)
+    target_link_libraries(kritva_core_component_status_health_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_component_status_health COMMAND kritva_core_component_status_health_test)
+
     #Add Test: tests/unit/reference_context_test.cpp (the test-only context harness in tests/runtime/ and tests/platform/)
     add_executable(kritva_core_reference_context_test tests/unit/reference_context_test.cpp)
     target_link_libraries(kritva_core_reference_context_test PRIVATE kritva_core)
