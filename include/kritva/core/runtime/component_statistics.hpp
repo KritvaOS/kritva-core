@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-OPS-001
+// Requirements: CORE-OPS-001, CORE-OPS-004
 // API         : CORE-API-RUNTIME
 //
 // Author      : KritvaOS Core Team
@@ -21,7 +21,7 @@
 namespace kritva::core::runtime {
 
 //------------------------------------------------------------------------------
-// IComponentStatistics (contract completed by R07-004)
+// IComponentStatistics (CORE-OPS-004)
 //
 // An OPTIONAL interface through which an integrator-written Component (or any
 // object the integrator chooses) offers its own operational Statistics. It is
@@ -40,6 +40,15 @@ namespace kritva::core::runtime {
 //     (RuntimeManager::statistics()), which count Runtime component calls. The
 //     Runtime never reads, resets or combines a component's statistics, and
 //     component statistics never change Runtime statistics.
+//
+//   - The pairing of a provider with its component is the CALLER's: the interface
+//     carries no identity and Core does not check it (a component typically
+//     inherits both, or an integrator-owned object forwards to the component's
+//     counters). A component without statistics simply has no provider; Core never
+//     invents or defaults one, and observe() then reports std::nullopt.
+//   - Values pass through unchanged: Core does not clamp, normalize, derive, add
+//     to or reset any field (a utilization outside 0..100 or a queue_depth below
+//     zero is reported as the provider stored it).
 //
 // SEMANTICS
 //   - statistics() is a const, read-only query: a conforming implementation has
