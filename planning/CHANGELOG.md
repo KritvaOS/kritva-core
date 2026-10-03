@@ -35,6 +35,7 @@ Accepted:
 - KF-CORE-R07-002 — Component Status & Health Reporting Contract (`61e0067`; evidence `8d9e4b0`)
 - KF-CORE-R07-003 — Component Operational Event Contract (`56ff226`; evidence `871b878`)
 - KF-CORE-R07-004 — Component Statistics Ownership & Observation Contract (`16654e9`; evidence `e354dac`)
+- R07 Component Operational API Review — PASS / FROZEN (evidence `6b1296f`)
 
 Pending independent review:
 

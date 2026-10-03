@@ -69,4 +69,6 @@ Carried forward: 32-bit scheduler affinity mask; conformance level-2 mutation ga
 
 ## Decision
 
-Reviewer records PASS / CHANGES REQUIRED / BLOCKED with evidence and commit SHA.
+Reviewer decision: **PASS / FROZEN** (05-10-2026), ChatGPT (independent reviewer). Evidence commit `6b1296f`.
+
+Freeze rule (approved): R07-005 onward must not change the frozen production API (`runtime/component_observation.hpp`, `runtime/component_statistics.hpp`, `runtime/component_events.hpp` and their public declarations) or its observable semantics except through an explicit architecture-review exception. Test-only additions and documentation may continue normally.
