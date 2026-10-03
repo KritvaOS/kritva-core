@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-004 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define component statistics observation contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -104,8 +104,14 @@ Primary commit: `16654e9` `feat(core): define component statistics observation c
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `16654e9` (evidence `e354dac`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: optionality preserved (not a base of `Component`, no `statistics()` on it, no RTTI); by-value pass-through of every field including extremes; reads do not reset; independent snapshots; component statistics fully separate from Runtime statistics through lifecycle, FAULT and reset; caller-owned pairing explicit; 7/7 mutants detected and the discarded malformed mutant left no production change. `CORE-OPS-004` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-004 is ACCEPTED.**
