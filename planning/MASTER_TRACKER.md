@@ -62,7 +62,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Platform | R0.4 | Platform abstraction | 8 | RELEASED | 8/8 | Historical | R0.3 | Platform API Review + Integration Freeze + Release Gate | 0.4.0 |
 | Platform Runtime | R0.5 | Platform runtime integration foundation | 7 | RELEASED | 7/7 | Historical | R0.4 | Platform API Review + Integration Freeze + Release Gate | 0.5.0 |
 | Component Context | R0.6 | Controlled component execution context without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 20–27 ED | R0.5 | Component API Review + Integration Freeze + Validation + Release Gate | 0.6.0 |
-| Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | **7 + 2 architecture gates + API/freeze gates** | **PLANNED** | **0/7 implementation tasks** | **24–32 ED** | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
+| Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 24–32 ED (estimate; actual not recorded) | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
 
 ## R0.7 Task Tracker
 
@@ -186,9 +186,9 @@ And for milestone validation:
 
 ## Current Decision
 
-R0.6 is fully released and closed.
+R0.7 is fully released and closed (`kritva-core-r0.7`, version 0.7.0, release-record commit `424984f`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
 
-R0.7 architecture is confirmed through the Design Consult and Scope Confirmation. Implementation authorization begins with R07-001 only after its task package and acceptance criteria are issued. R0.7 is therefore **PLANNED — ARCHITECTURE CONFIRMED**, not yet in implementation.
+No next milestone is planned yet.
 
 ## Deferred Known Issues
 
