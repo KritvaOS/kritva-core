@@ -82,6 +82,10 @@ An operation invalid for the current state fails with `INVALID_STATE` and change
 
 `runtime::ComponentRegistry` (`runtime/component_registry.hpp`) records which components exist, keyed by `ComponentId`, and nothing else. It is non-owning: the integrator owns each component and must keep it alive, at the same address, while the registry is used; the registry never owns, copies, moves, deletes or calls a component. Registering an id that is already registered fails with `INVALID_ARGUMENT` (source = the id) and changes nothing. `find()` and `contains()` are side-effect free. `components()` returns a snapshot of non-owning pointers, each component once, in ascending `ComponentId` order regardless of registration order. There is no unregister operation. The registry is not thread-safe and is control-plane only. Dependency ordering and lifecycle orchestration are separate (KF-CORE-R03-003/004/005).
 
+### Dependency graph
+
+`runtime::DependencyGraph` (`runtime/dependency_graph.hpp`) records "dependent depends on dependency" edges between `ComponentId`s and computes a dependency order. It holds only ids: no component, pointer or registry, and it never calls a component. `add_dependency()` rejects, with `INVALID_ARGUMENT` and the dependent as error source, the invalid id, a self dependency, a duplicate edge (never silently merged) and any edge that would create a cycle (the cycle is listed in the message), leaving the graph unchanged; the graph is therefore always acyclic. `order(registry)` returns every registered component exactly once with dependencies before dependents; among components that are simultaneously ready the lowest `ComponentId` goes first, so the result does not depend on registration or insertion order. An edge endpoint that is not registered makes `order()` fail with `CONFIGURATION_ERROR` and no order is returned. Lifecycle orchestration using this order belongs to KF-CORE-R03-004/005.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

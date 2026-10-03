@@ -62,5 +62,12 @@ int main() {
     if (!registry.register_component(stub)) return 7;
     if (registry.register_component(stub)) return 8;           // duplicate id
     if (registry.find(ComponentId{1}) != &stub) return 9;
+
+    // Dependency graph (compiled library code): one edge and a registered order.
+    DependencyGraph graph;
+    if (!graph.add_dependency(ComponentId{2}, ComponentId{1})) return 10;
+    if (graph.add_dependency(ComponentId{1}, ComponentId{2})) return 11;   // would be a cycle
+    const auto order = graph.order(registry);
+    if (order) return 12;                                                    // id 2 is not registered
     return 0;
 }

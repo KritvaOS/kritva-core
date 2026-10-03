@@ -47,6 +47,7 @@
 #include "runtime/component_info.hpp"
 #include "runtime/component.hpp"
 #include "runtime/component_registry.hpp"
+#include "runtime/dependency_graph.hpp"
 #include "runtime/runtime.hpp"
 #include "messaging/message.hpp"
 #include "messaging/topic.hpp"

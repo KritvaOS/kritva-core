@@ -34,6 +34,8 @@
 - CORE-RT-001 Define the platform-independent lifecycle-managed component contract: immutable component identity (ComponentId, valid iff non-zero) and metadata (ComponentInfo: id, non-empty name, version) fixed at construction; explicit lifecycle operation semantics that reuse the Core lifecycle states and transition table (no new state); Result/Error integration in which every Error returned by an instantiated component's operation is attributable (source is the component id); non-owning lifetime (Core never owns, copies or moves components); and no universal thread-safety or real-time guarantee.
 - CORE-RT-002 Define runtime contract.
 - CORE-RT-003 Provide a deterministic, non-owning component registry keyed by ComponentId: registration rejects a duplicate id without replacing the existing entry (INVALID_ARGUMENT, source = the id), lookup returns the registered component or nullptr, and enumeration returns each component exactly once in ascending ComponentId order independent of registration order. The registry never owns, copies, moves or deletes a component, never calls a component, has no unregister operation, and is not thread-safe.
+- CORE-RT-004 Represent component dependencies by stable ComponentId in a DependencyGraph that holds no component or pointer: self dependencies, duplicate edges (rejected, never merged) and invalid ids are rejected with INVALID_ARGUMENT (source = the dependent) and leave the graph unchanged.
+- CORE-RT-005 Detect dependency cycles and provide a deterministic dependency order: an edge that would create a cycle is rejected with the cycle identified in the error, so the graph is always acyclic; order(registry) returns every registered component exactly once, dependencies first, with ties broken by lowest ComponentId (independent of registration and insertion order); an edge endpoint that is not registered fails order() with CONFIGURATION_ERROR and no order is returned. The graph never calls a component.
 - CORE-MSG-001 Define platform-neutral message identity/header.
 
 ### Foundation types
@@ -131,6 +133,7 @@ Requirement IDs are identifiers, not a contiguous sequence; gaps are not filled.
 | CORE-RT-001 | runtime/component.hpp, runtime/component_id.hpp, runtime/component_info.hpp | header-only | tests/unit/runtime_test.cpp, tests/unit/component_test.cpp, tests/contract/component_contract.hpp |
 | CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
 | CORE-RT-003 | runtime/component_registry.hpp | src/component_registry.cpp | tests/unit/component_registry_test.cpp |
+| CORE-RT-004, CORE-RT-005 | runtime/dependency_graph.hpp | src/dependency_graph.cpp | tests/unit/dependency_graph_test.cpp |
 | CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |
 | CORE-MSG-002 | messaging/topic.hpp | header-only | tests/unit/messaging_test.cpp |
 | CORE-PLAT-001 | platform/scheduler.hpp | contract only | tests/unit/platform_test.cpp, tests/contract/scheduler_contract.hpp |
