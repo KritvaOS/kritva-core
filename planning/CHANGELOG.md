@@ -36,9 +36,9 @@ Accepted:
 - KF-CORE-R08-003 — Configuration Version & Validation Contract (`bdb4b93`; evidence `0ea3ea3`)
 - R08 Configuration API Review — PASS / FROZEN (production freeze baseline `bdb4b93`; evidence `0a73b5a`)
 - KF-CORE-R08-004 — Reference Configuration Harness & Contract Tests (`f4b6de4`; evidence `2b93ad6`)
+- KF-CORE-R08-005 — Runtime/Component Configuration Integration (`a5dfbc1`; evidence `159b1bc`)
 
 Pending independent review:
-- KF-CORE-R08-005 — Runtime/Component Configuration Integration (`a5dfbc1`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 

@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-005 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): add configuration runtime integration tests` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 3–4 ED |
@@ -116,4 +116,14 @@ Primary commit: `a5dfbc1` `test(core): add configuration runtime integration tes
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `a5dfbc1` (evidence `159b1bc`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: test-only (no production diff since the freeze baseline `bdb4b93`); the seeded differential (200 seeds × 40 steps, vacuity-guarded) gives transcripts identical to the plain baseline; forwarding order, exactly-once delivery of the caller's own object, stop at the first failure with the component's Error unchanged, no retry and no rollback, isolation from Runtime state, FAULT, Status, Health, ComponentContext and the platform are accepted; the three additive harness changes are test-only; the equivalent mutants are accepted as classified. `CORE-CFG-009` and `CORE-CFG-010` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-005 is ACCEPTED.**
