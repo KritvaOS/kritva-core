@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-006, CORE-RT-007, CORE-RT-008, CORE-PLAT-010
+// Requirements: CORE-RT-006, CORE-RT-007, CORE-RT-008, CORE-PLAT-010, CORE-PLAT-015
 // API         : CORE-API-RUNTIME
 //
 // Author      : KritvaOS Core Team
@@ -228,6 +228,41 @@ namespace kritva::core::runtime {
 //     operations that allocate only to build the Error of a failed attach, and
 //     make no thread-safety or real-time claim (callers serialize all calls, as
 //     for every RuntimeManager operation).
+//
+// RUNTIME AND PLATFORM LIFECYCLE ARE SEPARATE (R0.5, CORE-PLAT-015)
+//   R0.5 adds no Runtime API and changes no Runtime behavior: it states and
+//   test-protects the boundary that attach_platform()/platform() already have.
+//   - TWO LIFECYCLES. The Runtime lifecycle (this class, R0.3) and the lifecycle of
+//     the platform's services (scheduler, clock, timer, watchdog) are independent.
+//     The integrator, or the adapter, creates, configures, starts, stops and
+//     destroys platform services; Core never does. Attaching an adapter does not
+//     start, stop, create, configure or recover anything, and neither does any
+//     Runtime operation, in any state, including FAULT and reset(). A service the
+//     integrator started stays exactly as it was across initialize(), start(),
+//     stop(), shutdown(), reset() and a failure; the Runtime never reads a clock,
+//     never creates a thread, task, timer or polling loop, and never advances,
+//     ticks or waits for a platform service.
+//   - NOTHING FLOWS BACK. Whether an adapter is attached, which services it
+//     provides, which capabilities it reports, and whether a service works, fails
+//     or expires, never changes a Runtime state, the dependency order, fail-fast
+//     behavior, the FAULT conditions, reset() or the statistics. A platform
+//     failure is not a Runtime event: it becomes a Runtime failure only when an
+//     integrator-written Component returns it as its own failed Result (with
+//     source = its own ComponentId and the platform's code and message
+//     unchanged), and then it is an ordinary component failure handled exactly as
+//     in R0.3. A watchdog expiry never enters the Runtime and never causes FAULT,
+//     reset() or recovery; a Runtime FAULT never touches a watchdog.
+//   - ATTACHMENT STAYS SETUP-ONLY. attach_platform() is valid only before the first
+//     successful initialize() and only while no adapter is attached; in every
+//     later state, READY, RUNNING, STOPPED and FAULT included, and after
+//     reset(), it fails with INVALID_STATE and changes nothing. R0.5 does not
+//     change this.
+//   - HOW TO USE THE PLATFORM. The supported way to consume it is the integrator
+//     building a platform::PlatformContext (platform/context.hpp) from the adapter
+//     or from platform() and giving it to its own components, which then use the
+//     explicit require_*() queries or PlatformRequirements and check_required().
+//     Components do not receive a raw IPlatformAdapter* from the Runtime, and the
+//     Component lifecycle signature is unchanged.
 //
 // THREADING, ALLOCATION, REAL TIME
 //   - Synchronous and single-threaded: no thread, executor or timer is created
