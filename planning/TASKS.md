@@ -92,7 +92,7 @@ R06 Release Gate
 | KF-CORE-R07-005 | Reference Operational Harness & Contract Tests | tests/operational | ACCEPTED (0b1bd1d) | 3–4 ED |
 | KF-CORE-R07-006 | Runtime/Component Operational Integration | tests/integration | ACCEPTED (3f524cd) | 3–4 ED |
 | R07 Integration Freeze | Freeze production operational behavior | architecture | PASS / HONORED (`142a32e`) | 0.5 ED |
-| KF-CORE-R07-007 | Full R0.7 Validation | integration/validation | PLANNED | 2–3 ED |
+| KF-CORE-R07-007 | Full R0.7 Validation | integration/validation | REVIEW (candidate d83e1ba) | 2–3 ED |
 | R07 Release Gate | Release 0.7.0 | release | PLANNED | 1 ED |
 
 ## R07 Dependency Graph
