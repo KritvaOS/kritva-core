@@ -9,7 +9,7 @@
 // Module      : Platform Contract
 // Layer       : Core Foundation
 //
-// Requirements: CORE-PLAT-001
+// Requirements: CORE-PLAT-001, CORE-PLAT-005
 // API         : CORE-API-PLATFORM
 //
 // Author      : KritvaOS Core Team
@@ -25,7 +25,7 @@
 namespace kritva::core::platform {
 
 //------------------------------------------------------------------------------
-// TaskId (CORE-PLAT-001)
+// TaskId (CORE-PLAT-001, CORE-PLAT-005)
 //
 //   - Opaque handle returned by IScheduler::create_task(). The numeric value
 //     has no meaning and no ordering; do not interpret or do arithmetic on it.
@@ -46,7 +46,7 @@ namespace kritva::core::platform {
 using TaskId = std::uint64_t;
 
 //------------------------------------------------------------------------------
-// TaskConfig (CORE-PLAT-001)
+// TaskConfig (CORE-PLAT-001, CORE-PLAT-005)
 //
 // Describes one task. Passed by const reference; the scheduler must copy
 // whatever it needs before create_task() returns and must not retain the
@@ -85,11 +85,12 @@ using TaskId = std::uint64_t;
 //                                    adapter/platform cannot provide
 //                                    affinity (for example no affinity
 //                                    support at all).
-//                R0.2 limitation: the 32-bit mask can address logical CPUs
-//                0..31 only. This reflects the current TaskConfig type, not a
-//                long-term Core architectural limit; a wider representation
-//                may be introduced with the platform abstraction work
-//                (KF-CORE-R04) and is out of scope for R0.2.
+//                Known limitation (kept in R0.4): the 32-bit mask can address
+//                logical CPUs 0..31 only. This reflects the current TaskConfig
+//                type, not a long-term Core architectural limit; a wider
+//                representation would be a separately reviewed, additive API
+//                change. Adapters for machines with more CPUs document how
+//                they treat CPUs beyond 31.
 //
 //   period       Activation period. Duration{} (zero) means aperiodic: entry
 //                is invoked once per start(). A positive value means
@@ -109,10 +110,15 @@ struct TaskConfig {
 };
 
 //------------------------------------------------------------------------------
-// IScheduler (CORE-PLAT-001)
+// IScheduler (CORE-PLAT-001, CORE-PLAT-005)
 //
 // Contract implemented by platform adapters (Linux, RTOS, ...). Core defines
-// no implementation. Lifecycle of one scheduler instance:
+// no implementation and no scheduler of its own; the rules shared by all
+// platform contracts (ownership, opaque context, error codes) are in
+// platform/boundary.hpp. The (entry, context) pair of create_task() has the
+// semantics of kritva::core::Callback (types/callback.hpp) but is kept as two
+// parameters so the signature stays source compatible. Lifecycle of one
+// scheduler instance:
 //
 //     create_task()*  ->  start()  ->  (running)  ->  stop()  ->  start() ...
 //
@@ -192,6 +198,38 @@ struct TaskConfig {
 //   - This interface makes no hard-real-time, latency, or jitter guarantee.
 //     Adapters document what they actually provide.
 //   - Exceptions: operations report failure through Result and do not throw.
+//
+// EXECUTION CONTEXT AND TEARDOWN (CORE-PLAT-005)
+//   - An `entry` is invoked only while the scheduler is RUNNING: after a
+//     successful start() (or, for a task created while RUNNING under dynamic
+//     creation, after its documented activation) and never again once stop()
+//     has returned successfully.
+//   - Where `entry` runs (a thread, an interrupt, a cooperative tick) is
+//     adapter-defined and documented by the adapter. Core owns no thread and
+//     the scheduler contract does not imply one. Different tasks may run
+//     concurrently with each other and with the caller; the same task's `entry`
+//     is never invoked concurrently with itself (an overrun is handled by the
+//     adapter's documented overrun policy, not by overlapping invocations).
+//   - `entry` shall not throw and shall not call stop() (see above). Whether it
+//     may block or call other services is adapter-defined; the caller
+//     synchronizes any state shared through `context`.
+//   - Teardown: stop() before releasing the `context` of any task. An adapter
+//     that is destroyed or torn down while RUNNING must reach an orderly stop
+//     (no `entry` executing, none starting) before it releases task resources;
+//     Core does not specify adapter destructors. A failing `entry` has no
+//     effect on any other Core object: the scheduler has no recovery behavior,
+//     and neither a task failure nor a scheduler failure triggers Runtime
+//     recovery.
+//
+// THREAD SAFETY AND REAL TIME (CORE-PLAT-005)
+//   - Core imposes no universal thread-safety guarantee: whether create_task(),
+//     start() and stop() may be called concurrently with each other is
+//     adapter-defined and documented by the adapter. Callers serialize them
+//     unless told otherwise.
+//   - All three operations are control-plane: they may allocate and block, and
+//     are not for real-time paths. Core makes no hard-real-time, latency or
+//     jitter guarantee; priority and period are hints to the platform.
+//   - Operations report failure through Result and do not throw.
 //------------------------------------------------------------------------------
 class IScheduler {
 public:
