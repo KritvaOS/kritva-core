@@ -91,6 +91,9 @@ Accepted:
 - KF-CORE-R06-006 — Runtime/Component Context Integration Tests (`2fd5424`)
 - R06 Integration Freeze — PASS / HONORED (production freeze point `5b755af`; evidence `769ac8d`)
 
+Pending independent review:
+- KF-CORE-R06-007 — Full R0.6 Validation (candidate `b473e5d`)
+
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
 
 Accepted:
