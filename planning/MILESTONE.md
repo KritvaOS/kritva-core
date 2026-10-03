@@ -66,7 +66,7 @@ See `planning/milestones/KF-CORE-R05/` for the complete proposal and task accept
 
 ## KF-CORE-R06 — Component Execution Context
 
-Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.6` created locally on the release-record commit; RELEASED after it is pushed)
+Status: RELEASED (`kritva-core-r0.6` -> `a4c41aa`, published to origin)
 
 ### Objective
 

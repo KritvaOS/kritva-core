@@ -71,26 +71,15 @@ Milestone → Task → Acceptance Criteria → Implementation → Unit Tests →
 
 ## Current State
 
-R0.5 is released and closed:
+R0.6 is released and closed:
 
-- `kritva-core-r0.5`
-- version `0.5.0`
-- release-record commit `adf8ac2`
+- `kritva-core-r0.6`
+- version `0.6.0`
+- release-record commit `a4c41aa`
 - remote verification: PASS / RELEASED / SYNCHRONIZED / CLOSED
 
-R0.2, R0.3 and R0.4 are also released and closed.
+R0.2, R0.3, R0.4 and R0.5 are also released and closed.
 
-R0.4 established platform contracts and integration boundaries. R0.5 added the platform runtime integration foundation (`PlatformContext`, requirements and explicit service consumption), while keeping `kritva-core` platform independent.
-
-## R0.6 Planning State
-
-R0.6 — Component Execution Context is currently an **architecture proposal**.
-
-- Proposed version: `0.6.0`
-- Implementation status: NOT STARTED
-- Estimated effort: `20–27` engineering-days
-- Next gate: R06 architecture/design review
-- No R0.6 production API is authorized yet.
-- R0.5 API and Runtime/platform boundaries remain authoritative.
+R0.5 added the platform runtime integration foundation (`PlatformContext`, requirements and explicit service consumption). R0.6 added the non-owning `runtime::ComponentContext` for integrator-written Components, with the Runtime lifecycle unchanged and `kritva-core` still platform independent.
 
 See `MASTER_TRACKER.md` and `milestones/KF-CORE-R06/`.

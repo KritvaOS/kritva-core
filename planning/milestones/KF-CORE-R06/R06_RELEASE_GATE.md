@@ -35,7 +35,7 @@ Only the independent architect/reviewer records the final gate decision.
 
 | Gate | Decision | Release Commit | Tag | Reviewer | Date |
 |---|---|---|---|---|---|
-| R06 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.6`) | `kritva-core-r0.6` (annotated, on the release-record commit; created locally, push pending) | ChatGPT | 05-10-2026 |
+| R06 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.6`) | `kritva-core-r0.6` (annotated, on release-record commit `a4c41aa`, tag object `fb9d631`, pushed to origin) | ChatGPT | 05-10-2026 |
 
 ## Recorded release
 
@@ -48,6 +48,6 @@ Only the independent architect/reviewer records the final gate decision.
 - Testing rule honored: unit/contract tests of the R0.6 contracts (R06-001..005), integration tests through public APIs (R06-006), and the complete regression suite (45 CTest groups, R0.1–R0.5 and R0.6) all pass; the release does not rest on the new tests alone.
 - Decision: **PASS**
 - Release tag: `kritva-core-r0.6`, annotated, on the documentation-only release-record commit that records this gate (not on `b473e5d`). That commit changes only release-state documentation (this record, `MILESTONE_STATUS.md`, the milestone files and the planning `CHANGELOG.md`); no implementation, API, behavior, lint or formatting change.
-- Push: to be performed by the user; after publication the remote branch, the annotated tag object and the peeled tag commit are verified and recorded.
+- Push: performed by the user; remote verification (`git ls-remote`): `refs/heads/main` = `a4c41aa`, `refs/tags/kritva-core-r0.6` = `fb9d631` (annotated tag object), peeled `refs/tags/kritva-core-r0.6^{}` = `a4c41aa`. Result: PASS / RELEASED / SYNCHRONIZED / CLOSED.
 
 Deferred as post-R0.6 work or documented caveats (none block the release): `make lint` and `make format-check` tooling (still TODO stubs), the 32-bit scheduler CPU affinity mask, the conformance suite level-2 mutation strictness gap, a `ComponentContext` outliving what it refers to (documented undefined behavior; non-owning by design), the unused `<chrono>` include in `types/duration.hpp`, the stale root `implementation.md`, and the absence of any concrete platform adapter (outside Core by design).
