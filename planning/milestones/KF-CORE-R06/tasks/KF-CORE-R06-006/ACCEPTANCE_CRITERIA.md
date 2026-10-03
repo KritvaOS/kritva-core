@@ -169,11 +169,14 @@ Primary commit: `2fd5424` `test(core): add component context integration tests` 
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `2fd5424` (evidence `82038a9`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: no production code or API change after the Component API freeze; public APIs only; the 72-case equivalence of a platform failure through a context with an ordinary component failure (full invocation traces included), the availability and requirement-gating matrices, the 40x40 differential with every platform method failing, fault/reset/recovery, the failed-stop accounting, statistics, source attribution in every chain position, watchdog/callback independence and ownership are accepted; the integration-relevant mutation survivors were closed and the rest are unit-level mutants already killed by their own unit tests. `CORE-CTX-006` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-006 is ACCEPTED.**

@@ -88,8 +88,6 @@ Accepted:
 - KF-CORE-R06-004 — Context Requirements & Capability Binding (`5b755af`)
 - R06 Component API Review — PASS / FROZEN (evidence `06207c7`)
 - KF-CORE-R06-005 — Reference Context Harness & Contract Tests (`c7f7b46`)
-
-Pending independent review:
 - KF-CORE-R06-006 — Runtime/Component Context Integration Tests (`2fd5424`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
