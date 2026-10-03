@@ -112,12 +112,14 @@ Primary commit: `460de87` `test(core): add platform conformance suite` (R04-005 
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: `460de87` (evidence `e416a28`; TESTING.md rationale `f2665b0`)
+
+Reviewer notes: level-1 mutation evidence (69/69 faulty doubles rejected) is the meaningful acceptance criterion; the 57 level-2 survivors are acceptably classified and remain documented as a known strictness gap (the suite is not claimed 100% mutation complete); no artificial doubles are required, and an isolating double should be added later only if a survivor is a genuinely distinct contract property. Removing `final` from the reference test doubles is APPROVED and its rationale is retained in TESTING.md. Each service/adapter check must receive a fresh service. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R04-006 is ACCEPTED.**

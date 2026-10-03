@@ -81,7 +81,7 @@ API freeze gates are mandatory and are not bypassed by task compilation or test 
 | KF-CORE-R04-003 | Clock & Timer Contract | platform/time | ACCEPTED | 67114bb |
 | KF-CORE-R04-004 | Watchdog Contract | platform/watchdog | ACCEPTED | 4af4756 |
 | KF-CORE-R04-005 | Platform Capability & Adapter Contract | platform/capability | ACCEPTED | f7231c1 |
-| KF-CORE-R04-006 | Platform Conformance Tests | tests/platform | REVIEW | 460de87 |
+| KF-CORE-R04-006 | Platform Conformance Tests | tests/platform | ACCEPTED | 460de87 |
 | KF-CORE-R04-007 | Runtime–Platform Integration Boundary | runtime/platform | PLANNED | — |
 | KF-CORE-R04-008 | Full R0.4 Validation | integration/validation | PLANNED | — |
 
