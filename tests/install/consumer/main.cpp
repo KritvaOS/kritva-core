@@ -51,7 +51,7 @@ int main() {
     const Status status(StatusCode::OK);
     if (status.code() != StatusCode::OK) return 4;
 
-    if ((Version{0, 6, 0}).to_string() != "0.6.0") return 5;
+    if ((Version{0, 7, 0}).to_string() != "0.7.0") return 5;
 
     // Compiled runtime library code: the component registry.
     using namespace kritva::core::runtime;
@@ -179,5 +179,55 @@ int main() {
     const auto component_check = component_context.check_required(component_needs);
     if (component_check || component_check.error().code != ErrorCode::UNSUPPORTED || component_check.error().source != ComponentId{77}) return 61;
     if (component_context.evaluate(component_needs).satisfied()) return 62;
+
+    // Component operational information (R0.7) through the installed headers and library.
+    class OpsComponent final : public Component, public IComponentStatistics {
+    public:
+        explicit OpsComponent(ComponentInfo info) : Component(std::move(info)) {}
+        Result<void> configure(const Configuration&) override { return Result<void>::success(); }
+        Result<void> initialize() override { return Result<void>::success(); }
+        Result<void> start() override { return Result<void>::success(); }
+        Result<void> stop() override { return Result<void>::success(); }
+        Result<void> shutdown() override { return Result<void>::success(); }
+        LifecycleState lifecycle_state() const noexcept override { return LifecycleState::RUNNING; }
+        Status status() const override { Status s(StatusCode::OK); s.set_message("running"); return s; }
+        Health health() const override { Health h(HealthState::DEGRADED); h.set_detail("slow"); return h; }
+        CapabilitySet capabilities() const override { return CapabilitySet{}; }
+        Statistics statistics() const override { Statistics s; s.sample_count.increment(3); s.queue_depth.set(-2); return s; }
+    };
+    class CountingSink final : public IEventSink {
+    public:
+        Result<void> report(const Event& event) override {
+            ++calls;
+            last = event;
+            if (reject) return Result<void>::failure(Error{ErrorCode::RESOURCE_UNAVAILABLE, ErrorSeverity::WARNING, Id{900}, {}, "full"});
+            return Result<void>::success();
+        }
+        int calls{0};
+        bool reject{false};
+        Event last{};
+    };
+    auto ops_info = ComponentInfo::create(ComponentId{88}, "ops");
+    if (!ops_info) return 63;
+    OpsComponent ops(std::move(ops_info).value());
+    const ComponentObservation plain = observe(ops);
+    if (plain.id != ComponentId{88} || plain.lifecycle != LifecycleState::RUNNING || plain.statistics.has_value()) return 64;   // no provider: nullopt
+    if (plain.status.code() != StatusCode::OK || plain.status.message() != "running") return 65;
+    if (plain.health.state() != HealthState::DEGRADED || plain.health.detail() != "slow") return 66;                            // independent of the lifecycle
+    const ComponentObservation full = observe(ops, &ops);
+    if (!full.statistics || full.statistics->sample_count.value() != 3 || full.statistics->queue_depth.value() != -2) return 67;
+    CountingSink sink;
+    const ComponentEventReporter reporter(ops, sink);
+    if (!reporter.bound() || reporter.id() != ComponentId{88}) return 68;
+    Event event{Id{1}, Id{}, EventType::HEALTH, Timestamp{5}, ErrorSeverity::WARNING, Id{2}};
+    if (!reporter.report(event) || sink.calls != 1 || sink.last.source_id != ComponentId{88}) return 69;          // zero source is stamped
+    event.source_id = Id{89};
+    const auto foreign = reporter.report(event);
+    if (foreign || foreign.error().code != ErrorCode::INVALID_ARGUMENT || foreign.error().source != ComponentId{88} || sink.calls != 1) return 70;
+    sink.reject = true;
+    event.source_id = ComponentId{88};
+    const auto refused = reporter.report(event);
+    if (refused || refused.error().code != ErrorCode::RESOURCE_UNAVAILABLE || refused.error().source != Id{900} || sink.calls != 2) return 71;   // the sink's Result, unchanged
+    if (ComponentEventReporter{}.report(event).error().code != ErrorCode::INVALID_STATE) return 72;               // unbound
     return 0;
 }

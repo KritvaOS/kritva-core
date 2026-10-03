@@ -1,5 +1,50 @@
 # Changelog
 
+## 0.7.0 — Component Operational Foundation (KF-CORE-R07)
+
+A narrow, platform-independent way to observe a Component's operational information and to report its occurrences,
+built on the existing `Status`, `Health`, `Statistics` and `Event` types and on the unchanged R0.3 runtime and R0.6
+component context. R0.7 adds no operational state machine, no event bus, queue, broker or dispatcher, no telemetry or
+logging backend, no Runtime polling and no health-driven recovery, retry or restart. All R0.7 production API is
+additive: three new public headers and no change to `src/`.
+
+### Observation
+- `runtime::observe()` and `runtime::ComponentObservation` (`runtime/component_observation.hpp`): a read-only, detached
+  value holding the component's id, lifecycle state, `Status`, `Health` and an optional `Statistics` snapshot, produced
+  from the component's own accessors in a documented order. The Component is authoritative: Core keeps no mirror or
+  cache. There is no cross-property atomic snapshot, and purity of the accessors is a contract on conforming
+  implementations.
+- `Status`, `Health` and lifecycle are independent value snapshots: any combination is legal and passed on unchanged,
+  and Health is information only (never a recovery trigger and independent of a Runtime FAULT).
+- `runtime::IComponentStatistics` (`runtime/component_statistics.hpp`): an **optional**, Component-owned statistics
+  provider that is not a base of `Component` (no `statistics()` is added to it, no RTTI is used). Values pass through
+  unchanged; the Runtime's own statistics remain distinct.
+
+### Events
+- `runtime::IEventSink` (integrator-owned) and `runtime::ComponentEventReporter` (`runtime/component_events.hpp`): a
+  copyable value of two non-owning pointers, immutable after construction. `report()` stamps a zero `source_id` with the
+  component's id, forwards a matching one unchanged, rejects a mismatching one with `INVALID_ARGUMENT` without calling
+  the sink, calls the sink exactly once synchronously and returns its `Result` unchanged. Nothing is buffered, retried,
+  queued or dispatched, and an Event never commands the Runtime. The sink must outlive every reporter.
+
+### Runtime boundary
+- The Runtime has no observation API and never reads Status, Health, a statistics provider or a sink; replaying seeded
+  Runtime scenarios with and without operational activity gives identical results, states, faults, statistics and
+  invocation traces.
+
+### Build and validation
+- New requirements `CORE-OPS-001` to `CORE-OPS-010`, traced.
+- A test-only operational harness (recording sink, scripted operational component, statistics provider, observer and
+  runtime probe) and reusable conformance checks that fail for deliberately broken implementations.
+- Validated from a fresh clone with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are placeholders).
+- The scheduler CPU affinity mask is 32 bits; widening it would be a separately reviewed change.
+- The conformance suite's single-check mutation strictness is documented as a known gap (see R04-006).
+- A context, reporter or statistics provider must not outlive what it refers to (documented undefined behavior; they
+  are non-owning by design).
+
 ## 0.6.0 — Component Execution Context (KF-CORE-R06)
 
 An explicit, deterministic, non-owning execution context for integrator-written Components, on top of the unchanged
