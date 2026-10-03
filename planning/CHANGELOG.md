@@ -68,8 +68,6 @@ Accepted:
 - KF-CORE-R05-001 — Platform Context & Service Access Model (`c5910e7`)
 - KF-CORE-R05-002 — Platform Service Requirement Model (`f9d6007`)
 - KF-CORE-R05-003 — Explicit Platform Service Consumption (`f8cd523`)
-
-Pending independent review:
 - KF-CORE-R05-004 — Runtime–Platform Lifecycle Boundary (`f23777b`)
 
 ### KF-CORE-R04 — Platform Abstraction Planning

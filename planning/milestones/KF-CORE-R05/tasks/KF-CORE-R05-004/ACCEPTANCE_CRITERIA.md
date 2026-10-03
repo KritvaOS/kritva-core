@@ -130,14 +130,17 @@ Primary commit: `f23777b` `feat(core): preserve runtime platform lifecycle bound
 - Regression: `ctest` 36/36 in Debug, Release, ASan+UBSan, strict `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Werror`, TSan (ASLR off); the whole existing suite, including the complete R0.3 runtime group and the R0.4 `runtime_platform` differential, is unchanged and green; build 0 warnings; GCC `-fanalyzer` clean; coverage 98% (565/571; the same baseline lines plus the one exception-unwind brace in `requirements.hpp`); `make check` passes with traceability 70 requirements, 69 traced, 0 errors; `git diff --check` clean; dependency scan clean.
 - Out of scope confirmed: no concrete adapter, no Runtime asynchronous redesign, no automatic recovery, no new Runtime lifecycle state.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `f23777b` (evidence `5ab932f`) |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: contract text and tests only, with no `src/` behavior change, no Runtime API change and no lifecycle semantic change; `attach_platform()`/`platform()` are preserved; platform services remain integrator-owned and the Runtime never starts, stops, configures, ticks, polls, recovers or reads them; 20/20 mutants detected including the previously surviving `reset()` detachment mutant. `CORE-PLAT-015` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R05-004 is ACCEPTED.**
+
