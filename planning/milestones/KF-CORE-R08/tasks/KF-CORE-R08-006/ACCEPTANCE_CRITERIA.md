@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-006 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): validate configuration boundary and regression` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -105,4 +105,14 @@ Primary commit: `94fad8e` `test(core): validate configuration boundary and regre
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `94fad8e` (evidence `644bdf8`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: test-only (no production diff since the freeze baseline `bdb4b93`); the compile-time boundary snapshot of the frozen configuration surface, its by-name reconfiguration/revision detector and the 20/20 detected header mutants, the installed-package consumer covering the configuration contract, and the fresh-clone Debug/Release validation are accepted; `CORE-CFG-013` is defined once for R08-006 and R08-007. `CORE-CFG-013` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-006 is ACCEPTED.**

@@ -38,9 +38,9 @@ Accepted:
 - KF-CORE-R08-004 — Reference Configuration Harness & Contract Tests (`f4b6de4`; evidence `2b93ad6`)
 - KF-CORE-R08-005 — Runtime/Component Configuration Integration (`a5dfbc1`; evidence `159b1bc`)
 - R08 Integration Freeze — PASS / HONORED (production freeze point `bdb4b93`; evidence `e1051a0`)
+- KF-CORE-R08-006 — Configuration Boundary & Regression Validation (`94fad8e`; evidence `644bdf8`)
 
 Pending independent review:
-- KF-CORE-R08-006 — Configuration Boundary & Regression Validation (`94fad8e`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
