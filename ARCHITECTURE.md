@@ -116,7 +116,7 @@ A failed component operation is returned by the runtime exactly as the component
 | `configure` or `shutdown` fails | unchanged | sequence ends at the failure; `shutdown` progress is kept | the component's `Error` |
 | any operation except `reset()` while in `FAULT` | `FAULT` | none invoked | `INVALID_STATE` |
 | `reset()` outside `FAULT` | unchanged | none invoked | `INVALID_STATE` |
-| `reset()` succeeds | `STOPPED` | cleaned up (below) | `fault_error()` becomes null |
+| `reset()` succeeds | `STOPPED` | cleaned up (below) | `fault_error()` becomes null (the pointer is valid only while the runtime is in `FAULT`) |
 | `reset()` fails | `FAULT` | progress kept; no successful step repeated | the cleanup `Error`; `fault_error()` still the original |
 
 `reset()` is explicit and caller-driven, valid only in `FAULT`, always in reverse dependency order: pass 1 stops every component recorded initialized or started; pass 2 shuts down every component recorded stopped or faulted (a faulted component leaves `FAULT` only through `shutdown()`). Components never invoked are untouched. The failed operation is not retried by `reset()`; the caller may then call `initialize()` again, which is a new explicit attempt. `FAULT` to `RECOVERING` to `READY` exists in the lifecycle table but is not used because no Component operation produces it. Nothing retries, supervises or recovers automatically, and component health is never consulted. The runtime owns a `Statistics` (`statistics()`): `sample_count` counts successful component invocations, `error_count` failed ones (including cleanup), `retry_count` stays zero, the other fields are unused.

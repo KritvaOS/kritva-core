@@ -9,7 +9,7 @@
 // Module      : Tests
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-007
+// Requirements: CORE-RT-008
 // API         : CORE-TEST-RUNTIME-FAILURE
 //
 // Author      : KritvaOS Core Team

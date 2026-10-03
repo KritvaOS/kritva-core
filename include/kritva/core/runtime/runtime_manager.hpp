@@ -9,7 +9,7 @@
 // Module      : Runtime
 // Layer       : Core Foundation
 //
-// Requirements: CORE-RT-006, CORE-RT-007
+// Requirements: CORE-RT-006, CORE-RT-007, CORE-RT-008
 // API         : CORE-API-RUNTIME
 //
 // Author      : KritvaOS Core Team
@@ -128,7 +128,8 @@ namespace kritva::core::runtime {
 //   - A failure in initialize(), start() or stop() moves the Runtime to FAULT
 //     (the Core table allows INITIALIZING/READY/RUNNING/STOPPING -> FAULT) and
 //     records that Error as the fault, observable through fault_error() until
-//     reset() succeeds. In FAULT every operation except reset() (including
+//     reset() succeeds (the pointer refers to Runtime-owned storage and is valid
+//     only while the Runtime is in FAULT; it is null otherwise). In FAULT every operation except reset() (including
 //     shutdown()) fails with INVALID_STATE and invokes nothing.
 //
 //   RECOVERY (explicit, caller-driven)
@@ -163,11 +164,11 @@ namespace kritva::core::runtime {
 //
 //   STATISTICS (a runtime-owned Statistics, R02 semantics)
 //   - statistics() returns the manager's own Statistics. It is updated only
-//     inside the call that causes the event: sample_count counts successful
-//     component lifecycle invocations, error_count counts failed component
-//     invocations (including cleanup), retry_count is never incremented (the
-//     Runtime never retries), and drop_count, queue_depth and utilization are
-//     not used. It is plain data, not an atomic snapshot, never used for
+//     inside the call that causes the event: sample_count counts component
+//     lifecycle invocations that actually returned success (not merely attempted
+//     calls), error_count counts those that returned failure (including
+//     cleanup), retry_count is never incremented (the Runtime never retries), and
+//     drop_count, queue_depth and utilization are not used. It is plain data, not an atomic snapshot, never used for
 //     synchronization or recovery decisions, and not thread-safe.
 //
 //   ERROR, FAULT, HEALTH, WARNING, DIAGNOSTIC, EVENT, MESSAGE
@@ -222,7 +223,10 @@ public:
     /// Valid only in FAULT. See RECOVERY above.
     Result<void> reset();
 
-    /// The Error that moved the Runtime to FAULT, or nullptr when not faulted.
+    /// The Error that moved the Runtime to FAULT. Non-null exactly while the Runtime is
+    /// in FAULT; it points at Runtime-owned storage and stays valid until a successful
+    /// reset() clears it or the Runtime is destroyed (a failed reset() keeps it unchanged).
+    /// nullptr whenever the Runtime is not in FAULT. Do not retain it beyond that.
     [[nodiscard]] const Error* fault_error() const noexcept { return fault_ ? &*fault_ : nullptr; }
 
     /// The runtime-owned statistics (see STATISTICS above).
