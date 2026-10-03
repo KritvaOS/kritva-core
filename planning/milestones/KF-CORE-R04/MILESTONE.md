@@ -10,6 +10,8 @@ Establish a stable, platform-independent abstraction boundary for Kritva Core pl
 
 R0.4 defines contracts for scheduler, clock, timer, watchdog and platform capability discovery, plus the boundary by which future platform services may integrate with RuntimeManager.
 
+> R0.4 establishes platform contracts and integration boundaries; it does not implement a concrete Linux, RTOS, MCU, vendor, Nexus, or Edge platform adapter.
+
 ## Architectural Principle
 
 `kritva-core` defines contracts; platform-specific repositories implement them.

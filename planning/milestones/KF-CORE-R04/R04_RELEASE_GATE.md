@@ -4,6 +4,8 @@
 
 Authorize the Kritva Core R0.4 release only after all R0.4 tasks and gates have passed.
 
+> R0.4 establishes platform contracts and integration boundaries; it does not implement a concrete Linux, RTOS, MCU, vendor, Nexus, or Edge platform adapter.
+
 ## Entry Criteria
 
 - R04-001 through R04-008 accepted.
