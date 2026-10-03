@@ -20,7 +20,7 @@ R0.4 established stable platform contracts and the Runtime/platform integration 
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
-Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.5` created locally on the release-record commit; RELEASED after it is pushed)
+Status: RELEASED (`kritva-core-r0.5` -> `adf8ac2`, published to origin)
 
 ### Objective
 

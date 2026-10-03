@@ -85,7 +85,7 @@ Only the independent architect/reviewer records the final gate decision.
 
 | Gate | Decision | Release Commit | Tag | Reviewer | Date |
 |---|---|---|---|---|---|
-| R05 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.5`) | `kritva-core-r0.5` (annotated, on the release-record commit; created locally, push pending) | ChatGPT | 05-10-2026 |
+| R05 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.5`) | `kritva-core-r0.5` (annotated, on release-record commit `adf8ac2`, tag object `aecb045`, pushed to origin) | ChatGPT | 05-10-2026 |
 
 ## Recorded release
 
@@ -98,6 +98,6 @@ Only the independent architect/reviewer records the final gate decision.
 - Testing rule honored: unit/contract tests of the R0.5 contracts, integration tests through public APIs with reference/fake services, and the complete existing regression suite (32 of 39 CTest groups predate R0.5) all pass; the release does not rest on the new tests alone.
 - Decision: **PASS**
 - Release tag: `kritva-core-r0.5`, annotated, on the documentation-only release-record commit that records this gate (not on `5fb5e69`). That commit changes only release-state documentation (this record, `MILESTONE_STATUS.md`, the milestone files and the planning `CHANGELOG.md`); no implementation, API, behavior, lint or formatting change.
-- Push: to be performed by the user; after publication the remote branch, the annotated tag object and the peeled tag commit are verified and recorded.
+- Push: performed by the user; `git ls-remote` confirms `refs/heads/main` and the peeled tag `kritva-core-r0.5^{}` at `adf8ac2`, and the tag object `aecb045`.
 
 Deferred as post-R0.5 work or documented caveats (none block the release): `make lint` and `make format-check` tooling (still TODO stubs), the 32-bit scheduler CPU affinity mask, the single-check mutation strictness gap of the conformance suite, a `PlatformContext` outliving its adapter (documented undefined behavior; non-owning by design), the unused `<chrono>` include in `types/duration.hpp`, the stale root `implementation.md`, and the absence of any concrete platform adapter (outside Core by design).

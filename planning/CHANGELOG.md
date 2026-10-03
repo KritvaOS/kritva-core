@@ -4,7 +4,7 @@
 
 ### Release record
 
-- R05 Release Gate — PASS. Kritva Core R0.5 / version 0.5.0; release candidate `5fb5e69`; tag `kritva-core-r0.5` on the documentation-only release-record commit (annotated, local; push pending).
+- R05 Release Gate — PASS. Kritva Core R0.5 / version 0.5.0; release candidate `5fb5e69`; tag `kritva-core-r0.5` on the documentation-only release-record commit `adf8ac2` (annotated, pushed to origin).
 - R04 Release Gate — PASS. Kritva Core R0.4 / version 0.4.0; release candidate `e7df87c`; tag `kritva-core-r0.4` on the documentation-only release-record commit `b31108d` (annotated, pushed to origin).
 - R03 Release Gate — PASS. Kritva Core R0.3 / version 0.3.0; release candidate `f598fef`; tag `kritva-core-r0.3` on the documentation-only release-record commit `cc16ec9` (annotated, pushed to origin).
 
