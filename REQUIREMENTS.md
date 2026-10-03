@@ -33,6 +33,7 @@
 - CORE-PLAT-003 Define watchdog platform contract.
 - CORE-RT-001 Define the platform-independent lifecycle-managed component contract: immutable component identity (ComponentId, valid iff non-zero) and metadata (ComponentInfo: id, non-empty name, version) fixed at construction; explicit lifecycle operation semantics that reuse the Core lifecycle states and transition table (no new state); Result/Error integration in which every Error returned by an instantiated component's operation is attributable (source is the component id); non-owning lifetime (Core never owns, copies or moves components); and no universal thread-safety or real-time guarantee.
 - CORE-RT-002 Define runtime contract.
+- CORE-RT-003 Provide a deterministic, non-owning component registry keyed by ComponentId: registration rejects a duplicate id without replacing the existing entry (INVALID_ARGUMENT, source = the id), lookup returns the registered component or nullptr, and enumeration returns each component exactly once in ascending ComponentId order independent of registration order. The registry never owns, copies, moves or deletes a component, never calls a component, has no unregister operation, and is not thread-safe.
 - CORE-MSG-001 Define platform-neutral message identity/header.
 
 ### Foundation types
@@ -129,6 +130,7 @@ Requirement IDs are identifiers, not a contiguous sequence; gaps are not filled.
 | CORE-CFG-003 | configuration/configuration_version.hpp | header-only | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-RT-001 | runtime/component.hpp, runtime/component_id.hpp, runtime/component_info.hpp | header-only | tests/unit/runtime_test.cpp, tests/unit/component_test.cpp, tests/contract/component_contract.hpp |
 | CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
+| CORE-RT-003 | runtime/component_registry.hpp | src/component_registry.cpp | tests/unit/component_registry_test.cpp |
 | CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |
 | CORE-MSG-002 | messaging/topic.hpp | header-only | tests/unit/messaging_test.cpp |
 | CORE-PLAT-001 | platform/scheduler.hpp | contract only | tests/unit/platform_test.cpp, tests/contract/scheduler_contract.hpp |

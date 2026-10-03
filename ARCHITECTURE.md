@@ -78,6 +78,10 @@ A runtime `Component` (`runtime/component.hpp`) has an immutable identity (`Comp
 
 An operation invalid for the current state fails with `INVALID_STATE` and changes nothing. A valid `initialize()`, `start()` or `stop()` that fails moves the component to `FAULT` and returns the cause; a failed `shutdown()` leaves the state unchanged. `FAULT` is left only by `shutdown()`; recovery semantics are defined by KF-CORE-R03-006. Every `Error` returned by an operation of an instantiated component has `source` equal to the component id (errors from `ComponentInfo::create()` occur before a component exists and are exempt). Transient states are not observable once an operation returns. See `include/kritva/core/runtime/component.hpp`.
 
+### Component registry
+
+`runtime::ComponentRegistry` (`runtime/component_registry.hpp`) records which components exist, keyed by `ComponentId`, and nothing else. It is non-owning: the integrator owns each component and must keep it alive, at the same address, while the registry is used; the registry never owns, copies, moves, deletes or calls a component. Registering an id that is already registered fails with `INVALID_ARGUMENT` (source = the id) and changes nothing. `find()` and `contains()` are side-effect free. `components()` returns a snapshot of non-owning pointers, each component once, in ascending `ComponentId` order regardless of registration order. There is no unregister operation. The registry is not thread-safe and is control-plane only. Dependency ordering and lifecycle orchestration are separate (KF-CORE-R03-003/004/005).
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

@@ -23,6 +23,7 @@
 #include <kritva/core/core.hpp>
 
 #include <string>
+#include <utility>
 
 int main() {
     using namespace kritva::core;
@@ -38,5 +39,28 @@ int main() {
     if (status.code() != StatusCode::OK) return 4;
 
     if ((Version{0, 2, 0}).to_string() != "0.2.0") return 5;
+
+    // Compiled library code added after R0.2: the component registry.
+    using namespace kritva::core::runtime;
+    class Stub final : public Component {
+    public:
+        explicit Stub(ComponentInfo info) : Component(std::move(info)) {}
+        Result<void> configure(const Configuration&) override { return Result<void>::success(); }
+        Result<void> initialize() override { return Result<void>::success(); }
+        Result<void> start() override { return Result<void>::success(); }
+        Result<void> stop() override { return Result<void>::success(); }
+        Result<void> shutdown() override { return Result<void>::success(); }
+        LifecycleState lifecycle_state() const noexcept override { return LifecycleState::UNKNOWN; }
+        Status status() const override { return Status{}; }
+        Health health() const override { return Health{}; }
+        CapabilitySet capabilities() const override { return CapabilitySet{}; }
+    };
+    auto info = ComponentInfo::create(ComponentId{1}, "stub");
+    if (!info) return 6;
+    Stub stub(std::move(info).value());
+    ComponentRegistry registry;
+    if (!registry.register_component(stub)) return 7;
+    if (registry.register_component(stub)) return 8;           // duplicate id
+    if (registry.find(ComponentId{1}) != &stub) return 9;
     return 0;
 }
