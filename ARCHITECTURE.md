@@ -143,6 +143,8 @@ Explicit consumption (CORE-PLAT-014): `PlatformContext::require_scheduler()/requ
 
 Runtime and platform lifecycles are separate (CORE-PLAT-015): the integrator owns and drives the platform services; the Runtime never starts, stops, ticks or reads them, never calls the adapter, and is affected by nothing the platform does. A platform failure becomes a Runtime failure only through an integrator-written Component, as an ordinary component failure. Attachment stays setup-only. R0.5 adds no Runtime API or behavior. See API.md section 34.
 
+R0.6 adds `runtime::ComponentContext` (CORE-CTX-001): the explicit, non-owning context of an integrator-written Component, a copyable value of two pointers (the component's immutable `ComponentInfo` and the R0.5 `PlatformContext`), immutable after construction, with no registry, no ownership and no path to a broader authority. The Runtime never creates, holds or passes it. See API.md section 35.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
