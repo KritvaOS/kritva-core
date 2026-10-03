@@ -54,6 +54,24 @@ Apply after R03-003:
 - [ ] Logging backend boundary confirmed.
 - [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
 
+## R03 Runtime Implementation Review
+Apply to R03-004 through R03-006:
+- [ ] R03-004 implements existing `CORE-RT-002` / `runtime::Runtime`.
+- [ ] No competing Runtime abstraction introduced.
+- [ ] Frozen Foundation APIs unchanged.
+- [ ] Runtime topology is fixed after setup.
+- [ ] Dependency ordering is deterministic.
+- [ ] Forward lifecycle order is dependency-first.
+- [ ] Teardown order is reverse dependency order.
+- [ ] Runtime state transitions are documented.
+- [ ] Component-originated Error source/code preserved.
+- [ ] Failure/partial-progress behavior is deterministic.
+- [ ] Recovery is explicit caller-driven only.
+- [ ] No automatic retry/background recovery/watchdog.
+- [ ] Health is distinct from warning/error.
+- [ ] Statistics policy matches Foundation/R02 decisions.
+- [ ] No logging backend introduced.
+
 ## R03 Runtime Contract Review
 Apply after R03-006:
 - [ ] Runtime Manager contract frozen.

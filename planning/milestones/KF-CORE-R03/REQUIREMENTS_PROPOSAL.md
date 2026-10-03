@@ -23,7 +23,7 @@ The authoritative file defines exactly two runtime IDs:
 | CORE-RT-001 | Lifecycle-managed component contract (extended by R03-001) | in use |
 | CORE-RT-002 | Runtime contract (`runtime/runtime.hpp`, R0.1/R0.2) | in use, not renumbered |
 
-The first draft of this proposal used `CORE-RT-002` for the component registry, which collided with the authoritative `CORE-RT-002`. IDs `CORE-RT-003` and above are unused in `REQUIREMENTS.md`, so the proposed IDs after `CORE-RT-001` were shifted by one. The existing `CORE-RT-002` is untouched; how the R03-004 runtime manager relates to it (extension of the same contract, or a new requirement) is decided in R03-004, not here.
+The first draft of this proposal used `CORE-RT-002` for the component registry, which collided with the authoritative `CORE-RT-002`. IDs `CORE-RT-003` and above are unused in `REQUIREMENTS.md`, so the proposed IDs after `CORE-RT-001` were shifted by one. The existing `CORE-RT-002` is untouched and remains authoritative. R03-004 implements the existing `runtime::Runtime` interface; `CORE-RT-006` defines the concrete Runtime Manager behavior within that contract. A genuine incompatibility must return to architecture review.
 
 | Draft ID | Subject | Final proposed ID |
 |---|---|---|

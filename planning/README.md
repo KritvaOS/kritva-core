@@ -49,3 +49,8 @@ Milestone → Task → Acceptance Criteria → Implementation → Unit Tests →
 - After R03-008: Release Gate.
 
 Project-level `TASKS.md` and `REVIEW_CHECKLIST.md` are authoritative. Do not create duplicate milestone-level versions of those files.
+
+
+## Current R03 State
+
+The R03 Foundation API Review has passed. R03-001 through R03-003 are accepted. R03-004 Runtime Manager is READY; R03-005 and R03-006 are blocked by their task dependencies. See `milestones/KF-CORE-R03/` for the authoritative milestone planning package.

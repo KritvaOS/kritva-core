@@ -54,15 +54,15 @@ No R03-004 implementation starts until this gate is PASS.
 
 ### R03-004
 
-Implement synchronous, platform-independent runtime orchestration.
+Implement synchronous, platform-independent Runtime Manager behavior within the existing `runtime::Runtime` / `CORE-RT-002` contract. Compose the frozen Registry and DependencyGraph without changing their public APIs.
 
 ### R03-005
 
-Implement dependency-aware lifecycle orchestration.
+Implement deterministic dependency-aware lifecycle orchestration. Forward operations use dependency order; teardown uses reverse dependency order.
 
 ### R03-006
 
-Define deterministic runtime failure propagation and explicit recovery/reset behavior.
+Define deterministic runtime failure propagation and explicit caller-driven recovery/reset behavior. No automatic retry or autonomous recovery.
 
 ### Runtime Contract Review
 

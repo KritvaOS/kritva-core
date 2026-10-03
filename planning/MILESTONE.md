@@ -39,7 +39,7 @@ Some tasks may be developed in parallel only if their dependency conditions are 
 
 ## KF-CORE-R03 — Runtime Foundation
 
-Status: PLANNED
+Status: IN PROGRESS
 
 ### Objective
 

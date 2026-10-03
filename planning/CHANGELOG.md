@@ -24,6 +24,9 @@ Accepted:
 - KF-CORE-R03-002 — Component Registry (`7ae9a32`)
 - KF-CORE-R03-003 — Dependency Management (`795fb94`)
 - R03 Foundation API Review — PASS / FROZEN (Component, Registry, DependencyGraph contracts frozen; `CORE-RT-002` Runtime interface remains authoritative for R03-004)
+- R03-004–006 acceptance criteria prepared: Runtime Manager, Runtime Lifecycle, Runtime Failure & Recovery.
+- R03-004 is READY; R03-005 and R03-006 remain blocked by task dependencies.
+- Runtime Contract Review remains mandatory after R03-006.
 
 Cross-cutting R03 policy review includes Error, Warning, Info/diagnostic messaging, Event versus message, Statistics update semantics, and logging boundary.
 

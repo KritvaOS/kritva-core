@@ -2,7 +2,9 @@
 
 ## Status
 
-PLANNED
+IN PROGRESS
+
+Current progress: 3 / 8 tasks accepted
 
 ## Objective
 
@@ -71,3 +73,31 @@ R03 is complete only when:
 - no prohibited platform dependencies are introduced;
 - final reviewer sign-off is recorded;
 - release tag is created only after acceptance.
+
+## Runtime Phase Decisions
+
+The Foundation API Review passed and froze the Component, Registry, and DependencyGraph contracts.
+
+### R03-004 — Runtime Manager
+- Implements the existing authoritative `CORE-RT-002` / `runtime::Runtime` interface.
+- Does not introduce a competing public Runtime abstraction.
+- Treats the component set as fixed after runtime initialization.
+- Composes the non-owning registry and dependency graph.
+- Performs topology validation before lifecycle execution.
+- Remains synchronous and platform independent.
+
+### R03-005 — Runtime Lifecycle
+- Owns deterministic runtime lifecycle orchestration.
+- Forward lifecycle operations use dependency order.
+- Stop/shutdown use reverse dependency order.
+- Does not redefine the accepted Component lifecycle contract.
+- Does not introduce automatic retry or background recovery.
+
+### R03-006 — Runtime Failure & Recovery
+- Preserves originating Component error code/source.
+- Defines deterministic fault and partial-progress behavior.
+- Recovery is explicit caller-driven behavior only.
+- No automatic retry, watchdog, background worker, or timer-driven recovery.
+- Health is distinct from error/warning semantics.
+
+The Runtime Contract Review after R03-006 freezes these runtime semantics before R03-007.
