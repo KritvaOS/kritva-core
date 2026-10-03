@@ -14,9 +14,6 @@ Foundation tasks defined:
 Foundation gate:
 - R03 Foundation API Review after R03-003.
 
-Pending independent review:
-- KF-CORE-R03-006 — Runtime Failure & Recovery (`ee3d55d`, follow-up `d651677`)
-
 Runtime gates:
 - R03 Runtime Contract Review after R03-006.
 - R03 Integration Freeze after R03-007.
@@ -28,6 +25,7 @@ Accepted:
 - KF-CORE-R03-003 — Dependency Management (`795fb94`)
 - KF-CORE-R03-004 — Runtime Manager (`e4d3a9b`, follow-ups `40e33e9`, `25eb914`)
 - KF-CORE-R03-005 — Runtime Lifecycle (`e2b660d`, follow-ups `a4f2a65`, `eac011f`)
+- KF-CORE-R03-006 — Runtime Failure & Recovery (`ee3d55d`, follow-up `d651677`)
 - R03 Foundation API Review — PASS / FROZEN (Component, Registry, DependencyGraph contracts frozen; `CORE-RT-002` Runtime interface remains authoritative for R03-004)
 - R03-004–006 acceptance criteria prepared: Runtime Manager, Runtime Lifecycle, Runtime Failure & Recovery.
 - R03-004 is READY; R03-005 and R03-006 remain blocked by task dependencies.

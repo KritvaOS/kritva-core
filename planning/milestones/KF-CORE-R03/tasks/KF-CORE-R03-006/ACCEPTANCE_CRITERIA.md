@@ -206,7 +206,17 @@ Re-validation: production diff is comment/documentation only (no non-comment cha
 
 ## 9. Reviewer Sign-off
 
-Only the independent architecture reviewer records PASS / CHANGES REQUIRED / BLOCKED.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 03-10-2026 |
+| Decision | **PASS** |
+
+Accepted commits: `ee3d55d` `feat(core): define runtime failure handling` (unchanged), `d651677` `docs(core): define runtime failure handling requirement`; evidence `3359780`, `2a873e4`.
+
+Approved and frozen for the R03 Runtime Contract Review: `reset()` is the only explicit recovery and ends in `STOPPED` (no `RECOVERING` state); it never retries the failed component operation; two cleanup passes in reverse dependency order; failed cleanup keeps `FAULT` and the original `fault_error()` and preserves progress; per-component progress is tracked by the runtime, never read from component state or health; the `fault_error()` pointer is valid only while the runtime is in `FAULT`; the runtime-owned statistics semantics; no health-triggered or background recovery. A new lifecycle attempt requires an explicit `initialize()`.
+
+**Reviewer Decision: PASS — KF-CORE-R03-006 is ACCEPTED.** The R03 Runtime Contract Review (R03-004..006) is the next gate; R03-007 stays blocked until it passes. Per the user's instruction, work stops here.
 
 ## 10. Git Commit
 
