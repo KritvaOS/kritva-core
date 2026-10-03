@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-003 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define component operational event contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -104,8 +104,14 @@ Primary commit: `56ff226` `feat(core): define component operational event contra
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `56ff226` (evidence `871b878`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: integrator-owned sink and immutable non-owning reporter; unbound, zero-stamp, match and mismatch behaviors (amendment A2) with the sink never called on rejection; only `source_id` touched; one synchronous call with the sink Result unchanged; no buffering, retry, queue or dispatch; no Runtime or lifecycle effect; sink lifetime explicit (A5); re-entrancy, sink exceptions and cross-component isolation covered; the two structural survivors and the redundant overloads are accepted as classified. `CORE-OPS-005` and `CORE-OPS-008` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-003 is ACCEPTED.**
