@@ -41,7 +41,65 @@ Some tasks may be developed in parallel only if their dependency conditions are 
 
 Status: PLANNED
 
-Implement the first concrete runtime foundation after R02 contracts are frozen.
+### Objective
+
+Implement the first concrete, platform-independent Kritva Core runtime foundation on top of the accepted R0.2 contracts.
+
+### Task Order
+
+```text
+R03-001 Component Contract & Identity
+        ↓
+R03-002 Component Registry
+        ↓
+R03-003 Dependency Management
+        ↓
+R03 Foundation API Review
+        ↓
+R03-004 Runtime Manager
+        ↓
+R03-005 Runtime Lifecycle
+        ↓
+R03-006 Runtime Failure & Recovery
+        ↓
+R03 Runtime Contract Review
+        ↓
+R03-007 Runtime Integration Tests
+        ↓
+R03 Integration Freeze
+        ↓
+R03-008 Final Validation
+        ↓
+R03 Release Gate
+```
+
+### R03 Foundation Gate
+
+After R03-003, the combined Component/Registry/Dependency public API must pass the **R03 Foundation API Review** before R03-004 begins.
+
+The review also examines, but does not prematurely implement, the cross-cutting policy for:
+
+- Error
+- Warning
+- Info/diagnostic messaging
+- Event versus message
+- Statistics update behavior
+- logging backend boundary
+
+### R03 Scope
+
+R03 establishes:
+
+- component contract and identity;
+- component registry;
+- dependency management;
+- runtime manager;
+- deterministic lifecycle orchestration;
+- deterministic runtime failure/recovery semantics;
+- runtime integration tests;
+- final validation.
+
+R03 remains platform independent. It does not introduce ROS2/DDS, EtherCAT implementation, vendor HAL/BSP, hardware drivers, AI/CV/SLAM, motion planning, robot skills, or OS-specific runtime execution.
 
 ## KF-CORE-R04 — Platform Abstraction
 

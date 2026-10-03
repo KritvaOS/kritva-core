@@ -6,7 +6,7 @@
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` (referenced; tag not present in Git, see R0.2 Milestone Gate note) |
 | KF-CORE-R02 | RELEASED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` |
-| KF-CORE-R03 | PLANNED | 0% | — | — |
+| KF-CORE-R03 | PLANNED | 0 / 8 tasks accepted | — | — |
 | KF-CORE-R04 | PLANNED | 0% | — | — |
 
 ## R02 Task Status
@@ -51,9 +51,65 @@ Known follow-ups:
 - minor documentation cleanup (unused `<chrono>` include in `types/duration.hpp`, stale root `implementation.md`)
 
 Repository-history note:
-- R0.1 release tag discrepancy: `kritva-core-r0.1` is referenced by the R0.1 milestone documentation but does not exist in the local or remote Git repository. The remote contains no tags. The historical R0.1 release point is `245d91e` based on repository history, but no retroactive tag is being created as part of R0.2 closure.
+- R0.1 release tag discrepancy: `kritva-core-r0.1` is referenced by the R0.1 milestone documentation but does not exist in the local or remote Git repository. The historical R0.1 release point is `245d91e` based on repository history, but no retroactive tag is being created as part of R0.2 closure.
 
 Gate decision: ACCEPTED (reviewer: ChatGPT)
+
+## KF-CORE-R03 Task Status
+
+| Task | Status | Dependency | Primary Commit |
+|---|---|---|---|
+| KF-CORE-R03-001 Component Contract & Identity | PLANNED | R02 | `feat(core): define component runtime contract` |
+| KF-CORE-R03-002 Component Registry | PLANNED | R03-001 accepted | `feat(core): add component registry` |
+| KF-CORE-R03-003 Dependency Management | PLANNED | R03-001 + R03-002 accepted | `feat(core): add runtime dependency management` |
+| R03 Foundation API Review | PENDING | R03-001..003 accepted | — |
+| KF-CORE-R03-004 Runtime Manager | PLANNED | Foundation API Review PASS | `feat(core): add runtime manager` |
+| KF-CORE-R03-005 Runtime Lifecycle | PLANNED | R03-004 accepted | `feat(core): implement runtime lifecycle orchestration` |
+| KF-CORE-R03-006 Runtime Failure & Recovery | PLANNED | R03-005 accepted | `feat(core): define runtime failure handling` |
+| R03 Runtime Contract Review | PENDING | R03-004..006 accepted | — |
+| KF-CORE-R03-007 Runtime Integration Tests | PLANNED | Runtime Contract Review PASS | `test(core): add runtime integration contracts` |
+| R03 Integration Freeze | PENDING | R03-007 accepted | — |
+| KF-CORE-R03-008 Final Validation | PLANNED | Integration Freeze | `test(core): complete R03 runtime validation` |
+| R03 Release Gate | PENDING | R03-008 accepted | — |
+
+## R03 Acceptance Gates
+
+### Foundation API Review — after R03-003
+
+Must freeze:
+
+- ComponentId semantics
+- component lifecycle contract
+- metadata
+- ownership/lifetime
+- registry registration/lookup/enumeration
+- deterministic ordering
+- dependency representation
+- missing/self/duplicate dependency semantics
+- cycle detection
+- topological ordering
+- deterministic tie-break
+
+Cross-cutting policy is reviewed at this gate for:
+
+- Error
+- Warning
+- Info/diagnostic
+- Event versus message
+- Statistics updates
+- logging boundary
+
+### Runtime Contract Review — after R03-006
+
+Must freeze runtime manager, lifecycle, failure propagation, recovery/reset, diagnostics and statistics runtime semantics.
+
+### Integration Freeze — after R03-007
+
+No production API changes during final validation unless explicitly returned to architecture review.
+
+### Release Gate — after R03-008
+
+All tasks accepted, full validation green, independent review PASS, documentation updated, and release tag created.
 
 ## Status Definitions
 

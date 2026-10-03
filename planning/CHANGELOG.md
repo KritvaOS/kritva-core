@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+### KF-CORE-R03 — Runtime Foundation Planning
+
+Planning activated for the R03 Runtime Foundation milestone.
+
+Foundation tasks defined:
+- KF-CORE-R03-001 — Component Contract & Identity
+- KF-CORE-R03-002 — Component Registry
+- KF-CORE-R03-003 — Dependency Management
+
+Foundation gate:
+- R03 Foundation API Review after R03-003.
+
+Runtime gates:
+- R03 Runtime Contract Review after R03-006.
+- R03 Integration Freeze after R03-007.
+- R03 Release Gate after R03-008.
+
+Cross-cutting R03 policy review includes Error, Warning, Info/diagnostic messaging, Event versus message, Statistics update semantics, and logging boundary.
+
 ### KF-CORE-R02 — Core Contract Hardening
 
 Accepted:
