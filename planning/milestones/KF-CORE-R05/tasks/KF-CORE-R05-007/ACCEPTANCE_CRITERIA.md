@@ -170,14 +170,17 @@ Working tree clean after every commit; the candidate commit is `5fb5e69`; this e
 - The unused `<chrono>` include in `types/duration.hpp` and the stale root `implementation.md` remain (cosmetic, unchanged).
 - The release commit and tag `kritva-core-r0.5` are decided at the R05 Release Gate; nothing is tagged or pushed.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | validated candidate `5fb5e69` (fresh clone); validation record `8384f5d` `test(core): complete R0.5 validation` |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: the fresh-clone validation matrix passes; production code is byte-identical to the Platform Integration Freeze point; the install consumer exercises the R0.3 runtime, the R0.4 boundary and the R0.5 foundation through the installed package and the package version is enforced; the non-blocking follow-ups do not reopen R05. **Release tag decision:** `kritva-core-r0.5` tags the final release-record commit that records the Release Gate, not `5fb5e69`; the exact SHA is determined only after that commit exists. The release-record commit contains only release-state documentation, no implementation, API, behavior, lint or formatting change.
+
+**Reviewer Decision: PASS — KF-CORE-R05-007 is ACCEPTED.**
+

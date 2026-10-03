@@ -73,9 +73,7 @@ Accepted:
 - KF-CORE-R05-005 — Reference Platform Integration (`7f30626`)
 - KF-CORE-R05-006 — Platform Integration & Runtime Tests (`fe04d35`)
 - R05 Platform Integration Freeze — PASS / HONORED (production freeze point `f23777b`; evidence `cf6e617`)
-
-Pending independent review:
-- KF-CORE-R05-007 — Full R0.5 Validation (candidate `5fb5e69`)
+- KF-CORE-R05-007 — Full R0.5 Validation (`8384f5d`; candidate `5fb5e69`)
 
 ### KF-CORE-R04 — Platform Abstraction Planning
 
