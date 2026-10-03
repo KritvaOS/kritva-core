@@ -111,12 +111,14 @@ Primary commit: `eb06fa0` `feat(core): harden scheduler platform contract` (R04-
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: `eb06fa0` `feat(core): harden scheduler platform contract`; evidence `ab7211c`. No changes required.
+
+Approved contract statements: the same task's entry is never invoked concurrently with itself (overrun handling is adapter policy); the teardown rule (orderly stop before releasing task resources, Core does not specify adapter destructors); the 32-bit affinity mask is kept as a documented limitation. The task does not expand the scheduler API or alter R0.3 Runtime behavior.
+
+**Reviewer Decision: PASS — KF-CORE-R04-002 is ACCEPTED.**
