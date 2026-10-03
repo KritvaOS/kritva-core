@@ -112,6 +112,7 @@ public:
 
     Result<void> configure(const Configuration& c) override {
         ++calls;
+        if (trace != nullptr) trace->push_back(std::to_string(info().id().value()) + ":configure");   // like the plain reference component
         last_object = &c;
         Result<void> result = apply(c);
         if (log_ != nullptr) log_->push_back(ConfigurationCall{info().id().value(), &c, static_cast<bool>(result), result ? ErrorCode::NONE : result.error().code});
@@ -203,12 +204,17 @@ private:
         if (defect_ == Defect::FIRST_FAILURE_HALF_STATE && applied_.empty() && rate != nullptr) applied_["rate"] = rate->value;
         Result<void> semantic = Result<void>::success();
         if (strikes(FailAt::SEMANTIC)) semantic = fail(fail_code, "injected semantic failure");
+        else if (fail_next_configure != ErrorCode::NONE) {                     // the plain reference component's one-shot injection
+            const ErrorCode code = fail_next_configure;
+            fail_next_configure = ErrorCode::NONE;
+            semantic = fail(code, "configure failed");                         // same code, source and message as the plain component
+        }
         else if (rate == nullptr || !std::holds_alternative<std::int64_t>(rate->value)) semantic = fail(ErrorCode::CONFIGURATION_ERROR, "rate missing or not an integer");
         else if (std::get<std::int64_t>(rate->value) < ReferenceSchema::kMinRate || std::get<std::int64_t>(rate->value) > ReferenceSchema::kMaxRate) semantic = fail(ErrorCode::CONFIGURATION_ERROR, "rate out of range");
         else if (name != nullptr && (!std::holds_alternative<std::string>(name->value) || std::get<std::string>(name->value).empty())) semantic = fail(ErrorCode::CONFIGURATION_ERROR, "name must be a non-empty string");
         if (!semantic) {
             if (defect_ == Defect::RETRIES_ON_FAILURE) ++evaluations;            // a hidden second attempt
-            return reject(semantic.error().code, "semantic rejection");
+            return reject(semantic.error().code, semantic.error().message.c_str());   // the semantic stage's own message
         }
         Applied staged = from(c);                                                // copies: nothing refers to the caller's object
         if (strikes(FailAt::BEFORE_COMMIT)) return reject(fail_code, "injected failure before commit");
