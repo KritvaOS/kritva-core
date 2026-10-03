@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-004 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): add configuration reference harness` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 3–4 ED |
@@ -104,4 +104,14 @@ Primary commit: `f4b6de4` `test(core): add configuration reference harness`. **T
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `f4b6de4` (evidence `2b93ad6`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: test-only (no production diff since the freeze baseline `bdb4b93`); a reference component that follows the frozen contract with 22 deliberately broken variants, each detected by the clause written for it; reusable contract and Runtime-forwarding checks that pass for the real RuntimeManager and detect broken drivers; the single explained survivor (re-reading state after the caller object is destroyed cannot be expressed without undefined behavior) and the closed Runtime mutants are accepted; the one amendment of the unreviewed evidence commit was documentation-only. `CORE-CFG-012` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-004 is ACCEPTED.**
