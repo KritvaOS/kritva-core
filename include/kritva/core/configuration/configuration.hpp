@@ -9,7 +9,7 @@
 // Module      : Configuration
 // Layer       : Core Foundation
 //
-// Requirements: CORE-CFG-001; CORE-CFG-002; CORE-CFG-004; CORE-CFG-005; CORE-CFG-006; CORE-CFG-011
+// Requirements: CORE-CFG-001; CORE-CFG-002; CORE-CFG-004; CORE-CFG-005; CORE-CFG-006; CORE-CFG-007; CORE-CFG-011
 // API         : CORE-API-CONFIGURATION
 //
 // Author      : KritvaOS Core Team
@@ -114,6 +114,35 @@ namespace kritva::core {
 //   contract a conforming component meets and the reference conformance checks
 //   verify. There are no transactions across components: the Runtime does not
 //   roll back components that were configured before another one failed.
+//
+// VALIDATION BOUNDARY (CORE-CFG-007)
+//   Validation has two owners, and Core owns only the first:
+//     1. CORE STRUCTURAL VALIDATION: the generic well-formedness of a
+//        Configuration as a container. Its entry point is
+//        Configuration::validate(). The one structural invariant today is that
+//        every Parameter has a non-empty name; it is enforced where a Parameter
+//        enters the container (set() rejects an empty name with
+//        ErrorCode::INVALID_ARGUMENT and leaves the Configuration unchanged), so
+//        validate() succeeds for every Configuration that can be constructed
+//        through the public API. That is by design and is part of the contract:
+//        validate() stays the single structural entry point, is const, has no
+//        side effect and is deterministic. Adding a new structural invariant
+//        would be a behavior change and is outside R0.8.
+//     2. COMPONENT SEMANTIC VALIDATION: everything about what a parameter MEANS.
+//        Core knows no parameter names, types, ranges, enumerations, defaults,
+//        required or optional sets or units: a Parameter value of any
+//        ParameterValue alternative (including an empty string, an extreme integer
+//        or a NaN) is accepted by the container as is. Whether a configuration
+//        is acceptable to a component is decided only by that component, inside
+//        its configure(), before anything is applied (CORE-CFG-006).
+//   ERRORS. R0.8 adds NO ErrorCode and no per-parameter error taxonomy. Use the
+//   most specific existing code, with source = the component's id:
+//     lifecycle state does not allow configuration ......... INVALID_STATE
+//     structurally malformed input (as validate()/set() do)  INVALID_ARGUMENT
+//     component-specific semantic or schema incompatibility  CONFIGURATION_ERROR
+//   The message is for humans; consumers decide on the code, never by parsing it.
+//   Core never rewrites, translates or wraps a component's configuration error:
+//   the Runtime returns it unchanged.
 //
 // INDEPENDENCE
 //   Configuration is independent of Status, Health and a Runtime FAULT: a
