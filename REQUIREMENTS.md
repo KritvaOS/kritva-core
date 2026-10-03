@@ -131,7 +131,7 @@ Requirement IDs are identifiers, not a contiguous sequence; gaps are not filled.
 | CORE-CFG-001, CORE-CFG-002 | configuration/parameter.hpp, configuration/configuration.hpp | src/configuration.cpp | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-CFG-003 | configuration/configuration_version.hpp | header-only | tests/unit/configuration_test.cpp, tests/contract/foundation_contract_test.cpp |
 | CORE-RT-001 | runtime/component.hpp, runtime/component_id.hpp, runtime/component_info.hpp | header-only | tests/unit/runtime_test.cpp, tests/unit/component_test.cpp, tests/contract/component_contract.hpp |
-| CORE-RT-002 | runtime/runtime.hpp | header-only | tests/unit/runtime_test.cpp |
+| CORE-RT-002 | runtime/runtime.hpp, runtime/runtime_manager.hpp | src/runtime_manager.cpp | tests/unit/runtime_test.cpp, tests/unit/runtime_manager_test.cpp |
 | CORE-RT-003 | runtime/component_registry.hpp | src/component_registry.cpp | tests/unit/component_registry_test.cpp |
 | CORE-RT-004, CORE-RT-005 | runtime/dependency_graph.hpp | src/dependency_graph.cpp | tests/unit/dependency_graph_test.cpp |
 | CORE-MSG-001 | messaging/message.hpp | header-only | tests/unit/messaging_test.cpp |

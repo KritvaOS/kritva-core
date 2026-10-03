@@ -69,5 +69,12 @@ int main() {
     if (graph.add_dependency(ComponentId{1}, ComponentId{2})) return 11;   // would be a cycle
     const auto order = graph.order(registry);
     if (order) return 12;                                                    // id 2 is not registered
+
+    // Runtime manager (compiled library code): topology validation then fixing.
+    RuntimeManager manager;
+    if (!manager.register_component(stub)) return 13;
+    if (!manager.initialize()) return 14;
+    if (manager.state() != LifecycleState::READY || !manager.topology_fixed()) return 15;
+    if (manager.register_component(stub)) return 16;                         // topology is fixed
     return 0;
 }

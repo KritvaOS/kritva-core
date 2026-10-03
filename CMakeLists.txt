@@ -33,6 +33,7 @@ add_library(kritva_core
     src/configuration.cpp
     src/component_registry.cpp
     src/dependency_graph.cpp
+    src/runtime_manager.cpp
 )
 
 target_compile_features(kritva_core PUBLIC cxx_std_20)
@@ -185,6 +186,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     add_executable(kritva_core_dependency_graph_test tests/unit/dependency_graph_test.cpp)
     target_link_libraries(kritva_core_dependency_graph_test PRIVATE kritva_core)
     add_test(NAME kritva_core_dependency_graph COMMAND kritva_core_dependency_graph_test)
+
+    #Add Test: tests/unit/runtime_manager_test.cpp
+    add_executable(kritva_core_runtime_manager_test tests/unit/runtime_manager_test.cpp)
+    target_link_libraries(kritva_core_runtime_manager_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_runtime_manager COMMAND kritva_core_runtime_manager_test)
 
     #Add Test: tests/unit/messaging_test.cpp
     add_executable(kritva_core_messaging_test tests/unit/messaging_test.cpp)

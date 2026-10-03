@@ -49,6 +49,7 @@
 #include "runtime/component_registry.hpp"
 #include "runtime/dependency_graph.hpp"
 #include "runtime/runtime.hpp"
+#include "runtime/runtime_manager.hpp"
 #include "messaging/message.hpp"
 #include "messaging/topic.hpp"
 #include "time/clock.hpp"

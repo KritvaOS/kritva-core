@@ -86,6 +86,14 @@ An operation invalid for the current state fails with `INVALID_STATE` and change
 
 `runtime::DependencyGraph` (`runtime/dependency_graph.hpp`) records "dependent depends on dependency" edges between `ComponentId`s and computes a dependency order. It holds only ids: no component, pointer or registry, and it never calls a component. `add_dependency()` rejects, with `INVALID_ARGUMENT` and the dependent as error source, the invalid id, a self dependency, a duplicate edge (never silently merged) and any edge that would create a cycle (the cycle is listed in the message), leaving the graph unchanged; the graph is therefore always acyclic. `order(registry)` returns every registered component exactly once with dependencies before dependents; among components that are simultaneously ready the lowest `ComponentId` goes first, so the result does not depend on registration or insertion order. An edge endpoint that is not registered makes `order()` fail with `CONFIGURATION_ERROR` and no order is returned. Lifecycle orchestration using this order belongs to KF-CORE-R03-004/005.
 
+### Runtime Manager
+
+`runtime::Runtime` (`runtime/runtime.hpp`, `CORE-RT-002`) is the authoritative runtime contract and is unchanged. `runtime::RuntimeManager` (`runtime/runtime_manager.hpp`) is its concrete, synchronous, platform-independent implementation; there is no second Runtime abstraction. It composes a `ComponentRegistry` and a `DependencyGraph`, owns no component, and creates no thread, executor, scheduler or timer.
+
+Setup (`register_component()`, `add_dependency()`) forwards to the registry and graph and returns their results unchanged. The first successful `initialize()` validates the topology with `DependencyGraph::order()` (the only ordering algorithm, so lowest-`ComponentId` tie-break and dependencies first) and then fixes the topology for the life of the manager: later setup fails with `INVALID_STATE`. A failed validation returns the graph's `CONFIGURATION_ERROR` unchanged and leaves the runtime `UNKNOWN` with setup still open.
+
+The runtime follows the Component operation table for its own state only: `initialize` from `UNKNOWN`/`STOPPED` to `READY`; `start` from `READY` to `RUNNING`; `stop` from `READY`/`RUNNING` to `STOPPED`; `shutdown` a no-op in `UNKNOWN`/`STOPPED`; anything else fails with `INVALID_STATE` and changes nothing. In this task the runtime calls no component; ordered component invocation is KF-CORE-R03-005 and failure/recovery is KF-CORE-R03-006.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
