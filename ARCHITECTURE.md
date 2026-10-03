@@ -151,6 +151,8 @@ Injection (CORE-CTX-003) is by construction only: the integrator builds a compon
 
 Requirement binding (CORE-CTX-004): `ComponentContext::evaluate()` and `check_required()` apply the R0.5 requirement model to the context's platform view, unchanged, with the Core availability error attributed to the component when bound. The context stores no requirements; matching is by identity only. See API.md section 38.
 
+The component context harness (CORE-CTX-005) is test-only: a reference component that runs scripted plans through its context and reusable contract checks for any context; it never enters production code (audit and isolation CTest).
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.
