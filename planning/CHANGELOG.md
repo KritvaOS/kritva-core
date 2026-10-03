@@ -39,9 +39,9 @@ Accepted:
 - KF-CORE-R08-005 — Runtime/Component Configuration Integration (`a5dfbc1`; evidence `159b1bc`)
 - R08 Integration Freeze — PASS / HONORED (production freeze point `bdb4b93`; evidence `e1051a0`)
 - KF-CORE-R08-006 — Configuration Boundary & Regression Validation (`94fad8e`; evidence `644bdf8`)
+- KF-CORE-R08-007 — Full R0.8 Validation & Release Candidate (`1aa3611`; candidate `1e7ba2b`)
 
 Pending independent review:
-- KF-CORE-R08-007 — Full R0.8 Validation & Release Candidate (candidate `1e7ba2b`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 

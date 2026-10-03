@@ -143,7 +143,7 @@ R07 Release Gate
 | KF-CORE-R08-005 | Runtime/Component Configuration Integration | 3–4 ED | R08-004 | ACCEPTED (a5dfbc1) | Integration Freeze input |
 | R08 Integration Freeze | Freeze production configuration behavior | 0.5 ED | R08-005 | PASS / HONORED (`e1051a0`) | Production freeze |
 | KF-CORE-R08-006 | Configuration Boundary & Regression Validation | 2–3 ED | Integration Freeze PASS/HONORED | ACCEPTED (94fad8e) | Validation |
-| KF-CORE-R08-007 | Full R0.8 Validation & Release Candidate | 2–3 ED | R08-006 | REVIEW (candidate 1e7ba2b) | Release Gate input |
+| KF-CORE-R08-007 | Full R0.8 Validation & Release Candidate | 2–3 ED | R08-006 | ACCEPTED `1aa3611` (candidate 1e7ba2b) | Release Gate input |
 | R08 Release Gate | Release 0.8.0 | 1 ED | R08-007 | PLANNED | Release |
 
 **R08 working estimate: 22–31 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.

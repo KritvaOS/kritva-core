@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R08-007 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): complete R0.8 configuration validation` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -149,4 +149,14 @@ Working tree clean after every commit; the candidate commit is `1e7ba2b`; this e
 
 ## Reviewer Decision
 
-`PASS / CHANGES REQUIRED / BLOCKED` — to be completed by ChatGPT only.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `1aa3611` (release candidate `1e7ba2b`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
+
+Reviewer notes: fresh-clone validation of the clean candidate, the full quality matrix (Debug/Release, ASan+UBSan, TSan, strict, `-fanalyzer`, randomized order), traceability 100/99/0, coverage 618/625 unchanged, the installed-package consumer including the R0.8 configuration contract and version enforcement, isolation and dependency scans, and an empty production diff since the freeze point `bdb4b93` are accepted. The reviewer noted its connector could not resolve the abbreviated local SHAs, so the verdict relies on the supplied evidence (the commits were local-only). `CORE-CFG-013` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R08-007 is ACCEPTED.**
