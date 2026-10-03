@@ -39,7 +39,7 @@ Some tasks may be developed in parallel only if their dependency conditions are 
 
 ## KF-CORE-R03 — Runtime Foundation
 
-Status: IN PROGRESS
+Status: ACCEPTED (release gate PASS; tag `kritva-core-r0.3` created locally on the release-record commit; RELEASED after it is pushed)
 
 ### Objective
 

@@ -14,56 +14,56 @@ The version/tag are release candidates until this gate is PASS. The authoritativ
 Provide the final independent acceptance decision for R03 and authorize creation of the release tag.
 
 ## Entry Criteria
-- [ ] R03-001 through R03-008 accepted.
-- [ ] Foundation API Review = PASS/FROZEN.
-- [ ] Runtime Contract Review = PASS/FROZEN.
-- [ ] Integration Freeze = PASS.
-- [ ] R03-008 final validation = PASS.
-- [ ] No unresolved CHANGES REQUIRED/BLOCKED review item.
+- [x] R03-001 through R03-008 accepted.
+- [x] Foundation API Review = PASS/FROZEN.
+- [x] Runtime Contract Review = PASS/FROZEN.
+- [x] Integration Freeze = PASS.
+- [x] R03-008 final validation = PASS.
+- [x] No unresolved CHANGES REQUIRED/BLOCKED review item.
 
 ## Release Acceptance Criteria
 
 ### Architecture and API
-- [ ] Component, Registry and DependencyGraph foundation contracts remain frozen.
-- [ ] CORE-RT-002 remains authoritative.
-- [ ] CORE-RT-006 through CORE-RT-010 are authoritative and traceable.
-- [ ] No unapproved public API changes exist.
-- [ ] No prohibited platform/runtime dependencies were introduced.
+- [x] Component, Registry and DependencyGraph foundation contracts remain frozen.
+- [x] CORE-RT-002 remains authoritative.
+- [x] CORE-RT-006 through CORE-RT-010 are authoritative and traceable.
+- [x] No unapproved public API changes exist.
+- [x] No prohibited platform/runtime dependencies were introduced.
 
 ### Functional behavior
-- [ ] Component registration and dependency validation are deterministic.
-- [ ] Runtime topology validation/freeze is deterministic.
-- [ ] Lifecycle ordering and reverse teardown are deterministic.
-- [ ] Failure propagation preserves originating errors.
-- [ ] Explicit reset/recovery is deterministic.
-- [ ] No automatic/background recovery exists.
+- [x] Component registration and dependency validation are deterministic.
+- [x] Runtime topology validation/freeze is deterministic.
+- [x] Lifecycle ordering and reverse teardown are deterministic.
+- [x] Failure propagation preserves originating errors.
+- [x] Explicit reset/recovery is deterministic.
+- [x] No automatic/background recovery exists.
 
 ### Validation
-- [ ] Complete CTest suite passes.
-- [ ] Debug and Release pass.
-- [ ] ASan/UBSan pass.
-- [ ] TSan passes where configured.
-- [ ] Strict `-Werror` passes.
-- [ ] GCC `-fanalyzer` passes.
-- [ ] Coverage requirement is satisfied/reviewed.
-- [ ] Traceability audit has zero errors.
-- [ ] Install-consumer passes.
-- [ ] Working tree is clean.
+- [x] Complete CTest suite passes.
+- [x] Debug and Release pass.
+- [x] ASan/UBSan pass.
+- [x] TSan passes where configured.
+- [x] Strict `-Werror` passes.
+- [x] GCC `-fanalyzer` passes.
+- [x] Coverage requirement is satisfied/reviewed.
+- [x] Traceability audit has zero errors.
+- [x] Install-consumer passes.
+- [x] Working tree is clean.
 
 ### Documentation
-- [ ] REQUIREMENTS.md reconciled.
-- [ ] API.md reconciled.
-- [ ] ARCHITECTURE.md reconciled.
-- [ ] MILESTONE_STATUS.md updated.
-- [ ] CHANGELOG.md contains the R0.3 release entry.
-- [ ] Release evidence is archived/reproducible.
+- [x] REQUIREMENTS.md reconciled.
+- [x] API.md reconciled.
+- [x] ARCHITECTURE.md reconciled.
+- [x] MILESTONE_STATUS.md updated.
+- [x] CHANGELOG.md contains the R0.3 release entry.
+- [x] Release evidence is archived/reproducible.
 
 ### Release metadata
-- [ ] `VERSION` and build metadata agree with the intended R0.3 version.
-- [ ] Release commit is identified.
-- [ ] Release tag name is verified before creation.
-- [ ] Tag points to the accepted release commit.
-- [ ] Annotated tag message identifies Kritva Core R0.3.
+- [x] `VERSION` and build metadata agree with the intended R0.3 version.
+- [x] Release commit is identified.
+- [x] Release tag name is verified before creation.
+- [x] Tag points to the accepted release commit.
+- [x] Annotated tag message identifies Kritva Core R0.3.
 
 ## Release Procedure
 After PASS:
@@ -79,4 +79,15 @@ Only the independent architect/reviewer records the final gate decision.
 
 | Gate | Decision | Release Commit | Tag | Reviewer | Date |
 |---|---|---|---|---|---|
-| R03 Release Gate | PENDING | — | — | — | — |
+| R03 Release Gate | **PASS** | the commit carrying this record (release-record commit; resolve with `git show kritva-core-r0.3`) | `kritva-core-r0.3` (annotated, local; not pushed) | ChatGPT | 03-10-2026 |
+
+## Recorded release
+
+- Release: Kritva Core R0.3 — Runtime Foundation
+- Version: `0.3.0` (`VERSION` and the CMake project version agree; enforced by the traceability audit)
+- Release candidate: `f598fef` (fresh-clone validation; validation record `407df6b`; R03-008 accepted at `ebe79f0`)
+- Decision: **PASS**
+- Release tag: `kritva-core-r0.3`, annotated, on the documentation-only release-record commit that records this gate (not on `f598fef`). That commit changes only release-state documentation (this record, `MILESTONE_STATUS.md`, `MILESTONE.md`, the planning `CHANGELOG.md`); no implementation, API or behavior change.
+- Push: not performed; requires explicit authorization. When authorized, push the branch and the tag together.
+
+Deferred as post-R0.3 work or documented caveats (none block the release): `make lint` and `make format-check` tooling (still TODO stubs), the unused `<chrono>` include in `types/duration.hpp`, the stale root `implementation.md`, the historical `kritva-core-r0.1` tag discrepancy, no recovery directly to READY, the raw `fault_error()` pointer, the single shared `Configuration` for all components, and no thread-safety or real-time guarantee.
