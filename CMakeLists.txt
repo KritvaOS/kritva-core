@@ -246,6 +246,17 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_runtime_platform_lifecycle_test PRIVATE kritva_core)
     add_test(NAME kritva_core_runtime_platform_lifecycle COMMAND kritva_core_runtime_platform_lifecycle_test)
 
+    #Add Test: tests/unit/reference_platform_test.cpp (the test-only reference platform in tests/platform/)
+    add_executable(kritva_core_reference_platform_test tests/unit/reference_platform_test.cpp)
+    target_link_libraries(kritva_core_reference_platform_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_reference_platform COMMAND kritva_core_reference_platform_test)
+
+    #Add Test: tests/audit/production_isolation.cmake (production code never depends on test-only support)
+    add_test(NAME kritva_core_test_isolation
+        COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR} -DCXX_COMPILER=${CMAKE_CXX_COMPILER}
+            -DWORK_DIR=${CMAKE_BINARY_DIR}/isolation_test
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/audit/production_isolation.cmake)
+
     #Add Test: tests/unit/platform_boundary_test.cpp
     add_executable(kritva_core_platform_boundary_test tests/unit/platform_boundary_test.cpp)
     target_link_libraries(kritva_core_platform_boundary_test PRIVATE kritva_core)

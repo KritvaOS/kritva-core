@@ -59,6 +59,7 @@ PLATFORM_FORBIDDEN_INCLUDE = re.compile(
     r'#\s*include\s*[<"](unistd\.h|pthread\.h|semaphore\.h|fcntl\.h|signal\.h|sched\.h|poll\.h|dlfcn\.h|errno\.h|'
     r'windows\.h|winsock2?\.h|sys/[^>"]+|linux/[^>"]+|asm/[^>"]+|arpa/[^>"]+|netinet/[^>"]+|'
     r'FreeRTOS\.h|task\.h|cmsis_[a-z_]+\.h|stm32[^>"]*|zephyr/[^>"]+)[>"]')
+TEST_ONLY_INCLUDE = re.compile(r'#\s*include\s*[<"][^>"]*(tests/|reference_|fake_|test_double|conformance)[^>"]*[>"]', re.I)
 FORBIDDEN_CMAKE = re.compile(r"\b(find_package|FetchContent_\w+|ExternalProject_\w+|add_subdirectory)\s*\(", re.I)
 
 errors: list[str] = []
@@ -260,6 +261,19 @@ def main() -> int:
             if f.suffix in {".hpp", ".cpp", ".h"}:
                 for m in PLATFORM_FORBIDDEN_INCLUDE.finditer(f.read_text()):
                     errors.append(f"CORE-PLAT-004: {f.relative_to(ROOT)} includes a platform/OS/vendor header: {m.group(0)}")
+
+    # 7b. CORE-PLAT-016: production code never depends on test-only support (reference platform, fakes, doubles).
+    for d in ("include", "src"):
+        for f in (ROOT / d).rglob("*"):
+            if f.suffix in {".hpp", ".cpp", ".h"}:
+                for m in TEST_ONLY_INCLUDE.finditer(f.read_text()):
+                    errors.append(f"CORE-PLAT-016: {f.relative_to(ROOT)} includes test-only support: {m.group(0)}")
+    production_target = re.search(r"add_library\(\s*kritva_core\b[^)]*\)", cmake, re.S)
+    if production_target and re.search(r"tests/|reference_|fake_", production_target.group(0)):
+        errors.append("CORE-PLAT-016: the production library target lists a test source")
+    for install in re.finditer(r"install\([^)]*\)", cmake, re.S):
+        if re.search(r"tests/|reference_|fake_", install.group(0)):
+            errors.append("CORE-PLAT-016: an install() rule installs test support")
 
     # 8. CORE-RT-010: release version metadata agrees.
     version = (ROOT / "VERSION").read_text().strip()
