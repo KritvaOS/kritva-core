@@ -9,8 +9,8 @@ Define and validate the dependency graph between registered components and produ
 
 | ID | Requirement |
 |---|---|
-| CORE-RT-003 | Represent dependencies using stable component identity |
-| CORE-RT-004 | Detect dependency cycles and provide deterministic dependency ordering |
+| CORE-RT-004 | Represent dependencies using stable component identity |
+| CORE-RT-005 | Detect dependency cycles and provide deterministic dependency ordering |
 
 ### 3. Scope
 

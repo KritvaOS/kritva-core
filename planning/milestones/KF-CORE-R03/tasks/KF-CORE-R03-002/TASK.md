@@ -31,6 +31,7 @@ Lifecycle orchestration, dependency ordering, scheduler/executor, threads, recov
 5. Do not rely on accidental unordered-container iteration.
 6. Do not implement lifecycle orchestration.
 7. Do not add unregister unless a concrete R03 requirement is demonstrated.
+8. Preserve the R03-001 ownership model: the registry is non-owning and never owns, copies, moves or deletes a `Component`.
 
 ### Required Evidence
 

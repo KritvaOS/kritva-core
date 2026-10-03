@@ -10,9 +10,8 @@ Define the platform-independent public contract representing a Kritva Core runti
 | ID | Requirement |
 |---|---|
 | CORE-RT-001 | Platform-independent component contract with stable identity and explicit lifecycle semantics |
-| CORE-RT-007 | Runtime failures use deterministic Core error/result semantics where applicable |
 
-> R03 requirement IDs are planning proposals until incorporated into the authoritative `REQUIREMENTS.md`.
+> R03 requirement IDs are planning proposals until incorporated into the authoritative `REQUIREMENTS.md`. R03-001 is traced to `CORE-RT-001` only. The R02 `Result<T>` / `Error` / `Status` contracts are API dependencies, not a requirement of this task; runtime failure propagation and recovery are owned by R03-006 (see `REQUIREMENTS_PROPOSAL.md`).
 
 ### 3. Scope
 
@@ -155,7 +154,7 @@ Follow-up fixes, if required after review, must use a focused `fix(core): ...` c
   6. **Error attribution:** every `Error` a component returns has `source == info().id()` (uses the existing `Error::source` field; no new error type).
   7. **Ownership:** non-owning. Core never owns, copies, moves or deletes components; whoever constructs a component owns it and must keep it alive and at a stable address while registered/used. Observer results (`status`, `health`, `capabilities`) are value snapshots and cannot dangle.
   8. **Thread safety:** no universal guarantee; callers serialize operations; `info()` is safe to read concurrently (immutable); everything is control-plane with no real-time claim.
-- **Requirement IDs (flagged):** the acceptance table cites proposed `CORE-RT-007`. It is a proposal for KF-CORE-R03-006 (runtime failure propagation) and is NOT in `REQUIREMENTS.md`; I did not add it, per the proposal file's rule that IDs become authoritative after review. Only the existing authoritative `CORE-RT-001` text was extended. **Separate, important:** the proposal's `CORE-RT-002` ("component registry") collides with the existing authoritative `CORE-RT-002` ("runtime contract", `runtime/runtime.hpp`). That must be resolved before R03-002 (for example by giving the registry a new ID); I changed nothing.
+- **Requirement IDs:** only the existing authoritative `CORE-RT-001` text was extended. The proposed `CORE-RT-007` that this table originally cited was removed in review round 1 (see below).
 - Tests: new CTest `kritva_core_component` (11 test functions) covering identity validity/comparison/hash, `ComponentInfo` valid and invalid creation, ownership shape (non-copyable, non-movable, virtual destructor, `info()` reference stable), the full operation matrix over UNKNOWN/READY/RUNNING/STOPPED through the reusable `check_component_contract()`, FAULT behavior after injected `initialize`/`start`/`stop` failure with attributable errors, failed `shutdown`, rejected configuration not applied, invalid operations without side effects, and a minimal consumer that uses only `Component&`.
 - **Mutation evidence** (each temporary edit reverted; files verified identical): `start` allowed from RUNNING; error `source` dropped; `shutdown` allowed from READY; `ComponentInfo::create` accepting an empty name; failure not moving to FAULT; configuration partially applied on failure (all aborted the test); `Component` made copyable (compile-time `static_assert` failure).
 - Build: `rm -rf build && cmake -S . -B build && cmake --build build -j$(nproc)` — 0 warnings.
@@ -167,6 +166,20 @@ Follow-up fixes, if required after review, must use a focused `fix(core): ...` c
 - Coverage: `make coverage` — 98% (186/189 lines); the three uncovered lines are the same pre-existing defensive lines in `lifecycle.cpp`/`configuration.cpp`. The new headers are fully covered.
 - Final `git status --short`: clean after the commit.
 - Known limitations / not done by design: no registry, dependency, runtime manager, recovery or scheduler; the generic checker cannot reach FAULT (reached only via injected failure in the reference component); `ComponentId` is an alias, so type confusion with other `Id` aliases is not a compile error.
+
+### 9b. Review round 1 — CHANGES REQUIRED (ChatGPT, on `655c1dd`; planning/traceability only)
+
+Implementation direction approved with no redesign requested: `ComponentId = Id`; `ComponentInfo`; identity immutability; non-owning, non-copyable, non-movable components; lifecycle operation table; failure semantics; error source; tests and validation evidence.
+
+**Approved public API change:** `Component` construction now requires a valid `ComponentInfo`.
+
+Required changes and their resolution (implementation commit `655c1dd` is unchanged):
+
+1. **Requirement numbering (`CORE-RT-002` collision).** Authoritative `REQUIREMENTS.md` defines only `CORE-RT-001` and `CORE-RT-002` (runtime contract). `CORE-RT-003` and above are unused. `REQUIREMENTS_PROPOSAL.md` was renumbered so the registry is `CORE-RT-003` and every later proposal ID shifted by one (through `CORE-RT-010`), with an old-to-new table; the R03-002 and R03-003 acceptance tables were updated to match. The authoritative `CORE-RT-002` is not renumbered.
+2. **Future-requirement dependency.** `CORE-RT-007` removed from this task's traceability; R03-001 traces to `CORE-RT-001` only. R03-006 owns runtime failure and recovery.
+3. **API approval recorded** (above).
+4. **Ownership decision carried forward.** The R03-002 task and acceptance criteria now state that the registry is non-owning and never owns, copies, moves or deletes components, and must not silently become an owning container.
+5. **Error-source rule qualified** (reviewer qualification): *every error returned by an instantiated `Component` operation shall have `source == component.info().id()`*; errors from `ComponentInfo::create()` occur before a component exists and are exempt. Documented in `component.hpp`, `ARCHITECTURE.md` and `API.md` (comment/documentation only, separate commit).
 
 ### 10. Reviewer Sign-off
 

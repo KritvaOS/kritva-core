@@ -9,7 +9,7 @@ Provide a deterministic, platform-independent registry for registering and locat
 
 | ID | Requirement |
 |---|---|
-| CORE-RT-002 | Component registry with deterministic registration and lookup semantics |
+| CORE-RT-003 | Component registry with deterministic registration and lookup semantics |
 
 ### 3. Scope
 
@@ -65,6 +65,9 @@ Out of scope:
 #### AC-002-06 — Ownership/Lifetime
 - [ ] Ownership model is explicit.
 - [ ] Component lifetime is explicit.
+- [ ] The registry is non-owning: it holds non-owning references to components owned by the application/runtime owner (R03-001 ownership model preserved).
+- [ ] The registry never owns, copies, moves or deletes a component; components are non-copyable and non-movable (R03-001), and the registry must not require otherwise.
+- [ ] The registry does not silently become an owning container.
 - [ ] Behavior when a component is destroyed is defined.
 - [ ] Validity of returned references/pointers is defined.
 - [ ] No dangling reference is permitted.

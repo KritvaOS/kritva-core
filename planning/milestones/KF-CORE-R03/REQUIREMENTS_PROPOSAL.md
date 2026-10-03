@@ -5,14 +5,38 @@ These IDs are planning proposals. They become authoritative only after the corre
 | ID | Proposed Requirement | Task |
 |---|---|---|
 | CORE-RT-001 | Platform-independent component contract with stable identity and explicit lifecycle semantics | R03-001 |
-| CORE-RT-002 | Component registry with deterministic registration and lookup semantics | R03-002 |
-| CORE-RT-003 | Represent dependencies using stable component identity | R03-003 |
-| CORE-RT-004 | Detect dependency cycles and provide deterministic dependency ordering | R03-003 |
-| CORE-RT-005 | Runtime manager orchestrates registered components without an OS-specific execution mechanism | R03-004 |
-| CORE-RT-006 | Runtime lifecycle is deterministic and dependency aware | R03-005 |
-| CORE-RT-007 | Runtime failure propagation and explicit recovery/reset are deterministic without implicit automatic retry | R03-006 |
-| CORE-RT-008 | Platform-independent runtime integration tests cover registration, dependency, lifecycle and failure behavior | R03-007 |
-| CORE-RT-009 | R03 runtime behavior passes build, test, sanitizer, traceability and regression gates | R03-008 |
+| CORE-RT-003 | Component registry with deterministic registration and lookup semantics | R03-002 |
+| CORE-RT-004 | Represent dependencies using stable component identity | R03-003 |
+| CORE-RT-005 | Detect dependency cycles and provide deterministic dependency ordering | R03-003 |
+| CORE-RT-006 | Runtime manager orchestrates registered components without an OS-specific execution mechanism | R03-004 |
+| CORE-RT-007 | Runtime lifecycle is deterministic and dependency aware | R03-005 |
+| CORE-RT-008 | Runtime failure propagation and explicit recovery/reset are deterministic without implicit automatic retry | R03-006 |
+| CORE-RT-009 | Platform-independent runtime integration tests cover registration, dependency, lifecycle and failure behavior | R03-007 |
+| CORE-RT-010 | R03 runtime behavior passes build, test, sanitizer, traceability and regression gates | R03-008 |
+
+## Numbering reconciliation (against authoritative `REQUIREMENTS.md`, commit `655c1dd`)
+
+The authoritative file defines exactly two runtime IDs:
+
+| ID | Authoritative definition | Status |
+|---|---|---|
+| CORE-RT-001 | Lifecycle-managed component contract (extended by R03-001) | in use |
+| CORE-RT-002 | Runtime contract (`runtime/runtime.hpp`, R0.1/R0.2) | in use, not renumbered |
+
+The first draft of this proposal used `CORE-RT-002` for the component registry, which collided with the authoritative `CORE-RT-002`. IDs `CORE-RT-003` and above are unused in `REQUIREMENTS.md`, so the proposed IDs after `CORE-RT-001` were shifted by one. The existing `CORE-RT-002` is untouched; how the R03-004 runtime manager relates to it (extension of the same contract, or a new requirement) is decided in R03-004, not here.
+
+| Draft ID | Subject | Final proposed ID |
+|---|---|---|
+| CORE-RT-002 | Component registry | CORE-RT-003 |
+| CORE-RT-003 | Dependency representation | CORE-RT-004 |
+| CORE-RT-004 | Cycle detection and ordering | CORE-RT-005 |
+| CORE-RT-005 | Runtime manager | CORE-RT-006 |
+| CORE-RT-006 | Runtime lifecycle | CORE-RT-007 |
+| CORE-RT-007 | Runtime failure and recovery | CORE-RT-008 |
+| CORE-RT-008 | Runtime integration tests | CORE-RT-009 |
+| CORE-RT-009 | R03 validation gates | CORE-RT-010 |
+
+Each ID is added to the authoritative `REQUIREMENTS.md` only by the task that implements it, after that task's review. Before each addition, check `REQUIREMENTS.md` for collisions (`make traceability-check` fails on duplicate definitions).
 
 ## Cross-Cutting Policy
 
