@@ -50,7 +50,7 @@ R05 Release Gate
 | KF-CORE-R06-005 | Reference Context Harness & Contract Tests | tests/context | ACCEPTED | 3–4 ED |
 | KF-CORE-R06-006 | Runtime/Component Context Integration Tests | tests/integration | ACCEPTED | 3–4 ED |
 | R06 Integration Freeze | Freeze production behavior | architecture | PASS / HONORED | 0.5 ED |
-| KF-CORE-R06-007 | Full R0.6 Validation | integration/validation | REVIEW | 2–3 ED |
+| KF-CORE-R06-007 | Full R0.6 Validation | integration/validation | ACCEPTED | 2–3 ED |
 | R06 Release Gate | Release 0.6.0 | release | PLANNED | 1 ED |
 
 ## R06 Dependency Graph

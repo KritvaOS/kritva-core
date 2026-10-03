@@ -79,7 +79,7 @@ R0.2–R0.5 are retained as historical milestones. The current repository does n
 | KF-CORE-R06-005 | Reference Context Harness & Contract Tests | 3–4 ED | API Freeze | ACCEPTED (c7f7b46) | Contract tests |
 | KF-CORE-R06-006 | Runtime/Component Context Integration Tests | 3–4 ED | R06-005 | ACCEPTED (2fd5424) | Integration Freeze |
 | R06 Integration Freeze | Freeze production behavior | 0.5 ED | R06-006 | PASS / HONORED | **PASS / HONORED** |
-| KF-CORE-R06-007 | Full R0.6 Validation | 2–3 ED | Integration Freeze | REVIEW (candidate b473e5d) | Release Gate input |
+| KF-CORE-R06-007 | Full R0.6 Validation | 2–3 ED | Integration Freeze | ACCEPTED (7351db6; candidate b473e5d) | Release Gate input |
 | R06 Release Gate | Release 0.6.0 | 1 ED | R06-007 | PLANNED | **PASS** |
 
 **R06 working estimate: 20–27 ED**, excluding unresolved architecture changes returned by review.

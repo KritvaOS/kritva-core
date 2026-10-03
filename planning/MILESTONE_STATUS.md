@@ -195,8 +195,8 @@ Release: Kritva Core R0.5, version 0.5.0; release candidate `5fb5e69`; release-r
 | KF-CORE-R06-005 | ACCEPTED (c7f7b46) | Component API Review PASS/FROZEN | 3–4 ED |
 | KF-CORE-R06-006 | ACCEPTED (2fd5424) | R06-005 | 3–4 ED |
 | R06 Integration Freeze | PASS / HONORED | R06-006 | 0.5 ED |
-| KF-CORE-R06-007 | REVIEW (candidate b473e5d) | Integration Freeze PASS/HONORED | 2–3 ED |
-| R06 Release Gate | PLANNED | R06-007 | 1 ED |
+| KF-CORE-R06-007 | ACCEPTED `7351db6` (candidate b473e5d) | Integration Freeze PASS/HONORED | 2–3 ED |
+| R06 Release Gate | READY | R06-007 | 1 ED |
 
 ### R0.6 Status
 

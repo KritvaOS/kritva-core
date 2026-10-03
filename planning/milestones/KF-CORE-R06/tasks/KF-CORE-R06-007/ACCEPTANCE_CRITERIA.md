@@ -208,11 +208,14 @@ Working tree clean after every commit; the candidate commit is `b473e5d`; this e
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `7351db6` (release candidate `b473e5d`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: fresh-clone validation of the clean candidate, the full quality matrix (Debug/Release, ASan+UBSan, TSan, strict, `-fanalyzer`, randomized order), traceability 80/79/0, coverage 99%, installed-package consumer including `ComponentContext` and version enforcement, isolation and dependency scans, and an empty production diff since the freeze point `5b755af` are accepted. The listed follow-ups are non-blocking. No corrective commit is required. `CORE-CTX-007` is authoritative.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-007 is ACCEPTED.**
