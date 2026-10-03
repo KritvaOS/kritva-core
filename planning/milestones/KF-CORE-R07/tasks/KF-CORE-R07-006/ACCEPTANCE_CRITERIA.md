@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R07-006 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): add component operational integration tests` |
 | Reviewer | ChatGPT — independent acceptance gate |
 
@@ -110,8 +110,14 @@ Primary commit: `3f524cd` `test(core): add component operational integration tes
 
 ## Reviewer Decision
 
-- [ ] PASS
-- [ ] CHANGES REQUIRED
-- [ ] BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `3f524cd` (evidence `ceffe92`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-Reviewer decision is independent of implementor checkboxes.
+Reviewer notes: test-only (no production diff since `16654e9`); the seeded differential (150 seeds × 40 steps, six operational variants) gives transcripts identical to the plain baseline; the Runtime never consumes Status, Health, providers or sinks; Health never clears, deepens or triggers FAULT and explicit `reset()` remains the only recovery; Events never replace failures; Runtime and component statistics stay distinct; no adapter or service lifecycle is introduced; the reversed-initialize mutant is rightly owned by the R0.3 suites. `CORE-OPS-007` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R07-006 is ACCEPTED.**
