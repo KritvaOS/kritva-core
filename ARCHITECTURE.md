@@ -131,6 +131,8 @@ The timer contract (`time::ITimer`, `start(period, mode, callback)`) measures el
 
 The watchdog contract (`platform::IWatchdog`) defines STOPPED/RUNNING behavior for start, kick and stop; the expiry action is adapter-defined and never triggers Runtime recovery. See API.md section 28 and CORE-PLAT-007.
 
+The platform adapter contract (`platform::IPlatformAdapter`) reports a platform's identity (`PlatformInfo`: name and version), which of the four services it provides (non-owning pointers, `nullptr` meaning unsupported) and its capabilities (an owned `CapabilitySet` snapshot). Core ships no adapter, registry or singleton; the integrator owns the adapter. See API.md section 29 and CORE-PLAT-008.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

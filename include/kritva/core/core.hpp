@@ -59,3 +59,4 @@
 #include "platform/boundary.hpp"
 #include "platform/clock.hpp"
 #include "platform/watchdog.hpp"
+#include "platform/adapter.hpp"
