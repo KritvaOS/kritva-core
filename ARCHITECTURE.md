@@ -135,6 +135,8 @@ The platform adapter contract (`platform::IPlatformAdapter`) reports a platform'
 
 The Runtime-platform boundary (CORE-PLAT-010) is one optional, additive pair on `RuntimeManager`: `attach_platform()` (setup only, never replaces) and `platform()`. The Runtime stores a non-owning reference and never calls the adapter or any platform service, so its behavior is identical with and without one; the integrator owns the adapter, and platform failures and watchdog expiry reach the Runtime only through integrator-written components. See API.md section 30.
 
+R0.5 adds `platform::PlatformContext` (CORE-PLAT-012): a copyable, non-owning view over one `IPlatformAdapter` for integrator-written code. It owns nothing, is not a registry or service locator, and forwards service and capability queries to the adapter on demand; the integrator keeps ownership and the adapter must outlive every context. See API.md section 31.
+
 ## 4. Platform Independence
 
 Core must be usable across Linux, PREEMPT_RT, RTOS, MCU, ARM, RISC-V, x86, simulation, FPGA, and future Kritva silicon.

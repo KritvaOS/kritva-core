@@ -60,3 +60,4 @@
 #include "platform/clock.hpp"
 #include "platform/watchdog.hpp"
 #include "platform/adapter.hpp"
+#include "platform/context.hpp"
