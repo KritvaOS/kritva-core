@@ -45,9 +45,16 @@ int main() {
     class Stub final : public Component {
     public:
         explicit Stub(ComponentInfo info) : Component(std::move(info)) {}
+        bool fail_start{false};    // one-shot failure injection for the failure/recovery check below
         Result<void> configure(const Configuration&) override { return Result<void>::success(); }
         Result<void> initialize() override { return Result<void>::success(); }
-        Result<void> start() override { return Result<void>::success(); }
+        Result<void> start() override {
+            if (fail_start) {
+                fail_start = false;
+                return Result<void>::failure(Error{ErrorCode::TIMEOUT, ErrorSeverity::ERROR, info().id(), {}, "stub start failed"});
+            }
+            return Result<void>::success();
+        }
         Result<void> stop() override { return Result<void>::success(); }
         Result<void> shutdown() override { return Result<void>::success(); }
         LifecycleState lifecycle_state() const noexcept override { return LifecycleState::UNKNOWN; }
@@ -80,5 +87,17 @@ int main() {
     if (!manager.stop() || !manager.shutdown()) return 18;                   // orchestrates the stub component
     if (manager.reset()) return 19;                                          // reset is only valid in FAULT
     if (manager.statistics().sample_count.value() == 0) return 20;           // runtime-owned statistics
+
+    // Failure propagation and explicit recovery through the installed library.
+    RuntimeManager faulty;
+    if (!faulty.register_component(stub) || !faulty.initialize()) return 21;
+    stub.fail_start = true;
+    const auto failed = faulty.start();
+    if (failed || failed.error().code != ErrorCode::TIMEOUT || failed.error().source != ComponentId{1}) return 22;   // original error
+    if (faulty.state() != LifecycleState::FAULT || faulty.fault_error() == nullptr) return 23;
+    if (faulty.stop()) return 24;                                            // FAULT rejects everything but reset()
+    if (!faulty.reset() || faulty.state() != LifecycleState::STOPPED || faulty.fault_error() != nullptr) return 25;
+    if (faulty.statistics().error_count.value() != 1) return 26;
+    if (!faulty.initialize() || !faulty.start()) return 27;                  // a new explicit attempt
     return 0;
 }
