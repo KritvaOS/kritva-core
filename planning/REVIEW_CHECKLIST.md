@@ -143,3 +143,116 @@ Apply after R03-008:
 - [ ] Working tree status recorded.
 - [ ] Follow-up fixes use focused commits.
 - [ ] Milestone tag created only after final acceptance.
+
+## R04 Platform Boundary Review
+- [ ] Adapter boundary is explicit.
+- [ ] Core does not own platform implementation objects unless explicitly contracted.
+- [ ] Context lifetime is explicit.
+- [ ] Scheduler semantics distinguish Core requirements from adapter policy.
+- [ ] Clock domain semantics remain authoritative.
+- [ ] Timer execution context and ownership are explicit.
+- [ ] Watchdog expiry does not implicitly trigger Runtime recovery.
+- [ ] Unsupported platform capabilities are represented explicitly.
+- [ ] No global platform singleton is introduced.
+- [ ] No platform-specific headers enter production Core sources.
+
+## Implementation
+- [ ] Requirements are traceable.
+- [ ] Error paths are handled.
+- [ ] Boundary behavior is tested.
+- [ ] No unrelated files changed.
+- [ ] No hidden API behavior introduced.
+- [ ] Later task does not silently change an earlier accepted public API.
+- [ ] Any breaking change is returned to architecture review.
+
+## Testing
+- [ ] New unit/contract tests exist for changed behavior.
+- [ ] Negative/failure cases are covered.
+- [ ] Adapter-defined behavior is not incorrectly asserted as universal Core behavior.
+- [ ] Existing R0.3 regression suite passes.
+- [ ] Debug build passes.
+- [ ] Release build passes.
+- [ ] `-Werror` passes.
+- [ ] ASan/UBSan pass where configured.
+- [ ] TSan passes where configured.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage is reviewed.
+- [ ] Traceability/dependency checks pass.
+- [ ] Install-consumer regression remains green.
+
+## R04 Platform API Review
+Apply after R04-004:
+- [ ] R04-001 through R04-004 accepted.
+- [ ] Adapter boundary frozen.
+- [ ] Scheduler contract frozen.
+- [ ] Clock contract frozen.
+- [ ] Timer contract frozen.
+- [ ] Watchdog contract frozen.
+- [ ] Ownership/lifetime semantics frozen.
+- [ ] Thread-safety boundary frozen.
+- [ ] Real-time guarantee boundary frozen.
+- [ ] Platform-specific implementation remains out of Core.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R04 Platform Integration Freeze
+Apply after R04-006:
+- [ ] R04-005 accepted.
+- [ ] Conformance suite passes.
+- [ ] Core public platform contracts are frozen.
+- [ ] No unresolved production API changes.
+- [ ] Any required API change returned to architecture review.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R04 Runtime–Platform Integration Review
+Apply to R04-007:
+- [ ] Platform Integration Freeze is PASS/FROZEN.
+- [ ] RuntimeManager remains platform independent.
+- [ ] Scheduler integration is explicit and optional.
+- [ ] Clock integration preserves R0.3 lifecycle semantics.
+- [ ] Watchdog does not trigger automatic Runtime recovery.
+- [ ] Platform errors preserve Result/Error semantics.
+- [ ] No thread/background execution introduced into Core.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R04 Final Validation Review
+Apply to R04-008:
+- [ ] Platform Integration Freeze is PASS.
+- [ ] Clean Debug/Release builds pass.
+- [ ] Complete regression passes.
+- [ ] ASan/UBSan pass.
+- [ ] TSan passes where configured.
+- [ ] Strict `-Werror` passes.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage reviewed.
+- [ ] Requirements traceability reports zero errors.
+- [ ] Install-consumer passes.
+- [ ] Prohibited platform dependency scan passes.
+- [ ] Production code remains platform independent.
+- [ ] Working tree is clean.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R04 Release Gate
+- [ ] All eight R04 tasks accepted.
+- [ ] Platform API Review PASS/FROZEN.
+- [ ] Platform Integration Freeze PASS/HONORED.
+- [ ] Final validation PASS.
+- [ ] Requirements/API/docs reconciled.
+- [ ] VERSION and CMake version agree.
+- [ ] Release version/tag target verified.
+- [ ] Annotated `kritva-core-r0.4` tag authorized only after PASS.
+- [ ] Final release decision recorded.
+
+## Documentation
+- [ ] Public contract documentation is updated.
+- [ ] REQUIREMENTS.md is consistent.
+- [ ] R04 requirements proposal is reconciled with authoritative requirements.
+- [ ] CHANGELOG.md is updated.
+- [ ] Evidence is reproducible.
+
+## Git
+- [ ] Exact task commit message used.
+- [ ] Commit is focused.
+- [ ] No accidental generated files.
+- [ ] Follow-up fixes use focused commits.
+- [ ] Accepted history is not rewritten.
+- [ ] Milestone tag created only after final acceptance.

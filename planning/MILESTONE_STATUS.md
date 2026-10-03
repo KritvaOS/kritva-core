@@ -139,3 +139,21 @@ Action: froze the production API and accepted runtime semantics before R03-008; 
 ### Release Gate
 Status: PASS (03-10-2026)
 Release: Kritva Core R0.3, version 0.3.0; release candidate `f598fef`; release-record commit `cc16ec9`; tag `kritva-core-r0.3` (annotated, published). Record: `planning/milestones/KF-CORE-R03/R03_RELEASE_GATE.md`.
+
+## R0.4 Task Status
+
+| ID | Task | Status | Dependency |
+|---|---|---|---|
+| KF-CORE-R04-001 | Platform Adapter Boundary & Context | PLANNED | R0.3 released |
+| KF-CORE-R04-002 | Scheduler Contract Hardening | PLANNED | R04-001 |
+| KF-CORE-R04-003 | Clock & Timer Contract | PLANNED | R04-001 |
+| KF-CORE-R04-004 | Watchdog Contract | PLANNED | R04-001 |
+| R04 Platform API Review | PLANNED | R04-004 |
+| KF-CORE-R04-005 | Platform Capability & Adapter Contract | PLANNED | Platform API Review |
+| KF-CORE-R04-006 | Platform Conformance Tests | PLANNED | R04-005 |
+| R04 Platform Integration Freeze | PLANNED | R04-006 |
+| KF-CORE-R04-007 | Runtime–Platform Integration Boundary | PLANNED | Platform Integration Freeze |
+| KF-CORE-R04-008 | Full R0.4 Validation | PLANNED | R04-007 |
+| R04 Release Gate | PLANNED | R04-008 |
+
+No R0.4 task is ACCEPTED until implementation evidence and independent review satisfy its acceptance criteria.

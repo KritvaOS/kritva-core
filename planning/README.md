@@ -20,32 +20,30 @@ planning/
 └── milestones/
     ├── KF-CORE-R02/
     │   └── tasks/
-    └── KF-CORE-R03/
+    ├── KF-CORE-R03/
+    │   ├── MILESTONE.md
+    │   ├── IMPLEMENTATION_SEQUENCE.md
+    │   ├── REQUIREMENTS_PROPOSAL.md
+    │   ├── gate records and evidence
+    │   └── tasks/
+    └── KF-CORE-R04/
         ├── MILESTONE.md
         ├── IMPLEMENTATION_SEQUENCE.md
         ├── REQUIREMENTS_PROPOSAL.md
-        ├── R03_FOUNDATION_API_REVIEW.md
-        ├── R03_FOUNDATION_API_REVIEW_EVIDENCE.md
-        ├── R03_RUNTIME_CONTRACT_REVIEW.md
-        ├── R03_INTEGRATION_FREEZE.md
-        ├── R03_RELEASE_GATE.md
+        ├── R04_PLATFORM_API_REVIEW.md
+        ├── R04_PLATFORM_API_REVIEW_EVIDENCE.md
+        ├── R04_PLATFORM_INTEGRATION_FREEZE.md
+        ├── R04_PLATFORM_INTEGRATION_FREEZE_EVIDENCE.md
+        ├── R04_RELEASE_GATE.md
         └── tasks/
-            ├── KF-CORE-R03-001/
-            │   ├── TASK.md
-            │   └── ACCEPTANCE_CRITERIA.md
-            ├── KF-CORE-R03-002/
-            │   ├── TASK.md
-            │   └── ACCEPTANCE_CRITERIA.md
-            ├── KF-CORE-R03-003/
-            ├── KF-CORE-R03-004/
-            ├── KF-CORE-R03-005/
-            ├── KF-CORE-R03-006/
-            ├── KF-CORE-R03-007/
-            │   ├── TASK.md
-            │   └── ACCEPTANCE_CRITERIA.md
-            └── KF-CORE-R03-008/
-                ├── TASK.md
-                └── ACCEPTANCE_CRITERIA.md
+            ├── KF-CORE-R04-001/
+            ├── KF-CORE-R04-002/
+            ├── KF-CORE-R04-003/
+            ├── KF-CORE-R04-004/
+            ├── KF-CORE-R04-005/
+            ├── KF-CORE-R04-006/
+            ├── KF-CORE-R04-007/
+            └── KF-CORE-R04-008/
 ```
 
 ## Execution Flow
@@ -62,6 +60,14 @@ Milestone → Task → Acceptance Criteria → Implementation → Unit Tests →
 Project-level `TASKS.md` and `REVIEW_CHECKLIST.md` are authoritative. Do not create duplicate milestone-level versions of those files.
 
 
-## Current R03 State
+## Current State
 
-The R03 Foundation API Review has passed. R03-001 through R03-006 are accepted. The next gate is the R03 Runtime Contract Review; R03-007 is blocked until that gate passes, and R03-008 is blocked by the Integration Freeze. See `milestones/KF-CORE-R03/` for the authoritative milestone planning package.
+R0.3 is released and closed:
+
+- `kritva-core-r0.3`
+- version 0.3.0
+- release-record commit `cc16ec9`
+
+The next planned milestone is **KF-CORE-R04 — Platform Abstraction**.
+
+R0.4 defines platform contracts and integration boundaries while keeping `kritva-core` platform independent. Linux, RTOS, vendor BSP/HAL, EtherCAT, ROS2/DDS and hardware-specific implementations remain outside Core.

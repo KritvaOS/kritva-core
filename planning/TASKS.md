@@ -71,3 +71,53 @@ A task moves to ACCEPTED only after:
 6. independent review passes.
 
 API freeze gates are mandatory and are not bypassed by task compilation or test success.
+
+## KF-CORE-R04 — Platform Abstraction
+
+| ID | Task | Primary Area | Status | Primary Commit |
+|---|---|---|---|---|
+| KF-CORE-R04-001 | Platform Adapter Boundary & Context | platform/boundary | PLANNED | — |
+| KF-CORE-R04-002 | Scheduler Contract Hardening | platform/scheduler | PLANNED | — |
+| KF-CORE-R04-003 | Clock & Timer Contract | platform/time | PLANNED | — |
+| KF-CORE-R04-004 | Watchdog Contract | platform/watchdog | PLANNED | — |
+| KF-CORE-R04-005 | Platform Capability & Adapter Contract | platform/capability | PLANNED | — |
+| KF-CORE-R04-006 | Platform Conformance Tests | tests/platform | PLANNED | — |
+| KF-CORE-R04-007 | Runtime–Platform Integration Boundary | runtime/platform | PLANNED | — |
+| KF-CORE-R04-008 | Full R0.4 Validation | integration/validation | PLANNED | — |
+
+## R04 Dependency Graph
+
+```text
+R04-001 Platform Adapter Boundary & Context
+        ├──────────────┬──────────────┐
+        ↓              ↓              ↓
+     R04-002        R04-003        R04-004
+ Scheduler        Clock/Timer      Watchdog
+        └──────────────┬──────────────┘
+                       ↓
+              R04 Platform API Review
+                       ↓
+              R04-005 Platform Capability
+                       ↓
+              R04-006 Conformance Tests
+                       ↓
+              R04 Platform Integration Freeze
+                       ↓
+              R04-007 Runtime–Platform Boundary
+                       ↓
+              R04-008 Full Validation
+                       ↓
+              R04 Release Gate
+```
+
+## Acceptance Rule
+
+A task moves to ACCEPTED only after:
+1. implementation is complete;
+2. required new tests pass;
+3. required integration/regression tests pass;
+4. required quality checks pass;
+5. evidence is supplied;
+6. independent review passes.
+
+API freeze gates are mandatory. A later task must not silently change an earlier accepted public contract.

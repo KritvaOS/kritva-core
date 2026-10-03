@@ -101,8 +101,4 @@ R03 establishes:
 
 R03 remains platform independent. It does not introduce ROS2/DDS, EtherCAT implementation, vendor HAL/BSP, hardware drivers, AI/CV/SLAM, motion planning, robot skills, or OS-specific runtime execution.
 
-## KF-CORE-R04 — Platform Abstraction
 
-Status: PLANNED
-
-Define validated platform integration boundaries for Linux, MCU/RTOS, Nexus and Edge implementations.

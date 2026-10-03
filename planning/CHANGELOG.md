@@ -61,6 +61,27 @@ Accepted:
 Accepted:
 - KF-CORE-R03-PREP-001 — Install and package Core library (`29255d5`)
 
+### KF-CORE-R04 — Platform Abstraction Planning
+
+R0.4 planning activated after the R0.3 release.
+
+Tasks defined:
+- KF-CORE-R04-001 — Platform Adapter Boundary & Context
+- KF-CORE-R04-002 — Scheduler Contract Hardening
+- KF-CORE-R04-003 — Clock & Timer Contract
+- KF-CORE-R04-004 — Watchdog Contract
+- KF-CORE-R04-005 — Platform Capability & Adapter Contract
+- KF-CORE-R04-006 — Platform Conformance Tests
+- KF-CORE-R04-007 — Runtime–Platform Integration Boundary
+- KF-CORE-R04-008 — Full R0.4 Validation
+
+Gates defined:
+- R04 Platform API Review after R04-004.
+- R04 Platform Integration Freeze after R04-006.
+- R04 Release Gate after R04-008.
+
+R0.4 explicitly keeps platform implementations outside `kritva-core`.
+
 ## [kritva-core-r0.1]
 
 ### KF-CORE-R01 — Core Foundation
