@@ -204,10 +204,17 @@ Re-validation after both commits: `ctest` 22/22 (Debug), ASan+UBSan 22/22, stric
 
 ## 9. Reviewer Sign-off
 
-Only the independent architecture reviewer records:
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 03-10-2026 |
+| Decision | **PASS** |
+
+Accepted commits: `e4d3a9b` `feat(core): add runtime manager` (unchanged), `40e33e9` `test(core): enforce runtime topology freeze through views`, `25eb914` `docs(core): define runtime manager requirement`; evidence `c13cb42`, `3951279`.
+
+Frozen R03-004 contract going into R03-005: `RuntimeManager` implements the existing `CORE-RT-002` `Runtime`; satisfies `CORE-RT-006`; composes Registry and DependencyGraph; does not own components; does not invoke Component lifecycle operations; validates the topology during the first successful `initialize()` and freezes it; rejects later setup mutation with `INVALID_STATE`; stays `UNKNOWN` after a failed validation with the topology still mutable; uses the Core lifecycle semantics for its own state.
+
+**Reviewer Decision: PASS — KF-CORE-R03-004 is ACCEPTED.**
 
 ## 10. Git Commit
 
