@@ -7,12 +7,14 @@ Freeze the combined Component, Registry, and Dependency contracts before R03-004
 
 ### Entry Criteria
 
-- [ ] R03-001 accepted
-- [ ] R03-002 accepted
-- [ ] R03-003 accepted
-- [ ] all required unit tests pass
-- [ ] all required integration/regression tests pass
-- [ ] validation evidence complete
+Objective evidence and the API snapshot: `R03_FOUNDATION_API_REVIEW_EVIDENCE.md`. The boxes below are ticked on that evidence; every box from "Component Contract" onward and the gate decision remain the reviewer's.
+
+- [x] R03-001 accepted
+- [x] R03-002 accepted
+- [x] R03-003 accepted
+- [x] all required unit tests pass
+- [x] all required integration/regression tests pass
+- [x] validation evidence complete
 
 ### Component Contract
 
