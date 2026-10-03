@@ -63,6 +63,10 @@ Accepted:
 
 ### KF-CORE-R04 — Platform Abstraction Planning
 
+Pending independent review:
+- KF-CORE-R04-001 — Platform Adapter Boundary & Context (`d1c5f13`)
+
+
 R0.4 planning activated after the R0.3 release.
 
 Tasks defined:
