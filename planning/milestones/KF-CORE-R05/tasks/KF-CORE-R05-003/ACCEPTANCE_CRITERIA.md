@@ -132,14 +132,17 @@ Primary commit: `f8cd523` `feat(core): define explicit platform service consumpt
 - Regression: `ctest` 35/35 in Debug, Release, ASan+UBSan, strict `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Werror`, TSan (ASLR off); whole existing suite unchanged and green; build 0 warnings; GCC `-fanalyzer` clean; coverage 98% (562/568: `context.hpp` fully covered, plus the one exception-unwind brace in `requirements.hpp` and the five baseline lines); `make check` passes with traceability 69 requirements, 68 traced, 0 errors; `git diff --check` clean; dependency scan clean.
 - Out of scope confirmed: no concrete service implementation, no implicit service orchestration, no automatic retry, no watchdog-driven Runtime recovery, no error-wrapping helper.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `f8cd523` (evidence `cd3010f`) |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: four additive explicit `require_*()` queries that return the adapter-owned pointer or `UNSUPPORTED`; query-only semantics with no activation; platform service errors remain unchanged and are attributed to a component only by that component; the one-pointer invariant of `PlatformContext` is preserved (no cache or mini-registry); 19/20 mutants detected and the 20th is an equivalent mutant. `CORE-PLAT-014` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R05-003 is ACCEPTED.**
+
