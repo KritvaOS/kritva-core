@@ -25,6 +25,7 @@
 #include "../error/result.hpp"
 #include "../configuration/configuration.hpp"
 #include "../lifecycle/lifecycle.hpp"
+#include <set>
 #include <vector>
 namespace kritva::core::runtime {
 
@@ -94,11 +95,16 @@ namespace kritva::core::runtime {
 //   - The Runtime is never RUNNING before every start() has succeeded, and never
 //     READY before every initialize() has succeeded: its state changes only
 //     after the whole sequence succeeded.
-//   - shutdown() invokes components only if they were ever initialized and have
-//     not been shut down since ("live"); in UNKNOWN (never initialized) or after
-//     a completed shutdown it is a no-op, so repeated shutdown() calls never
-//     invoke a component twice. A later initialize() makes the components live
-//     again.
+//   - Components have a lifecycle progress that the Runtime records itself and
+//     never infers from Component::lifecycle_state() (STOPPED alone cannot tell
+//     "never initialized" from "shut down"): never initialized, initialized
+//     (live), shut down. initialize() makes every component live again.
+//   - shutdown() invokes only live components that have not yet completed a
+//     shutdown during the current live period, in reverse order. A component
+//     whose shutdown has already succeeded is NOT invoked by a later shutdown()
+//     attempt. In UNKNOWN (never initialized) or after every component has been
+//     shut down it is a no-op that invokes nothing, so no component is ever
+//     shut down twice per live period.
 //   - The Runtime invokes only the operation being orchestrated and never reads
 //     or changes a component's state itself.
 //
@@ -108,9 +114,13 @@ namespace kritva::core::runtime {
 //     rolled back or compensated. The component's own Error is returned
 //     UNCHANGED (code, severity, source = that component's id, message).
 //   - configure() and shutdown() failures leave the Runtime state unchanged.
-//     A failed shutdown() may be called again; it then invokes every live
-//     component again, in reverse order (Component::shutdown is idempotent in
-//     STOPPED).
+//   - Shutdown progress is preserved across a failed shutdown(): components
+//     shut down before the failure stay recorded as shut down, and the failing
+//     component and every component after it in reverse order are still
+//     pending. Calling shutdown() again retries exactly those, in reverse order
+//     (the failing component first), and never repeats a successful shutdown.
+//     Example, reverse order D, C, B, A: first call D ok, C ok, B fails (A not
+//     invoked); retry invokes B then A only. There is no rollback.
 //   - A failure in initialize(), start() or stop() moves the Runtime to FAULT
 //     (the Core table allows INITIALIZING/READY/RUNNING/STOPPING -> FAULT). In
 //     FAULT every operation, including shutdown(), fails with INVALID_STATE
@@ -163,7 +173,7 @@ public:
     [[nodiscard]] LifecycleState state() const noexcept override { return lifecycle_.state(); }
 
 private:
-    enum class Step { CONFIGURE, INITIALIZE, START, STOP, SHUTDOWN };
+    enum class Step { CONFIGURE, INITIALIZE, START, STOP };
 
     Result<void> invalid_state(const char* operation) const;
     Result<void> setup_closed(const char* operation) const;
@@ -178,7 +188,8 @@ private:
     Lifecycle lifecycle_;
     std::vector<ComponentId> order_;   // validated forward order, set when the topology is fixed
     bool topology_fixed_{false};
-    bool components_live_{false};      // initialized and not yet shut down
+    bool components_live_{false};      // initialized and not yet fully shut down
+    std::set<ComponentId> shut_down_;  // components whose shutdown succeeded in this live period
 };
 
 } // namespace kritva::core::runtime

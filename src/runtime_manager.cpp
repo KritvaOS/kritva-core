@@ -66,7 +66,6 @@ Result<void> RuntimeManager::run(const std::vector<ComponentId>& ids, Step step,
             case Step::INITIALIZE: return component->initialize();
             case Step::START:      return component->start();
             case Step::STOP:       return component->stop();
-            case Step::SHUTDOWN:   return component->shutdown();
         }
         return Result<void>::success();
     };
@@ -107,6 +106,7 @@ Result<void> RuntimeManager::initialize() {
     }
     transition(LifecycleState::INITIALIZING);
     components_live_ = true;                              // components may now hold resources
+    shut_down_.clear();                                   // a new live period: no shutdown has happened in it
     if (auto r = run(order_, Step::INITIALIZE, false, nullptr); !r.has_value()) {
         transition(LifecycleState::FAULT);
         return r;
@@ -141,8 +141,19 @@ Result<void> RuntimeManager::shutdown() {
     const LifecycleState s = lifecycle_.state();
     if (s != LifecycleState::UNKNOWN && s != LifecycleState::STOPPED) return invalid_state("shutdown");
     if (!components_live_) return Result<void>::success();   // nothing to release: no component is invoked
-    if (auto r = run(order_, Step::SHUTDOWN, true, nullptr); !r.has_value()) return r;   // state unchanged
+
+    // Reverse order, skipping components whose shutdown already succeeded in this live
+    // period. The first failure ends the call (state unchanged); progress made so far is
+    // kept, so a retry resumes with the failing component and never repeats a success.
+    for (auto it = order_.rbegin(); it != order_.rend(); ++it) {
+        if (shut_down_.count(*it) != 0) continue;
+        Component* component = registry_.find(*it);
+        assert(component != nullptr);
+        if (auto r = component->shutdown(); !r.has_value()) return r;
+        shut_down_.insert(*it);
+    }
     components_live_ = false;
+    shut_down_.clear();
     return Result<void>::success();
 }
 

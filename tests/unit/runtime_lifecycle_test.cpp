@@ -437,7 +437,9 @@ void test_failed_initialize_keeps_earlier_components_initialized_without_rollbac
     assert(f.runtime.topology_fixed());                                     // validation had succeeded
 }
 
-void test_failed_shutdown_leaves_state_and_may_be_retried_explicitly() {
+// A failed shutdown() preserves the progress already made: components that were shut
+// down are not invoked again, and the retry resumes with the failing component.
+void test_failed_shutdown_preserves_progress_and_retry_resumes() {
     Fixture f;
     assert(f.runtime.initialize() && f.runtime.stop());
     f.component(1).fail_next_shutdown = ErrorCode::RESOURCE_UNAVAILABLE;
@@ -447,12 +449,69 @@ void test_failed_shutdown_leaves_state_and_may_be_retried_explicitly() {
     assert(f.trace == Trace({"5:shutdown", "2:shutdown", "1:shutdown"}));   // reverse, stops at the failure
     assert(f.runtime.state() == LifecycleState::STOPPED);                   // unchanged
 
-    // Explicit retry: invokes every live component again, in reverse order (documented).
+    // Retry: 5 and 2 already succeeded and are NOT invoked again; 1 is retried, then 3, 4.
     f.trace.clear();
     assert(f.runtime.shutdown());
-    assert(f.trace == expect(kReverse, "shutdown"));
+    assert(f.trace == Trace({"1:shutdown", "3:shutdown", "4:shutdown"}));
+    assert(f.component(5).shutdown_calls == 1 && f.component(2).shutdown_calls == 1);
+    assert(f.component(1).shutdown_calls == 2);                              // the failing one, once more
+    assert(f.component(3).shutdown_calls == 1 && f.component(4).shutdown_calls == 1);
+
+    // Fully shut down: a further call invokes nothing.
     f.trace.clear();
-    assert(f.runtime.shutdown() && f.trace.empty());                        // now released: no-op
+    assert(f.runtime.shutdown() && f.trace.empty());
+    assert(f.runtime.state() == LifecycleState::STOPPED);
+}
+
+void test_shutdown_progress_over_every_failure_position_and_repeated_failures() {
+    for (std::size_t position = 0; position < kReverse.size(); ++position) {
+        Fixture f;
+        assert(f.runtime.initialize() && f.runtime.stop());
+        f.component(kReverse[position]).fail_next_shutdown = ErrorCode::INTERNAL_ERROR;
+        assert(!f.runtime.shutdown());
+        f.trace.clear();
+        assert(f.runtime.shutdown());
+        // The retry covers exactly the failing component and everything after it.
+        Trace expected;
+        for (std::size_t i = position; i < kReverse.size(); ++i) expected.push_back(std::to_string(kReverse[i]) + ":shutdown");
+        assert(f.trace == expected);
+        for (std::uint64_t id = 1; id <= 5; ++id) {
+            const std::size_t where = static_cast<std::size_t>(std::find(kReverse.begin(), kReverse.end(), id) - kReverse.begin());
+            assert(f.component(id).shutdown_calls == (where == position ? 2 : 1));   // never more than once, except the failure
+        }
+    }
+
+    // Two consecutive failures at different components keep accumulating progress.
+    Fixture f;
+    assert(f.runtime.initialize() && f.runtime.stop());
+    f.component(2).fail_next_shutdown = ErrorCode::TIMEOUT;
+    assert(!f.runtime.shutdown());                                           // 5 ok, 2 fails
+    f.component(3).fail_next_shutdown = ErrorCode::TIMEOUT;
+    f.trace.clear();
+    assert(!f.runtime.shutdown());                                           // 2 ok (retry), 1 ok, 3 fails
+    assert(f.trace == Trace({"2:shutdown", "1:shutdown", "3:shutdown"}));
+    f.trace.clear();
+    assert(f.runtime.shutdown());                                            // 3 retried, then 4
+    assert(f.trace == Trace({"3:shutdown", "4:shutdown"}));
+    assert(f.component(5).shutdown_calls == 1 && f.component(1).shutdown_calls == 1 && f.component(4).shutdown_calls == 1);
+}
+
+void test_shutdown_progress_is_per_live_period_and_distinguishes_never_initialized() {
+    Fixture f;
+    assert(f.runtime.shutdown() && f.total_calls() == 0);                    // never initialized: nothing is "shut down"
+    assert(f.runtime.initialize() && f.runtime.stop());
+    f.component(4).fail_next_shutdown = ErrorCode::TIMEOUT;                  // fails last in reverse order
+    assert(!f.runtime.shutdown());                                           // 5,2,1,3 shut down; 4 fails
+
+    // Re-initializing starts a new live period: earlier shutdown progress is forgotten and
+    // every component is initialized and later shut down again.
+    f.trace.clear();
+    assert(f.runtime.initialize());
+    assert(f.trace == expect(kForward, "initialize"));
+    assert(f.runtime.stop());
+    f.trace.clear();
+    assert(f.runtime.shutdown());
+    assert(f.trace == expect(kReverse, "shutdown"));                         // all five, none skipped
 }
 
 void test_validation_failure_invokes_no_component() {
@@ -493,7 +552,9 @@ int main() {
     test_failure_at_every_position_of_every_operation();
     test_faulted_runtime_rejects_every_operation_without_invoking_components();
     test_failed_initialize_keeps_earlier_components_initialized_without_rollback();
-    test_failed_shutdown_leaves_state_and_may_be_retried_explicitly();
+    test_failed_shutdown_preserves_progress_and_retry_resumes();
+    test_shutdown_progress_over_every_failure_position_and_repeated_failures();
+    test_shutdown_progress_is_per_live_period_and_distinguishes_never_initialized();
     test_validation_failure_invokes_no_component();
     test_no_automatic_retry_or_background_activity();
     return 0;
