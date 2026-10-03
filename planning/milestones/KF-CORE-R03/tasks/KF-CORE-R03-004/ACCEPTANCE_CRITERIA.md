@@ -192,6 +192,16 @@ At minimum detect:
 - Final `git status --short`: clean after the commit.
 - Known limitations / out of scope: no ordered component invocation (R03-005), no failure/recovery (R03-006), no FAULT handling, no thread-safety, no real-time claim; `initialize()` and `component_order()` recompute the order (control plane).
 
+### 8b. Review round 1 — CHANGES REQUIRED (ChatGPT, on `e4d3a9b`; documentation/contract completion only)
+
+Architecture approved with no redesign: implementing the existing `Runtime`; the state model; first successful `initialize()` fixes the topology (no separate seal); failed validation leaves the runtime `UNKNOWN` with the topology mutable; `FAULT` deferred to R03-006; read-only `registry()`/`dependencies()` views; no component lifecycle calls; no threads. Required changes and resolution (implementation commit `e4d3a9b` unchanged):
+
+1. **Define `CORE-RT-006` and trace to it** — `25eb914` `docs(core): define runtime manager requirement`: `CORE-RT-006` is now defined in `REQUIREMENTS.md`; `runtime_manager.hpp`, `runtime_manager.cpp` and `runtime_manager_test.cpp` carry `CORE-RT-006` in their `Requirements:` tag (comment-only change, no production logic change); the `CORE-RT-002` traceability row is back to `runtime/runtime.hpp` and `runtime_test.cpp`; a new `CORE-RT-006` row covers the manager. Traceability: 54 requirements, 53 traced, 0 errors.
+2. **Explicitly test that post-freeze setup is rejected** — `40e33e9` `test(core): enforce runtime topology freeze through views`: the implementation already rejected `register_component()` and `add_dependency()` after the first successful `initialize()` with `INVALID_STATE` (covered by `test_topology_is_fixed_by_initialize`, and by mutation evidence for "setup allowed after fixing" and "topology never fixed"). The new test adds: compile-time proof (`static_assert` on concepts) that the const `registry()` and `dependencies()` views cannot call `register_component()` / `add_dependency()`, and a check that after the freeze both setup APIs fail and the registry size, edge count, membership and order are unchanged. Mutation: making `registry()` return a non-const view fails the `static_assert`.
+3. No change to the implementation architecture.
+
+Re-validation after both commits: `ctest` 22/22 (Debug), ASan+UBSan 22/22, strict `-Werror` 22/22; `make check` passes; `git diff --check` clean; working tree clean.
+
 ## 9. Reviewer Sign-off
 
 Only the independent architecture reviewer records:

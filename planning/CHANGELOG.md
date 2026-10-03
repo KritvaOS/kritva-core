@@ -15,7 +15,7 @@ Foundation gate:
 - R03 Foundation API Review after R03-003.
 
 Pending independent review:
-- KF-CORE-R03-004 — Runtime Manager (`e4d3a9b`)
+- KF-CORE-R03-004 — Runtime Manager (`e4d3a9b`, follow-ups `40e33e9`, `25eb914`)
 
 Runtime gates:
 - R03 Runtime Contract Review after R03-006.

@@ -63,7 +63,7 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 | KF-CORE-R03-002 Component Registry | ACCEPTED (`7ae9a32`, `4649910`) | R03-001 accepted | `feat(core): add component registry` |
 | KF-CORE-R03-003 Dependency Management | ACCEPTED (`795fb94`, `7e2a53b`) | R03-001 + R03-002 accepted | `feat(core): add runtime dependency management` |
 | R03 Foundation API Review | PASS / FROZEN | R03-001..003 accepted | 03-10-2026 |
-| KF-CORE-R03-004 Runtime Manager | REVIEW (`e4d3a9b`) | Foundation API Review PASS | `feat(core): add runtime manager` |
+| KF-CORE-R03-004 Runtime Manager | REVIEW (`e4d3a9b`, `40e33e9`, `25eb914`) | Foundation API Review PASS | `feat(core): add runtime manager` |
 | KF-CORE-R03-005 Runtime Lifecycle | BLOCKED BY R03-004 | R03-004 accepted | `feat(core): implement runtime lifecycle orchestration` |
 | KF-CORE-R03-006 Runtime Failure & Recovery | BLOCKED BY R03-005 | R03-005 accepted | `feat(core): define runtime failure handling` |
 | R03 Runtime Contract Review | PENDING | R03-004..006 accepted | — |
