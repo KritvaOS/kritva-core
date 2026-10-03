@@ -229,5 +229,54 @@ int main() {
     const auto refused = reporter.report(event);
     if (refused || refused.error().code != ErrorCode::RESOURCE_UNAVAILABLE || refused.error().source != Id{900} || sink.calls != 2) return 71;   // the sink's Result, unchanged
     if (ComponentEventReporter{}.report(event).error().code != ErrorCode::INVALID_STATE) return 72;               // unbound
+
+    // Component configuration contract (R0.8) through the installed headers and library.
+    class ConfigComponent final : public Component {
+    public:
+        explicit ConfigComponent(ComponentInfo info) : Component(std::move(info)) {}
+        Result<void> configure(const Configuration& c) override {
+            if (state_ != LifecycleState::UNKNOWN && state_ != LifecycleState::STOPPED) return fail(ErrorCode::INVALID_STATE);
+            if (auto structural = c.validate(); !structural) return fail(structural.error().code);
+            const Parameter* rate = c.get("rate");
+            if (rate == nullptr || !std::holds_alternative<std::int64_t>(rate->value)) return fail(ErrorCode::CONFIGURATION_ERROR);
+            const std::int64_t r = std::get<std::int64_t>(rate->value);
+            if (r < 1 || r > 100) return fail(ErrorCode::CONFIGURATION_ERROR);                  // semantic validation is the component's
+            rate_ = r;                                                                          // staged, then committed: all or nothing
+            return Result<void>::success();
+        }
+        Result<void> initialize() override { state_ = LifecycleState::READY; return Result<void>::success(); }
+        Result<void> start() override { state_ = LifecycleState::RUNNING; return Result<void>::success(); }
+        Result<void> stop() override { state_ = LifecycleState::STOPPED; return Result<void>::success(); }
+        Result<void> shutdown() override { return Result<void>::success(); }
+        LifecycleState lifecycle_state() const noexcept override { return state_; }
+        Status status() const override { return Status{}; }
+        Health health() const override { return Health{}; }
+        CapabilitySet capabilities() const override { return CapabilitySet{}; }
+        std::int64_t rate() const { return rate_; }
+    private:
+        Result<void> fail(ErrorCode code) const { return Result<void>::failure(Error{code, ErrorSeverity::ERROR, info().id(), {}, "configure"}); }
+        LifecycleState state_{LifecycleState::UNKNOWN};
+        std::int64_t rate_{0};
+    };
+    static_assert(std::is_same_v<ConfigurationVersion, Version>);                              // the schema/contract compatibility version, an alias
+    Configuration good;
+    if (!good.set(Parameter{"rate", std::int64_t{10}, "hz"}) || !good.validate()) return 73;
+    if (good.set(Parameter{"", std::int64_t{1}, ""}).error().code != ErrorCode::INVALID_ARGUMENT || good.size() != 1) return 74;   // structural: atomic rejection
+    Configuration out_of_range;
+    if (!out_of_range.set(Parameter{"rate", std::int64_t{500}, ""}) || !out_of_range.validate()) return 75;     // structurally valid ...
+    auto cfg_a = ComponentInfo::create(ComponentId{91}, "a"), cfg_b = ComponentInfo::create(ComponentId{92}, "b");
+    if (!cfg_a || !cfg_b) return 76;
+    ConfigComponent ca(std::move(cfg_a).value()), cb(std::move(cfg_b).value());
+    const auto semantic = ca.configure(out_of_range);                                                          // ... but semantically rejected by the component
+    if (semantic || semantic.error().code != ErrorCode::CONFIGURATION_ERROR || semantic.error().source != ComponentId{91} || ca.rate() != 0) return 77;
+    RuntimeManager config_runtime;
+    if (!config_runtime.register_component(ca) || !config_runtime.register_component(cb) || !config_runtime.add_dependency(ComponentId{92}, ComponentId{91})) return 78;
+    if (!config_runtime.configure(good) || ca.rate() != 10 || cb.rate() != 10 || config_runtime.state() != LifecycleState::UNKNOWN) return 79;   // forwarded, state unchanged
+    if (!config_runtime.initialize()) return 80;
+    const auto not_eligible = config_runtime.configure(good);                                                       // valid only from UNKNOWN and STOPPED
+    if (not_eligible || not_eligible.error().code != ErrorCode::INVALID_STATE || config_runtime.state() != LifecycleState::READY) return 81;
+    if (!config_runtime.stop()) return 82;
+    const auto rejected = config_runtime.configure(out_of_range);                                                // the first component rejects: stop, no rollback
+    if (rejected || rejected.error().source != ComponentId{91} || config_runtime.state() != LifecycleState::STOPPED || config_runtime.fault_error() != nullptr || ca.rate() != 10) return 83;
     return 0;
 }
