@@ -23,7 +23,7 @@
 
 | ID | Task | Primary Area | Status | Primary Commit |
 |---|---|---|---|---|
-| KF-CORE-R03-001 | Component Contract & Identity | runtime/component | PLANNED | `feat(core): define component runtime contract` |
+| KF-CORE-R03-001 | Component Contract & Identity | runtime/component | REVIEW (`655c1dd`) | `feat(core): define component runtime contract` |
 | KF-CORE-R03-002 | Component Registry | runtime/registry | PLANNED | `feat(core): add component registry` |
 | KF-CORE-R03-003 | Dependency Management | runtime/dependency | PLANNED | `feat(core): add runtime dependency management` |
 | KF-CORE-R03-004 | Runtime Manager | runtime/manager | PLANNED | `feat(core): add runtime manager` |

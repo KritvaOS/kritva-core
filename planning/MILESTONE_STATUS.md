@@ -6,7 +6,7 @@
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` (referenced; tag not present in Git, see R0.2 Milestone Gate note) |
 | KF-CORE-R02 | RELEASED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` |
-| KF-CORE-R03 | PLANNED | 0 / 8 tasks accepted | — | — |
+| KF-CORE-R03 | IN PROGRESS | 0 / 8 tasks accepted | — | — |
 | KF-CORE-R04 | PLANNED | 0% | — | — |
 
 ## R02 Task Status
@@ -59,7 +59,7 @@ Gate decision: ACCEPTED (reviewer: ChatGPT)
 
 | Task | Status | Dependency | Primary Commit |
 |---|---|---|---|
-| KF-CORE-R03-001 Component Contract & Identity | PLANNED | R02 | `feat(core): define component runtime contract` |
+| KF-CORE-R03-001 Component Contract & Identity | REVIEW (`655c1dd`) | R02 | `feat(core): define component runtime contract` |
 | KF-CORE-R03-002 Component Registry | PLANNED | R03-001 accepted | `feat(core): add component registry` |
 | KF-CORE-R03-003 Dependency Management | PLANNED | R03-001 + R03-002 accepted | `feat(core): add runtime dependency management` |
 | R03 Foundation API Review | PENDING | R03-001..003 accepted | — |
