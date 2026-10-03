@@ -64,7 +64,7 @@ Accepted:
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation
 
-Pending independent review:
+Accepted:
 - KF-CORE-R05-001 — Platform Context & Service Access Model (`c5910e7`)
 
 ### KF-CORE-R04 — Platform Abstraction Planning

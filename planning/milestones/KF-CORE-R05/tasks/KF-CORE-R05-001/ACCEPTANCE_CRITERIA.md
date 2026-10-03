@@ -130,17 +130,20 @@ Primary commit: `c5910e7` `feat(core): add platform context` (API decisions Q1â€
 - Regression: `ctest` 33/33 in Debug, Release, ASan+UBSan, strict `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Werror`, TSan (ASLR off): the whole existing suite (including the R0.4 platform, conformance and runtime-platform tests) is unchanged and green; build 0 warnings; GCC `-fanalyzer` clean; coverage 98% (464/469, the same five uncovered lines); `make check` passes with traceability 67 requirements, 66 traced, 0 errors; `git diff --check` clean. Prohibited-dependency scan clean (no threading, OS or vendor header; `platform/context.hpp` includes only Core headers).
 - Out of scope confirmed: no service registry or locator, no ownership, no Component lifecycle change, no Runtime change, no concrete platform, no threads or background execution.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `c5910e7` (evidence `bea6e41`) |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: `PlatformContext` is a correct small copyable non-owning value view (one pointer, trivially destructible, no cache, no ownership, no registry or second platform authority); the copy-and-lifetime sentence is present; capability matching is identity only; no `RuntimeManager` change; 17/17 mutants detected after closing two survivors. `CORE-PLAT-012` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS â€” KF-CORE-R05-001 is ACCEPTED.**
+
 
 
 ### API Design Guardrail
