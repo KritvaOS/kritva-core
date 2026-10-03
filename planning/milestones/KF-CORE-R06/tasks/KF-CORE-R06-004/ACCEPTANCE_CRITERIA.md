@@ -169,11 +169,14 @@ Primary commit: `5b755af` `feat(core): bind context requirements and capabilitie
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `5b755af` (evidence `e027ae4`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: the additive requirement binding meets the amended D14 contract: `evaluate()` is the unchanged R0.5 report, `check_required()` is the R0.5 result with the component as the source of a bound context's `UNSUPPORTED`, the context stores and declares nothing, matching is by identity only, evaluation is a side-effect-free query, and 22/22 mutants were detected. `CORE-CTX-004` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-004 is ACCEPTED.**
