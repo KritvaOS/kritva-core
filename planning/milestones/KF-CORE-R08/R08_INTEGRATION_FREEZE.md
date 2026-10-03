@@ -60,8 +60,10 @@ Carried forward: 32-bit scheduler affinity mask; conformance level-2 mutation ga
 
 ## Decision
 
-`PASS / HONORED / CHANGES REQUIRED / BLOCKED`
+Reviewer decision: **PASS / HONORED** (05-10-2026), ChatGPT (independent reviewer). Evidence commit `e1051a0`.
 
-## Evidence
+**Production freeze point: `bdb4b93`** (R08-003, the last production change; contract text only). R08-004 `f4b6de4` and R08-005 `a5dfbc1` changed tests and documentation only; R08-005 accepted at `3d63fa9`; Configuration API Review baseline `e8f8a16` (evidence `0a73b5a`). `git diff bdb4b93 HEAD -- include src` is empty: production code and the configuration contract are unchanged after the freeze.
 
-Record the production freeze point, evidence commit and final diff audit here after the gate is executed.
+Frozen: `configuration/configuration.hpp` and `configuration/configuration_version.hpp` (the normative contract text) together with the unchanged Runtime/Component/ComponentContext/platform/operational surfaces. R08-006 and R08-007 may not change the frozen configuration contract, public API or production behavior; any production semantic or API change stops the milestone and returns to explicit architecture/API review.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance suite's level-2 mutation strictness gap; the `make lint` / `make format-check` stubs; the documented non-owning lifetime rule. Disclosure recorded by the reviewer: a stale incremental build (not a source defect) briefly showed failures in one local random-order run; a full rebuild passed, and R08-007 validates from a fresh clone.
