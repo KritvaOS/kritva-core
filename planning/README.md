@@ -40,7 +40,7 @@ planning/
     │   ├── REQUIREMENTS_PROPOSAL.md
     │   ├── design/API/gate records
     │   └── tasks/
-    └── KF-CORE-R06/
+    ├── KF-CORE-R06/
         ├── MILESTONE.md
         ├── IMPLEMENTATION_SEQUENCE.md
         ├── REQUIREMENTS_PROPOSAL.md
@@ -83,3 +83,23 @@ R0.2, R0.3, R0.4 and R0.5 are also released and closed.
 R0.5 added the platform runtime integration foundation (`PlatformContext`, requirements and explicit service consumption). R0.6 added the non-owning `runtime::ComponentContext` for integrator-written Components, with the Runtime lifecycle unchanged and `kritva-core` still platform independent.
 
 See `MASTER_TRACKER.md` and `milestones/KF-CORE-R06/`.
+
+## Current R0.7 State
+
+R0.6 is released and closed at version 0.6.0. R0.7 is now the current planned milestone.
+
+### KF-CORE-R07 — Component Operational Foundation
+
+Status: PLANNED — ARCHITECTURE CONFIRMED; implementation not started.
+
+Architecture decision:
+- Component operational information remains Component-owned.
+- Existing Status, Health, Statistics and Event concepts are preferred over parallel abstractions.
+- No new operational state machine is introduced.
+- Observation is read-only and side-effect free.
+- Component statistics are optional; they are not mandatory on the base Component interface.
+- Operational Events are explicitly reported to integrator-owned sinks; no Core EventBus is introduced.
+- Runtime remains lifecycle authority and does not automatically poll, interpret or react to operational information.
+- No Core-owned background execution, telemetry/logging backend, automatic recovery, or platform-specific operational framework is introduced.
+
+Implementation authorization starts with R07-001 after its task package and acceptance criteria are issued.

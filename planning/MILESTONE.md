@@ -113,4 +113,55 @@ R06 Release Gate
 - No Core-owned background execution or automatic recovery is introduced.
 - Any breaking or semantic API change returns to architecture review before implementation continues.
 
-See `planning/milestones/KF-CORE-R06/` for the R0.6 architecture proposal, task package and gate definitions.
+See `planning/milestones/KF-CORE-R06/` for the R0.6 architecture, task package, validation evidence and release records.
+
+
+## KF-CORE-R07 — Component Operational Foundation
+
+Status: PLANNED — ARCHITECTURE CONFIRMED; IMPLEMENTATION NOT STARTED
+
+### Objective
+
+Establish a narrow, platform-independent Component operational observation/reporting contract using existing Core concepts (`Status`, `Health`, `Statistics`, and `Event`) without changing Runtime lifecycle semantics or introducing a Core operational framework.
+
+### Architecture Confirmation
+
+- Component remains authoritative for its operational information.
+- Runtime remains authoritative for lifecycle orchestration and Runtime-owned statistics.
+- Existing typed operational concepts are preferred over parallel abstractions.
+- Observation is read-only and side-effect free.
+- No new Component Operational State machine is introduced.
+- Component statistics are optional; they are not mandatory on the base `runtime::Component` interface.
+- Events are explicitly reported to integrator-owned sinks; Core does not provide an EventBus, queue, broker or dispatcher.
+- Operational information does not automatically drive lifecycle, recovery, retry or restart.
+- No Core-owned background execution, telemetry backend, logging backend or platform-specific implementation is introduced.
+
+### Task Order
+
+```text
+R07 Design Consult
+        ↓
+R07 Scope Confirmation
+        ↓
+R07-001 Component Operational Observation Contract
+        ↓
+R07-002 Component Status & Health Reporting Contract
+        ↓
+R07-003 Component Operational Event Contract
+        ↓
+R07-004 Component Statistics Ownership & Observation Contract
+        ↓
+R07 Component Operational API Review
+        ↓
+R07-005 Reference Operational Harness & Contract Tests
+        ↓
+R07-006 Runtime/Component Operational Integration
+        ↓
+R07 Integration Freeze
+        ↓
+R07-007 Full R0.7 Validation
+        ↓
+R07 Release Gate
+```
+
+See `planning/milestones/KF-CORE-R07/` for the complete architecture, scope, task acceptance and gate package.

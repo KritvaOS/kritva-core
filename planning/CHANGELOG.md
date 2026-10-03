@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+### KF-CORE-R07 — Component Operational Foundation Planning
+
+Architecture confirmed after R0.7 Design Consult and Scope Confirmation.
+
+R0.7 scope:
+- Component operational observation contract
+- Status and Health reporting semantics
+- Explicit operational Event reporting to integrator-owned sinks
+- Optional Component-owned Statistics observation contract
+- Reference operational harness and contract tests
+- Runtime/Component operational integration tests preserving R0.3 lifecycle semantics
+- Integration Freeze
+- Full R0.7 validation
+- Release Gate
+
+Explicit exclusions:
+- no new operational state machine
+- no Core EventBus or event queue
+- no telemetry or logging backend
+- no Core-owned worker/thread/background execution
+- no automatic retry, restart or health-driven recovery
+- no platform-specific operational implementation
+
+R0.7 implementation has not started. `KF-CORE-R07-001` is the next implementation task after task-specific acceptance criteria are issued.
+
+
 ### Release record
 
 - R06 Release Gate — PASS. Kritva Core R0.6 / version 0.6.0; release candidate `b473e5d`; tag `kritva-core-r0.6` on the documentation-only release-record commit (annotated, pushed to origin; tag object `fb9d631`).
@@ -148,3 +174,4 @@ R0.4 explicitly keeps platform implementations outside `kritva-core`.
 Initial Kritva Core foundation and public API contracts.
 
 Release tag: `kritva-core-r0.1`
+

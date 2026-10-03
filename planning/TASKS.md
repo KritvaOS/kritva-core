@@ -1,6 +1,6 @@
 # Kritva Core — Master Task Register
 
-R0.2, R0.3, R0.4 and R0.5 remain recorded as released historical milestones.
+R0.2, R0.3, R0.4, R0.5 and R0.6 are recorded as released historical milestones. R0.7 is the current planned architecture milestone.
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
@@ -38,7 +38,7 @@ R05-007
 R05 Release Gate
 ```
 
-## KF-CORE-R06 — Component Execution Context (Architecture Proposal)
+## KF-CORE-R06 — Component Execution Context
 
 | ID | Task | Primary Area | Status | Est. Effort |
 |---|---|---|---|---:|
@@ -51,7 +51,7 @@ R05 Release Gate
 | KF-CORE-R06-006 | Runtime/Component Context Integration Tests | tests/integration | ACCEPTED | 3–4 ED |
 | R06 Integration Freeze | Freeze production behavior | architecture | PASS / HONORED | 0.5 ED |
 | KF-CORE-R06-007 | Full R0.6 Validation | integration/validation | ACCEPTED | 2–3 ED |
-| R06 Release Gate | Release 0.6.0 | release | PLANNED | 1 ED |
+| R06 Release Gate | Release 0.6.0 | release | PASS / RELEASED | 1 ED |
 
 ## R06 Dependency Graph
 
@@ -76,6 +76,58 @@ R06-007
    ↓
 R06 Release Gate
 ```
+
+
+## KF-CORE-R07 — Component Operational Foundation (Architecture Confirmed)
+
+| ID | Task | Primary Area | Status | Est. Effort |
+|---|---|---|---|---:|
+| R07 Design Consult | Operational model and architectural boundary | architecture | APPROVED | 2–3 ED |
+| R07 Scope Confirmation | Confirm milestone scope and exclusions | architecture | APPROVED | 1 ED |
+| KF-CORE-R07-001 | Component Operational Observation Contract | runtime/observation | PLANNED | 3–4 ED |
+| KF-CORE-R07-002 | Component Status & Health Reporting Contract | status/health | PLANNED | 2–3 ED |
+| KF-CORE-R07-003 | Component Operational Event Contract | event | PLANNED | 3–4 ED |
+| KF-CORE-R07-004 | Component Statistics Ownership & Observation Contract | statistics | PLANNED | 2–3 ED |
+| R07 Component Operational API Review | Freeze public operational API | architecture | PLANNED | 1 ED |
+| KF-CORE-R07-005 | Reference Operational Harness & Contract Tests | tests/operational | PLANNED | 3–4 ED |
+| KF-CORE-R07-006 | Runtime/Component Operational Integration | tests/integration | PLANNED | 3–4 ED |
+| R07 Integration Freeze | Freeze production operational behavior | architecture | PLANNED | 0.5 ED |
+| KF-CORE-R07-007 | Full R0.7 Validation | integration/validation | PLANNED | 2–3 ED |
+| R07 Release Gate | Release 0.7.0 | release | PLANNED | 1 ED |
+
+## R07 Dependency Graph
+
+```text
+R07 Design Consult
+        ↓
+R07 Scope Confirmation
+        ↓
+R07-001 Component Operational Observation Contract
+        ↓
+R07-002 Component Status & Health Reporting Contract
+        ↓
+R07-003 Component Operational Event Contract
+        ↓
+R07-004 Component Statistics Ownership & Observation Contract
+        ↓
+R07 Component Operational API Review
+        ↓
+R07-005 Reference Operational Harness & Contract Tests
+        ↓
+R07-006 Runtime/Component Operational Integration
+        ↓
+R07 Integration Freeze
+        ↓
+R07-007 Full R0.7 Validation
+        ↓
+R07 Release Gate
+```
+
+### R0.7 Scope Decision
+
+R0.7 establishes a narrow, platform-independent Component operational observation/reporting contract using existing Core concepts. It does not introduce a new operational state machine, Core EventBus, telemetry backend, logging backend, background worker, automatic recovery, or platform-specific operational framework. Component operational data remains Component-owned; Runtime remains lifecycle authority; integrator code owns observation sinks, telemetry and policy.
+
+R0.7 does not add `statistics()` to the mandatory `runtime::Component` base interface by default. Component statistics are an optional operational contract defined by R07-004.
 
 ## Acceptance Rule
 

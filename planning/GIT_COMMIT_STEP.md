@@ -61,7 +61,7 @@ The R03 Release Gate reviews the final candidate before tag creation.
 
 ## Milestone Release
 
-After all eight tasks are accepted:
+After all milestone implementation tasks are accepted:
 
 1. Update `MILESTONE_STATUS.md`.
 2. Update `CHANGELOG.md`.
@@ -151,7 +151,7 @@ R05 task commits:
 | KF-CORE-R05-006 | `test(core): add platform runtime integration tests` |
 | KF-CORE-R05-007 | `test(core): complete R0.5 validation` |
 
-R06 proposed task commits:
+R06 task commits:
 
 | Task | Exact implementation commit |
 |---|---|
@@ -163,4 +163,47 @@ R06 proposed task commits:
 | KF-CORE-R06-006 | `test(core): add component context integration tests` |
 | KF-CORE-R06-007 | `test(core): complete R0.6 validation` |
 
-R06 is an architecture proposal. These commit messages become implementation-authoritative only after the R06 architecture/design review authorizes implementation.
+R06 implementation is RELEASED/CLOSED. The listed R06 commit messages are retained as historical task conventions.
+
+## R07 Architecture-Confirmed Commit Messages
+
+R07 implementation authorization begins only after each task's `ACCEPTANCE_CRITERIA.md` is issued and the task is not blocked by a prior gate.
+
+| Task | Exact implementation commit |
+|---|---|
+| KF-CORE-R07-001 | `feat(core): define component operational observation contract` |
+| KF-CORE-R07-002 | `feat(core): define component status and health reporting contract` |
+| KF-CORE-R07-003 | `feat(core): define component operational event contract` |
+| KF-CORE-R07-004 | `feat(core): define component statistics observation contract` |
+| KF-CORE-R07-005 | `test(core): add component operational reference harness` |
+| KF-CORE-R07-006 | `test(core): add component operational integration tests` |
+| KF-CORE-R07-007 | `test(core): complete R0.7 operational validation` |
+
+### R07 Architecture Gates
+
+- R07 Design Consult — APPROVED.
+- R07 Scope Confirmation — APPROVED.
+- R07 Component Operational API Review must PASS/FROZEN before R07-005.
+- R07 Integration Freeze applies after R07-006 and before R07-007.
+- R07 Release Gate reviews R07-007 before version/tag creation.
+
+### R07 Commit Rules
+
+- One logical task has one primary implementation commit.
+- Exact task commit message is authoritative only for that task's implementation commit.
+- Do not amend accepted task commits.
+- Corrective changes after review use a focused follow-up commit.
+- No production API or semantic change after R07 API Freeze without returning to architecture review.
+
+### R07 Release Procedure
+
+After all R07 implementation tasks are accepted:
+
+1. Update `MILESTONE_STATUS.md`.
+2. Update `CHANGELOG.md`.
+3. Verify `VERSION` and CMake version.
+4. Run clean Debug/Release and complete validation matrix.
+5. Perform independent R07 Release Gate review.
+6. Create a documentation-only release-record commit.
+7. Create the annotated `kritva-core-r0.7` tag only after PASS.
+8. Independently verify remote `main`, tag object and peeled tag.

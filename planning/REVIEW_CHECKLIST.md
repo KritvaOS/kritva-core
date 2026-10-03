@@ -334,3 +334,87 @@ Apply during R06 architecture/design review and before R06-001 implementation au
 - [ ] Annotated `kritva-core-r0.6` tag is authorized only after PASS.
 - [ ] Remote main/tag/peeled tag are independently verified.
 - [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.
+
+## R07 Component Operational Foundation Review
+
+Apply during R07 architecture review and before R07-001 implementation authorization:
+
+- [ ] R0.6 ComponentContext and R0.3 Runtime lifecycle boundaries remain authoritative.
+- [ ] No new Component operational state machine is introduced.
+- [ ] `Status`, `Health`, `Statistics` and `Event` remain distinct concepts.
+- [ ] Component remains authoritative for its operational information.
+- [ ] Observation is read-only and side-effect free.
+- [ ] Snapshot/value semantics are explicit.
+- [ ] No cross-property atomic snapshot claim is introduced.
+- [ ] Component statistics remain optional unless a later reviewed contract says otherwise.
+- [ ] No Core EventBus, queue, broker or dispatcher is introduced.
+- [ ] Event reporting is explicit and integrator-owned at the sink boundary.
+- [ ] Events do not implicitly trigger lifecycle, recovery or retry behavior.
+- [ ] Runtime does not automatically poll or interpret Component operational data.
+- [ ] Runtime-owned statistics remain separate from Component statistics.
+- [ ] No generic Diagnostic container is introduced without a separately demonstrated contract gap.
+- [ ] No Core-owned worker/thread/background operation is introduced.
+- [ ] No telemetry/logging backend enters production Core.
+- [ ] No platform/vendor/OS dependency enters production Core.
+- [ ] Any production API change is explicitly identified before implementation.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R07 Component Operational API Review Gate
+
+- [ ] R07-001 through R07-004 accepted.
+- [ ] Existing `Component` lifecycle signatures remain unchanged unless explicitly approved.
+- [ ] Any new operational API is minimal, self-contained and traceable.
+- [ ] Status/Health semantics are frozen.
+- [ ] Optional Statistics semantics are frozen.
+- [ ] Event reporting/sink ownership semantics are frozen.
+- [ ] No hidden Runtime observation or control path exists.
+- [ ] Contract/unit/mutation evidence is sufficient.
+- [ ] Full pre-R07 regression remains green.
+- [ ] Public-header self-containment passes.
+- [ ] Traceability and dependency audits pass.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+- [ ] On PASS, production operational API is FROZEN.
+
+## R07 Integration Freeze
+
+- [ ] R07-005 and R07-006 accepted.
+- [ ] Integration tests use public APIs only.
+- [ ] Runtime lifecycle ordering/failure/reset behavior is unchanged.
+- [ ] Operational observation causes no lifecycle side effects.
+- [ ] Health/status/statistics changes do not automatically change Runtime state.
+- [ ] Events do not trigger recovery or lifecycle operations.
+- [ ] No Core-owned event queue, worker or telemetry path exists.
+- [ ] No test-only production hook exists.
+- [ ] Production diff from the API freeze point contains only approved validation/documentation changes.
+- [ ] PASS / HONORED / CHANGES REQUIRED / BLOCKED recorded.
+
+## R07 Final Validation Review
+
+- [ ] R07 Integration Freeze is PASS/HONORED.
+- [ ] Fresh-clone Debug/Release builds pass.
+- [ ] Complete CTest regression passes.
+- [ ] ASan/UBSan pass.
+- [ ] TSan passes where configured.
+- [ ] Strict warning build passes.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage reviewed against accepted baseline.
+- [ ] Traceability audit passes.
+- [ ] Install consumer passes.
+- [ ] Production isolation/dependency audit passes.
+- [ ] Public-header self-containment passes.
+- [ ] No prohibited event/telemetry/threading infrastructure is present.
+- [ ] Working tree is clean.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R07 Release Gate
+
+- [ ] R07-001 through R07-007 accepted.
+- [ ] R07 Component Operational API Review PASS/FROZEN.
+- [ ] R07 Integration Freeze PASS/HONORED.
+- [ ] Fresh-clone validation PASS.
+- [ ] Requirements/API/planning documentation reconciled.
+- [ ] Version and CMake metadata agree.
+- [ ] Release record is documentation-only.
+- [ ] Annotated `kritva-core-r0.7` tag is authorized only after PASS.
+- [ ] Remote main/tag/peeled tag independently verified.
+- [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.
