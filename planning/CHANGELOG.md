@@ -23,6 +23,7 @@ Accepted:
 - KF-CORE-R03-001 — Component Contract & Identity (`655c1dd`, `35efee1`, `9a98ab3`)
 - KF-CORE-R03-002 — Component Registry (`7ae9a32`)
 - KF-CORE-R03-003 — Dependency Management (`795fb94`)
+- R03 Foundation API Review — PASS / FROZEN (Component, Registry, DependencyGraph contracts frozen; `CORE-RT-002` Runtime interface remains authoritative for R03-004)
 
 Cross-cutting R03 policy review includes Error, Warning, Info/diagnostic messaging, Event versus message, Statistics update semantics, and logging boundary.
 

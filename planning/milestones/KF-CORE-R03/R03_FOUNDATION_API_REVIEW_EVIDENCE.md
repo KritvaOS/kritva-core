@@ -2,6 +2,8 @@
 
 Prepared by Claude for the architecture reviewer. This file supplies objective evidence and a snapshot of the API surface to be frozen. It contains **no gate decision**: the PASS / CHANGES REQUIRED / BLOCKED decision, the "frozen" checkboxes and the sign-off table in `R03_FOUNDATION_API_REVIEW.md` belong to the reviewer. Where this file proposes policy, it is labeled **PROPOSAL** and needs an explicit decision.
 
+> **Gate outcome: PASS / FROZEN** (03-10-2026). The proposals below were decided as recorded in `R03_FOUNDATION_API_REVIEW.md` ("Recorded decisions"); where they differ, that file prevails.
+
 ## 1. State under review
 
 - Repository HEAD for this evidence: `6f9db3d` (`docs(planning): accept R03-003`). Production code last changed in `795fb94`.
@@ -140,7 +142,7 @@ These are reviewed at this gate and not implemented by R03-001..003. For each it
 
 ### 5.2 Warning policy
 - Facts: `ErrorSeverity::WARNING` exists in `Error` and `Event`; `Health` has `DEGRADED`; there is no non-failing-warning return channel (an operation either succeeds or fails).
-- PROPOSAL: R03 introduces no warning API. A warning condition is a successful operation plus a `HealthState::DEGRADED` health value and/or an `Event` with `WARNING` severity, as needed; no `Result` carries a warning alongside success.
+- PROPOSAL: R03 introduces no warning API; no `Result` carries a warning alongside success. (Refined at the gate: `HealthState::DEGRADED` is NOT equated with a warning; see the recorded decisions in `R03_FOUNDATION_API_REVIEW.md`.)
 
 ### 5.3 Info / diagnostic policy
 - Facts: `Status::message()`, `Health::detail()` and `Event` severity `INFO` exist; Core contains no logging backend, no `<iostream>`, `<cstdio>` or syslog.
