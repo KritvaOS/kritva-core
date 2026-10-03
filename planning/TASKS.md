@@ -43,7 +43,7 @@ R05 Release Gate
 | ID | Task | Primary Area | Status | Est. Effort |
 |---|---|---|---|---:|
 | KF-CORE-R06-001 | Component Execution Context & Ownership Model | context | ACCEPTED | 3–4 ED |
-| KF-CORE-R06-002 | Operational Context Services & Access Policy | context/services | REVIEW | 3–4 ED |
+| KF-CORE-R06-002 | Operational Context Services & Access Policy | context/services | ACCEPTED | 3–4 ED |
 | KF-CORE-R06-003 | Context Injection Without Runtime Lifecycle Change | runtime/component | PLANNED | 3–4 ED |
 | KF-CORE-R06-004 | Context Requirements & Capability Binding | context/requirements | PLANNED | 2–3 ED |
 | R06 Component API Review | Freeze public context/API | architecture | PLANNED | 1 ED |

@@ -173,11 +173,14 @@ Primary commit: `072b713` `feat(core): define operational context access policy`
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `072b713` (evidence `cfa67f9`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: the closed access surface, the side-effect-free queries, the bound-context attribution of the Core availability error (`PlatformContext` unchanged) and the attribution-only `attribute()` (every field mutated in turn, only `source` changes) are accepted; `src/` and the R0.5 public contracts are unchanged; 28 of 29 mutants detected and the 29th is an equivalent mutant. `CORE-CTX-002` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-002 is ACCEPTED.**
