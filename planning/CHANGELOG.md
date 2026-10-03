@@ -19,8 +19,8 @@ Runtime gates:
 - R03 Integration Freeze after R03-007.
 - R03 Release Gate after R03-008.
 
-Pending independent review:
-- KF-CORE-R03-001 — Component Contract & Identity (`655c1dd`)
+Accepted:
+- KF-CORE-R03-001 — Component Contract & Identity (`655c1dd`, `35efee1`, `9a98ab3`)
 
 Cross-cutting R03 policy review includes Error, Warning, Info/diagnostic messaging, Event versus message, Statistics update semantics, and logging boundary.
 

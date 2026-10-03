@@ -185,14 +185,21 @@ Required changes and their resolution (implementation commit `655c1dd` is unchan
 
 | Item | Result |
 |---|---|
-| Implementation complete | ☐ |
-| Unit tests complete | ☐ |
-| Integration/regression tests complete | ☐ |
-| Validation gates complete | ☐ |
-| Public API reviewed | ☐ |
-| Architecture constraints satisfied | ☐ |
-| Reviewer decision | **PASS / CHANGES REQUIRED / BLOCKED** |
-| Reviewer | __________________ |
-| Date | __________________ |
+| Implementation complete | ☑ |
+| Unit tests complete | ☑ |
+| Integration/regression tests complete | ☑ |
+| Validation gates complete | ☑ |
+| Public API reviewed | ☑ (approved: `Component` construction requires a valid `ComponentInfo`) |
+| Architecture constraints satisfied | ☑ |
+| Reviewer decision | **PASS** |
+| Reviewer | ChatGPT |
+| Date | 03-10-2026 |
 
-**Important:** Codex/Claude may provide objective evidence and check implementation/test evidence. Final reviewer decision is made by the architecture reviewer.
+Accepted commits:
+- `655c1dd` `feat(core): define component runtime contract` (implementation, unchanged)
+- `35efee1` `docs(core): qualify component error source rule`
+- `9a98ab3` `docs(planning): correct R03 foundation requirement traceability`
+
+Review notes: ComponentId (alias of Id), ComponentInfo, identity immutability, the non-owning / non-copyable / non-movable ownership model, the lifecycle operation table, failure semantics, the qualified error-source rule, tests, mutation evidence and validation are approved. The shifted R03 requirement numbering (CORE-RT-003..010; existing CORE-RT-002 unchanged) is approved. The accepted `ComponentId` and `ComponentInfo` contracts are frozen for R03-002; any proposed change returns to architecture review. R03-002 must inherit the non-owning model: the registry never owns, copies, moves or deletes components.
+
+**Reviewer Decision: PASS — KF-CORE-R03-001 is ACCEPTED.**
