@@ -111,12 +111,14 @@ Primary commit: `4af4756` `feat(core): define watchdog platform contract` (R04-0
 
 ## Reviewer Sign-off
 
-- [ ] Scope satisfied
-- [ ] Requirement traceability satisfied
-- [ ] Tests satisfied
-- [ ] Quality checks satisfied
-- [ ] Evidence reproducible
-- [ ] Architecture boundary preserved
-- [ ] No unresolved blocker
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Date | 04-10-2026 |
+| Decision | **PASS** |
 
-Final reviewer decision is made independently after evidence review.
+Accepted commits: `4af4756` (evidence `9216847`)
+
+Reviewer notes: the minimal three-method `IWatchdog` API is retained (design decision Q3) and no `state()` accessor is added; the three proposed contract statements are APPROVED (`start()` while RUNNING is `INVALID_STATE`; `kick()` while STOPPED is `INVALID_STATE` and never starts the watchdog; `stop()` may return `UNSUPPORTED` and leave the watchdog RUNNING). Expiry is bounded to the adapter contract and never triggers Runtime recovery. Reviewer evaluated the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R04-004 is ACCEPTED.**
