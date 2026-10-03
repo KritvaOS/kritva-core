@@ -2,7 +2,7 @@
 
 ## Status
 
-PLANNED — Architecture Proposal Approved
+ACCEPTED (release gate PASS; tag `kritva-core-r0.5` created locally on the release-record commit; RELEASED after it is pushed)
 
 ## Target
 

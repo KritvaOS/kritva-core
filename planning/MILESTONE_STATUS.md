@@ -8,6 +8,7 @@
 | KF-CORE-R02 | RELEASED | 8 / 8 tasks accepted | PASS | `kritva-core-r0.2` |
 | KF-CORE-R03 | RELEASED | 8 / 8 tasks accepted | Foundation API Review, Runtime Contract Review and Release Gate PASS; Integration Freeze honored | `kritva-core-r0.3` (annotated tag on release-record commit `cc16ec9`; tag object `0dfccab`; pushed to origin) |
 | KF-CORE-R04 | RELEASED | 8 / 8 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.4` (annotated tag on release-record commit `b31108d`; tag object `9e1bc7b`; pushed to origin) |
+| KF-CORE-R05 | ACCEPTED (release tag pending push) | 7 / 7 tasks accepted | Platform API Review PASS / FROZEN, Platform Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.5` (local annotated tag on the release-record commit; not yet pushed) |
 
 ## R02 Task Status
 
@@ -175,3 +176,7 @@ Release: Kritva Core R0.4, version 0.4.0; release candidate `e7df87c`; release-r
 | KF-CORE-R05-006 | Platform Integration & Runtime Tests | ACCEPTED (fe04d35) | R0.4 released |
 | R05 Platform Integration Freeze | PASS / HONORED (`cf6e617`) | R05-006 |
 | KF-CORE-R05-007 | Full R0.5 Validation | ACCEPTED (`8384f5d`; candidate `5fb5e69`) | R0.4 released |
+
+### R0.5 Release Gate
+Status: PASS (05-10-2026)
+Release: Kritva Core R0.5, version 0.5.0; release candidate `5fb5e69`; tag `kritva-core-r0.5` (annotated, on the release-record commit; push pending). Record: `planning/milestones/KF-CORE-R05/R05_RELEASE_GATE.md`.
