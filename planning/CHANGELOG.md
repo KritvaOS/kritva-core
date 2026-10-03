@@ -87,8 +87,6 @@ Accepted:
 - KF-CORE-R06-003 — Context Injection Without Runtime Lifecycle Change (`adb0e08`)
 - KF-CORE-R06-004 — Context Requirements & Capability Binding (`5b755af`)
 - R06 Component API Review — PASS / FROZEN (evidence `06207c7`)
-
-Pending independent review:
 - KF-CORE-R06-005 — Reference Context Harness & Contract Tests (`c7f7b46`)
 
 ### KF-CORE-R05 — Platform Runtime Integration Foundation

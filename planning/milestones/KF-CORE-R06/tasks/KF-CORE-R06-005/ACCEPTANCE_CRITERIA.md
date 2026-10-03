@@ -171,11 +171,14 @@ Primary commit: `c7f7b46` `test(core): add component context reference harness` 
 
 ## 12. Reviewer decision
 
-**Reviewer only:**
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `c7f7b46` (evidence `ad083ed`) |
+| Evidence reference | section 11a above |
+| Date | 05-10-2026 |
 
-- PASS
-- CHANGES REQUIRED
-- BLOCKED
+Reviewer notes: the harness consumes the frozen `ComponentContext` API without changing production code or API; the reference context component, the reusable `check_component_context()` checks (passing for every combination, copies and moves, failing for a wrong platform), the counted side effects, the Runtime-isolation test, lifetime observation and the isolation guard (verified by a planted violation) are accepted; the mutation survivors are structural mutants killed by their own unit tests. `CORE-CTX-005` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
 
-Reviewer: ____________________  
-Date: ____________________
+**Reviewer Decision: PASS — KF-CORE-R06-005 is ACCEPTED.**
