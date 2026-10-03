@@ -18,6 +18,7 @@
 
 
 #pragma once
+#include "types/callback.hpp"
 #include "types/id.hpp"
 #include "types/version.hpp"
 #include "types/timestamp.hpp"
@@ -55,5 +56,6 @@
 #include "time/clock.hpp"
 #include "time/timer.hpp"
 #include "platform/scheduler.hpp"
+#include "platform/boundary.hpp"
 #include "platform/clock.hpp"
 #include "platform/watchdog.hpp"

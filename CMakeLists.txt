@@ -89,6 +89,20 @@ install(FILES
 if(KRITVA_CORE_BUILD_TESTS)
     enable_testing()
 
+    # Every public header must compile on its own (self-containment): one generated
+    # translation unit per header, built with the library's flags and include path.
+    file(GLOB_RECURSE KRITVA_PUBLIC_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/include
+         ${CMAKE_CURRENT_SOURCE_DIR}/include/kritva/core/*.hpp)
+    set(KRITVA_HEADER_CHECK_SOURCES "")
+    foreach(header IN LISTS KRITVA_PUBLIC_HEADERS)
+        string(REPLACE "/" "_" header_name "${header}")
+        set(check_source ${CMAKE_BINARY_DIR}/header_checks/${header_name}.cpp)
+        file(GENERATE OUTPUT ${check_source} CONTENT "#include <${header}>\n")
+        list(APPEND KRITVA_HEADER_CHECK_SOURCES ${check_source})
+    endforeach()
+    add_library(kritva_core_header_checks OBJECT ${KRITVA_HEADER_CHECK_SOURCES})
+    target_link_libraries(kritva_core_header_checks PRIVATE kritva_core)
+
     # Tests use assert(); keep them active in Release/RelWithDebInfo builds.
     # Applies only to targets created below, not to the kritva_core library.
     if(MSVC)
@@ -206,6 +220,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     add_executable(kritva_core_runtime_integration_test tests/integration/runtime_integration_test.cpp)
     target_link_libraries(kritva_core_runtime_integration_test PRIVATE kritva_core)
     add_test(NAME kritva_core_runtime_integration COMMAND kritva_core_runtime_integration_test)
+
+    #Add Test: tests/unit/platform_boundary_test.cpp
+    add_executable(kritva_core_platform_boundary_test tests/unit/platform_boundary_test.cpp)
+    target_link_libraries(kritva_core_platform_boundary_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_platform_boundary COMMAND kritva_core_platform_boundary_test)
 
     #Add Test: tests/unit/messaging_test.cpp
     add_executable(kritva_core_messaging_test tests/unit/messaging_test.cpp)
