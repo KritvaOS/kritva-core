@@ -18,6 +18,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -245,6 +246,42 @@ void test_runtime_does_not_own_components() {
     assert(destroyed_b);
 }
 
+// The read-only views cannot be used to get around the topology-freeze rule: the
+// mutating operations are not callable through them, before or after the freeze.
+template<class T> concept CanRegister = requires(T& registry, Component& c) { registry.register_component(c); };
+template<class T> concept CanAddEdge = requires(T& graph) { graph.add_dependency(ComponentId{1}, ComponentId{2}); };
+
+void test_views_cannot_bypass_the_topology_freeze() {
+    using RegistryView = std::remove_reference_t<decltype(std::declval<RuntimeManager&>().registry())>;
+    using GraphView = std::remove_reference_t<decltype(std::declval<RuntimeManager&>().dependencies())>;
+    static_assert(std::is_const_v<RegistryView> && std::is_const_v<GraphView>);
+    static_assert(!CanRegister<RegistryView>);       // register_component is non-const
+    static_assert(!CanAddEdge<GraphView>);           // add_dependency is non-const
+    static_assert(CanRegister<ComponentRegistry>);   // (the concepts do detect the operations)
+    static_assert(CanAddEdge<DependencyGraph>);
+
+    auto a = make_component(1);
+    auto b = make_component(2);
+    auto late = make_component(3);
+    RuntimeManager runtime;
+    assert(runtime.register_component(*a) && runtime.register_component(*b));
+    assert(runtime.add_dependency(ComponentId{1}, ComponentId{2}));
+    assert(runtime.initialize());
+
+    // After the freeze both setup APIs are rejected and the underlying state is untouched.
+    const std::size_t components = runtime.registry().size();
+    const std::size_t edges = runtime.dependencies().size();
+    const Ids order = order_of(runtime);
+    const auto reg = runtime.register_component(*late);
+    const auto edge = runtime.add_dependency(ComponentId{2}, ComponentId{3});
+    assert(!reg && reg.error().code == ErrorCode::INVALID_STATE);
+    assert(!edge && edge.error().code == ErrorCode::INVALID_STATE);
+    assert(runtime.registry().size() == components && runtime.dependencies().size() == edges);
+    assert(!runtime.registry().contains(ComponentId{3}));
+    assert(runtime.dependencies().dependencies_of(ComponentId{2}).empty());
+    assert(order_of(runtime) == order);
+}
+
 // -----------------------------------------------------------------------------
 // Topology validation and order (AC-04, AC-05)
 // -----------------------------------------------------------------------------
@@ -361,6 +398,7 @@ int main() {
     test_composes_registry_and_graph_and_forwards_errors_unchanged();
     test_topology_is_fixed_by_initialize();
     test_runtime_does_not_own_components();
+    test_views_cannot_bypass_the_topology_freeze();
     test_valid_topology_is_accepted_and_ordered();
     test_missing_dependency_is_rejected_and_leaves_runtime_not_running();
     test_unregistered_dependent_is_rejected();
