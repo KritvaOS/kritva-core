@@ -80,7 +80,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | KF-CORE-R07-006 | Runtime/Component Operational Integration | 3–4 ED | R07-005 | ACCEPTED (3f524cd) | Integration Freeze |
 | R07 Integration Freeze | Freeze production operational behavior | 0.5 ED | R07-006 | PASS / HONORED (`142a32e`) | **PASS / HONORED** |
 | KF-CORE-R07-007 | Full R0.7 Validation | 2–3 ED | Integration Freeze | ACCEPTED `86dfcb9` (candidate d83e1ba) | Release Gate input |
-| R07 Release Gate | Release 0.7.0 | 1 ED | R07-007 | PLANNED | **PENDING** |
+| R07 Release Gate | Release 0.7.0 | 1 ED | R07-007 | PASS (tag pending push) | **PASS** |
 
 **R07 working estimate: 20–28 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.
 
