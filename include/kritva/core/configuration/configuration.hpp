@@ -9,7 +9,7 @@
 // Module      : Configuration
 // Layer       : Core Foundation
 //
-// Requirements: CORE-CFG-001; CORE-CFG-002; CORE-CFG-004; CORE-CFG-011
+// Requirements: CORE-CFG-001; CORE-CFG-002; CORE-CFG-004; CORE-CFG-005; CORE-CFG-006; CORE-CFG-011
 // API         : CORE-API-CONFIGURATION
 //
 // Author      : KritvaOS Core Team
@@ -75,6 +75,45 @@ namespace kritva::core {
 //   for real-time paths. A Configuration, like Status and Statistics, is not
 //   thread-safe: concurrent const reads are safe, any concurrent mutation needs
 //   external synchronization.
+//
+// INPUT OWNERSHIP AND DETACHMENT (CORE-CFG-005)
+//   The CALLER owns the Configuration it passes. configure() receives it by
+//   const reference, so a component cannot modify it, and it is valid only for
+//   the duration of the call. After configure() returns, successfully or not, the
+//   caller may change, move or destroy its object and the component must be
+//   unaffected:
+//     - A conforming Component COPIES whatever it keeps. It does not retain the
+//       address of, a reference to, a pointer into (including the pointer
+//       returned by get()) or a view of the caller's Configuration or of any
+//       Parameter, string or value inside it beyond the synchronous call.
+//     - A Configuration is a plain copyable value: a copy is independent of its
+//       source, and mutating either never changes the other. The pointer returned
+//       by Configuration::get() is valid only until the next mutation of that
+//       Configuration or its destruction.
+//     - Core never copies, stores or caches a component's Configuration: the
+//       Runtime forwards the caller's object by reference during the call and
+//       keeps nothing; there is no Core configuration registry, global store or
+//       second authoritative copy, and no generic Component::configuration()
+//       accessor is required (or provided) to read back what a component applied.
+//       The component owns the semantic state it accepts and decides whether and
+//       how to expose it.
+//
+// ATOMIC, NON-PARTIAL APPLICATION (CORE-CFG-006)
+//   A conforming Component applies a configuration all-or-nothing:
+//     - On success, the configuration it accepted is its applied configuration.
+//     - On ANY failure (invalid state, malformed input, semantic rejection,
+//       resource failure, or an incompatible schema) NOTHING is applied: the
+//       previously accepted configuration, or the component's initial state if it
+//       never accepted one, stays exactly as it was. No parameter of the rejected
+//       configuration may be visible in the component's applied state and no
+//       partially updated state may result. The usual way to meet this is to
+//       validate and stage the whole input first and commit it with a step that
+//       cannot fail (for example moving or swapping a prepared value).
+//     - Failure leaves the lifecycle state unchanged (CORE-CFG-004).
+//   Core can state this rule but cannot enforce it on a component; it is the
+//   contract a conforming component meets and the reference conformance checks
+//   verify. There are no transactions across components: the Runtime does not
+//   roll back components that were configured before another one failed.
 //
 // INDEPENDENCE
 //   Configuration is independent of Status, Health and a Runtime FAULT: a
