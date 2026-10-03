@@ -38,6 +38,7 @@ Accepted:
 - KF-CORE-R08-004 — Reference Configuration Harness & Contract Tests (`f4b6de4`; evidence `2b93ad6`)
 
 Pending independent review:
+- KF-CORE-R08-005 — Runtime/Component Configuration Integration (`a5dfbc1`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 

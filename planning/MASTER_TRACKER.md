@@ -140,7 +140,7 @@ R07 Release Gate
 | KF-CORE-R08-003 | Configuration Version & Validation Contract | 2–3 ED | R08-002 | ACCEPTED (bdb4b93) | API review input |
 | R08 Configuration API Review | Freeze public configuration semantics | 1 ED | R08-001..003 | PASS / FROZEN (`0a73b5a`) | API freeze |
 | KF-CORE-R08-004 | Reference Configuration Harness & Contract Tests | 3–4 ED | API Review PASS/FROZEN | ACCEPTED (f4b6de4) | Contract tests |
-| KF-CORE-R08-005 | Runtime/Component Configuration Integration | 3–4 ED | R08-004 | PLANNED | Integration Freeze input |
+| KF-CORE-R08-005 | Runtime/Component Configuration Integration | 3–4 ED | R08-004 | REVIEW (a5dfbc1) | Integration Freeze input |
 | R08 Integration Freeze | Freeze production configuration behavior | 0.5 ED | R08-005 | PLANNED | Production freeze |
 | KF-CORE-R08-006 | Configuration Boundary & Regression Validation | 2–3 ED | Integration Freeze PASS/HONORED | PLANNED | Validation |
 | KF-CORE-R08-007 | Full R0.8 Validation & Release Candidate | 2–3 ED | R08-006 | PLANNED | Release Gate input |
