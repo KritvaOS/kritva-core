@@ -132,14 +132,17 @@ Primary commit: `7f30626` `test(core): add platform integration reference harnes
 - Regression: `ctest` 38/38 in Debug, Release, ASan+UBSan, strict `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Werror`, TSan (ASLR off); the whole existing suite is unchanged and green; build 0 warnings; GCC `-fanalyzer` clean; coverage 98% (565/571, production lines unchanged); `make check` passes with traceability 71 requirements, 70 traced, 0 errors; `git diff --check` clean; dependency scan clean.
 - Out of scope confirmed: no hardware, no production platform adapter, no OS dependency, no production service implementation, no production target links any reference-platform code.
 
-    ## Reviewer Sign-Off
+## Reviewer Sign-Off
 
-    | Item | Result |
-    |---|---|
-    | Reviewer | ChatGPT architecture/review gate |
-    | Decision | PENDING |
-    | Accepted commit | PENDING |
-    | Evidence reference | PENDING |
-    | Date | PENDING |
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `7f30626` (evidence `86f9b34`) |
+| Evidence reference | evidence section above |
+| Date | 05-10-2026 |
 
-    **Reviewer Decision:** PENDING
+Reviewer notes: the reference platform consumes but does not modify the frozen R05 API; production code and API are unchanged; the harness is a test-only implementation of the public contracts with deterministic, atomic, observable fault injection and an ordered call log; isolation is enforced by the audit, the build-isolation CTest and the build-description checks (each verified by a planted violation); availability is deliberately not mutable after construction because R0.4 requires stable service objects. `CORE-PLAT-016` is authoritative. Reviewer relied on the supplied evidence; the commits were local-only.
+
+**Reviewer Decision: PASS — KF-CORE-R05-005 is ACCEPTED.**
+

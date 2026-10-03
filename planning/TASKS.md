@@ -10,7 +10,7 @@ R0.2, R0.3 and R0.4 remain recorded as released historical milestones.
 | KF-CORE-R05-002 | Platform Service Requirement Model | platform/requirements | ACCEPTED | `feat(core): define platform service requirements` |
 | KF-CORE-R05-003 | Explicit Platform Service Consumption | platform/services | ACCEPTED | `feat(core): define explicit platform service consumption` |
 | KF-CORE-R05-004 | Runtime–Platform Lifecycle Boundary | runtime/platform | ACCEPTED | `feat(core): preserve runtime platform lifecycle boundary` |
-| KF-CORE-R05-005 | Reference Platform Integration | tests/platform | REVIEW | `test(core): add platform integration reference harness` |
+| KF-CORE-R05-005 | Reference Platform Integration | tests/platform | ACCEPTED | `test(core): add platform integration reference harness` |
 | KF-CORE-R05-006 | Platform Integration & Runtime Tests | tests/integration | PLANNED | `test(core): add platform runtime integration tests` |
 | KF-CORE-R05-007 | Full R0.5 Validation | integration/validation | PLANNED | `test(core): complete R0.5 validation` |
 
