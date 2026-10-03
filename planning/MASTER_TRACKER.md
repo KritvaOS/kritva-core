@@ -137,7 +137,7 @@ R07 Release Gate
 | R08 Scope Confirmation | Confirm milestone scope and exclusions | 1 ED | Design Consult | APPROVED | Implementation authorization input |
 | KF-CORE-R08-001 | Component Configuration Contract & Lifecycle Semantics | 2–3 ED | Scope Confirmation | ACCEPTED (605516b) | Configuration contract |
 | KF-CORE-R08-002 | Configuration Ownership & Atomic Application | 2–3 ED | R08-001 | ACCEPTED (6efeaac) | Ownership/atomicity contract |
-| KF-CORE-R08-003 | Configuration Version & Validation Contract | 2–3 ED | R08-002 | PLANNED | API review input |
+| KF-CORE-R08-003 | Configuration Version & Validation Contract | 2–3 ED | R08-002 | REVIEW (bdb4b93) | API review input |
 | R08 Configuration API Review | Freeze public configuration semantics | 1 ED | R08-001..003 | PLANNED | API freeze |
 | KF-CORE-R08-004 | Reference Configuration Harness & Contract Tests | 3–4 ED | API Review PASS/FROZEN | PLANNED | Contract tests |
 | KF-CORE-R08-005 | Runtime/Component Configuration Integration | 3–4 ED | R08-004 | PLANNED | Integration Freeze input |

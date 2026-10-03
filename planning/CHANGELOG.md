@@ -35,6 +35,7 @@ Accepted:
 - KF-CORE-R08-002 — Configuration Ownership & Atomic Application (`6efeaac`; evidence `6aab91b`)
 
 Pending independent review:
+- KF-CORE-R08-003 — Configuration Version & Validation Contract (`bdb4b93`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
