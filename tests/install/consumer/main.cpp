@@ -51,7 +51,7 @@ int main() {
     const Status status(StatusCode::OK);
     if (status.code() != StatusCode::OK) return 4;
 
-    if ((Version{0, 5, 0}).to_string() != "0.5.0") return 5;
+    if ((Version{0, 6, 0}).to_string() != "0.6.0") return 5;
 
     // Compiled runtime library code: the component registry.
     using namespace kritva::core::runtime;
@@ -152,5 +152,32 @@ int main() {
     if (!requirements.add_service(platform::PlatformService::SCHEDULER, platform::Requirement::REQUIRED)) return 48;
     const auto needed = platform::check_required(requirements, context);
     if (needed || needed.error().code != ErrorCode::UNSUPPORTED) return 49;           // a required service is missing
+
+    // Component execution context (R0.6) through the installed headers and library.
+    const auto component_info = ComponentInfo::create(ComponentId{77}, "consumer");
+    if (!component_info) return 50;
+    const ComponentContext unbound;
+    if (unbound.bound() || unbound.info() != nullptr || unbound.id().valid() || unbound.platform().attached()) return 51;
+    const ComponentContext component_context(component_info.value(), context);
+    if (!component_context.bound() || component_context.id() != ComponentId{77} || component_context.info() != &component_info.value()) return 52;
+    if (!component_context.platform().attached() || component_context.platform().info() == nullptr) return 53;
+    const auto no_scheduler = component_context.require_scheduler();
+    if (no_scheduler || no_scheduler.error().code != ErrorCode::UNSUPPORTED) return 54;
+    if (no_scheduler.error().source != ComponentId{77}) return 55;                       // the availability error is attributed to the component
+    if (unbound.require_timer().error().source.valid()) return 56;                      // an unbound context has no identity to attribute
+    if (component_context.supports(platform::PlatformService::TIMER) || component_context.has_capability(CapabilityId{100})) return 57;
+    Error original;
+    original.code = ErrorCode::TIMEOUT;
+    original.severity = ErrorSeverity::WARNING;
+    original.source = Id{5};
+    original.message = "original";
+    const Error attributed = component_context.attribute(original);                     // attribution replaces only the source
+    if (attributed.source != ComponentId{77} || attributed.code != ErrorCode::TIMEOUT || attributed.severity != ErrorSeverity::WARNING || attributed.message != "original") return 58;
+    if (unbound.attribute(original).source != Id{5}) return 59;
+    platform::PlatformRequirements component_needs;
+    if (!component_needs.add_service(platform::PlatformService::CLOCK, platform::Requirement::REQUIRED)) return 60;
+    const auto component_check = component_context.check_required(component_needs);
+    if (component_check || component_check.error().code != ErrorCode::UNSUPPORTED || component_check.error().source != ComponentId{77}) return 61;
+    if (component_context.evaluate(component_needs).satisfied()) return 62;
     return 0;
 }

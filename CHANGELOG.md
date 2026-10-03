@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.6.0 — Component Execution Context (KF-CORE-R06)
+
+An explicit, deterministic, non-owning execution context for integrator-written Components, on top of the unchanged
+R0.3 runtime and the R0.4/R0.5 platform contracts. R0.6 adds no service registry or locator, no automatic injection,
+no Component-to-Component access, no concrete platform and no thread, executor or background execution. All R0.6
+production API is additive: one new public header.
+
+### Component context
+- `runtime::ComponentContext` (`runtime/component_context.hpp`): a copyable value of exactly two non-owning
+  pointers, the component's immutable `ComponentInfo` and the R0.5 `PlatformContext`. It is **immutable after
+  construction** (no setter, reset or rebinding; not assignable), unbound by default, and a temporary identity or
+  component is refused at compile time. It owns nothing; copying neither extends a lifetime nor transfers ownership.
+- A closed, typed, side-effect-free access surface: identity, the R0.5 view by const reference, `require_scheduler()`,
+  `require_clock()`, `require_timer()`, `require_watchdog()`, `supports()`, `has_capability()`, `attribute()`,
+  `evaluate()` and `check_required()`. There is no generic or by-name access and no path to the Runtime, registry,
+  another component, configuration, statistics, health or the raw adapter.
+- Error attribution: when the context is bound the Core availability error (`UNSUPPORTED`) carries the component as its
+  source (code, severity, timestamp and message are R0.5's), so a component can return it directly; `attribute()`
+  replaces only the `source` of an `Error`; platform service errors are never touched.
+- Construction-time injection only: the Runtime never creates, stores, passes or probes a context, and `Component`
+  and `RuntimeManager` are unchanged. Requirement binding applies the R0.5 identity-based requirement model; the
+  context stores no requirements.
+
+### Build and validation
+- New requirements `CORE-CTX-001` to `CORE-CTX-007`, traced.
+- A test-only reference context component (scripted plans through a context), reusable context contract checks, and a
+  Runtime/component integration suite proving that a platform failure reaching the Runtime through a context is exactly
+  an ordinary component failure (72 service-method, attempt and error-code cases, full invocation traces), and that the
+  Runtime is identical whatever components do with their context.
+- Validated from a fresh clone with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and 99% line coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are placeholders).
+- The scheduler CPU affinity mask is 32 bits; widening it would be a separately reviewed change.
+- The conformance suite's single-check mutation strictness is documented as a known gap (see R04-006).
+- A context (like `PlatformContext`) must not outlive what it refers to (documented undefined behavior; the context is
+  non-owning by design).
+
 ## 0.5.0 — Platform Runtime Integration Foundation (KF-CORE-R05)
 
 A controlled, platform-independent way for integrator-written code to consume externally owned platform services,
