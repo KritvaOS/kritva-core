@@ -284,8 +284,8 @@ R09 Release Gate
 | KF-CORE-R10-003 | ABI / Binary Compatibility Policy | compatibility/abi | ACCEPTED (`559d75f`) | 2–3 ED |
 | KF-CORE-R10-004 | Versioning & API Evolution Policy | compatibility/release | ACCEPTED (`a121c24`) | 3–4 ED |
 | KF-CORE-R10-005 | Deprecation & Migration Policy | compatibility/release | ACCEPTED (`2882cd2`) | 2–3 ED |
-| R10 API / Compatibility Review | Freeze R1.0 compatibility semantics | architecture | READY | 1 ED |
-| KF-CORE-R10-006 | Compatibility & Boundary Validation Harness | tests/compatibility | BLOCKED BY API REVIEW | 3–4 ED |
+| R10 API / Compatibility Review | Freeze R1.0 compatibility semantics | architecture | PASS / FROZEN (`55e57df`) | 1 ED |
+| KF-CORE-R10-006 | Compatibility & Boundary Validation Harness | tests/compatibility | READY | 3–4 ED |
 | KF-CORE-R10-007 | Package / Install Compatibility | package/install | BLOCKED BY R10-006 | 2–3 ED |
 | R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | architecture | PLANNED | 0.5 ED |
 | KF-CORE-R10-008 | Documentation / Security / Traceability Validation | docs/security/traceability | BLOCKED BY INTEGRATION FREEZE | 2–3 ED |
