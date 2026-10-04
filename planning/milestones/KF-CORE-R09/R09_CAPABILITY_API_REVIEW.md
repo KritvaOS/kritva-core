@@ -80,10 +80,12 @@ Carried forward: 32-bit scheduler affinity mask; conformance level-2 mutation ga
 
 ## Decision
 
-To be completed by independent reviewer:
+Reviewer decision: **PASS / FROZEN** (05-10-2026), ChatGPT (independent reviewer). Evidence commit `c84bb9c`.
 
-**PASS / FROZEN** or **CHANGES REQUIRED** or **BLOCKED**
+**Production freeze commit: `4c86b53`** (the accepted head after R09-001 `4081dc0`, R09-002 `4bd241e` and R09-003 `e91a51f`; production unchanged since `e91a51f`). Frozen production contracts: `capability/capability.hpp`, `capability/capability_id.hpp` and `capability/capability_set.hpp` (the normative contract text) together with the unchanged public surface it governs (`src/` and the platform, Component, Runtime, dependency-graph and context headers, byte-identical to `kritva-core-r0.8`). Production API change: none. Production behavior change: none. Documentation synchronized: yes. Security impact: documentation only. Outstanding blockers: 0.
 
 ## Freeze Rule
 
 After PASS/FROZEN, no production API or semantic change may occur without explicit return to architecture review.
+
+Reviewer precision (approved): test-only code, documentation tooling, API-documentation content, security documentation and validation scripts may evolve after the freeze provided they do not modify the frozen production contract or alter production behavior; documentation may change only to remain synchronized with the frozen contract.

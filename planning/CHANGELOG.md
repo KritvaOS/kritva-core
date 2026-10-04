@@ -35,6 +35,7 @@ Accepted:
 - KF-CORE-R09-001 — Capability Contract & Provider Semantics (`4081dc0`; evidence `7a727e8`; baseline `c250c54`)
 - KF-CORE-R09-002 — CapabilitySet Invariants & Version Semantics (`4bd241e`; evidence `7bcd90d`)
 - KF-CORE-R09-003 — Requirement / Capability Matching Boundary (`e91a51f`; evidence `e53464a`; correction `7b6b0f4`)
+- R09 Capability API Review — PASS / FROZEN (production freeze commit `4c86b53`; evidence `c84bb9c`)
 
 Pending independent review:
 
