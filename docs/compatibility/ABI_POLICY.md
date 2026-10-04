@@ -41,7 +41,8 @@ A combination in this table may happen to work. It is not verified, not tested a
 ## 5. What clients may rely on
 
 - Rebuilding a program against a later Core 1.x release is governed by `COMPATIBILITY_POLICY.md` (source and semantic compatibility).
-- The installed package consumed with the toolchain that produced it is the verified configuration (validated by the installed-consumer test, R10-007).
+- The installed package consumed with the toolchain that produced it is the verified configuration (validated by the installed-consumer test, R10-007). This means only that the release validation demonstrates source and semantic use of the installed package in the tested producer and consumer build environment. It does not mean ABI compatibility is guaranteed, that an arbitrary independently built binary may link against the library, or that any cross-toolchain or cross-build combination is compatible.
+- A compiled library artifact is not an ABI guarantee: Core is currently a static library, and producing a compiled artifact implies no binary commitment.
 - Core code that is released together (one install tree, one version) is internally consistent.
 
 ## 6. Conditions for any future ABI promise
