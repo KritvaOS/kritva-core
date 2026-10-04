@@ -130,6 +130,17 @@ traceability-check: ## Audit requirements/API/test traceability
 	$(PYTHON) $(SCRIPT_DIR)/audit/check_traceability.py
 
 #------------------------------------------------------------------------------
+# API Documentation Audit
+#
+# Mechanical structure/reference audit of docs/api (never prose quality).
+#------------------------------------------------------------------------------
+.PHONY: api-docs-check
+
+api-docs-check: ## Audit the Markdown API documentation (structure and references)
+	@echo "[api-docs] Auditing API documentation..."
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_docs.py
+
+#------------------------------------------------------------------------------
 # Code Formatting
 #------------------------------------------------------------------------------
 
@@ -164,7 +175,7 @@ lint: ## Run static analysis and lint checks
 
 .PHONY: check
 
-check: header-check traceability-check format-check lint ## Run all local repository checks
+check: header-check traceability-check api-docs-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
 

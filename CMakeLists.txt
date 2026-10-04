@@ -356,6 +356,18 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_capability_requirement_boundary_test PRIVATE kritva_core)
     add_test(NAME kritva_core_capability_requirement_boundary COMMAND kritva_core_capability_requirement_boundary_test)
 
+    #Add Test: tests/unit/capability_boundary_test.cpp (compile-time snapshot of the frozen capability/requirement/readiness boundary)
+    add_executable(kritva_core_capability_boundary_test tests/unit/capability_boundary_test.cpp)
+    target_link_libraries(kritva_core_capability_boundary_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_capability_boundary COMMAND kritva_core_capability_boundary_test)
+
+    #Add Test: the API documentation audit and its self-test (tooling only; checks docs/api structure and references)
+    find_program(KRITVA_PYTHON3 NAMES python3 python)
+    if(KRITVA_PYTHON3)
+        add_test(NAME kritva_core_api_docs_audit COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_api_docs.py --root ${CMAKE_CURRENT_SOURCE_DIR})
+        add_test(NAME kritva_core_api_docs_audit_self_test COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_api_docs.py --root ${CMAKE_CURRENT_SOURCE_DIR} --self-test)
+    endif()
+
     #Add Test: tests/unit/reference_capability_test.cpp (the test-only capability harness in tests/runtime/)
     add_executable(kritva_core_reference_capability_test tests/unit/reference_capability_test.cpp)
     target_link_libraries(kritva_core_reference_capability_test PRIVATE kritva_core)

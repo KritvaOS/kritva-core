@@ -278,5 +278,44 @@ int main() {
     if (!config_runtime.stop()) return 82;
     const auto rejected = config_runtime.configure(out_of_range);                                                // the first component rejects: stop, no rollback
     if (rejected || rejected.error().source != ComponentId{91} || config_runtime.state() != LifecycleState::STOPPED || config_runtime.fault_error() != nullptr || ca.rate() != 10) return 83;
+
+    // Capability contract (R0.9) through the installed headers and library.
+    class ProvidingAdapter final : public platform::IPlatformAdapter {
+    public:
+        [[nodiscard]] const platform::PlatformInfo& info() const noexcept override { return info_; }
+        [[nodiscard]] platform::IScheduler* scheduler() const noexcept override { return nullptr; }
+        [[nodiscard]] time::IClock* clock() const noexcept override { return nullptr; }
+        [[nodiscard]] time::ITimer* timer() const noexcept override { return nullptr; }
+        [[nodiscard]] platform::IWatchdog* watchdog() const noexcept override { return nullptr; }
+        [[nodiscard]] CapabilitySet capabilities() const override { ++snapshots; return provided; }
+        CapabilitySet provided;
+        mutable int snapshots{0};
+    private:
+        platform::PlatformInfo info_{"provider-101", Version{101, 0, 0}};      // a name and version that look like an identity
+    };
+    CapabilitySet declared;
+    declared.add(Capability{CapabilityId{100}, "gpio", Version{1, 0, 0}});
+    declared.add(Capability{CapabilityId{102}, "capability-101", Version{0, 0, 0}});
+    declared.add(Capability{CapabilityId{100}, "gpio-v2", Version{2, 0, 0}});                      // replaces in place
+    if (declared.size() != 2 || declared.all()[0].id != CapabilityId{100} || declared.find(CapabilityId{100})->name != "gpio-v2") return 84;
+    if (declared.find(CapabilityId{100})->version != (Version{2, 0, 0}) || declared.contains(CapabilityId{101})) return 85;   // identity only
+    CapabilitySet snapshot = declared;
+    snapshot.add(Capability{CapabilityId{103}, "extra", Version{}});
+    if (declared.contains(CapabilityId{103})) return 86;                                            // a copy is an independent snapshot
+    declared.add(Capability{CapabilityId{}, "no-identity", Version{}});                             // storable, not authoritative
+    ProvidingAdapter provider;
+    provider.provided = declared;
+    platform::PlatformRequirements capability_needs;
+    if (capability_needs.add_capability(CapabilityId{}, platform::Requirement::REQUIRED).error().code != ErrorCode::INVALID_ARGUMENT) return 87;   // a requirement cannot name an invalid identity
+    if (!capability_needs.add_capability(CapabilityId{100}, platform::Requirement::REQUIRED) || !capability_needs.add_capability(CapabilityId{101}, platform::Requirement::OPTIONAL)) return 88;
+    if (capability_needs.add_capability(CapabilityId{100}, platform::Requirement::OPTIONAL)) return 89;                                          // a duplicate is decided by identity
+    const platform::PlatformContext provider_context(provider);
+    const auto capability_report = platform::evaluate(capability_needs, provider_context);
+    if (!capability_report.satisfied() || capability_report.complete() || capability_report.missing_optional_capabilities.size() != 1) return 90;  // 101 is missing although the provider's name says "101"
+    if (provider.snapshots != 1) return 91;                                                                                                       // one snapshot per evaluation
+    platform::PlatformRequirements impossible;
+    if (!impossible.add_capability(CapabilityId{101}, platform::Requirement::REQUIRED)) return 92;
+    const auto unmet = platform::check_required(impossible, provider_context);
+    if (unmet || unmet.error().code != ErrorCode::UNSUPPORTED) return 93;
     return 0;
 }

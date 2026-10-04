@@ -16,3 +16,7 @@ Establish security assumptions and trust boundaries without introducing a securi
 ## Out of scope
 
 Authentication, authorization frameworks, key management, secure boot, TLS, cryptographic credential handling, and security daemons are not introduced by R0.9 absent explicit requirements.
+
+## R0.9 security-impact classification
+
+R0.9 (Capability Contract & Readiness Boundary) is classified **SECURITY IMPACT: DOCUMENTATION ONLY**: no API, authority boundary, persistence, discovery or execution path was added; the trust assumptions it relies on are recorded in `SECURITY_DECISIONS.md` (SD-R09-01..07) and `TRUST_BOUNDARIES.md`.
