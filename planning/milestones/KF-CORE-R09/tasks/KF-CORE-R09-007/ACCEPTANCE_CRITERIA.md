@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-007 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): complete R0.9 capability validation` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -168,10 +168,12 @@ Working tree clean after every commit; the candidate commit is `ef14e99`; this e
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `683a3ce` (release candidate `ef14e99`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-007 is not yet accepted.**
+Reviewer notes: fresh-clone validation of the clean candidate, the full quality matrix, traceability 108/107/0, the API documentation audit (0 errors), coverage 618/625 unchanged, the installed-package consumer including the R0.9 capability contract and version enforcement, isolation and dependency scans, the Security Architecture Review PASS and an empty production diff since the freeze commit `4c86b53` are accepted. The reviewer noted its connector could not resolve the local SHAs, so the verdict relies on the supplied evidence. `CORE-CAP-011` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-007 is ACCEPTED.**

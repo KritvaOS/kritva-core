@@ -296,5 +296,5 @@ Release: Kritva Core R0.8, version 0.8.0; release candidate `1e7ba2b`; tag `krit
 | KF-CORE-R09-005 | ACCEPTED (0f6b6c3) | R09-004 | 3–4 ED |
 | R09 Integration Freeze | PASS / HONORED (`553258b`) | R09-005 | 0.5 ED |
 | KF-CORE-R09-006 | ACCEPTED (04f0859) | Integration Freeze PASS/HONORED | 2–3 ED |
-| KF-CORE-R09-007 | REVIEW (candidate ef14e99) | R09-006 | 2–3 ED |
+| KF-CORE-R09-007 | ACCEPTED `683a3ce` (candidate ef14e99) | R09-006 | 2–3 ED |
 | R09 Release Gate | PLANNED | R09-007 | 1 ED |
