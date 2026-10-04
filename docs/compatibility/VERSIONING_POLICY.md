@@ -73,7 +73,7 @@ The installed CMake package selects a version by this rule, which applies to Cor
 - a request for a **newer** MINOR or PATCH than is installed is rejected;
 - a request for a **different MAJOR** (including 0.x against a 1.x install) is rejected;
 - a request with no version is accepted;
-- an `EXACT` request is accepted only when the versions are equal.
+- an `EXACT` request is accepted only when the requested version string equals the installed version string (all three components spelled; CMake's `EXACT` is textual, so `1.2` never matches an installed `1.2.0`).
 
 This is the CMake `SameMajorVersion` behavior, stated here so that it is a decision of this policy and not an inherited default. It replaces the pre-1.0 `SameMinorVersion` behavior for Core 1.x (R10-007 implements it in the package build, validates it with the installed-consumer test and defines the package requirement that owns that validation). Selecting a package version says nothing about the authenticity or provenance of the artifact.
 
@@ -88,6 +88,10 @@ Examples for an installed version of `1.2.3`:
 | 1.2.3 | 1.3 | Reject |
 | 1.2.3 | 0.9 | Reject |
 | 1.2.3 | 2.0 | Reject |
+| 1.2.3 | 1.2.3 EXACT | Accept |
+| 1.2.3 | 1.2 EXACT | Reject |
+| 1.2.3 | 1 EXACT | Reject |
+| 1.2.3 | 1.2.4 EXACT | Reject |
 
 ## 7. Compatibility is not security
 

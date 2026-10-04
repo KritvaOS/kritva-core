@@ -87,6 +87,7 @@ REQUIRED_PHRASES = [
     ("API_INVENTORY.md", "whole header is deprecated"),
     ("API_INVENTORY.md", "recorded in `DEPRECATIONS.md`"),
     ("VERSIONING_POLICY.md", "`kritva-core-rMAJOR.MINOR.PATCH` for a patch release"),
+    ("VERSIONING_POLICY.md", "requested version string equals the installed version string"),
 ]
 # (page, text identifying a table row, class that row must carry)
 REQUIRED_ROW_CLASSES = [
@@ -104,8 +105,11 @@ def parse_version(text):
     return tuple(int(x) for x in text.split("."))
 
 
-def package_accepts(installed, requested):
-    """The documented selection rule: same MAJOR and installed >= requested (missing components are 0)."""
+def package_accepts(installed, requested, exact=False):
+    """The documented selection rule: same MAJOR and installed >= requested (missing components are 0); EXACT is textual
+    (the requested version string must equal the installed version string)."""
+    if exact:
+        return installed == requested
     i, r = parse_version(installed), parse_version(requested)
     r = r + (0,) * (3 - len(r))
     return i[0] == r[0] and i[:3] >= r[:3]
@@ -134,14 +138,20 @@ def audit_versioning(page, text, errors):
     for impact in sorted(IMPACTS - seen_impacts):
         errors.append(f"docs/compatibility/{page}: the release-impact table has no {impact} row")
     examples = 0
+    exact_examples = 0
     for line in secs.get(next((h for h in secs if "package version selection" in h), ""), "").splitlines():
-        m = re.match(r"^\|\s*(\d+(?:\.\d+){0,2})\s*\|\s*(\d+(?:\.\d+){0,2})\s*\|\s*(Accept|Reject)\s*\|\s*$", line)
+        m = re.match(r"^\|\s*(\d+(?:\.\d+){0,2})\s*\|\s*(\d+(?:\.\d+){0,2})( EXACT)?\s*\|\s*(Accept|Reject)\s*\|\s*$", line)
         if m:
             examples += 1
-            if package_accepts(m.group(1), m.group(2)) != (m.group(3) == "Accept"):
-                errors.append(f"docs/compatibility/{page}: the example installed {m.group(1)} / requested {m.group(2)} states {m.group(3)}, which contradicts the documented selection rule")
+            exact = bool(m.group(3))
+            if package_accepts(m.group(1), m.group(2), exact) != (m.group(4) == "Accept"):
+                errors.append(f"docs/compatibility/{page}: the example installed {m.group(1)} / requested {m.group(2)}{m.group(3) or ''} states {m.group(4)}, which contradicts the documented selection rule")
+            if exact:
+                exact_examples += 1
     if examples == 0:
         errors.append(f"docs/compatibility/{page}: the package version selection section has no example row")
+    if exact_examples == 0:
+        errors.append(f"docs/compatibility/{page}: the package version selection section has no EXACT example row")
     tags = 0
     for line in text.splitlines():
         m = re.match(r"^\|\s*(\d+\.\d+\.\d+)\s*\|\s*`(kritva-core-r[0-9.]+)`\s*\|\s*$", line)
@@ -359,6 +369,8 @@ def self_test(root):
         ("a tag that contradicts the naming rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| 1\.0\.1 \| )`kritva-core-r1\.0\.1`", r"\1`kritva-core-r1.0`"), "contradicts the tag naming rule"),
         ("a missing patch-tag rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", "for a patch release", "for a release"), "patch release"),
         ("a package mode that does not implement the rule", lambda t: _edit(t, "CMakeLists.txt", "COMPATIBILITY SameMajorVersion", "COMPATIBILITY SameMinorVersion"), "does not implement the version-selection rule"),
+        ("an EXACT example that contradicts the textual rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| 1\.2\.3 \| 1\.2 EXACT \| )Reject", r"\1Accept"), "contradicts the documented selection rule"),
+        ("a missing textual EXACT rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", "requested version string equals the installed version string", "versions are equal"), "requested version string equals"),
         ("an unlinked page", lambda t: _edit(t, "docs/api/API_GUIDELINES.md", "COMPATIBILITY_POLICY.md", "POLICY.md"), "does not link"),
     ]
     failures = 0

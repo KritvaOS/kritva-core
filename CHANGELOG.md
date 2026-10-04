@@ -44,7 +44,9 @@
   MAJOR with installed >= requested, a newer MINOR/PATCH or another MAJOR is rejected, and EXACT only accepts the
   installed version string. Validated by the installed-consumer test and by a find_package version matrix over several
   installed versions (which also detects the old mode). Build change only; no header, source or API change; the project
-  version is unchanged until the release candidate.
+  version is unchanged until the release candidate. Review finding F5 (architecture-review exception to the frozen
+  policy text): `EXACT` is accepted only when the requested version string equals the installed version string, as
+  CMake's `EXACT` is textual; the policy example table and the audit model now say so.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 
