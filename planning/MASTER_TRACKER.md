@@ -398,4 +398,4 @@ R10 Release Gate
 
 ## Current Decision
 
-R0.9 remains RELEASED / SYNCHRONIZED / CLOSED. KF-CORE-R10 is now the active planning milestone at PLANNED status. Design Consult and Scope Confirmation are APPROVED; R10-001 is ACCEPTED (`1dba571`); R10-002 is next.
+R0.9 remains RELEASED / SYNCHRONIZED / CLOSED. KF-CORE-R10 is IN PROGRESS. Design Consult and Scope Confirmation are APPROVED; R10-001 is ACCEPTED (`1dba571`); R10-002 is next.
