@@ -94,7 +94,7 @@ The analyzer is not claimed to be globally clean for R1.0. Recorded as a known t
 
 | Item | Value |
 |---|---|
-| Release commit | the docs-only release-record commit `docs(release): record Kritva Core R1.0 release gate` |
+| Release commit | `4acce3b` `docs(release): record Kritva Core R1.0 release gate` |
 | Tag | `kritva-core-r1.0` (annotated, on the release-record commit, not on the candidate) |
 | Candidate-to-release diff | `git diff af16847 HEAD -- include src tests CMakeLists.txt VERSION` empty |
-| Remote verification | PENDING — owner push of `main` and the tag, then independent remote audit; final state recorded in a follow-up documentation-only commit |
+| Remote verification | PASS / RELEASED / SYNCHRONIZED / CLOSED — `git ls-remote`: `refs/heads/main` = `4acce3b` at release verification; tag object `fc9b51f`; peeled tag `kritva-core-r1.0^{}` = `4acce3b`; remote `VERSION` = 1.0.0 and CMake project version 1.0.0 |

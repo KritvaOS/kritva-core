@@ -6,7 +6,7 @@
 
 ## State
 
-ACCEPTED — Release Gate PASS; `kritva-core-r1.0` pending owner push and remote verification.
+RELEASED / SYNCHRONIZED / CLOSED — `kritva-core-r1.0` on release-record commit `4acce3b`.
 
 ## Package Contents
 

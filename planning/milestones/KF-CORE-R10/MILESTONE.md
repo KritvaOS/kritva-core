@@ -2,7 +2,7 @@
 
 ## Status
 
-ACCEPTED — R10-001..009, API / Compatibility Review, Integration Freeze, Security Architecture Review and Release Gate PASS; `kritva-core-r1.0` (1.0.0) pending owner push and remote verification.
+RELEASED / SYNCHRONIZED / CLOSED — R10-001..009 and all gates accepted; `kritva-core-r1.0` (1.0.0) on release-record commit `4acce3b`.
 
 ## Objective
 

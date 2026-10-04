@@ -311,11 +311,12 @@ After all R09 implementation tasks are accepted:
 | KF-CORE-R10-007 | `test(core): validate R1.0 package compatibility` |
 | KF-CORE-R10-008 | `test(core): validate R1.0 documentation security and traceability` |
 | KF-CORE-R10-009 | `build(core): prepare 1.0.0 release candidate` |
+| R10 Release Gate (release record) | `docs(release): record Kritva Core R1.0 release gate` |
 
 ### R10 Architecture Gates
 
 - R10 Design Consult — APPROVED.
-- R10 Scope Confirmation — mandatory before R10-001 implementation.
+- R10 Scope Confirmation — APPROVED (before R10-001 implementation).
 - R10 API / Compatibility Review must PASS/FROZEN before R10-006 and R10-007 implementation proceeds.
 - R10 Integration Freeze applies after R10-007 and before R10-008/R10-009.
 - R10 Release Gate reviews R10-009 before version/tag creation.

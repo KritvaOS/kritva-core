@@ -617,6 +617,8 @@ Apply during R09 architecture review and task acceptance:
 
 ## R10 Core 1.0 Compatibility Review
 
+Status: completed for `kritva-core-r1.0` (see `milestones/KF-CORE-R10/R10_API_COMPATIBILITY_REVIEW.md`, `R10_INTEGRATION_FREEZE.md`, `R10_SECURITY_REVIEW.md` and `R10_RELEASE_GATE.md`); the items below remain the reusable review template.
+
 Apply to KF-CORE-R10-001 through R10-009 and the R10 gates:
 
 - [ ] R0.9 is confirmed as the normative pre-1.0 baseline.

@@ -282,7 +282,7 @@ See `planning/milestones/KF-CORE-R09/` for the complete architecture, task accep
 
 ## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation
 
-Status: ACCEPTED — R10-001..009 and all gates accepted; Release Gate PASS; `kritva-core-r1.0` pending owner push and remote verification.
+Status: RELEASED / SYNCHRONIZED / CLOSED — `kritva-core-r1.0` (1.0.0, release-record commit `4acce3b`).
 
 ### Objective
 

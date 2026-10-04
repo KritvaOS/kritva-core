@@ -72,10 +72,11 @@ See `MASTER_TRACKER.md`, `milestones/KF-CORE-R09/` and `milestones/KF-CORE-R10/`
 
 ## R1.0 State
 
-KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation has passed its Release Gate (PASS / RELEASE AUTHORIZED) and awaits push and remote verification.
+KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation is released and closed:
 
-- Target release: `1.0.0` / `kritva-core-r1.0` (annotated tag on the release-record commit); release candidate `af16847`.
-- R10-001..009, the API / Compatibility Review (freeze `55e57df`), the Integration Freeze (`660e4f4`) and the Security Architecture Review are accepted.
-- Remote verification: PENDING.
+- `kritva-core-r1.0` (annotated tag on release-record commit `4acce3b`; tag object `fc9b51f`)
+- version `1.0.0`
+- release candidate `af16847`
+- remote verification: PASS / RELEASED / SYNCHRONIZED / CLOSED
 
 R1.0 establishes the source, semantic and ABI compatibility posture (no ABI promise), the public API inventory and classification, versioning, evolution and deprecation policy, package/install version selection, compatibility validation and release governance. It introduces no platform-specific code and no new runtime framework.

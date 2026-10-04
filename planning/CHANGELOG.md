@@ -4,7 +4,7 @@
 
 ## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation
 
-R1.0 release gate PASSED (version 1.0.0, candidate `af16847`); release record committed and annotated tag `kritva-core-r1.0` created locally, pending owner push and remote verification. All R10-001..009 tasks and the API / Compatibility Review, Integration Freeze and Security Architecture Review are accepted.
+R1.0 release gate PASSED (version 1.0.0, candidate `af16847`); RELEASED. Annotated tag `kritva-core-r1.0` on release-record commit `4acce3b`, pushed and independently verified on origin. All R10-001..009 tasks and the API / Compatibility Review, Integration Freeze and Security Architecture Review are accepted.
 
 Original planning scope:
 
