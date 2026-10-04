@@ -246,6 +246,11 @@ if(KRITVA_CORE_BUILD_TESTS)
     target_link_libraries(kritva_core_component_configuration_integration_test PRIVATE kritva_core)
     add_test(NAME kritva_core_component_configuration_integration COMMAND kritva_core_component_configuration_integration_test)
 
+    #Add Test: tests/integration/capability_readiness_integration_test.cpp (Runtime + consumer components + a provision adapter)
+    add_executable(kritva_core_capability_readiness_integration_test tests/integration/capability_readiness_integration_test.cpp)
+    target_link_libraries(kritva_core_capability_readiness_integration_test PRIVATE kritva_core)
+    add_test(NAME kritva_core_capability_readiness_integration COMMAND kritva_core_capability_readiness_integration_test)
+
     #Add Test: tests/unit/platform_context_test.cpp
     add_executable(kritva_core_platform_context_test tests/unit/platform_context_test.cpp)
     target_link_libraries(kritva_core_platform_context_test PRIVATE kritva_core)
