@@ -368,6 +368,8 @@ if(KRITVA_CORE_BUILD_TESTS)
         add_test(NAME kritva_core_api_docs_audit_self_test COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_api_docs.py --root ${CMAKE_CURRENT_SOURCE_DIR} --self-test)
         add_test(NAME kritva_core_api_inventory_audit COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_api_inventory.py --root ${CMAKE_CURRENT_SOURCE_DIR})
         add_test(NAME kritva_core_api_inventory_audit_self_test COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_api_inventory.py --root ${CMAKE_CURRENT_SOURCE_DIR} --self-test)
+        add_test(NAME kritva_core_compat_policy_audit COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_compat_policy.py --root ${CMAKE_CURRENT_SOURCE_DIR})
+        add_test(NAME kritva_core_compat_policy_audit_self_test COMMAND ${KRITVA_PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/audit/check_compat_policy.py --root ${CMAKE_CURRENT_SOURCE_DIR} --self-test)
     endif()
 
     #Add Test: tests/unit/reference_capability_test.cpp (the test-only capability harness in tests/runtime/)

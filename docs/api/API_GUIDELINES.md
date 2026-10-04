@@ -10,7 +10,7 @@ Every public API document should describe:
 6. Error behavior
 7. Thread-safety
 8. Allocation/blocking/real-time expectations
-9. Compatibility rules
+9. Compatibility rules (classified by `../compatibility/COMPATIBILITY_POLICY.md`)
 10. Security considerations
 11. Examples where useful
 12. Related requirements

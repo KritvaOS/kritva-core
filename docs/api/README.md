@@ -14,7 +14,7 @@ Markdown is authoritative. Generated HTML or PDF is publication output only.
 - Platform
 - Runtime
 
-The public-header inventory and compatibility classification (R1.0) lives in `../compatibility/API_INVENTORY.md`.
+The public-header inventory and compatibility classification (R1.0) lives in `../compatibility/API_INVENTORY.md`; the source and semantic compatibility policy for stable items is `../compatibility/COMPATIBILITY_POLICY.md`.
 
 See `API_INDEX.md` for the current map (every document and whether it is `maintained` or a `stub`).
 

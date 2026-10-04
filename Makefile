@@ -152,6 +152,17 @@ api-inventory-check: ## Audit the public API inventory against the installed hea
 	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_inventory.py
 
 #------------------------------------------------------------------------------
+# Compatibility Policy Audit (R1.0)
+#
+# Mechanical structure/reference audit of docs/compatibility policy pages.
+#------------------------------------------------------------------------------
+.PHONY: compat-policy-check
+
+compat-policy-check: ## Audit the compatibility policy pages (structure and references)
+	@echo "[compat-policy] Auditing compatibility policy..."
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_compat_policy.py
+
+#------------------------------------------------------------------------------
 # Code Formatting
 #------------------------------------------------------------------------------
 
@@ -186,7 +197,7 @@ lint: ## Run static analysis and lint checks
 
 .PHONY: check
 
-check: header-check traceability-check api-docs-check api-inventory-check format-check lint ## Run all local repository checks
+check: header-check traceability-check api-docs-check api-inventory-check compat-policy-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
 

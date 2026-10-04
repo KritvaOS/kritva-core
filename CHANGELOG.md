@@ -7,6 +7,12 @@
   documentation decisions recorded. `scripts/audit/check_api_inventory.py` audits it against `include/kritva/core/`
   (`make check`, two CTests). No header, source or behavior change; no ABI or compatibility rule is defined by the
   inventory itself.
+- **R10-002 — Source and semantic compatibility policy (CORE-COMPAT-002, CORE-COMPAT-003).**
+  `docs/compatibility/COMPATIBILITY_POLICY.md` fixes the contract sources and precedence and classifies source-level and
+  semantic changes to stable items as Compatible, Review-required or Incompatible (review-required is treated as
+  incompatible until the evolution process of R10-004 exists). `scripts/audit/check_compat_policy.py` audits its
+  structure and references (`make check`, two CTests). No header, source or behavior change; no ABI, version-number,
+  deprecation or package rule is defined.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 

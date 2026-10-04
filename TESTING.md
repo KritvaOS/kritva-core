@@ -84,6 +84,10 @@ lifecycle_test.cpp
 
 `scripts/audit/check_api_inventory.py` (run by `make check` and the CTests `kritva_core_api_inventory_audit` and `kritva_core_api_inventory_audit_self_test`) checks `docs/compatibility/API_INVENTORY.md` against the installed headers: every installed header listed exactly once, every listed header present, valid stability classes and flags, documentation references resolving to pages listed in `docs/api/API_INDEX.md` with the stated status, and the Enum, Virt and Thr flags consistent with the header text (CORE-COMPAT-001). The self-test injects sixteen deliberate defects and requires each to be reported. The audit checks structure and references only; it does not judge what a stability class means.
 
+## 9b. Compatibility Policy Audit (R1.0)
+
+`scripts/audit/check_compat_policy.py` (run by `make check` and the CTests `kritva_core_compat_policy_audit` and `kritva_core_compat_policy_audit_self_test`) checks the pages under `docs/compatibility/`: required sections present, every header, document and requirement identifier named in backticks exists, each classification table holds only valid classes with every class present in the source and semantic sections, and the policy is linked from `docs/api/README.md` and `docs/api/API_GUIDELINES.md` (CORE-COMPAT-002, CORE-COMPAT-003). The self-test injects eight deliberate defects. The audit checks structure and references only; whether a classification is right is architecture review.
+
 ## 10. Completion Criteria
 
 A feature is complete only after requirement coverage, API documentation, implementation, relevant tests, successful build/test, and final diff review.
