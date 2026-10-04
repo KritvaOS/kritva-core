@@ -280,8 +280,8 @@ R09 Release Gate
 | R10 Design Consult | Core 1.0 maturity and compatibility architecture | architecture | APPROVED | 2–3 ED |
 | R10 Scope Confirmation | Confirm scope, compatibility posture and exclusions | architecture | APPROVED | 1 ED |
 | KF-CORE-R10-001 | Public API Inventory & Compatibility Classification | compatibility/api | ACCEPTED (`1dba571`) | 2–3 ED |
-| KF-CORE-R10-002 | Source & Semantic Compatibility Contract | compatibility/api | READY | 3–4 ED |
-| KF-CORE-R10-003 | ABI / Binary Compatibility Policy | compatibility/abi | BLOCKED BY R10-002 | 2–3 ED |
+| KF-CORE-R10-002 | Source & Semantic Compatibility Contract | compatibility/api | ACCEPTED (`bbe10b6`) | 3–4 ED |
+| KF-CORE-R10-003 | ABI / Binary Compatibility Policy | compatibility/abi | READY | 2–3 ED |
 | KF-CORE-R10-004 | Versioning & API Evolution Policy | compatibility/release | BLOCKED BY R10-003 | 3–4 ED |
 | KF-CORE-R10-005 | Deprecation & Migration Policy | compatibility/release | BLOCKED BY R10-004 | 2–3 ED |
 | R10 API / Compatibility Review | Freeze R1.0 compatibility semantics | architecture | PLANNED | 1 ED |
