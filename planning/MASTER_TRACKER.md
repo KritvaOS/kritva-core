@@ -63,7 +63,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Platform Runtime | R0.5 | Platform runtime integration foundation | 7 | RELEASED | 7/7 | Historical | R0.4 | Platform API Review + Integration Freeze + Release Gate | 0.5.0 |
 | Component Context | R0.6 | Controlled component execution context without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 20–27 ED | R0.5 | Component API Review + Integration Freeze + Validation + Release Gate | 0.6.0 |
 | Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 24–32 ED (estimate; actual not recorded) | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
-| Component Configuration | **R0.8** | Component Configuration foundation | 7 | PLANNED | 0/7 | 22–31 ED | R0.7 released | Design Consult + Scope Confirmation + Configuration API Review + Integration Freeze + Release Gate | 0.8.0 target |
+| Component Configuration | **R0.8** | Component Configuration foundation | 7 | RELEASED | 7/7 | 22–31 ED (estimate; actual not recorded) | R0.7 released | Design Consult + Scope Confirmation + Configuration API Review + Integration Freeze + Release Gate | 0.8.0 |
 
 ## R0.7 Task Tracker
 
@@ -248,9 +248,9 @@ And for milestone validation:
 
 ## Current Decision
 
-R0.7 is fully released and closed (`kritva-core-r0.7`, version 0.7.0, release-record commit `424984f`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
+R0.8 is fully released and closed (`kritva-core-r0.8`, version 0.8.0, release-record commit `cbbec81`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
 
-R0.8 is the current planned milestone. Design Consult and Scope Confirmation are APPROVED; implementation has not started.
+No next milestone is planned yet.
 
 ## Deferred Known Issues
 
