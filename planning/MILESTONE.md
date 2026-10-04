@@ -225,7 +225,7 @@ See `planning/milestones/KF-CORE-R08/` for the complete architecture, scope, tas
 
 ## KF-CORE-R09 — Capability Contract & Readiness Boundary
 
-Status: ACCEPTED — R09-001..007, Capability API Review, Integration Freeze and Release Gate PASS; `kritva-core-r0.9` pending owner push and remote verification.
+Status: RELEASED / SYNCHRONIZED / CLOSED — `kritva-core-r0.9` (0.9.0, release-record commit `d72343a`).
 
 ### Objective
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-ACCEPTED — all tasks (R09-001..007) and gates accepted; Release Gate PASS; release `kritva-core-r0.9` (0.9.0) pending owner push and remote verification.
+RELEASED / SYNCHRONIZED / CLOSED — all tasks (R09-001..007) and gates accepted; `kritva-core-r0.9` (0.9.0) on release-record commit `d72343a`.
 
 ## Objective
 

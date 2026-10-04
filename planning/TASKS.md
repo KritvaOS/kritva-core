@@ -1,6 +1,6 @@
 # Kritva Core — Master Task Register
 
-R0.2 through R0.8 are recorded as released historical milestones. R0.9 is accepted (Release Gate PASS) and pending push and remote verification.
+R0.2 through R0.9 are recorded as released historical milestones.
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
@@ -242,7 +242,7 @@ API freeze gates are mandatory.
 | R09 Integration Freeze | Freeze production capability behavior | architecture | PASS / HONORED (`553258b`) | 0.5 ED |
 | KF-CORE-R09-006 | API Documentation, Security & Boundary Validation | integration/validation | ACCEPTED (04f0859) | 2–3 ED |
 | KF-CORE-R09-007 | Full R0.9 Validation & Release Candidate | integration/validation/release | ACCEPTED `683a3ce` (candidate ef14e99) | 2–3 ED |
-| R09 Release Gate | Release 0.9.0 | release | PASS (release authorized) | 1 ED |
+| R09 Release Gate | Release 0.9.0 | release | RELEASED (`d72343a`) | 1 ED |
 
 ## R09 Dependency Graph
 

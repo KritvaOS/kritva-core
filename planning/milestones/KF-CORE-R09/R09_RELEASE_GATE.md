@@ -72,7 +72,7 @@ PLANNED — release gate record to be completed after R09-007.
 
 | Item | Value |
 |---|---|
-| Release commit | the docs-only release-record commit `docs(release): record Kritva Core R0.9 release gate` |
+| Release commit | `d72343a` `docs(release): record Kritva Core R0.9 release gate` |
 | Tag | `kritva-core-r0.9` (annotated, on the release-record commit) |
 | Candidate-to-release diff | `git diff ef14e99 HEAD -- include src tests CMakeLists.txt VERSION` empty |
-| Remote verification | PENDING — owner push, then independent remote audit; final state recorded in a follow-up documentation-only commit |
+| Remote verification | PASS / RELEASED / SYNCHRONIZED / CLOSED — `git ls-remote`: `refs/heads/main` = `d72343a`; tag object `f77fecb`; peeled tag `kritva-core-r0.9^{}` = `d72343a`; remote `VERSION` = 0.9.0 |

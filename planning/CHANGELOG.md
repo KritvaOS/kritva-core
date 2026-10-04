@@ -4,7 +4,7 @@
 
 ## KF-CORE-R09 — Capability Contract & Readiness Boundary
 
-R0.9 release gate PASSED (version 0.9.0, candidate `ef14e99`); release record committed and annotated tag `kritva-core-r0.9` created locally, pending owner push and remote verification.
+R0.9 release gate PASSED (version 0.9.0, candidate `ef14e99`); RELEASED. Annotated tag `kritva-core-r0.9` on release-record commit `d72343a`, pushed and independently verified on origin.
 
 Original planning scope:
 

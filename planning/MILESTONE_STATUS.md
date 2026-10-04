@@ -12,7 +12,7 @@
 | KF-CORE-R06 | RELEASED | 7 / 7 tasks accepted | Component API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.6` (annotated tag on release-record commit `a4c41aa`; tag object `fb9d631`; pushed to origin) |
 | KF-CORE-R07 | RELEASED | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.7` (annotated tag on release-record commit `424984f`; tag object `4aa3fab`; pushed to origin) | Target `kritva-core-r0.7` / version 0.7.0 |
 | KF-CORE-R08 | RELEASED | 7 / 7 tasks accepted | Configuration API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.8` (annotated tag on release-record commit `cbbec81`; tag object `2d576d7`; pushed to origin) | Target `kritva-core-r0.8` / version 0.8.0 |
-| KF-CORE-R09 | ACCEPTED | 7 / 7 tasks accepted | Capability API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Security Architecture Review PASS, Release Gate PASS | `kritva-core-r0.9` / version 0.9.0 (local annotated tag on the release-record commit; pending owner push and remote verification) |
+| KF-CORE-R09 | RELEASED | 7 / 7 tasks accepted | Capability API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Security Architecture Review PASS, Release Gate PASS | `kritva-core-r0.9` / version 0.9.0 (annotated tag on release-record commit `d72343a`; tag object `f77fecb`; pushed to origin) |
 
 ## R02 Task Status
 
@@ -297,4 +297,4 @@ Release: Kritva Core R0.8, version 0.8.0; release candidate `1e7ba2b`; tag `krit
 | R09 Integration Freeze | PASS / HONORED (`553258b`) | R09-005 | 0.5 ED |
 | KF-CORE-R09-006 | ACCEPTED (04f0859) | Integration Freeze PASS/HONORED | 2–3 ED |
 | KF-CORE-R09-007 | ACCEPTED `683a3ce` (candidate ef14e99) | R09-006 | 2–3 ED |
-| R09 Release Gate | PASS (release authorized) | R09-007 | 1 ED |
+| R09 Release Gate | RELEASED (`d72343a`) | R09-007 | 1 ED |

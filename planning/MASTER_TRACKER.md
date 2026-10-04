@@ -41,15 +41,15 @@ Estimated effort is established before implementation. Actual/observed effort is
 
 | Metric | Current state |
 |---|---|
-| Latest released milestone | **KF-CORE-R08** |
-| Latest released version | **0.8.0** |
-| Latest release tag | `kritva-core-r0.8` |
-| Latest release commit | `cbbec81` |
+| Latest released milestone | **KF-CORE-R09** |
+| Latest released version | **0.9.0** |
+| Latest release tag | `kritva-core-r0.9` |
+| Latest release commit | `d72343a` |
 | Remote verification | **PASS / RELEASED / SYNCHRONIZED / CLOSED** |
-| Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7, R0.8 |
-| Current active milestone | **KF-CORE-R09 — ACCEPTED / RELEASE GATE PASS / PENDING PUSH AND REMOTE VERIFICATION** |
+| Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7, R0.8, R0.9 |
+| Current active milestone | **None — R0.9 RELEASED / CLOSED; next milestone not yet planned** |
 | R08 implementation status | RELEASED / CLOSED |
-| R09 implementation status | IMPLEMENTED / ACCEPTED (7 / 7); Release Gate PASS; not yet pushed |
+| R09 implementation status | RELEASED / CLOSED |
 | Open release blockers | 0 |
 | API freeze active | No |
 | Concrete platform implementation in `kritva-core` | No |
@@ -66,7 +66,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Component Context | R0.6 | Controlled component execution context without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 20–27 ED | R0.5 | Component API Review + Integration Freeze + Validation + Release Gate | 0.6.0 |
 | Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 24–32 ED (estimate; actual not recorded) | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
 | Component Configuration | **R0.8** | Component Configuration foundation | 7 | RELEASED | 7/7 | 22–31 ED (estimate; actual not recorded) | R0.7 released | Design Consult + Scope Confirmation + Configuration API Review + Integration Freeze + Release Gate | 0.8.0 |
-| Capability / Readiness Boundary | **R0.9** | Capability Contract & Readiness Boundary | 7 | ACCEPTED (Release Gate PASS; pending push) | 7/7 | 22–30 ED | R0.8 released | Design Consult + Scope Confirmation + Capability API Review + Security Review + Integration Freeze + Validation + Release Gate | 0.9.0 |
+| Capability / Readiness Boundary | **R0.9** | Capability Contract & Readiness Boundary | 7 | RELEASED | 7/7 | 22–30 ED | R0.8 released | Design Consult + Scope Confirmation + Capability API Review + Security Review + Integration Freeze + Validation + Release Gate | 0.9.0 |
 
 ## R0.7 Task Tracker
 
@@ -290,7 +290,7 @@ Deferred issues must not silently enter R0.8 implementation scope.
 | R09 Integration Freeze | Freeze production capability behavior | 0.5 ED | R09-005 | PASS / HONORED (`553258b`) | Production freeze |
 | KF-CORE-R09-006 | API Documentation, Security & Boundary Validation | 2–3 ED | Integration Freeze PASS/HONORED | ACCEPTED (04f0859) | Validation |
 | KF-CORE-R09-007 | Full R0.9 Validation & Release Candidate | 2–3 ED | R09-006 | ACCEPTED `683a3ce` (candidate ef14e99) | Release Gate input |
-| R09 Release Gate | Release 0.9.0 | 1 ED | R09-007 | PASS (release authorized) | PASS |
+| R09 Release Gate | Release 0.9.0 | 1 ED | R09-007 | RELEASED (`d72343a`) | PASS |
 
 **R09 working estimate: 22–30 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.
 
@@ -338,4 +338,4 @@ R09 Release Gate
 
 ## Current Decision
 
-R0.8 remains RELEASED / SYNCHRONIZED / CLOSED. R0.9 (Capability Contract & Readiness Boundary, version 0.9.0) has all seven tasks and all gates accepted and the Release Gate PASSED; the annotated tag `kritva-core-r0.9` is created locally on the release-record commit and awaits the owner push and independent remote verification.
+R0.8 remains RELEASED / SYNCHRONIZED / CLOSED. R0.9 (Capability Contract & Readiness Boundary, version 0.9.0) is RELEASED / SYNCHRONIZED / CLOSED: annotated tag `kritva-core-r0.9` (object `f77fecb`) on release-record commit `d72343a`, independently verified on origin.
