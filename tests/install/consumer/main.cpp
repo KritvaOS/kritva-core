@@ -51,7 +51,7 @@ int main() {
     const Status status(StatusCode::OK);
     if (status.code() != StatusCode::OK) return 4;
 
-    if ((Version{0, 8, 0}).to_string() != "0.8.0") return 5;
+    if ((Version{0, 9, 0}).to_string() != "0.9.0") return 5;
 
     // Compiled runtime library code: the component registry.
     using namespace kritva::core::runtime;

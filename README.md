@@ -50,7 +50,7 @@ cmake --install build --prefix <prefix>      # or: make install PREFIX=<prefix>
 Downstream CMake projects consume the installed package:
 
 ```cmake
-find_package(kritva_core 0.8 CONFIG REQUIRED)   # add <prefix> to CMAKE_PREFIX_PATH
+find_package(kritva_core 0.9 CONFIG REQUIRED)   # add <prefix> to CMAKE_PREFIX_PATH
 target_link_libraries(my_target PRIVATE kritva_core::kritva_core)
 ```
 

@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-Public API organization for Kritva Core R0.8. The API is designed before implementation.
+Public API organization for Kritva Core R0.9. The API is designed before implementation.
 
 ## 2. Include Root
 

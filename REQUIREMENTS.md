@@ -17,7 +17,7 @@
 //==============================================================================
 
 
-# Kritva Core Requirements R0.8
+# Kritva Core Requirements R0.9
 
 ## P0
 - CORE-GEN-001 Platform-independent foundation.

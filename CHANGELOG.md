@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
+
+A precise, generic contract around the existing capability mechanisms (`Capability`, `CapabilityId`, `CapabilitySet`,
+provider snapshots, `PlatformRequirements` and the context binding) and their boundary with Component dependency
+ordering, lifecycle, readiness and health. R0.9 adds **no production type, signature or behavior**: the production change
+is the normative contract text in three capability headers. It introduces no service registry, locator, resolver,
+dependency injection, discovery, readiness state, capability credential or security mechanism.
+
+### Contract
+- **Capability** is descriptive metadata about a contract (identity, name, provided-contract version), not a credential,
+  token, proof of trust, state or health signal. `CapabilityId` is the only identity; the name is metadata. A
+  declaration is the provider's claim; providers publish by-value snapshots.
+- **CapabilitySet** is an ownership-safe value and snapshot, not a registry: at most one entry per identity, replacement
+  in place (latest wins, no history), first-insertion order, identity-only lookup, only grows. An entry with an invalid
+  identity is storable data, not an authoritative capability, and can never satisfy a requirement.
+- **Capability version** is the version of the provided capability contract; Core never compares, orders or ranges it.
+- **Provision is not requirement; matching is identity-only.** Names, versions, provider information and lookalikes are
+  never consulted; evaluation is explicit, side-effect free and takes at most one snapshot; the Runtime never evaluates,
+  resolves, binds, retries or recovers because of a capability.
+- **Capability requirements are not Component dependencies**; capability presence never changes the dependency order.
+- **Readiness** is calculated by no one in Core: a Component decides whether a prerequisite is sufficient for one of its
+  own lifecycle operations and fails it with an existing error; the lifecycle keeps its eight states.
+
+### Documentation and security
+- Markdown API documentation under `docs/api/` (maintained pages for capability, platform requirements, lifecycle and the
+  dependency graph; labelled stubs for unchanged domains) with a mechanical audit (`scripts/audit/check_api_docs.py`).
+- Security assessment recorded: **SECURITY IMPACT: DOCUMENTATION ONLY** (decisions SD-R09-01..07 under `docs/security/`).
+
+### Build and validation
+- New requirements `CORE-CAP-004` to `CORE-CAP-011`, traced.
+- A test-only capability harness (set, provider and requirement fixtures with 45 deliberately defective variants and
+  reusable conformance checks), a seeded Runtime/Component readiness model, and a compile-time snapshot of the frozen
+  capability/requirement/readiness boundary.
+- Validated from a fresh clone with ASan/UBSan, TSan, strict warnings, GCC `-fanalyzer` and coverage.
+
+### Known follow-ups
+- clang-tidy / cppcheck / clang-format are not configured (`make lint` and `make format-check` are placeholders).
+- The scheduler CPU affinity mask is 32 bits; widening it would be a separately reviewed change.
+- The conformance suite's single-check mutation strictness is documented as a known gap (see R04-006).
+- Nine API documentation pages for unchanged domains are labelled stubs and are replaced when their contract next changes.
+- References from `CapabilitySet`, a context, reporter or provider must not outlive what they refer to (documented
+  undefined behavior; non-owning by design).
+
 ## 0.8.0 — Component Configuration Foundation (KF-CORE-R08)
 
 A precise, platform-independent contract around the existing configuration path: `Configuration`,
