@@ -286,7 +286,7 @@ Deferred issues must not silently enter R0.8 implementation scope.
 | KF-CORE-R09-003 | Requirement / Capability Matching Boundary | 2–3 ED | R09-002 | ACCEPTED (e91a51f) | API review input |
 | R09 Capability API Review | Freeze public capability semantics | 1 ED | R09-001..003 | PASS / FROZEN (`c84bb9c`) | API freeze |
 | KF-CORE-R09-004 | Reference Capability & Requirement Harness | 3–4 ED | API Review PASS/FROZEN | ACCEPTED (2608795) | Contract tests |
-| KF-CORE-R09-005 | Component Readiness / Lifecycle Boundary Integration | 3–4 ED | R09-004 | REVIEW (0f6b6c3) | Integration Freeze input |
+| KF-CORE-R09-005 | Component Readiness / Lifecycle Boundary Integration | 3–4 ED | R09-004 | ACCEPTED (0f6b6c3) | Integration Freeze input |
 | R09 Integration Freeze | Freeze production capability behavior | 0.5 ED | R09-005 | PLANNED | Production freeze |
 | KF-CORE-R09-006 | API Documentation, Security & Boundary Validation | 2–3 ED | Integration Freeze PASS/HONORED | PLANNED | Validation |
 | KF-CORE-R09-007 | Full R0.9 Validation & Release Candidate | 2–3 ED | R09-006 | PLANNED | Release Gate input |

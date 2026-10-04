@@ -238,7 +238,7 @@ API freeze gates are mandatory.
 | KF-CORE-R09-003 | Requirement / Capability Matching Boundary | platform/requirements | ACCEPTED (e91a51f) | 2–3 ED |
 | R09 Capability API Review | Freeze public capability semantics | architecture | PASS / FROZEN (`c84bb9c`) | 1 ED |
 | KF-CORE-R09-004 | Reference Capability & Requirement Harness | tests/capability | ACCEPTED (2608795) | 3–4 ED |
-| KF-CORE-R09-005 | Component Readiness / Lifecycle Boundary Integration | tests/integration | REVIEW (0f6b6c3) | 3–4 ED |
+| KF-CORE-R09-005 | Component Readiness / Lifecycle Boundary Integration | tests/integration | ACCEPTED (0f6b6c3) | 3–4 ED |
 | R09 Integration Freeze | Freeze production capability behavior | architecture | PLANNED | 0.5 ED |
 | KF-CORE-R09-006 | API Documentation, Security & Boundary Validation | integration/validation | PLANNED | 2–3 ED |
 | KF-CORE-R09-007 | Full R0.9 Validation & Release Candidate | integration/validation/release | PLANNED | 2–3 ED |

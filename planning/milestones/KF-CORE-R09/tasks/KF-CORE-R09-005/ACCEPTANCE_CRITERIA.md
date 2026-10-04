@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-005 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): add capability readiness lifecycle integration tests` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 3–4 ED |
@@ -129,10 +129,12 @@ Primary commit: `0f6b6c3` `test(core): add capability readiness lifecycle integr
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `0f6b6c3` (evidence `9a086ae`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-005 is not yet accepted.**
+Reviewer notes: test-only (no production diff since the freeze commit `4c86b53`); consumer components decide their own prerequisite sufficiency inside a lifecycle operation and the Runtime only propagates the failure; no capability-driven retry, recovery, polling, evaluation or snapshot by the Runtime; unchanged order and trace under random provisions; Health independence; the seeded predictive model with a vacuity guard; the synchronized lifecycle and dependency-graph pages and the 8 mutants (one equivalent) are accepted. `CORE-CAP-009` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-005 is ACCEPTED.**
