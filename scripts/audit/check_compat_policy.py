@@ -79,6 +79,27 @@ IMPACTS = {"MAJOR", "MINOR", "PATCH"}
 ALLOWED_IMPACT = {"Incompatible": {"MAJOR"}, "Review-required": {"MINOR", "MAJOR"}, "Compatible": {"MINOR", "PATCH"}}
 
 
+# (page, phrase) pairs that must appear: the cross-document rules the R1.0 review froze
+REQUIRED_PHRASES = [
+    ("COMPATIBILITY_POLICY.md", "the most severe class applies"),
+    ("DEPRECATION_POLICY.md", "removed only after it has been published as deprecated"),
+    ("DEPRECATION_POLICY.md", "applies only when a whole header"),
+    ("API_INVENTORY.md", "whole header is deprecated"),
+    ("API_INVENTORY.md", "recorded in `DEPRECATIONS.md`"),
+    ("VERSIONING_POLICY.md", "`kritva-core-rMAJOR.MINOR.PATCH` for a patch release"),
+]
+# (page, text identifying a table row, class that row must carry)
+REQUIRED_ROW_CLASSES = [
+    ("COMPATIBILITY_POLICY.md", "Remove `noexcept` where the contract documents", "Incompatible"),
+    ("COMPATIBILITY_POLICY.md", "Remove `noexcept` where the contract does not document", "Review-required"),
+]
+
+
+def tag_for(version):
+    major, minor, patch = (int(x) for x in version.split("."))
+    return f"kritva-core-r{major}.{minor}" if patch == 0 else f"kritva-core-r{major}.{minor}.{patch}"
+
+
 def parse_version(text):
     return tuple(int(x) for x in text.split("."))
 
@@ -121,6 +142,15 @@ def audit_versioning(page, text, errors):
                 errors.append(f"docs/compatibility/{page}: the example installed {m.group(1)} / requested {m.group(2)} states {m.group(3)}, which contradicts the documented selection rule")
     if examples == 0:
         errors.append(f"docs/compatibility/{page}: the package version selection section has no example row")
+    tags = 0
+    for line in text.splitlines():
+        m = re.match(r"^\|\s*(\d+\.\d+\.\d+)\s*\|\s*`(kritva-core-r[0-9.]+)`\s*\|\s*$", line)
+        if m:
+            tags += 1
+            if tag_for(m.group(1)) != m.group(2):
+                errors.append(f"docs/compatibility/{page}: the version {m.group(1)} is given the tag {m.group(2)}, which contradicts the tag naming rule")
+    if tags == 0:
+        errors.append(f"docs/compatibility/{page}: the tag naming section has no example row")
 
 
 def audit_deprecations(root, errors):
@@ -167,6 +197,32 @@ def audit_deprecations(root, errors):
                 rel = os.path.relpath(os.path.join(d, name), base).replace(os.sep, "/")
                 if "[[deprecated" in read(os.path.join(d, name)) and rel not in registered:
                     errors.append(f"{rel} contains [[deprecated]] but has no row in DEPRECATIONS.md")
+
+
+def audit_cross_policy(root, errors):
+    """Cross-document rules frozen by the R1.0 API / Compatibility Review."""
+    base = os.path.join(root, "docs", "compatibility")
+    for page, phrase in REQUIRED_PHRASES:
+        path = os.path.join(base, page)
+        if os.path.isfile(path) and phrase not in read(path):
+            errors.append(f"docs/compatibility/{page}: the cross-policy rule '{phrase}' is missing")
+    for page, key, cls in REQUIRED_ROW_CLASSES:
+        path = os.path.join(base, page)
+        if not os.path.isfile(path):
+            continue
+        rows = [l for l in read(path).splitlines() if key in l and l.startswith("|")]
+        if not rows:
+            errors.append(f"docs/compatibility/{page}: the row '{key}' is missing")
+        elif not all(re.search(r"\|\s*" + re.escape(cls) + r"\s*\|", r) for r in rows):
+            errors.append(f"docs/compatibility/{page}: the row '{key}' must carry the class {cls}")
+    # a header classed deprecated in the inventory (whole header) must have a register row
+    inv, reg = os.path.join(base, "API_INVENTORY.md"), os.path.join(base, "DEPRECATIONS.md")
+    if os.path.isfile(inv) and os.path.isfile(reg):
+        registered = set(re.findall(r"^\|\s*`([^`]+\.hpp)`\s*\|", read(reg), flags=re.M))
+        for line in read(inv).splitlines():
+            m = re.match(r"^\|\s*`([^`]+\.hpp)`\s*\|[^|]*\|\s*deprecated\s*\|", line)
+            if m and m.group(1) not in registered:
+                errors.append(f"API_INVENTORY.md classes {m.group(1)} as deprecated but DEPRECATIONS.md has no row for it")
 
 
 def audit(root):
@@ -216,6 +272,7 @@ def audit(root):
             if not os.path.isfile(p) or page not in read(p):
                 errors.append(f"docs/api/{entry} does not link {page}")
     audit_deprecations(root, errors)
+    audit_cross_policy(root, errors)
     cmake = os.path.join(root, "CMakeLists.txt")
     if os.path.isfile(cmake) and ABI_MACHINERY.search(read(cmake)):
         errors.append("CMakeLists.txt introduces ABI machinery (SOVERSION, visibility, export header or a shared library) that docs/compatibility/ABI_POLICY.md says does not exist")
@@ -278,6 +335,13 @@ def self_test(root):
         ("a duplicated register row", lambda t: (_append(t, "include/kritva/core/capability/capability_id.hpp", '[[deprecated("x")]] inline void old_fn();\n'), _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "use new_fn", "2.0.0", "g"), _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "use new_fn", "2.0.0", "g"))[2], "more than once"),
         ("a missing register", lambda t: os.remove(os.path.join(t, "docs/compatibility/DEPRECATIONS.md")), "DEPRECATIONS.md is missing"),
         ("a missing lifecycle section", lambda t: _edit(t, "docs/compatibility/DEPRECATION_POLICY.md", r"^## 3\. Lifecycle$", "## 3. Notes"), "'lifecycle' is missing"),
+        ("a missing most-severe-class rule", lambda t: _edit(t, "docs/compatibility/COMPATIBILITY_POLICY.md", "the most severe class applies", "the first class applies"), "most severe class applies"),
+        ("a documented noexcept removal classed Review-required", lambda t: _edit(t, "docs/compatibility/COMPATIBILITY_POLICY.md", r"(Remove `noexcept` where the contract documents the no-throw guarantee \| )Incompatible", r"\1Review-required"), "must carry the class Incompatible"),
+        ("a missing removal-after-deprecation rule", lambda t: _edit(t, "docs/compatibility/DEPRECATION_POLICY.md", "removed only after it has been published as deprecated", "removed at any time"), "removed only after"),
+        ("a missing header-level deprecated rule in the inventory", lambda t: _edit(t, "docs/compatibility/API_INVENTORY.md", "whole header is deprecated", "header is old"), "whole header is deprecated"),
+        ("a whole header classed deprecated without a register row", lambda t: _edit(t, "docs/compatibility/API_INVENTORY.md", r"(\| `capability/capability_id.hpp` \| capability \| )stable", r"\1deprecated"), "has no row for it"),
+        ("a tag that contradicts the naming rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| 1\.0\.1 \| )`kritva-core-r1\.0\.1`", r"\1`kritva-core-r1.0`"), "contradicts the tag naming rule"),
+        ("a missing patch-tag rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", "for a patch release", "for a release"), "patch release"),
         ("an unlinked page", lambda t: _edit(t, "docs/api/API_GUIDELINES.md", "COMPATIBILITY_POLICY.md", "POLICY.md"), "does not link"),
     ]
     failures = 0

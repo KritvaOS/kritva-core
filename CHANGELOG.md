@@ -28,6 +28,12 @@
   the compatibility window and migration guidance, and `docs/compatibility/DEPRECATIONS.md` is the register (empty:
   no stable item is deprecated at 1.0.0). The audit checks the register against the public headers. No header, source
   or behavior change.
+- **R10 API / Compatibility Review corrections.** Four cross-document inconsistencies found by the review are closed:
+  the most severe class applies where a change matches several rows (removing a documented `noexcept` is
+  incompatible); a stable item is removed only after it has been published as deprecated; the inventory class
+  `deprecated` applies to a whole header only, item-level deprecation living in the register; patch releases are tagged
+  `kritva-core-rMAJOR.MINOR.PATCH` (`MAJOR.MINOR.0` releases keep `kritva-core-rMAJOR.MINOR`). The compatibility audit
+  checks each rule mechanically. No header, source or behavior change.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 

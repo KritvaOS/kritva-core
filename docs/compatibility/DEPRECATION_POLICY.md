@@ -38,6 +38,7 @@ A deprecated item keeps its full contract: its behavior, error codes, ownership,
 
 ## 5. Compatibility window and removal
 
+- A stable item is removed only after it has been published as deprecated, except under the emergency exception of `VERSIONING_POLICY.md`.
 - Every deprecation names a **replacement**, or, where none exists, a documented **rationale**.
 - A deprecated item is published as deprecated in at least one released version before the MAJOR release that removes it: it cannot be deprecated and removed in the same release.
 - The earliest removal is the **next MAJOR release after the release that deprecated it** (a deprecation in 1.4 earliest removes in 2.0). A MAJOR release may keep a deprecated item longer, and a removal is never implied by the passage of time alone.
@@ -50,7 +51,7 @@ Every deprecation and every `Incompatible` change ships migration guidance that 
 
 ## 7. Register
 
-`DEPRECATIONS.md` lists every deprecated item exactly once:
+`DEPRECATIONS.md` lists every deprecated item exactly once and is authoritative for item-level deprecation. The inventory class `deprecated` in `API_INVENTORY.md` applies only when a whole header is deprecated (and that header then also has register rows); an individual function, type, member or enumerator deprecated in an otherwise stable header leaves the header `stable`.
 
 | Header | Item | Deprecated since | Replacement or rationale | Earliest removal | Migration |
 |---|---|---|---|---|---|

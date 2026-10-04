@@ -9,7 +9,16 @@ To make the version number of a Core release a reliable statement about what a c
 
 ## 2. Version identity
 
-A Core release is identified by `MAJOR.MINOR.PATCH` (Semantic Versioning 2.0.0, applied to the contracts below, not to file counts or line counts). The repository `VERSION` file and the CMake project version are the same string, and a release is tagged `kritva-core-rMAJOR.MINOR`. Release impact is decided by the contract change, never by the size of the diff.
+A Core release is identified by `MAJOR.MINOR.PATCH` (Semantic Versioning 2.0.0, applied to the contracts below, not to file counts or line counts). The repository `VERSION` file and the CMake project version are the same string, and a release is tagged as below. Release impact is decided by the contract change, never by the size of the diff.
+
+The release tag is `kritva-core-rMAJOR.MINOR` for a release whose PATCH is `0` and `kritva-core-rMAJOR.MINOR.PATCH` for a patch release:
+
+| Version | Tag |
+|---|---|
+| 1.0.0 | `kritva-core-r1.0` |
+| 1.0.1 | `kritva-core-r1.0.1` |
+| 1.2.0 | `kritva-core-r1.2` |
+| 1.2.3 | `kritva-core-r1.2.3` |
 
 The 0.x line (R0.2 to R0.9) predates this policy and carries no compatibility promise; `1.0.0` is the first release the policy governs.
 
@@ -20,13 +29,13 @@ Every change to a stable item has a class under `COMPATIBILITY_POLICY.md` and a 
 | Change | Compatibility class | Release impact | Condition |
 |---|---|---|---|
 | Remove or rename a stable header, type, function, member, enumerator or constant | Incompatible | MAJOR | Preceded by deprecation (R10-005). |
-| Change a signature, alias, type property or documented semantic guarantee in an incompatible way | Incompatible | MAJOR | Migration guidance (R10-005). |
+| Change a signature, alias, type property or documented semantic guarantee (including a documented `noexcept`) in an incompatible way | Incompatible | MAJOR | Migration guidance (R10-005). |
 | Change an enumerator value or the meaning of an existing enumerator or `ErrorCode` | Incompatible | MAJOR | Never permitted in MINOR or PATCH. |
 | Add a pure virtual member to a client-implemented interface | Incompatible | MAJOR | Never permitted in MINOR or PATCH. |
 | Add an enumerator or `ErrorCode` value | Review-required | MINOR | Recorded evolution review (section 5) and changelog entry. |
 | Add a member, an overload or a defaulted parameter to an existing stable type or function | Review-required | MINOR | Recorded evolution review. |
 | Add a non-pure virtual member with a default to a client-implemented interface | Review-required | MINOR | Recorded evolution review of its semantic effect. |
-| Add `noexcept`, `constexpr`, `[[nodiscard]]` or `inline` to an existing declaration | Review-required | MINOR | Recorded evolution review. |
+| Add `noexcept`, `constexpr`, `[[nodiscard]]` or `inline` to an existing declaration, or remove a `noexcept` the contract does not document | Review-required | MINOR | Recorded evolution review. |
 | Add a new header, or a new type, function or constant with a new name | Compatible | MINOR | Inventory row, documentation and requirement added in the same change. |
 | Promote an `experimental` item to `stable` | Compatible | MINOR | Inventory updated by evolution review. |
 | Fix behavior that contradicts its own documented contract | Compatible | PATCH | Changelog entry and a regression test; not a reinterpretation of an ambiguous contract. |

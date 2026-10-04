@@ -1,7 +1,7 @@
 # Kritva Core Public API Inventory (R1.0 baseline)
 
 **Status:** baseline established by KF-CORE-R10-001 from the released R0.9 tree (`kritva-core-r0.9`, version 0.9.0).
-**Authority:** this page is the *inventory and classification* of the installed public header surface. It is not the compatibility policy. The rules that say what a class means and what may change are defined by later R1.0 tasks (source/semantic: R10-002, ABI: R10-003, versioning: R10-004, deprecation: R10-005). Nothing here is an ABI promise and nothing here changes any header or behavior.
+**Authority:** this page is the *inventory and classification* of the installed public header surface. It is not the compatibility policy. The rules that say what a class means and what may change are the accepted R1.0 policy pages in this directory: `COMPATIBILITY_POLICY.md` (source and semantic), `ABI_POLICY.md` (ABI), `VERSIONING_POLICY.md` (versioning, evolution and package selection) and `DEPRECATION_POLICY.md` with the register `DEPRECATIONS.md`. Nothing here is an ABI promise and nothing here changes any header or behavior.
 **Mechanical audit:** `scripts/audit/check_api_docs.py` checks `docs/api`; `scripts/audit/check_api_inventory.py` checks this page against `include/kritva/core/` (run by `make check` and two CTests).
 
 ## Public surface
@@ -14,7 +14,7 @@ The public surface is every header installed from `include/kritva/core/` (`insta
 |---|---|
 | `stable` | Part of the supported surface. The compatibility rules defined by R10-002..R10-005 apply to it. |
 | `experimental` | Public but explicitly not yet covered by those rules. |
-| `deprecated` | Public, scheduled for removal under the deprecation policy (R10-005). |
+| `deprecated` | The whole header is deprecated and scheduled for removal under `DEPRECATION_POLICY.md`. An individual deprecated function, type, member or enumerator in an otherwise stable header is recorded in `DEPRECATIONS.md`, not here, and does not change the header's class. |
 | `internal` | Visible because it is a header but not part of the supported surface. |
 | `test-only` | Support for tests; must not be installed. |
 

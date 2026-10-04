@@ -57,12 +57,16 @@ A change is **source-compatible** when every well-formed client that uses only d
 | Add an enumerator to a public enumeration or add an `ErrorCode` value | Review-required | Clients with an exhaustive `switch` under strict diagnostics fail to compile, and clients with `default` change behavior (design decision D07). |
 | Add a data member or member function to an existing class | Review-required | It can change aggregate initialization and structured bindings, overload resolution, name hiding in derived classes, and the address-of-member use. |
 | Add an overload or a defaulted parameter to an existing function | Review-required | It can make previously unambiguous calls ambiguous and breaks taking the function's address. |
-| Add `noexcept`, `constexpr`, `[[nodiscard]]` or `inline` to an existing declaration, or remove `noexcept` | Review-required | It changes the function type or the diagnostics seen by clients; removing `noexcept` weakens a guarantee (see section 6). |
+| Add `noexcept`, `constexpr`, `[[nodiscard]]` or `inline` to an existing declaration | Review-required | It changes the function type or the diagnostics seen by clients. |
+| Remove `noexcept` where the contract does not document a no-throw guarantee | Review-required | It changes the function type, and clients may still have relied on it. |
+| Remove `noexcept` where the contract documents the no-throw guarantee | Incompatible | It weakens a documented guarantee (section 6). |
 | Add a pure virtual member to an interface that clients implement | Incompatible | Every existing implementation becomes abstract. |
 | Add a non-pure virtual member with a default to an interface that clients implement | Review-required | It is source-compatible for implementers but changes the interface Core may call; its semantic effect is classified in section 6. |
 | Change or remove a virtual member's signature | Incompatible | Existing overrides stop overriding. |
 | Make a stable type non-copyable, non-movable, non-default-constructible, or change a documented aggregate or trivially-copyable property | Incompatible | Clients use these properties. |
 | Make a public header stop being self-contained, or make it depend on a header outside `kritva/core` or the C++ standard library | Incompatible | Clients include headers individually and Core stays platform independent. |
+
+**Most severe class.** Where a change matches more than one row of the source and semantic tables, the most severe class applies (`Incompatible` over `Review-required` over `Compatible`). For example, removing a documented `noexcept` matches both a source row and a semantic row and is `Incompatible`.
 
 ## 6. Semantic compatibility
 
