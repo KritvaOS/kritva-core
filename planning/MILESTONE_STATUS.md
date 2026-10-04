@@ -12,6 +12,7 @@
 | KF-CORE-R06 | RELEASED | 7 / 7 tasks accepted | Component API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.6` (annotated tag on release-record commit `a4c41aa`; tag object `fb9d631`; pushed to origin) |
 | KF-CORE-R07 | RELEASED | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.7` (annotated tag on release-record commit `424984f`; tag object `4aa3fab`; pushed to origin) | Target `kritva-core-r0.7` / version 0.7.0 |
 | KF-CORE-R08 | RELEASED | 7 / 7 tasks accepted | Configuration API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.8` (annotated tag on release-record commit `cbbec81`; tag object `2d576d7`; pushed to origin) | Target `kritva-core-r0.8` / version 0.8.0 |
+| KF-CORE-R09 | PLANNED | 0 / 7 tasks accepted | Design Consult APPROVED; Scope Confirmation APPROVED; Capability API Review pending | Target `kritva-core-r0.9` / version 0.9.0 |
 
 ## R02 Task Status
 
@@ -261,3 +262,21 @@ The R0.7 release candidate baseline is 51/51 CTest, 98.9% line coverage, Debug/R
 Status: PASS (05-10-2026)
 
 Release: Kritva Core R0.8, version 0.8.0; release candidate `1e7ba2b`; tag `kritva-core-r0.8` (annotated, on release-record commit `cbbec81`; pushed to origin). Record: `planning/milestones/KF-CORE-R08/R08_RELEASE_GATE.md`.
+
+
+## R09 Capability Contract & Readiness Boundary
+
+- [ ] R09-001 through R09-003 accepted.
+- [ ] R09 Capability API Review PASS/FROZEN.
+- [ ] R09-004 and R09-005 accepted.
+- [ ] R09 Integration Freeze PASS/HONORED.
+- [ ] R09-006 and R09-007 accepted.
+- [ ] API documentation synchronized in Markdown under `docs/api/`.
+- [ ] Security architecture/impact review completed.
+- [ ] Fresh-clone validation PASS.
+- [ ] Requirements/API/planning documentation reconciled.
+- [ ] Version and CMake metadata agree at 0.9.0.
+- [ ] Release record is documentation-only.
+- [ ] Annotated `kritva-core-r0.9` tag authorized only after PASS.
+- [ ] Remote `main`, tag object and peeled tag independently verified.
+- [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.

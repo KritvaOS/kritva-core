@@ -47,11 +47,13 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Latest release commit | `cbbec81` |
 | Remote verification | **PASS / RELEASED / SYNCHRONIZED / CLOSED** |
 | Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7, R0.8 |
-| Current active milestone | None — R0.8 released and closed; next milestone not yet planned |
+| Current active milestone | **KF-CORE-R09 — PLANNED / ARCHITECTURE CONFIRMED / IMPLEMENTATION NOT STARTED** |
 | R08 implementation status | RELEASED / CLOSED |
+| R09 implementation status | PLANNED / ARCHITECTURE CONFIRMED / IMPLEMENTATION NOT STARTED |
 | Open release blockers | 0 |
 | API freeze active | No |
 | Concrete platform implementation in `kritva-core` | No |
+| R09 production API freeze | No — Capability API Review pending |
 
 ## Consolidated Milestone Tracker
 
@@ -64,6 +66,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Component Context | R0.6 | Controlled component execution context without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 20–27 ED | R0.5 | Component API Review + Integration Freeze + Validation + Release Gate | 0.6.0 |
 | Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 24–32 ED (estimate; actual not recorded) | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
 | Component Configuration | **R0.8** | Component Configuration foundation | 7 | RELEASED | 7/7 | 22–31 ED (estimate; actual not recorded) | R0.7 released | Design Consult + Scope Confirmation + Configuration API Review + Integration Freeze + Release Gate | 0.8.0 |
+| Capability / Readiness Boundary | **R0.9** | Capability Contract & Readiness Boundary | 7 | PLANNED | 0/7 | 22–30 ED | R0.8 released | Design Consult + Scope Confirmation + Capability API Review + Security Review + Integration Freeze + Validation + Release Gate | 0.9.0 |
 
 ## R0.7 Task Tracker
 
@@ -188,6 +191,12 @@ R08-007 Full Validation / Release Candidate
 R08 Release Gate
 ```
 
+## Permanent Documentation Policy
+
+Beginning with R0.9, documentation synchronization is a standing acceptance requirement for every milestone. Every task explicitly assesses documentation impact; affected API, architecture, requirements, security and guide documents are updated in the same logical task unless a documented exception is approved. Every milestone must complete full documentation reconciliation before Release Gate PASS.
+
+Canonical maintained API documentation is Markdown under `docs/api/`. Generated HTML is a publication artifact and is not the authoritative specification.
+
 ## Mandatory Quality Gates
 
 Every future milestone continues to use the following minimum quality gates:
@@ -264,3 +273,69 @@ These remain deferred unless explicitly brought into scope:
 - stale root `implementation.md`
 
 Deferred issues must not silently enter R0.8 implementation scope.
+
+
+## R0.9 Task Tracker
+
+| ID | Task | Est. | Dependency | Status | Gate |
+|---|---|---:|---|---|---|
+| R09 Design Consult | Capability/readiness model and architectural boundary | 2–3 ED | R0.8 released | APPROVED | Scope input |
+| R09 Scope Confirmation | Confirm milestone scope and exclusions | 1 ED | Design Consult | APPROVED | Implementation authorization input |
+| KF-CORE-R09-001 | Capability Contract & Provider Semantics | 2–3 ED | Scope Confirmation | PLANNED | Capability contract |
+| KF-CORE-R09-002 | CapabilitySet Invariants & Version Semantics | 2–3 ED | R09-001 | PLANNED | Capability semantics |
+| KF-CORE-R09-003 | Requirement / Capability Matching Boundary | 2–3 ED | R09-002 | PLANNED | API review input |
+| R09 Capability API Review | Freeze public capability semantics | 1 ED | R09-001..003 | PLANNED | API freeze |
+| KF-CORE-R09-004 | Reference Capability & Requirement Harness | 3–4 ED | API Review PASS/FROZEN | PLANNED | Contract tests |
+| KF-CORE-R09-005 | Component Readiness / Lifecycle Boundary Integration | 3–4 ED | R09-004 | PLANNED | Integration Freeze input |
+| R09 Integration Freeze | Freeze production capability behavior | 0.5 ED | R09-005 | PLANNED | Production freeze |
+| KF-CORE-R09-006 | API Documentation, Security & Boundary Validation | 2–3 ED | Integration Freeze PASS/HONORED | PLANNED | Validation |
+| KF-CORE-R09-007 | Full R0.9 Validation & Release Candidate | 2–3 ED | R09-006 | PLANNED | Release Gate input |
+| R09 Release Gate | Release 0.9.0 | 1 ED | R09-007 | PLANNED | PASS |
+
+**R09 working estimate: 22–30 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.
+
+## R0.9 Architecture Decisions
+
+1. R0.9 is API-neutral by default; existing capability, requirement, context, Runtime and lifecycle mechanisms are preferred.
+2. Capability identity is authoritative through `CapabilityId`; Capability metadata is descriptive, not security evidence.
+3. Capability version describes the provided capability contract and is not runtime, configuration or authorization state.
+4. Capability requirement and Component DependencyGraph semantics remain separate.
+5. Capability matching remains identity-based by default; no generic version-range solver is introduced.
+6. Core does not automatically calculate readiness or add a new readiness lifecycle state.
+7. Health remains independent of readiness/lifecycle decisions.
+8. No ServiceRegistry, service locator, dependency resolver, dependency-injection framework or dynamic discovery mechanism is introduced.
+9. API documentation is maintained as canonical Markdown under `docs/api/`.
+10. Security planning begins in R0.9; security mechanisms remain out of scope unless explicitly approved.
+11. Nexus/Edge and platform-specific semantics remain outside `kritva-core`.
+
+## R0.9 Dependency Graph
+
+```text
+R09 Design Consult
+        ↓
+R09 Scope Confirmation
+        ↓
+R09-001 Capability Contract
+        ↓
+R09-002 CapabilitySet & Version
+        ↓
+R09-003 Requirement / Matching Boundary
+        ↓
+R09 Capability API Review
+        ↓
+R09-004 Reference Harness
+        ↓
+R09-005 Readiness / Lifecycle Integration
+        ↓
+R09 Integration Freeze
+        ↓
+R09-006 Documentation / Security / Boundary Validation
+        ↓
+R09-007 Full Validation / Release Candidate
+        ↓
+R09 Release Gate
+```
+
+## Current Decision
+
+R0.8 remains RELEASED / SYNCHRONIZED / CLOSED. R0.9 is now the active planned milestone with architecture direction approved and implementation not started.

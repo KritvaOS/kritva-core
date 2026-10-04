@@ -1,6 +1,6 @@
 # Kritva Core — Master Task Register
 
-R0.2 through R0.7 are recorded as released historical milestones. R0.8 is the current planned architecture milestone.
+R0.2 through R0.8 are recorded as released historical milestones. R0.9 is the current planned architecture milestone.
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
@@ -218,4 +218,56 @@ A task moves to ACCEPTED only after:
 
 Passing new tests alone is not sufficient.
 
+### Permanent Documentation Acceptance Rule
+
+Every task must explicitly assess documentation impact. If the task changes or clarifies a public API, behavior, requirement, architecture boundary, security assumption, ownership/lifetime rule, or usage guidance, the affected authoritative documentation must be updated in the same task unless the acceptance record explicitly justifies a separate documentation task. If there is no documentation impact, the task evidence must state `Documentation impact: none`.
+
+A task with known documentation drift is not eligible for ACCEPTED status.
+
 API freeze gates are mandatory.
+
+
+## KF-CORE-R09 — Capability Contract & Readiness Boundary (Architecture Confirmed)
+
+| ID | Task | Primary Area | Status | Est. Effort |
+|---|---|---|---|---:|
+| R09 Design Consult | Capability/readiness model and architectural boundary | architecture | APPROVED | 2–3 ED |
+| R09 Scope Confirmation | Confirm milestone scope and exclusions | architecture | APPROVED | 1 ED |
+| KF-CORE-R09-001 | Capability Contract & Provider Semantics | capability | PLANNED | 2–3 ED |
+| KF-CORE-R09-002 | CapabilitySet Invariants & Version Semantics | capability | PLANNED | 2–3 ED |
+| KF-CORE-R09-003 | Requirement / Capability Matching Boundary | platform/requirements | PLANNED | 2–3 ED |
+| R09 Capability API Review | Freeze public capability semantics | architecture | PLANNED | 1 ED |
+| KF-CORE-R09-004 | Reference Capability & Requirement Harness | tests/capability | PLANNED | 3–4 ED |
+| KF-CORE-R09-005 | Component Readiness / Lifecycle Boundary Integration | tests/integration | PLANNED | 3–4 ED |
+| R09 Integration Freeze | Freeze production capability behavior | architecture | PLANNED | 0.5 ED |
+| KF-CORE-R09-006 | API Documentation, Security & Boundary Validation | integration/validation | PLANNED | 2–3 ED |
+| KF-CORE-R09-007 | Full R0.9 Validation & Release Candidate | integration/validation/release | PLANNED | 2–3 ED |
+| R09 Release Gate | Release 0.9.0 | release | PLANNED | 1 ED |
+
+## R09 Dependency Graph
+
+```text
+R09 Design Consult
+        ↓
+R09 Scope Confirmation
+        ↓
+R09-001
+        ↓
+R09-002
+        ↓
+R09-003
+        ↓
+R09 Capability API Review
+        ↓
+R09-004
+        ↓
+R09-005
+        ↓
+R09 Integration Freeze
+        ↓
+R09-006
+        ↓
+R09-007
+        ↓
+R09 Release Gate
+```

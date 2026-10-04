@@ -221,3 +221,60 @@ R08 Release Gate
 22–31 ED estimate; actual effort not yet recorded.
 
 See `planning/milestones/KF-CORE-R08/` for the complete architecture, scope, task acceptance package and gate records.
+
+
+## KF-CORE-R09 — Capability Contract & Readiness Boundary
+
+Status: PLANNED — architecture direction approved; implementation not started.
+
+### Objective
+
+Harden and document the existing Capability, CapabilitySet, requirement and lifecycle/readiness boundaries without introducing a generic dependency-management framework or coupling Core to future Nexus, Edge, Linux, MCU, EtherCAT, ROS2/DDS, vendor or hardware architecture.
+
+### Architectural Rules
+
+- Capability, Requirement, Component Dependency, Lifecycle, Readiness and Health remain distinct concepts.
+- Existing Core mechanisms are preferred; R0.9 is API-neutral by default.
+- `CapabilityId` is the authoritative capability identity.
+- Capability metadata is descriptive and not security evidence.
+- Runtime remains lifecycle authority.
+- DependencyGraph remains ComponentId-based and separate from capability matching.
+- Core does not calculate generic readiness automatically and does not add a new readiness lifecycle state.
+- No ServiceRegistry, locator, resolver, dependency-injection framework or dynamic discovery is introduced.
+- API documentation is canonical Markdown under `docs/api/`; documentation changes accompany accepted API/semantic changes.
+- Security impact is assessed explicitly; security mechanisms remain out of scope unless separately approved.
+- Concrete platform and Nexus/Edge implementations remain outside Core.
+
+### Task Order
+
+```text
+R09 Design Consult
+        ↓
+R09 Scope Confirmation
+        ↓
+R09-001 Capability Contract & Provider Semantics
+        ↓
+R09-002 CapabilitySet Invariants & Version Semantics
+        ↓
+R09-003 Requirement / Capability Matching Boundary
+        ↓
+R09 Capability API Review
+        ↓
+R09-004 Reference Capability & Requirement Harness
+        ↓
+R09-005 Component Readiness / Lifecycle Boundary Integration
+        ↓
+R09 Integration Freeze
+        ↓
+R09-006 API Documentation, Security & Boundary Validation
+        ↓
+R09-007 Full R0.9 Validation & Release Candidate
+        ↓
+R09 Release Gate
+```
+
+### Planned Effort
+
+22–30 ED estimate; actual effort remains unrecorded until supported by evidence.
+
+See `planning/milestones/KF-CORE-R09/` for the complete architecture, task acceptance and gate package.

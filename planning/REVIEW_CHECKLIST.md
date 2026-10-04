@@ -502,3 +502,114 @@ Apply during R08 architecture review and task acceptance:
 - [ ] Annotated `kritva-core-r0.8` tag is authorized only after PASS.
 - [ ] Remote `main`, tag object and peeled tag are independently verified.
 - [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.
+
+
+## Permanent Documentation Synchronization Gate
+
+Apply to every future milestone and every task that changes or clarifies a contract:
+
+### Per Task
+- [ ] Documentation impact is explicitly assessed.
+- [ ] Affected `docs/api/` documents are updated in the same task when the public API or semantics change.
+- [ ] Affected architecture documentation is updated when architecture or boundary semantics change.
+- [ ] Requirements/traceability documentation is updated where applicable.
+- [ ] Security documentation is updated where trust, authority, ownership or security assumptions change.
+- [ ] Examples/guides are updated where applicable.
+- [ ] If documentation impact is none, the task evidence explicitly records `Documentation impact: none`.
+- [ ] No known documentation drift remains at task acceptance.
+
+### Milestone Release Gate
+- [ ] Complete documentation reconciliation is performed before Release Gate PASS.
+- [ ] Public headers and `docs/api/` are consistent.
+- [ ] Requirements and implementation are consistent.
+- [ ] Architecture decisions and implementation are consistent.
+- [ ] Security assumptions/boundaries and implementation are consistent.
+- [ ] No stale normative documentation remains.
+- [ ] No orphaned normative documentation remains.
+- [ ] Documentation indexes/navigation are complete.
+- [ ] Documentation reconciliation evidence is recorded.
+
+## R09 Capability Contract & Readiness Boundary Review
+
+Apply during R09 architecture review and task acceptance:
+
+- [ ] Existing Capability, CapabilitySet, PlatformRequirements, DependencyGraph and lifecycle mechanisms are reused rather than duplicated.
+- [ ] `CapabilityId` is the authoritative capability identity.
+- [ ] Capability version meaning is descriptive contract version only.
+- [ ] Capability metadata is not treated as security evidence.
+- [ ] Capability requirements remain distinct from ComponentId dependency ordering.
+- [ ] Capability matching does not infer name/platform/vendor semantics.
+- [ ] No generic version-range solver is introduced without explicit architecture approval.
+- [ ] No automatic readiness calculation or new readiness lifecycle state is introduced.
+- [ ] Health remains independent from lifecycle/readiness decisions.
+- [ ] No ServiceRegistry/locator/resolver/dependency-injection framework exists in production Core.
+- [ ] Core remains platform independent.
+- [ ] API documentation is maintained in canonical Markdown under `docs/api/`.
+- [ ] Every accepted public API/semantic change updates documentation in the same task.
+- [ ] Security trust/authority boundaries are documented.
+- [ ] Security impact is assessed for affected changes.
+- [ ] Mutation testing covers contract-sensitive behavior.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R09 Capability API Review Gate
+
+- [ ] R09-001 through R09-003 accepted.
+- [ ] Capability identity/version semantics are frozen.
+- [ ] CapabilitySet invariants are frozen.
+- [ ] Requirement/matching boundary is frozen.
+- [ ] No unauthorized production API has been added.
+- [ ] Public API documentation is synchronized.
+- [ ] Security impact assessments are present.
+- [ ] Public-header self-containment passes.
+- [ ] Focused contract/mutation evidence is sufficient.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+- [ ] On PASS, production capability API/semantics are FROZEN.
+
+## R09 Integration Freeze
+
+- [ ] R09-004 and R09-005 accepted.
+- [ ] No automatic dependency resolution exists.
+- [ ] No readiness state machine exists.
+- [ ] Capability matching does not alter DependencyGraph ordering.
+- [ ] Health does not automatically drive lifecycle.
+- [ ] Runtime lifecycle behavior remains compatible with R0.8.
+- [ ] PlatformRequirements/PlatformContext boundaries remain compatible.
+- [ ] No Core-owned background/retry/recovery infrastructure exists.
+- [ ] API documentation remains synchronized.
+- [ ] Security boundary remains unchanged or explicitly reviewed.
+- [ ] Production diff from the API Review freeze point contains no unapproved semantic changes.
+- [ ] PASS / HONORED / CHANGES REQUIRED / BLOCKED recorded.
+
+## R09 Final Validation Review
+
+- [ ] R09 Integration Freeze is PASS/HONORED.
+- [ ] Fresh-clone Debug/Release builds pass.
+- [ ] Complete CTest regression passes.
+- [ ] ASan/UBSan pass.
+- [ ] TSan passes where configured.
+- [ ] Strict warning build passes.
+- [ ] GCC `-fanalyzer` passes.
+- [ ] Coverage meets the R09 policy.
+- [ ] Traceability audit passes.
+- [ ] Install consumer passes.
+- [ ] API documentation consistency audit passes.
+- [ ] Security architecture/impact review passes.
+- [ ] Production isolation/dependency audit passes.
+- [ ] Public-header self-containment passes.
+- [ ] No dependency/readiness framework leaked into production Core.
+- [ ] Working tree is clean.
+- [ ] PASS / CHANGES REQUIRED / BLOCKED recorded.
+
+## R09 Release Gate
+
+- [ ] R09-001 through R09-007 accepted.
+- [ ] R09 Capability API Review PASS/FROZEN.
+- [ ] R09 Integration Freeze PASS/HONORED.
+- [ ] Fresh-clone validation PASS.
+- [ ] API documentation and security planning reconciled.
+- [ ] Requirements/API/planning documentation reconciled.
+- [ ] Version and CMake metadata agree at 0.9.0.
+- [ ] Release record is documentation-only.
+- [ ] Annotated `kritva-core-r0.9` tag authorized only after PASS.
+- [ ] Remote `main`, tag object and peeled tag independently verified.
+- [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.

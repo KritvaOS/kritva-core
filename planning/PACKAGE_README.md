@@ -1,6 +1,6 @@
-# Kritva Core Planning Package — R0.7 Architecture-Confirmed
+# Kritva Core Planning Package — R0.9 Architecture-Confirmed
 
-This archive preserves the supplied planning history through R0.6 and adds the R0.7 architecture-confirmed planning package.
+This archive preserves the supplied planning history through R0.8 and adds the R0.9 architecture-confirmed planning package, including API-documentation and security-planning controls.
 
 ## Common planning files
 
@@ -26,3 +26,14 @@ The R0.7 Design Consult and Scope Confirmation are approved. Implementation begi
 R0.7 establishes a narrow Component operational observation/reporting contract using existing Core concepts. It does not introduce a new operational state machine, Core EventBus, telemetry/logging backend, background worker, automatic recovery, automatic restart/retry, or platform-specific operational framework. Runtime remains lifecycle authority; Components remain authoritative for their operational information; integrators own observation sinks, telemetry and policy.
 
 R0.7 does not make Component statistics mandatory on the base Component interface.
+
+
+## R0.9 planning state
+
+R0.8 is RELEASED/CLOSED at version 0.8.0.
+
+R0.9 — `KF-CORE-R09 Capability Contract & Readiness Boundary` — is **PLANNED / ARCHITECTURE CONFIRMED / IMPLEMENTATION NOT STARTED**.
+
+The R0.9 Design Consult and Scope Confirmation are approved. Implementation begins with `KF-CORE-R09-001` after its task-specific `TASK.md` and `ACCEPTANCE_CRITERIA.md` are reviewed and issued.
+
+R0.9 explicitly keeps Core generic: no dependency-injection framework, ServiceRegistry, dynamic discovery, automatic readiness state, Health-driven lifecycle, or Nexus/Edge-specific semantics are introduced. API documentation is maintained as canonical Markdown, and a lightweight security architecture/impact review is required.

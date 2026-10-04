@@ -250,3 +250,49 @@ After all R08 implementation tasks are accepted:
 5. Create a documentation-only release-record commit.
 6. Create the annotated `kritva-core-r0.8` tag only after PASS.
 7. Independently verify remote `main`, tag object and peeled tag.
+
+
+## R09 Commit Messages
+
+| Task | Exact implementation commit |
+|---|---|
+| KF-CORE-R09-001 | `feat(core): define capability contract` |
+| KF-CORE-R09-002 | `feat(core): define capability set and version semantics` |
+| KF-CORE-R09-003 | `feat(core): define capability requirement matching boundary` |
+| KF-CORE-R09-004 | `test(core): add capability contract reference harness` |
+| KF-CORE-R09-005 | `test(core): add capability readiness lifecycle integration tests` |
+| KF-CORE-R09-006 | `test(core): validate R0.9 documentation security and boundaries` |
+| KF-CORE-R09-007 | `test(core): complete R0.9 capability validation` |
+
+### R09 Architecture Gates
+
+- R09 Design Consult — APPROVED.
+- R09 Scope Confirmation — APPROVED.
+- R09 Capability API Review must PASS/FROZEN before R09-004.
+- R09 Security Architecture Review is required before R09-006 acceptance; it may conclude `SECURITY IMPACT: NONE`.
+- R09 Integration Freeze applies after R09-005 and before R09-006/R09-007.
+- R09 Release Gate reviews R09-007 before version/tag creation.
+
+### R09 Commit Rules
+
+- One logical task has one primary implementation commit.
+- The exact task commit message in the acceptance criteria is authoritative.
+- Do not amend accepted task commits.
+- Corrective changes after review use a focused follow-up commit.
+- No unrelated changes.
+- A later task must not silently alter an earlier accepted API or semantic contract.
+- Public API/semantic changes after the R09 Capability API Review require an explicit architecture-review return.
+- API documentation changes required by an accepted contract change belong in the same logical task unless explicitly split and justified.
+
+### R09 Release Procedure
+
+After all R09 implementation tasks are accepted:
+
+1. Update `MILESTONE_STATUS.md`, `MASTER_TRACKER.md`, `TASKS.md` and `CHANGELOG.md`.
+2. Complete the permanent documentation reconciliation gate across `docs/api/`, architecture, requirements, security and guides.
+3. Verify `VERSION` and CMake version metadata.
+4. Run clean Debug/Release and complete validation matrix.
+5. Perform independent R09 Release Gate review.
+6. Create a documentation-only release-record commit.
+7. Create annotated `kritva-core-r0.9` tag only after PASS.
+8. Independently verify remote `main`, tag object and peeled tag.

@@ -233,7 +233,7 @@ Artifact and Verification hold file paths, or `inspection` where no automated ch
 
 | Requirement | Artifact | Verification | Note |
 |---|---|---|---|
-| CORE-GEN-001 | docs/architecture/boundaries.md | inspection | Boundary review; GEN-003 audit covers the dependency part. |
+| CORE-GEN-001 | docs/architecture/BOUNDARIES.md | inspection | Boundary review; GEN-003 audit covers the dependency part. |
 | CORE-GEN-002 | CMakeLists.txt | inspection | Library target requires `cxx_std_20`. |
 | CORE-GEN-003 | CMakeLists.txt | scripts/audit/check_traceability.py | Audit rejects find_package/FetchContent/ExternalProject/add_subdirectory and ROS2/DDS/EtherCAT includes. |
 | CORE-GEN-005 | CMakeLists.txt | scripts/audit/check_traceability.py | Audit requires every test source to be registered with CTest; the tests use no hardware. |
@@ -242,8 +242,8 @@ Artifact and Verification hold file paths, or `inspection` where no automated ch
 | CORE-BUILD-002 | CMakeLists.txt, cmake/kritva_coreConfig.cmake.in, Makefile | tests/install/run_install_test.cmake | CTest `kritva_core_install_consumer` installs to a scratch prefix, checks the layout, and builds and runs a consumer against the installed package only. |
 | CORE-TEST-001 | .github/workflows/kritva-core-ci.yml | inspection | |
 | CORE-DOC-001 | README.md | inspection | |
-| CORE-ARCH-001 | docs/architecture/boundaries.md | inspection | |
-| CORE-ARCH-003 | docs/architecture/audit-status.md | inspection | |
+| CORE-ARCH-001 | docs/architecture/BOUNDARIES.md | inspection | |
+| CORE-ARCH-003 | docs/architecture/archive/r0.2/audit-status.md | inspection | |
 | CORE-DEV-001 | docs/development/intern-work-package.md | inspection | |
 | CORE-RT-009 | include/kritva/core/runtime/runtime_manager.hpp, tests/integration/runtime_integration_test.cpp | tests/integration/runtime_integration_test.cpp | Frozen runtime contract exercised end to end; includes a model-based comparison. |
 | CORE-RT-010 | scripts/audit/check_traceability.py, tests/install/run_install_test.cmake | scripts/audit/check_traceability.py | Audit checks version consistency and the absence of threading/logging headers in production sources; the install test checks the installed package version. |

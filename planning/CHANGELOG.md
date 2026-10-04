@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## KF-CORE-R09 — Capability Contract & Readiness Boundary Planning
+
+Architecture direction and scope confirmed. R0.9 planning package prepared; implementation not started.
+
+R0.9 scope:
+- Capability identity/provider semantics
+- CapabilitySet invariants and version semantics
+- Existing capability requirement/matching boundary
+- Separation of capability matching from Component dependency ordering
+- Explicit readiness/lifecycle boundary without a new readiness state
+- API documentation synchronization in canonical Markdown
+- Security trust/authority planning without a security subsystem
+- Reference capability/requirement harness and integration validation
+- Integration Freeze, full validation and Release Gate
+
+R0.9 exclusions:
+- Generic dependency injection / ServiceRegistry / locator / resolver
+- Dynamic discovery or capability event broker
+- Automatic readiness calculation or new lifecycle state
+- Health-driven lifecycle/recovery
+- Authentication, authorization, cryptography or key management in Core
+- Nexus/Edge/Linux/MCU/EtherCAT/ROS2/DDS/vendor-specific implementation
+
+Proposed requirement domain: `CORE-CAP-004..011`.
+Planned effort: 22–30 ED; actual effort not yet recorded.
+
+
 ## KF-CORE-R08 — Component Configuration Foundation Planning
 
 Architecture and scope confirmed. R0.8 planning package prepared; implementation not started.
