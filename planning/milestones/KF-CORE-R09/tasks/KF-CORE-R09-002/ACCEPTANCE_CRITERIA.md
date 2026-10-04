@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-002 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define capability set and version semantics` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -121,10 +121,12 @@ Primary commit: `4bd241e` `feat(core): define capability set and version semanti
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `4bd241e` (evidence `7bcd90d`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-002 is not yet accepted.**
+Reviewer notes: no production type, signature or behavior change (CapabilitySet contract text in `capability_set.hpp`); at-most-one-entry-per-identity, replace-in-place, first-insertion order, determinism, identity-only lookup, reference-validity and snapshot rules, the provided-contract meaning of capability version with no ordering, and the synchronized `CAPABILITY_SET.md` are accepted; the two equivalent mutants are accepted as classified. `CORE-CAP-005` and `CORE-CAP-006` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-002 is ACCEPTED.**
