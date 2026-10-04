@@ -39,9 +39,9 @@ Accepted:
 - KF-CORE-R09-004 — Reference Capability & Requirement Harness (`2608795`; evidence `9d0a81d`)
 - KF-CORE-R09-005 — Component Readiness / Lifecycle Boundary Integration (`0f6b6c3`; evidence `9a086ae`)
 - R09 Integration Freeze — PASS / HONORED (production freeze commit `4c86b53`; evidence `553258b`)
+- KF-CORE-R09-006 — API Documentation, Security & Boundary Validation (`04f0859`; evidence `87a2960`)
 
 Pending independent review:
-- KF-CORE-R09-006 — API Documentation, Security & Boundary Validation (`04f0859`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 

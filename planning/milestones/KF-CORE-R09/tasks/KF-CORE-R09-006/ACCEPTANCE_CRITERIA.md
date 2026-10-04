@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-006 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): validate R0.9 documentation security and boundaries` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -124,10 +124,12 @@ Primary commit: `04f0859` `test(core): validate R0.9 documentation security and 
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `04f0859` (evidence `87a2960`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-006 is not yet accepted.**
+Reviewer notes: no production diff since the freeze commit `4c86b53`; the mechanical API documentation audit with its 10-defect self-test (15 indexed, 6 maintained, 9 stubs), the compile-time capability boundary snapshot with 19 detected mutants, the installed-package capability exercise and the fresh-clone validation are accepted; the stub-page policy (maintained pages for changed or relied-upon contracts, labelled stubs for unchanged domains, replaced when the contract next changes) is confirmed; the Security Architecture Review is PASS with SECURITY IMPACT: DOCUMENTATION ONLY. `CORE-CAP-011` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-006 is ACCEPTED.**

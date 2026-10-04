@@ -85,8 +85,8 @@ Authentication, authorization frameworks, capability tokens, cryptographic ident
 
 ## Decision
 
-To be recorded by the independent reviewer: **PASS / CHANGES REQUIRED / BLOCKED**
+Reviewer decision: **PASS** (05-10-2026), ChatGPT (independent reviewer), on the evidence of R09-006 (`04f0859`, evidence `87a2960`). Classification confirmed: **SECURITY IMPACT: DOCUMENTATION ONLY**. New security mechanism: none. New authority boundary: none. Security blocker: none.
 
 ## Reviewer Notes
 
-To be completed during R09 review.
+Capability claims are not authentication, authorization, a credential or proof of trust, and a satisfied requirement is not permission to perform an action; no credential, authorization mechanism, persistence, discovery, background execution, authority boundary or security subsystem is introduced. The seven decisions (SD-R09-01..07) and the updated trust-boundary, threat-model and architecture documents are an adequate R0.9 security baseline.
