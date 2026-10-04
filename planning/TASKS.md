@@ -271,3 +271,55 @@ R09-007
         ↓
 R09 Release Gate
 ```
+
+
+## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation (Architecture Proposed)
+
+| ID | Task | Primary Area | Status | Est. Effort |
+|---|---|---|---|---:|
+| R10 Design Consult | Core 1.0 maturity and compatibility architecture | architecture | APPROVED | 2–3 ED |
+| R10 Scope Confirmation | Confirm scope, compatibility posture and exclusions | architecture | PENDING | 1 ED |
+| KF-CORE-R10-001 | Public API Inventory & Compatibility Classification | compatibility/api | PLANNED | 2–3 ED |
+| KF-CORE-R10-002 | Source & Semantic Compatibility Contract | compatibility/api | BLOCKED BY SCOPE | 3–4 ED |
+| KF-CORE-R10-003 | ABI / Binary Compatibility Policy | compatibility/abi | BLOCKED BY R10-002 | 2–3 ED |
+| KF-CORE-R10-004 | Versioning & API Evolution Policy | compatibility/release | BLOCKED BY R10-003 | 3–4 ED |
+| KF-CORE-R10-005 | Deprecation & Migration Policy | compatibility/release | BLOCKED BY R10-004 | 2–3 ED |
+| R10 API / Compatibility Review | Freeze R1.0 compatibility semantics | architecture | PLANNED | 1 ED |
+| KF-CORE-R10-006 | Compatibility & Boundary Validation Harness | tests/compatibility | BLOCKED BY API REVIEW | 3–4 ED |
+| KF-CORE-R10-007 | Package / Install Compatibility | package/install | BLOCKED BY R10-006 | 2–3 ED |
+| R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | architecture | PLANNED | 0.5 ED |
+| KF-CORE-R10-008 | Documentation / Security / Traceability Validation | docs/security/traceability | BLOCKED BY INTEGRATION FREEZE | 2–3 ED |
+| KF-CORE-R10-009 | Full Validation & Release Candidate | validation/release | BLOCKED BY R10-008 | 2–3 ED |
+| R10 Release Gate | Release 1.0.0 | release | PLANNED | 1 ED |
+
+## R10 Dependency Graph
+
+```text
+R10 Design Consult
+        ↓
+R10 Scope Confirmation
+        ↓
+R10-001
+        ↓
+R10-002
+        ↓
+R10-003
+        ↓
+R10-004
+        ↓
+R10-005
+        ↓
+R10 API / Compatibility Review
+        ↓
+R10-006
+        ↓
+R10-007
+        ↓
+R10 Integration Freeze
+        ↓
+R10-008
+        ↓
+R10-009
+        ↓
+R10 Release Gate
+```

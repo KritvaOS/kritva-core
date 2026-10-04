@@ -2,6 +2,8 @@
 
 ## Current Snapshot
 
+R1.0 is the active planning milestone. R0.9 remains RELEASED / SYNCHRONIZED / CLOSED.
+
 | Milestone | Status | Progress | Review | Release |
 |---|---|---:|---|---|
 | KF-CORE-R01 | COMPLETE | 100% | PASS | `kritva-core-r0.1` (referenced; tag not present in Git, see R0.2 Milestone Gate note) |
@@ -13,6 +15,27 @@
 | KF-CORE-R07 | RELEASED | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.7` (annotated tag on release-record commit `424984f`; tag object `4aa3fab`; pushed to origin) | Target `kritva-core-r0.7` / version 0.7.0 |
 | KF-CORE-R08 | RELEASED | 7 / 7 tasks accepted | Configuration API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.8` (annotated tag on release-record commit `cbbec81`; tag object `2d576d7`; pushed to origin) | Target `kritva-core-r0.8` / version 0.8.0 |
 | KF-CORE-R09 | RELEASED | 7 / 7 tasks accepted | Capability API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Security Architecture Review PASS, Release Gate PASS | `kritva-core-r0.9` / version 0.9.0 (annotated tag on release-record commit `d72343a`; tag object `f77fecb`; pushed to origin) |
+| KF-CORE-R10 | PLANNED | 0 / 9 implementation tasks | Design Consult APPROVED; Scope Confirmation pending | `kritva-core-r1.0` / version 1.0.0 (target) |
+
+## KF-CORE-R10 — Current Planning Status
+
+| Gate / Task | Status | Dependency |
+|---|---|---|
+| R10 Design Consult | APPROVED | R0.9 released |
+| R10 Scope Confirmation | PENDING | Design Consult |
+| KF-CORE-R10-001 | PLANNED | Scope Confirmation |
+| KF-CORE-R10-002 | BLOCKED BY SCOPE | R10-001 |
+| KF-CORE-R10-003 | BLOCKED BY R10-002 | R10-002 |
+| KF-CORE-R10-004 | BLOCKED BY R10-003 | R10-003 |
+| KF-CORE-R10-005 | BLOCKED BY R10-004 | R10-004 |
+| R10 API / Compatibility Review | PLANNED | R10-001..005 |
+| KF-CORE-R10-006 | BLOCKED | API Review PASS/FROZEN |
+| KF-CORE-R10-007 | BLOCKED | R10-006 |
+| R10 Integration Freeze | PLANNED | R10-007 |
+| KF-CORE-R10-008 | BLOCKED | Integration Freeze PASS/HONORED |
+| KF-CORE-R10-009 | BLOCKED | R10-008 |
+| R10 Release Gate | PLANNED | R10-009 |
+
 
 ## R02 Task Status
 

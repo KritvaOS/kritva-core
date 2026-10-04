@@ -19,38 +19,25 @@ planning/
 ├── GIT_COMMIT_STEP.md
 ├── CHANGELOG.md
 └── milestones/
-    ├── KF-CORE-R02/
-    │   ├── IMPLEMENTATION_SEQUENCE.md
-    │   └── tasks/
-    ├── KF-CORE-R03/
-    │   ├── MILESTONE.md
-    │   ├── IMPLEMENTATION_SEQUENCE.md
-    │   ├── REQUIREMENTS_PROPOSAL.md
-    │   ├── gate records and evidence
-    │   └── tasks/
-    ├── KF-CORE-R04/
-    │   ├── MILESTONE.md
-    │   ├── IMPLEMENTATION_SEQUENCE.md
-    │   ├── REQUIREMENTS_PROPOSAL.md
-    │   ├── gate records and evidence
-    │   └── tasks/
-    ├── KF-CORE-R05/
-    │   ├── MILESTONE.md
-    │   ├── IMPLEMENTATION_SEQUENCE.md
-    │   ├── REQUIREMENTS_PROPOSAL.md
-    │   ├── design/API/gate records
-    │   └── tasks/
-    ├── KF-CORE-R06/
+    ├── KF-CORE-R02/ … KF-CORE-R09/
+    └── KF-CORE-R10/
         ├── MILESTONE.md
         ├── IMPLEMENTATION_SEQUENCE.md
         ├── REQUIREMENTS_PROPOSAL.md
-        ├── R06_DESIGN_DECISIONS.md
-        ├── R06_COMPONENT_API_REVIEW.md
-        ├── R06_INTEGRATION_FREEZE.md
-        ├── R06_RELEASE_GATE.md
-        ├── R06_PLANNING_NOTES.md
-        ├── R06_TESTING_AND_COMMIT_POLICY.md
+        ├── R10_DESIGN_CONSULT.md
+        ├── R10_SCOPE_CONFIRMATION.md
+        ├── R10_DESIGN_DECISIONS.md
+        ├── R10_BASELINE_REVIEW.md
+        ├── R10_API_COMPATIBILITY_REVIEW.md
+        ├── R10_SECURITY_ARCHITECTURE.md
+        ├── R10_INTEGRATION_FREEZE.md
+        ├── R10_RELEASE_GATE.md
+        ├── R10_TESTING_AND_COMMIT_POLICY.md
+        ├── TASK_MANIFEST.md
         └── tasks/
+            ├── KF-CORE-R10-001/
+            ├── …
+            └── KF-CORE-R10-009/
 ```
 
 ## Authority
@@ -78,7 +65,17 @@ R0.8 is released and closed (`kritva-core-r0.8`, version `0.8.0`, release-record
 - release candidate `ef14e99`
 - remote verification: PASS / RELEASED / SYNCHRONIZED / CLOSED
 
-R0.2 to R0.7 are also released and closed. R0.8 hardened the existing configuration path into a normative contract (lifecycle eligibility, ownership, atomic application, validation boundary, `ConfigurationVersion` as schema compatibility version, Runtime forwarding and failure isolation) with no production type, signature or behavior change, and `kritva-core` still platform independent.
+R0.2 to R0.8 are also released and closed. R0.8 hardened the existing configuration path into a normative contract (lifecycle eligibility, ownership, atomic application, validation boundary, `ConfigurationVersion` as schema compatibility version, Runtime forwarding and failure isolation) with no production type, signature or behavior change, and `kritva-core` still platform independent.
 
-See `MASTER_TRACKER.md`, `milestones/KF-CORE-R08/` and `milestones/KF-CORE-R09/`.
+See `MASTER_TRACKER.md`, `milestones/KF-CORE-R09/` and `milestones/KF-CORE-R10/`.
 
+
+## R1.0 Planning State
+
+KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation is the current active planning milestone.
+
+Status: PLANNED / architecture approved; implementation is not yet authorized.
+
+Target release: `1.0.0` / `kritva-core-r1.0`.
+
+R1.0 establishes source, semantic and ABI compatibility policy, API inventory/classification, versioning, deprecation, package/install compatibility, compatibility validation and release governance. It does not introduce platform-specific or new runtime frameworks.

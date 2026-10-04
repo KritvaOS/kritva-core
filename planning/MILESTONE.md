@@ -278,3 +278,66 @@ R09 Release Gate
 22–30 ED estimate; actual effort remains unrecorded until supported by evidence.
 
 See `planning/milestones/KF-CORE-R09/` for the complete architecture, task acceptance and gate package.
+
+
+## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation
+
+Status: PLANNED — Design Consult APPROVED; Scope Confirmation pending; implementation not authorized.
+
+### Objective
+
+Establish Kritva Core as a stable 1.x platform-independent foundation by defining and validating the long-term API evolution, source/semantic compatibility, ABI policy, versioning, deprecation, package/install compatibility, migration, documentation and release-contract rules required for `1.0.0` and subsequent 1.x releases.
+
+### Task Order
+
+```text
+R10 Design Consult
+        ↓
+R10 Scope Confirmation
+        ↓
+R10-001 Public API Inventory & Compatibility Classification
+        ↓
+R10-002 Source & Semantic Compatibility Contract
+        ↓
+R10-003 ABI / Binary Compatibility Policy
+        ↓
+R10-004 Versioning & API Evolution Policy
+        ↓
+R10-005 Deprecation & Migration Policy
+        ↓
+R10 API / Compatibility Review
+        ↓
+R10-006 Compatibility & Boundary Validation Harness
+        ↓
+R10-007 Package / Install Compatibility
+        ↓
+R10 Integration Freeze
+        ↓
+R10-008 Documentation / Security / Traceability Validation
+        ↓
+R10-009 Full Validation & Release Candidate
+        ↓
+R10 Release Gate
+```
+
+### Architectural Rules
+
+- R0.9 remains the normative pre-1.0 functional/API baseline.
+- Source compatibility, semantic compatibility and ABI/binary compatibility are distinct dimensions.
+- No universal ABI guarantee is implied; any ABI commitment requires an explicit support matrix.
+- Stable API removal normally requires a major release; deprecation and migration are explicit processes.
+- Public enum/ErrorCode values, virtual interfaces, ownership/lifetime/threading guarantees and package behavior are compatibility-sensitive.
+- CMake package/version-selection semantics are part of the supported installation contract.
+- No Nexus/Edge/Linux/MCU/EtherCAT/ROS2/DDS/vendor-specific implementation enters `kritva-core`.
+- No new Runtime, dependency, discovery, readiness or security enforcement framework is introduced by R1.0.
+- R0.9 release history is preserved and not retroactively rewritten.
+
+### Planned Effort
+
+25–35 ED estimate including architecture, implementation, testing, documentation, security review, validation and release audit. Actual effort is recorded only when supported by evidence.
+
+### Release Target
+
+Version `1.0.0`, annotated tag `kritva-core-r1.0`, subject to the R10 Release Gate.
+
+See `planning/milestones/KF-CORE-R10/` for the complete architecture, requirements proposal, task acceptance package and gate records.

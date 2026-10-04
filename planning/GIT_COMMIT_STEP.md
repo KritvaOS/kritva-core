@@ -296,3 +296,38 @@ After all R09 implementation tasks are accepted:
 6. Create a documentation-only release-record commit.
 7. Create annotated `kritva-core-r0.9` tag only after PASS.
 8. Independently verify remote `main`, tag object and peeled tag.
+
+
+## R10 Commit Messages
+
+| Task | Exact implementation commit |
+|---|---|
+| KF-CORE-R10-001 | `docs(core): inventory and classify R1.0 public API` |
+| KF-CORE-R10-002 | `docs(core): define source and semantic compatibility contract` |
+| KF-CORE-R10-003 | `docs(core): define R1.0 ABI compatibility policy` |
+| KF-CORE-R10-004 | `docs(core): define versioning and API evolution policy` |
+| KF-CORE-R10-005 | `docs(core): define API deprecation and migration policy` |
+| KF-CORE-R10-006 | `test(core): add R1.0 compatibility boundary harness` |
+| KF-CORE-R10-007 | `test(core): validate R1.0 package compatibility` |
+| KF-CORE-R10-008 | `test(core): validate R1.0 documentation security and traceability` |
+| KF-CORE-R10-009 | `build(core): prepare 1.0.0 release candidate` |
+
+### R10 Architecture Gates
+
+- R10 Design Consult — APPROVED.
+- R10 Scope Confirmation — mandatory before R10-001 implementation.
+- R10 API / Compatibility Review must PASS/FROZEN before R10-006 and R10-007 implementation proceeds.
+- R10 Integration Freeze applies after R10-007 and before R10-008/R10-009.
+- R10 Release Gate reviews R10-009 before version/tag creation.
+
+### R10 Release Procedure
+
+After all R10 implementation tasks are accepted:
+
+1. Reconcile `MILESTONE_STATUS.md`, `MASTER_TRACKER.md`, `TASKS.md` and `CHANGELOG.md`.
+2. Verify `VERSION` and CMake version are `1.0.0`.
+3. Run clean Debug/Release and complete validation matrix.
+4. Perform independent R10 Release Gate review.
+5. Create a documentation-only release-record commit.
+6. Create the annotated `kritva-core-r1.0` tag only after PASS.
+7. Independently verify remote `main`, tag object and peeled tag.

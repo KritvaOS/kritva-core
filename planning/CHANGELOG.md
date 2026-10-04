@@ -2,6 +2,31 @@
 
 ## [Unreleased]
 
+## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation
+
+R1.0 planning activated after R0.9 release closure. Status: PLANNED; implementation not authorized.
+
+R1.0 scope:
+- Public API inventory and compatibility classification
+- Source and semantic compatibility contract
+- ABI/binary compatibility policy
+- SemVer and API evolution policy
+- Deprecation and migration policy
+- Compatibility/boundary validation harness
+- CMake package and install compatibility
+- Documentation/security/traceability reconciliation
+- Full validation and `1.0.0` release-candidate preparation
+
+R1.0 exclusions:
+- platform-specific implementation
+- ROS2/DDS/EtherCAT/Linux/MCU/vendor integration
+- new Runtime/scheduler framework
+- service registry/discovery/dependency injection/readiness framework
+- security enforcement subsystem
+
+Target release: `1.0.0` / `kritva-core-r1.0`.
+Working estimate: 25–35 ED; actual effort remains unrecorded until supported by evidence.
+
 ## KF-CORE-R09 — Capability Contract & Readiness Boundary
 
 R0.9 release gate PASSED (version 0.9.0, candidate `ef14e99`); RELEASED. Annotated tag `kritva-core-r0.9` on release-record commit `d72343a`, pushed and independently verified on origin.

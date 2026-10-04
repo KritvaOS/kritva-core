@@ -613,3 +613,29 @@ Apply during R09 architecture review and task acceptance:
 - [ ] Annotated `kritva-core-r0.9` tag authorized only after PASS.
 - [ ] Remote `main`, tag object and peeled tag independently verified.
 - [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.
+
+
+## R10 Core 1.0 Compatibility Review
+
+Apply to KF-CORE-R10-001 through R10-009 and the R10 gates:
+
+- [ ] R0.9 is confirmed as the normative pre-1.0 baseline.
+- [ ] Every public installed header/API surface is inventoried and classified.
+- [ ] Stable/experimental/deprecated/internal/test-only status is explicit.
+- [ ] Source compatibility rules are defined and testable.
+- [ ] Semantic compatibility rules cover observable behavior, ownership/lifetime and threading guarantees.
+- [ ] ABI/binary compatibility posture is explicit; any support matrix is bounded and testable.
+- [ ] SemVer release-impact rules are explicit.
+- [ ] Public enum/ErrorCode numeric values and meanings are compatibility-controlled.
+- [ ] Virtual-interface evolution rules are explicit.
+- [ ] Deprecation and migration rules are explicit.
+- [ ] CMake package/version-selection behavior is explicitly specified and tested.
+- [ ] Compatibility tests distinguish deliberate changes from regressions.
+- [ ] Canonical Markdown documentation is synchronized.
+- [ ] Requirements traceability is complete.
+- [ ] Security impact of package/release/compatibility boundaries is recorded.
+- [ ] No R1.0 platform-specific or unrelated Runtime framework has been introduced.
+- [ ] R0.9 release evidence has not been retroactively rewritten.
+- [ ] Integration Freeze is PASS/HONORED before final validation.
+- [ ] Release Gate is PASS before `kritva-core-r1.0` tag authorization.
+- [ ] Final remote branch/tag/release-record audit is PASS.
