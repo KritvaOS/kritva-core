@@ -2,7 +2,7 @@
 
 ## Status
 
-PLANNED — architecture direction agreed; implementation not started.
+ACCEPTED — all tasks (R09-001..007) and gates accepted; Release Gate PASS; release `kritva-core-r0.9` (0.9.0) pending owner push and remote verification.
 
 ## Objective
 

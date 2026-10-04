@@ -71,12 +71,12 @@ Milestone → Task → Acceptance Criteria → Implementation → Unit Tests →
 
 ## Current State
 
-R0.8 is released and closed. R0.9 is now the active planned milestone:
+R0.8 is released and closed (`kritva-core-r0.8`, version `0.8.0`, release-record commit `cbbec81`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED). R0.9 has passed its Release Gate and awaits push and remote verification:
 
-- `kritva-core-r0.8`
-- version `0.8.0`
-- release-record commit `cbbec81`
-- remote verification: PASS / RELEASED / SYNCHRONIZED / CLOSED
+- `kritva-core-r0.9` (local annotated tag on the release-record commit)
+- version `0.9.0`
+- release candidate `ef14e99`
+- remote verification: PENDING
 
 R0.2 to R0.7 are also released and closed. R0.8 hardened the existing configuration path into a normative contract (lifecycle eligibility, ownership, atomic application, validation boundary, `ConfigurationVersion` as schema compatibility version, Runtime forwarding and failure isolation) with no production type, signature or behavior change, and `kritva-core` still platform independent.
 

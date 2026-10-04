@@ -2,9 +2,11 @@
 
 ## [Unreleased]
 
-## KF-CORE-R09 — Capability Contract & Readiness Boundary Planning
+## KF-CORE-R09 — Capability Contract & Readiness Boundary
 
-Architecture direction and scope confirmed. R0.9 planning package prepared; implementation not started.
+R0.9 release gate PASSED (version 0.9.0, candidate `ef14e99`); release record committed and annotated tag `kritva-core-r0.9` created locally, pending owner push and remote verification.
+
+Original planning scope:
 
 R0.9 scope:
 - Capability identity/provider semantics
