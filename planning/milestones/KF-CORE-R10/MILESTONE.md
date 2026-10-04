@@ -2,7 +2,7 @@
 
 ## Status
 
-PLANNED — Design Consult and Scope Confirmation APPROVED; R10-001 authorized; implementation in progress by task.
+ACCEPTED — R10-001..009, API / Compatibility Review, Integration Freeze, Security Architecture Review and Release Gate PASS; `kritva-core-r1.0` (1.0.0) pending owner push and remote verification.
 
 ## Objective
 

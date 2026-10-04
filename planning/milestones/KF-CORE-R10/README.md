@@ -6,7 +6,7 @@
 
 ## State
 
-PLANNED — Design Consult and Scope Confirmation APPROVED; R10-001 authorized.
+ACCEPTED — Release Gate PASS; `kritva-core-r1.0` pending owner push and remote verification.
 
 ## Package Contents
 

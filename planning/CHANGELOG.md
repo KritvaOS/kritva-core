@@ -4,7 +4,9 @@
 
 ## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation
 
-R1.0 planning activated after R0.9 release closure. Status: PLANNED; implementation not authorized.
+R1.0 release gate PASSED (version 1.0.0, candidate `af16847`); release record committed and annotated tag `kritva-core-r1.0` created locally, pending owner push and remote verification. All R10-001..009 tasks and the API / Compatibility Review, Integration Freeze and Security Architecture Review are accepted.
+
+Original planning scope:
 
 R1.0 scope:
 - Public API inventory and compatibility classification

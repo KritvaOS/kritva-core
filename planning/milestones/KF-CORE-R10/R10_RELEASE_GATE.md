@@ -2,7 +2,7 @@
 
 ## Status
 
-PLANNED — release gate record to be completed after R10-009.
+**PASS / RELEASE AUTHORIZED** — release candidate `af16847`; tag `kritva-core-r1.0` on the release-record commit.
 
 ## Release Target
 
@@ -56,4 +56,45 @@ PLANNED — release gate record to be completed after R10-009.
 
 ## Decision
 
-Pending final R1.0 evidence and independent review.
+| Item | Result |
+|---|---|
+| Reviewer | ChatGPT (independent architecture review) |
+| Decision | **PASS / RELEASE AUTHORIZED** |
+| Release candidate | `af16847` `build(core): prepare 1.0.0 release candidate` (R10-009 accepted; acceptance record `85d3dbe`) |
+| Version | 1.0.0 (`VERSION` = CMake project version, traceability-enforced) |
+| API / Compatibility Review freeze | `55e57df` (record `f08b666`) |
+| R10 Integration Freeze | `660e4f4` (record `f36fda1`) |
+| R10-008 acceptance / Security Architecture Review | `c0edf1f` / `285580d` (PASS, SECURITY IMPACT: DOCUMENTATION ONLY) |
+| Production API / source diff vs `kritva-core-r0.9` | **EMPTY** (`git diff kritva-core-r0.9 af16847 -- include src`) |
+| Intended production packaging change | `CMakeLists.txt` package version file `SameMinorVersion` -> `SameMajorVersion` (the only production-side change in R1.0) |
+| Approved frozen-policy exception | F5 (`30c461b`): `EXACT` accepted only when the requested version string equals the installed version string |
+| Open blockers | 0 |
+| Evidence basis | Local evidence acceptance (R1.0 commits unpushed at the gate); remote verification follows the owner push |
+| Date | 05-10-2026 |
+
+**Reviewer Decision: PASS — Kritva Core 1.0.0 is authorized for release.**
+
+## Validation Summary (fresh clone of `af16847`)
+
+Debug, Release, strict `-Werror`, ASan+UBSan and TSan (ASLR off) 76 / 76; Release random order x10 all 76 / 76; installed-consumer test on the real 1.0.0 package; package version matrix 165 cases / 0 disagreements (old same-minor mode detected); traceability 120 requirements / 119 traced / 0 errors; API documentation 15 documents / 10 maintained / 5 stubs / 0 errors; API inventory 49 / 49; compatibility-policy audit 0 errors; API surface 49 headers / 335 declarations / 0 differences; security documentation 8 records / 0 errors; coverage 619 / 626 lines (R0.9 baseline 618 / 625: one extra covered line in the unchanged `error/result.hpp`, the same seven uncovered production lines, no new production line, no new exclusion).
+
+## Known Tooling Note (GCC analyzer; not a blocker)
+
+GCC 11.4 `-fanalyzer` produces pre-existing `-Wanalyzer-null-dereference` diagnostics through libstdc++ `std::vector` internals in unchanged test code. The same diagnostics reproduce against the R0.9 baseline. No R1.0 production source or new compatibility test is affected.
+
+| Scope | Result |
+|---|---|
+| Production source (`src/`) | clean (0 warnings at `-O0`) |
+| R1.0-added compatibility test | clean |
+| Existing unchanged tests | pre-existing warnings reproduced from R0.9 |
+
+The analyzer is not claimed to be globally clean for R1.0. Recorded as a known tooling note and added to the post-1.0 backlog (scope the analyzer sweep).
+
+## Release Record
+
+| Item | Value |
+|---|---|
+| Release commit | the docs-only release-record commit `docs(release): record Kritva Core R1.0 release gate` |
+| Tag | `kritva-core-r1.0` (annotated, on the release-record commit, not on the candidate) |
+| Candidate-to-release diff | `git diff af16847 HEAD -- include src tests CMakeLists.txt VERSION` empty |
+| Remote verification | PENDING — owner push of `main` and the tag, then independent remote audit; final state recorded in a follow-up documentation-only commit |

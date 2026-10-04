@@ -47,9 +47,10 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Latest release commit | `d72343a` |
 | Remote verification | **PASS / RELEASED / SYNCHRONIZED / CLOSED** |
 | Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7, R0.8, R0.9 |
-| Current active milestone | **KF-CORE-R10 — IN PROGRESS (R10-001..009 ACCEPTED, 9 / 9)** |
+| Current active milestone | **KF-CORE-R10 — ACCEPTED / RELEASE GATE PASS / PENDING PUSH AND REMOTE VERIFICATION** |
 | R08 implementation status | RELEASED / CLOSED |
 | R09 implementation status | RELEASED / CLOSED |
+| R10 implementation status | IMPLEMENTED / ACCEPTED (9 / 9); Release Gate PASS; not yet pushed |
 | Open release blockers | 0 |
 | API freeze active | No |
 | Concrete platform implementation in `kritva-core` | No |
@@ -67,7 +68,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Component Operations | **R0.7** | Controlled Component operational observation/reporting without changing Runtime lifecycle semantics | 7 | RELEASED | 7/7 | 24–32 ED (estimate; actual not recorded) | R0.6 | Design Consult + Scope Confirmation + API Review + Integration Freeze + Validation + Release Gate | 0.7.0 (target) |
 | Component Configuration | **R0.8** | Component Configuration foundation | 7 | RELEASED | 7/7 | 22–31 ED (estimate; actual not recorded) | R0.7 released | Design Consult + Scope Confirmation + Configuration API Review + Integration Freeze + Release Gate | 0.8.0 |
 | Capability / Readiness Boundary | **R0.9** | Capability Contract & Readiness Boundary | 7 | RELEASED | 7/7 | 22–30 ED | R0.8 released | Design Consult + Scope Confirmation + Capability API Review + Security Review + Integration Freeze + Validation + Release Gate | 0.9.0 |
-| API Maturity / Compatibility | **R1.0** | Core 1.0 API Maturity & Compatibility Foundation | 9 implementation tasks + 4 gates | IN PROGRESS | 9/9 | 25–35 ED | R0.9 released | Design Consult + Scope Confirmation + API/Compatibility Review + Security Review + Integration Freeze + Validation + Release Gate | 1.0.0 (target) |
+| API Maturity / Compatibility | **R1.0** | Core 1.0 API Maturity & Compatibility Foundation | 9 implementation tasks + 4 gates | ACCEPTED (Release Gate PASS; pending push) | 9/9 | 25–35 ED | R0.9 released | Design Consult + Scope Confirmation + API/Compatibility Review + Security Review + Integration Freeze + Validation + Release Gate | 1.0.0 (target) |
 
 ## R0.7 Task Tracker
 
@@ -260,7 +261,7 @@ And for milestone validation:
 
 R0.8 is fully released and closed (`kritva-core-r0.8`, version 0.8.0, release-record commit `cbbec81`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
 
-KF-CORE-R10 is the active planning milestone. Design Consult and Scope Confirmation are APPROVED; R10-001 (`1dba571`), R10-002 (`bbe10b6`) and R10-003 (`559d75f`) R10-004 (`a121c24`) and R10-005 (`2882cd2`) are ACCEPTED; the R10 API / Compatibility Review is PASS / FROZEN (freeze `55e57df`); R10-006 (`b44b14b`) is ACCEPTED; R10-007 (`f212e46`, F5 `30c461b`) is ACCEPTED; the R10 Integration Freeze is PASS / HONORED (freeze `660e4f4`); R10-008 (`c0edf1f`) is ACCEPTED, Security Architecture Review PASS; R10-009 (candidate `af16847`) is ACCEPTED; the R10 Release Gate is next.
+KF-CORE-R10 is the active planning milestone. Design Consult and Scope Confirmation are APPROVED; R10-001 (`1dba571`), R10-002 (`bbe10b6`) and R10-003 (`559d75f`) R10-004 (`a121c24`) and R10-005 (`2882cd2`) are ACCEPTED; the R10 API / Compatibility Review is PASS / FROZEN (freeze `55e57df`); R10-006 (`b44b14b`) is ACCEPTED; R10-007 (`f212e46`, F5 `30c461b`) is ACCEPTED; the R10 Integration Freeze is PASS / HONORED (freeze `660e4f4`); R10-008 (`c0edf1f`) is ACCEPTED, Security Architecture Review PASS; R10-009 (candidate `af16847`) is ACCEPTED; the R10 Release Gate is PASS / RELEASE AUTHORIZED (candidate `af16847`); the annotated tag `kritva-core-r1.0` is created locally on the release-record commit and awaits the owner push and independent remote verification.
 
 ## Deferred Known Issues
 
@@ -361,7 +362,7 @@ R0.8 remains RELEASED / SYNCHRONIZED / CLOSED. R0.9 (Capability Contract & Readi
 | R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | 0.5 ED | R10-007 | PASS / HONORED (freeze `660e4f4`) | Production freeze |
 | KF-CORE-R10-008 | Documentation / Security / Traceability Validation | 2–3 ED | Integration Freeze | ACCEPTED (`c0edf1f`) | Validation |
 | KF-CORE-R10-009 | Full Validation & Release Candidate | 2–3 ED | R10-008 | ACCEPTED (candidate `af16847`) | Release Gate input |
-| R10 Release Gate | Release 1.0.0 | 1 ED | R10-009 | READY | PASS required |
+| R10 Release Gate | Release 1.0.0 | 1 ED | R10-009 | PASS (release authorized) | PASS required |
 
 **R1.0 working estimate: 25–35 ED**, including architecture and release gates; actual effort remains unrecorded until supported by evidence.
 
