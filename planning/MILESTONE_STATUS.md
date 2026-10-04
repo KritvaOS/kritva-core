@@ -15,7 +15,7 @@ R1.0 is the active planning milestone. R0.9 remains RELEASED / SYNCHRONIZED / CL
 | KF-CORE-R07 | RELEASED | 7 / 7 tasks accepted | Component Operational API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.7` (annotated tag on release-record commit `424984f`; tag object `4aa3fab`; pushed to origin) | Target `kritva-core-r0.7` / version 0.7.0 |
 | KF-CORE-R08 | RELEASED | 7 / 7 tasks accepted | Configuration API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Release Gate PASS | `kritva-core-r0.8` (annotated tag on release-record commit `cbbec81`; tag object `2d576d7`; pushed to origin) | Target `kritva-core-r0.8` / version 0.8.0 |
 | KF-CORE-R09 | RELEASED | 7 / 7 tasks accepted | Capability API Review PASS / FROZEN, Integration Freeze PASS / HONORED, Security Architecture Review PASS, Release Gate PASS | `kritva-core-r0.9` / version 0.9.0 (annotated tag on release-record commit `d72343a`; tag object `f77fecb`; pushed to origin) |
-| KF-CORE-R10 | IN PROGRESS | 8 / 9 implementation tasks accepted | Design Consult APPROVED; Scope Confirmation APPROVED; R10-001..008 ACCEPTED; Integration Freeze PASS / HONORED; API / Compatibility Review PASS / FROZEN | `kritva-core-r1.0` / version 1.0.0 (target) |
+| KF-CORE-R10 | IN PROGRESS | 9 / 9 implementation tasks accepted | Design Consult APPROVED; Scope Confirmation APPROVED; R10-001..009 ACCEPTED; Integration Freeze PASS / HONORED; API / Compatibility Review PASS / FROZEN | `kritva-core-r1.0` / version 1.0.0 (target) |
 
 ## KF-CORE-R10 — Current Planning Status
 
@@ -33,8 +33,8 @@ R1.0 is the active planning milestone. R0.9 remains RELEASED / SYNCHRONIZED / CL
 | KF-CORE-R10-007 | ACCEPTED (`f212e46`, F5 `30c461b`) | R10-006 |
 | R10 Integration Freeze | PASS / HONORED (freeze `660e4f4`) | R10-007 |
 | KF-CORE-R10-008 | ACCEPTED (`c0edf1f`) | Integration Freeze PASS/HONORED |
-| KF-CORE-R10-009 | READY | R10-008 |
-| R10 Release Gate | PLANNED | R10-009 |
+| KF-CORE-R10-009 | ACCEPTED (candidate `af16847`) | R10-008 |
+| R10 Release Gate | READY | R10-009 |
 
 
 ## R02 Task Status

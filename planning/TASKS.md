@@ -289,8 +289,8 @@ R09 Release Gate
 | KF-CORE-R10-007 | Package / Install Compatibility | package/install | ACCEPTED (`f212e46`, F5 `30c461b`) | 2–3 ED |
 | R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | architecture | PASS / HONORED (`660e4f4`) | 0.5 ED |
 | KF-CORE-R10-008 | Documentation / Security / Traceability Validation | docs/security/traceability | ACCEPTED (`c0edf1f`) | 2–3 ED |
-| KF-CORE-R10-009 | Full Validation & Release Candidate | validation/release | READY | 2–3 ED |
-| R10 Release Gate | Release 1.0.0 | release | PLANNED | 1 ED |
+| KF-CORE-R10-009 | Full Validation & Release Candidate | validation/release | ACCEPTED (`af16847`) | 2–3 ED |
+| R10 Release Gate | Release 1.0.0 | release | READY | 1 ED |
 
 ## R10 Dependency Graph
 
