@@ -41,6 +41,7 @@ Accepted:
 - R09 Integration Freeze — PASS / HONORED (production freeze commit `4c86b53`; evidence `553258b`)
 
 Pending independent review:
+- KF-CORE-R09-006 — API Documentation, Security & Boundary Validation (`04f0859`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
