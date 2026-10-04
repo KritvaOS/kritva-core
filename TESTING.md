@@ -86,7 +86,7 @@ lifecycle_test.cpp
 
 ## 9b. Compatibility Policy Audit (R1.0)
 
-`scripts/audit/check_compat_policy.py` (run by `make check` and the CTests `kritva_core_compat_policy_audit` and `kritva_core_compat_policy_audit_self_test`) checks the pages under `docs/compatibility/`: required sections present, every header, document and requirement identifier named in backticks exists, each classification table holds only valid classes with every class present in the source and semantic sections, and the policy is linked from `docs/api/README.md` and `docs/api/API_GUIDELINES.md` (CORE-COMPAT-002, CORE-COMPAT-003). The self-test injects eight deliberate defects. The audit checks structure and references only; whether a classification is right is architecture review.
+`scripts/audit/check_compat_policy.py` (run by `make check` and the CTests `kritva_core_compat_policy_audit` and `kritva_core_compat_policy_audit_self_test`) checks the pages under `docs/compatibility/`: required sections present, every header, document and requirement identifier named in backticks exists, each classification table holds only valid classes with every class present in the source and semantic sections, and the policy is linked from `docs/api/README.md` and `docs/api/API_GUIDELINES.md` (CORE-COMPAT-002, CORE-COMPAT-003). The audit also covers `ABI_POLICY.md` (CORE-COMPAT-004) and fails if `CMakeLists.txt` introduces ABI machinery (`SOVERSION`, visibility settings, an export-header generator or a shared library target). The self-test injects twelve deliberate defects. The audit checks structure and references only; whether a classification is right is architecture review.
 
 ## 10. Completion Criteria
 

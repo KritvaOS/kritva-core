@@ -10,7 +10,7 @@
 # Module      : Audit
 # Layer       : Core Foundation
 #
-# Requirements: CORE-COMPAT-002, CORE-COMPAT-003
+# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004
 # API         : CORE-API-COMPATIBILITY-POLICY
 #
 # Author      : KritvaOS Core Team
@@ -18,7 +18,7 @@
 #==============================================================================
 """Audit docs/compatibility/ policy pages: structure and references only, never whether a classification is right.
 
-Checks (deterministic, no network, standard library only), for every policy page listed in POLICY_PAGES:
+Checks (deterministic, no network, standard library only), for every policy page listed in POLICY_PAGES (and the ABI-machinery guard on CMakeLists.txt):
   - the page exists and contains every required section (matched by heading keyword);
   - every header (`xxx/yyy.hpp`), document (`docs/...md`, or a page in docs/compatibility) and requirement id
     (`CORE-XXX-NNN`) it names in backticks exists (ids in REQUIREMENTS.md);
@@ -42,7 +42,14 @@ POLICY_PAGES = {
          "not security", "relationship", "traceability", "exclusions"],
         ["source compatibility", "semantic compatibility"],
     ),
+    "ABI_POLICY.md": (
+        ["purpose", "decision", "rationale", "not promised", "may rely", "future", "guard", "not security", "relationship",
+         "traceability", "exclusions"],
+        [],
+    ),
 }
+# ABI machinery that ABI_POLICY.md says does not exist; its appearance in the build forces the policy to be revisited.
+ABI_MACHINERY = re.compile(r"SOVERSION|VISIBILITY_PRESET|CXX_VISIBILITY|generate_export_header|GenerateExportHeader|add_library\s*\([^)]*\bSHARED\b", re.I)
 
 
 def read(path):
@@ -100,6 +107,9 @@ def audit(root):
             p = os.path.join(root, "docs", "api", entry)
             if not os.path.isfile(p) or page not in read(p):
                 errors.append(f"docs/api/{entry} does not link {page}")
+    cmake = os.path.join(root, "CMakeLists.txt")
+    if os.path.isfile(cmake) and ABI_MACHINERY.search(read(cmake)):
+        errors.append("CMakeLists.txt introduces ABI machinery (SOVERSION, visibility, export header or a shared library) that docs/compatibility/ABI_POLICY.md says does not exist")
     return errors, checked
 
 
@@ -132,6 +142,10 @@ def self_test(root):
         ("an undefined requirement id", lambda t: _edit(t, pol, "`CORE-COMPAT-002`", "`CORE-COMPAT-" + "999`"), "not defined in REQUIREMENTS.md"),
         ("an invalid class", lambda t: _edit(t, pol, r"\| Compatible \| Existing clients do not name it\.", "| Fine | Existing clients do not name it."), "invalid class"),
         ("a source section lacking the Incompatible class", _no_incompatible_in_source, "no row of class Incompatible"),
+        ("a missing ABI decision section", lambda t: _edit(t, "docs/compatibility/ABI_POLICY.md", r"^## 2\. Decision$", "## 2. Notes"), "'decision' is missing"),
+        ("a missing ABI guard section", lambda t: _edit(t, "docs/compatibility/ABI_POLICY.md", r"^## 7\. Guard$", "## 7. Notes"), "'guard' is missing"),
+        ("ABI machinery added to the build", lambda t: _edit(t, "CMakeLists.txt", r"^add_library\(kritva_core$", "set_target_properties(kritva_core PROPERTIES SOVERSION 1)\nadd_library(kritva_core"), "introduces ABI machinery"),
+        ("an undefined ABI requirement", lambda t: _edit(t, "docs/compatibility/ABI_POLICY.md", "`CORE-COMPAT-004`", "`CORE-COMPAT-" + "998`"), "not defined in REQUIREMENTS.md"),
         ("an unlinked page", lambda t: _edit(t, "docs/api/API_GUIDELINES.md", "COMPATIBILITY_POLICY.md", "POLICY.md"), "does not link"),
     ]
     failures = 0
@@ -143,6 +157,7 @@ def self_test(root):
                 shutil.copytree(os.path.join(root, "docs", d), os.path.join(tmp, "docs", d))
             os.symlink(os.path.join(root, "include"), os.path.join(tmp, "include"))
             shutil.copy(os.path.join(root, "REQUIREMENTS.md"), os.path.join(tmp, "REQUIREMENTS.md"))
+            shutil.copy(os.path.join(root, "CMakeLists.txt"), os.path.join(tmp, "CMakeLists.txt"))
             mutate(tmp)
             errors, _ = audit(tmp)
             if not any(expected in e for e in errors):

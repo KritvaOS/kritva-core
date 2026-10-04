@@ -13,6 +13,10 @@
   incompatible until the evolution process of R10-004 exists). `scripts/audit/check_compat_policy.py` audits its
   structure and references (`make check`, two CTests). No header, source or behavior change; no ABI, version-number,
   deprecation or package rule is defined.
+- **R10-003 — ABI / binary compatibility policy (CORE-COMPAT-004).** `docs/compatibility/ABI_POLICY.md` decides that
+  Core 1.x promises no ABI or binary compatibility (with the rationale, what is not promised, what clients may rely on
+  and the conditions for any future promise). The policy audit now also fails if ABI machinery (SOVERSION, visibility,
+  export header, shared library) appears in `CMakeLists.txt`. No ABI mechanism, header, source or behavior change.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 
