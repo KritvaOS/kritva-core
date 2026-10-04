@@ -34,6 +34,11 @@
   `deprecated` applies to a whole header only, item-level deprecation living in the register; patch releases are tagged
   `kritva-core-rMAJOR.MINOR.PATCH` (`MAJOR.MINOR.0` releases keep `kritva-core-rMAJOR.MINOR`). The compatibility audit
   checks each rule mechanically. No header, source or behavior change.
+- **R10-006 — Compatibility and boundary validation harness (CORE-COMPAT-009).** `tests/compat/api_surface.snapshot` and
+  `scripts/audit/check_api_surface.py` detect any change to the public declaration surface and classify it as an
+  Incompatible, Review-required or Compatible candidate (`make check`, two CTests, 14 self-test cases);
+  `tests/unit/api_compat_boundary_test.cpp` pins enumeration values, stable value-type properties and the shape of every
+  client-implemented virtual interface at compile time. Tests and tooling only: no header, source or behavior change.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 

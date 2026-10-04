@@ -163,6 +163,20 @@ compat-policy-check: ## Audit the compatibility policy pages (structure and refe
 	$(PYTHON) $(SCRIPT_DIR)/audit/check_compat_policy.py
 
 #------------------------------------------------------------------------------
+# Public API Surface Snapshot Audit (R1.0)
+#
+# Detects any change to the public declaration surface against the reviewed snapshot.
+#------------------------------------------------------------------------------
+.PHONY: api-surface-check api-surface-update
+
+api-surface-check: ## Compare the public API surface with tests/compat/api_surface.snapshot
+	@echo "[api-surface] Auditing public API surface..."
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_surface.py
+
+api-surface-update: ## Regenerate the API surface snapshot (a deliberate change; needs an evolution review)
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_surface.py --update
+
+#------------------------------------------------------------------------------
 # Code Formatting
 #------------------------------------------------------------------------------
 
@@ -197,7 +211,7 @@ lint: ## Run static analysis and lint checks
 
 .PHONY: check
 
-check: header-check traceability-check api-docs-check api-inventory-check compat-policy-check format-check lint ## Run all local repository checks
+check: header-check traceability-check api-docs-check api-inventory-check compat-policy-check api-surface-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
 
