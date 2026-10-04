@@ -17,7 +17,7 @@
 #==============================================================================
 
 cmake_minimum_required(VERSION 3.24)
-project(kritva-core VERSION 0.9.0 LANGUAGES CXX)
+project(kritva-core VERSION 1.0.0 LANGUAGES CXX)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

@@ -1,6 +1,21 @@
 # Changelog
 
-## Unreleased — Core 1.0 API Maturity & Compatibility Foundation (KF-CORE-R10, in progress)
+## 1.0.0 — Core 1.0 API Maturity & Compatibility Foundation (KF-CORE-R10)
+
+Kritva Core 1.0.0 is the first release governed by an explicit compatibility and evolution contract. It adds **no
+production type, signature or behavior** to the functional foundation of R0.2-R0.9: the headers and sources are
+byte-identical to `kritva-core-r0.9`. The single production-side change is the installed CMake package version
+selection (same MAJOR, installed >= requested). The release defines how the foundation may evolve:
+
+- source and semantic compatibility classes, release impact (Semantic Versioning) and an evolution review;
+- an explicit decision that **no ABI or binary compatibility is promised**;
+- a deprecation and migration lifecycle (no item is deprecated at 1.0.0);
+- an inventory of all 49 installed public headers, a public declaration surface snapshot and a compile-time boundary
+  test that detect accidental changes;
+- security decisions SD-R10-01..07 (compatibility, package selection and release boundaries; no security mechanism);
+- maintained API pages for `ERROR_CODES`, `COMPONENT`, `PLATFORM_ADAPTER` and `RUNTIME`.
+
+Per-task detail:
 
 - **R10-001 — Public API inventory (CORE-COMPAT-001).** `docs/compatibility/API_INVENTORY.md` lists and classifies all 49
   installed public headers (every one `stable`; sensitivity flags; owning documentation and status), with the
