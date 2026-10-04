@@ -71,14 +71,14 @@ Milestone → Task → Acceptance Criteria → Implementation → Unit Tests →
 
 ## Current State
 
-R0.7 is released and closed:
+R0.8 is released and closed:
 
-- `kritva-core-r0.7`
-- version `0.7.0`
-- release-record commit `424984f`
+- `kritva-core-r0.8`
+- version `0.8.0`
+- release-record commit `cbbec81`
 - remote verification: PASS / RELEASED / SYNCHRONIZED / CLOSED
 
-R0.2 to R0.6 are also released and closed. R0.7 added read-only Component operational observation, Component-owned Status/Health/optional statistics semantics and explicit Event reporting to integrator-owned sinks, with the Runtime lifecycle unchanged and `kritva-core` still platform independent.
+R0.2 to R0.7 are also released and closed. R0.8 hardened the existing configuration path into a normative contract (lifecycle eligibility, ownership, atomic application, validation boundary, `ConfigurationVersion` as schema compatibility version, Runtime forwarding and failure isolation) with no production type, signature or behavior change, and `kritva-core` still platform independent.
 
-See `MASTER_TRACKER.md` and `milestones/KF-CORE-R07/`.
+See `MASTER_TRACKER.md` and `milestones/KF-CORE-R08/`.
 
