@@ -92,7 +92,9 @@ A change is **semantically compatible** when every client that relies only on th
 | Change when or in what order Core calls a virtual of a client-implemented interface, or what it expects back | Incompatible | Implementers rely on the call contract. |
 | Change observable behavior that no contract states (section 4) | Compatible | It is not promised; a client that relied on it was outside the contract. |
 | Change the text of an `Error` message | Compatible | The message is for humans and is not parsed or compared. |
-| Fix behavior that contradicts its own documented contract | Compatible | The documented contract is what is promised; the fix is recorded in the changelog. |
+| Fix behavior that contradicts its own documented contract, restoring the implementation to the already-authoritative contract | Compatible | The documented contract is what is promised; the fix must be recorded in the changelog and covered by a regression test, and it must not be used to reinterpret an ambiguous contract. |
+
+If the existing contract is itself ambiguous, a fix that chooses one interpretation is an evolution decision (R10-004), not a compatible bug fix.
 
 A signature-preserving change of documented behavior is therefore a semantic API change and is classified and reviewed exactly like a signature change (design decision D06).
 
