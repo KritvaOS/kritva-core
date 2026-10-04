@@ -36,6 +36,7 @@ Accepted:
 - KF-CORE-R09-002 — CapabilitySet Invariants & Version Semantics (`4bd241e`; evidence `7bcd90d`)
 
 Pending independent review:
+- KF-CORE-R09-003 — Requirement / Capability Matching Boundary (`e91a51f`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
