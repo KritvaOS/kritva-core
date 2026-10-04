@@ -29,7 +29,14 @@ Proposed requirement domain: `CORE-CAP-004..011`.
 Planned effort: 22–30 ED; actual effort not yet recorded.
 
 
-## KF-CORE-R08 — Component Configuration Foundation Planning
+### KF-CORE-R09 — Capability Contract Implementation
+
+Accepted:
+
+Pending independent review:
+- KF-CORE-R09-001 — Capability Contract & Provider Semantics (`4081dc0`)
+
+### KF-CORE-R07 — Component Operational Foundation Planning
 
 Architecture and scope confirmed. R0.8 planning package prepared; implementation not started.
 

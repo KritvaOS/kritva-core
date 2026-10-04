@@ -233,7 +233,7 @@ API freeze gates are mandatory.
 |---|---|---|---|---:|
 | R09 Design Consult | Capability/readiness model and architectural boundary | architecture | APPROVED | 2–3 ED |
 | R09 Scope Confirmation | Confirm milestone scope and exclusions | architecture | APPROVED | 1 ED |
-| KF-CORE-R09-001 | Capability Contract & Provider Semantics | capability | PLANNED | 2–3 ED |
+| KF-CORE-R09-001 | Capability Contract & Provider Semantics | capability | REVIEW (4081dc0) | 2–3 ED |
 | KF-CORE-R09-002 | CapabilitySet Invariants & Version Semantics | capability | PLANNED | 2–3 ED |
 | KF-CORE-R09-003 | Requirement / Capability Matching Boundary | platform/requirements | PLANNED | 2–3 ED |
 | R09 Capability API Review | Freeze public capability semantics | architecture | PLANNED | 1 ED |

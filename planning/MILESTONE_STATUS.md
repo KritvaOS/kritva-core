@@ -280,3 +280,21 @@ Release: Kritva Core R0.8, version 0.8.0; release candidate `1e7ba2b`; tag `krit
 - [ ] Annotated `kritva-core-r0.9` tag authorized only after PASS.
 - [ ] Remote `main`, tag object and peeled tag independently verified.
 - [ ] RELEASED / SYNCHRONIZED / CLOSED recorded.
+
+
+## R0.9 Task Status
+
+| ID | Status | Dependency | Est. Effort |
+|---|---|---|---:|
+| R09 Design Consult | APPROVED | R0.8 released | 2–3 ED |
+| R09 Scope Confirmation | APPROVED | Design Consult | 1 ED |
+| KF-CORE-R09-001 | REVIEW (4081dc0) | Scope Confirmation | 2–3 ED |
+| KF-CORE-R09-002 | PLANNED | R09-001 | 2–3 ED |
+| KF-CORE-R09-003 | PLANNED | R09-002 | 2–3 ED |
+| R09 Capability API Review | PLANNED | R09-001..003 | 1 ED |
+| KF-CORE-R09-004 | PLANNED | API Review PASS/FROZEN | 3–4 ED |
+| KF-CORE-R09-005 | PLANNED | R09-004 | 3–4 ED |
+| R09 Integration Freeze | PLANNED | R09-005 | 0.5 ED |
+| KF-CORE-R09-006 | PLANNED | Integration Freeze PASS/HONORED | 2–3 ED |
+| KF-CORE-R09-007 | PLANNED | R09-006 | 2–3 ED |
+| R09 Release Gate | PLANNED | R09-007 | 1 ED |
