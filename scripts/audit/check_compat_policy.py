@@ -10,7 +10,7 @@
 # Module      : Audit
 # Layer       : Core Foundation
 #
-# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004, CORE-COMPAT-005, CORE-COMPAT-006, CORE-COMPAT-007, CORE-COMPAT-008
+# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004, CORE-COMPAT-005, CORE-COMPAT-006, CORE-COMPAT-007, CORE-COMPAT-008, CORE-COMPAT-010
 # API         : CORE-API-COMPATIBILITY-POLICY
 #
 # Author      : KritvaOS Core Team
@@ -225,6 +225,21 @@ def audit_cross_policy(root, errors):
                 errors.append(f"API_INVENTORY.md classes {m.group(1)} as deprecated but DEPRECATIONS.md has no row for it")
 
 
+def audit_package_rule(root, errors):
+    """The package build must implement the version-selection rule of VERSIONING_POLICY.md (same MAJOR, installed >= requested)."""
+    cmake = os.path.join(root, "CMakeLists.txt")
+    if not os.path.isfile(cmake):
+        return
+    m = re.search(r"write_basic_package_version_file\([^)]*COMPATIBILITY\s+(\w+)", read(cmake))
+    if not m:
+        errors.append("CMakeLists.txt has no write_basic_package_version_file COMPATIBILITY mode")
+    elif m.group(1) != "SameMajorVersion":
+        errors.append(f"CMakeLists.txt uses the package COMPATIBILITY mode {m.group(1)}, which does not implement the version-selection rule of docs/compatibility/VERSIONING_POLICY.md (SameMajorVersion)")
+    for rel in ("tests/install/package_version_matrix.cmake", "tests/install/run_install_test.cmake"):
+        if os.path.isdir(os.path.join(root, "tests")) and not os.path.isfile(os.path.join(root, rel)):
+            errors.append(f"{rel} (package version-selection validation) is missing")
+
+
 def audit(root):
     errors = []
     base = os.path.join(root, "docs", "compatibility")
@@ -273,6 +288,7 @@ def audit(root):
                 errors.append(f"docs/api/{entry} does not link {page}")
     audit_deprecations(root, errors)
     audit_cross_policy(root, errors)
+    audit_package_rule(root, errors)
     cmake = os.path.join(root, "CMakeLists.txt")
     if os.path.isfile(cmake) and ABI_MACHINERY.search(read(cmake)):
         errors.append("CMakeLists.txt introduces ABI machinery (SOVERSION, visibility, export header or a shared library) that docs/compatibility/ABI_POLICY.md says does not exist")
@@ -342,6 +358,7 @@ def self_test(root):
         ("a whole header classed deprecated without a register row", lambda t: _edit(t, "docs/compatibility/API_INVENTORY.md", r"(\| `capability/capability_id.hpp` \| capability \| )stable", r"\1deprecated"), "has no row for it"),
         ("a tag that contradicts the naming rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| 1\.0\.1 \| )`kritva-core-r1\.0\.1`", r"\1`kritva-core-r1.0`"), "contradicts the tag naming rule"),
         ("a missing patch-tag rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", "for a patch release", "for a release"), "patch release"),
+        ("a package mode that does not implement the rule", lambda t: _edit(t, "CMakeLists.txt", "COMPATIBILITY SameMajorVersion", "COMPATIBILITY SameMinorVersion"), "does not implement the version-selection rule"),
         ("an unlinked page", lambda t: _edit(t, "docs/api/API_GUIDELINES.md", "COMPATIBILITY_POLICY.md", "POLICY.md"), "does not link"),
     ]
     failures = 0

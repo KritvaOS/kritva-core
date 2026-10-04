@@ -9,7 +9,7 @@
 # Module      : Build
 # Layer       : Development Infrastructure
 #
-# Requirements: CORE-BUILD-001, CORE-BUILD-002
+# Requirements: CORE-BUILD-001, CORE-BUILD-002, CORE-COMPAT-010
 # API         : CMake
 #
 # Author      : KritvaOS Core Team
@@ -73,11 +73,13 @@ configure_package_config_file(
     INSTALL_DESTINATION ${KRITVA_CORE_CMAKE_INSTALL_DIR}
 )
 
-# Pre-1.0: a different minor version may change the API, so match the minor.
+# Core 1.x version selection (docs/compatibility/VERSIONING_POLICY.md, CORE-COMPAT-010): the same MAJOR and an installed
+# version greater than or equal to the requested one are accepted; a newer MINOR or PATCH and a different MAJOR are
+# rejected. Validated by tests/install (kritva_core_install_consumer, kritva_core_package_version_matrix).
 write_basic_package_version_file(
     ${CMAKE_CURRENT_BINARY_DIR}/kritva_coreConfigVersion.cmake
     VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMinorVersion
+    COMPATIBILITY SameMajorVersion
 )
 
 install(FILES
@@ -451,6 +453,22 @@ if(KRITVA_CORE_BUILD_TESTS)
             "-DCXX_FLAGS=${CMAKE_CXX_FLAGS}"
             -DCONFIG=$<CONFIG>
             -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/install/run_install_test.cmake
+    )
+
+    #Add Test: tests/install/package_version_matrix.cmake (find_package version selection against the documented rule)
+    add_test(NAME kritva_core_package_version_matrix
+        COMMAND ${CMAKE_COMMAND}
+            -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
+            -DWORK_DIR=${CMAKE_BINARY_DIR}/package_version_matrix
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/install/package_version_matrix.cmake
+    )
+    add_test(NAME kritva_core_package_version_matrix_detects_minor_mode
+        COMMAND ${CMAKE_COMMAND}
+            -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
+            -DWORK_DIR=${CMAKE_BINARY_DIR}/package_version_matrix_negative
+            -DMODE=SameMinorVersion
+            -DEXPECT_MISMATCH=ON
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/install/package_version_matrix.cmake
     )
 
 endif()

@@ -9,7 +9,7 @@
 # Module      : Install Test
 # Layer       : Development Infrastructure
 #
-# Requirements: CORE-BUILD-002
+# Requirements: CORE-BUILD-002, CORE-COMPAT-010
 # API         : CTest script
 #
 # Author      : KritvaOS Core Team
@@ -101,29 +101,47 @@ if(NOT consumer_exe)
 endif()
 run_step(run "${consumer_exe}")
 
-# 5. Version compatibility (SameMinorVersion, pre-1.0): the installed major.minor is accepted;
-#    the previous and next minor and another major are refused. Requests are derived from
-#    EXPECTED_VERSION so the test follows the project version.
+# 5. Version selection of the installed package (docs/compatibility/VERSIONING_POLICY.md, section 6): same MAJOR and
+#    installed >= requested are accepted; a newer MINOR or PATCH and another MAJOR are refused; EXACT only accepts the
+#    installed version string. Requests are derived from EXPECTED_VERSION so the test follows the project version; the
+#    full matrix over several installed versions is the CTest kritva_core_package_version_matrix.
+string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" _mmp "${EXPECTED_VERSION}")
+set(core_patch "${CMAKE_MATCH_3}")
+math(EXPR next_patch "${core_patch} + 1")
 math(EXPR next_minor "${core_minor} + 1")
-set(accepted "${core_major}.${core_minor}" "${EXPECTED_VERSION}")
-set(refused "${core_major}.${next_minor}" "9.0")
-if(core_minor GREATER 0)
-  math(EXPR previous_minor "${core_minor} - 1")
-  list(APPEND refused "${core_major}.${previous_minor}")
+math(EXPR next_major "${core_major} + 1")
+set(accepted "${core_major}" "${core_major}.0" "${core_major}.${core_minor}" "${EXPECTED_VERSION}")
+set(refused "${core_major}.${core_minor}.${next_patch}" "${core_major}.${next_minor}" "${next_major}.0" "9.0")
+if(core_major GREATER 0)
+  math(EXPR previous_major "${core_major} - 1")
+  list(APPEND refused "${previous_major}.${core_minor}")
 endif()
-foreach(request IN LISTS accepted refused)
+set(exact_accepted "${EXPECTED_VERSION}")
+set(exact_refused "${core_major}.${core_minor}" "${core_major}.${core_minor}.${next_patch}")
+function(try_request label request exact_flag expect_accept)
   execute_process(
-    COMMAND "${CMAKE_COMMAND}" -S "${CONSUMER_SOURCE_DIR}" -B "${WORK_DIR}/consumer-version-${request}"
+    COMMAND "${CMAKE_COMMAND}" -S "${CONSUMER_SOURCE_DIR}" -B "${WORK_DIR}/consumer-version-${label}-${request}"
             "-DCMAKE_PREFIX_PATH=${prefix}" "-DCMAKE_CXX_COMPILER=${CXX_COMPILER}"
             "-DCMAKE_CXX_FLAGS=${CXX_FLAGS}" "-DKRITVA_CORE_REQUIRE_VERSION=${request}"
-            "-DKRITVA_CORE_EXPECT_VERSION=${EXPECTED_VERSION}"
+            "-DKRITVA_CORE_REQUIRE_EXACT=${exact_flag}" "-DKRITVA_CORE_EXPECT_VERSION=${EXPECTED_VERSION}"
     RESULT_VARIABLE version_rc OUTPUT_QUIET ERROR_QUIET)
-  list(FIND accepted "${request}" is_accepted)
-  if(NOT is_accepted EQUAL -1 AND NOT version_rc EQUAL 0)
-    message(FATAL_ERROR "find_package refused compatible version request ${request}")
-  elseif(is_accepted EQUAL -1 AND version_rc EQUAL 0)
-    message(FATAL_ERROR "find_package accepted incompatible version request ${request}")
+  if(expect_accept AND NOT version_rc EQUAL 0)
+    message(FATAL_ERROR "find_package refused the compatible ${label} request ${request}")
+  elseif(NOT expect_accept AND version_rc EQUAL 0)
+    message(FATAL_ERROR "find_package accepted the incompatible ${label} request ${request}")
   endif()
+endfunction()
+foreach(request IN LISTS accepted)
+  try_request(compatible "${request}" OFF TRUE)
+endforeach()
+foreach(request IN LISTS refused)
+  try_request(incompatible "${request}" OFF FALSE)
+endforeach()
+foreach(request IN LISTS exact_accepted)
+  try_request(exact-compatible "${request}" ON TRUE)
+endforeach()
+foreach(request IN LISTS exact_refused)
+  try_request(exact-incompatible "${request}" ON FALSE)
 endforeach()
 
 message(STATUS "kritva_core install test: PASSED")

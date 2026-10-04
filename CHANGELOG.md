@@ -39,6 +39,12 @@
   Incompatible, Review-required or Compatible candidate (`make check`, two CTests, 14 self-test cases);
   `tests/unit/api_compat_boundary_test.cpp` pins enumeration values, stable value-type properties and the shape of every
   client-implemented virtual interface at compile time. Tests and tooling only: no header, source or behavior change.
+- **R10-007 — Package / install compatibility (CORE-COMPAT-010).** The CMake package version file now uses the
+  same-MAJOR mode (`SameMajorVersion`) instead of the pre-1.0 same-MINOR mode: a request is accepted only for the same
+  MAJOR with installed >= requested, a newer MINOR/PATCH or another MAJOR is rejected, and EXACT only accepts the
+  installed version string. Validated by the installed-consumer test and by a find_package version matrix over several
+  installed versions (which also detects the old mode). Build change only; no header, source or API change; the project
+  version is unchanged until the release candidate.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 
