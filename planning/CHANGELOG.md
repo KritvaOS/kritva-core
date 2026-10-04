@@ -38,6 +38,7 @@ Accepted:
 - R09 Capability API Review — PASS / FROZEN (production freeze commit `4c86b53`; evidence `c84bb9c`)
 
 Pending independent review:
+- KF-CORE-R09-004 — Reference Capability & Requirement Harness (`2608795`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
