@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-001 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define capability contract` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -122,10 +122,12 @@ Primary commit: `4081dc0` `feat(core): define capability contract` (consult appr
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `4081dc0` (evidence `7a727e8`; baseline `c250c54`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-001 is not yet accepted.**
+Reviewer notes: no production type, signature or behavior change (contract text in `capability.hpp` and `capability_id.hpp`); the identity-only rule, name as metadata, by-value provider snapshots, provision distinct from requirement, and the approved invalid-identity wording (storable entry, authoritative capability and satisfied requirement kept distinct) are accepted; the synchronized `docs/api/capability/CAPABILITY.md`, the 11 detected mutants and the task-level security classification (DOCUMENTATION ONLY) are accepted; the baseline reconciliation `c250c54` is accepted. `CORE-CAP-004` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-001 is ACCEPTED.**

@@ -281,7 +281,7 @@ Deferred issues must not silently enter R0.8 implementation scope.
 |---|---|---:|---|---|---|
 | R09 Design Consult | Capability/readiness model and architectural boundary | 2–3 ED | R0.8 released | APPROVED | Scope input |
 | R09 Scope Confirmation | Confirm milestone scope and exclusions | 1 ED | Design Consult | APPROVED | Implementation authorization input |
-| KF-CORE-R09-001 | Capability Contract & Provider Semantics | 2–3 ED | Scope Confirmation | REVIEW (4081dc0) | Capability contract |
+| KF-CORE-R09-001 | Capability Contract & Provider Semantics | 2–3 ED | Scope Confirmation | ACCEPTED (4081dc0) | Capability contract |
 | KF-CORE-R09-002 | CapabilitySet Invariants & Version Semantics | 2–3 ED | R09-001 | PLANNED | Capability semantics |
 | KF-CORE-R09-003 | Requirement / Capability Matching Boundary | 2–3 ED | R09-002 | PLANNED | API review input |
 | R09 Capability API Review | Freeze public capability semantics | 1 ED | R09-001..003 | PLANNED | API freeze |

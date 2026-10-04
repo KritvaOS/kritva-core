@@ -32,9 +32,9 @@ Planned effort: 22–30 ED; actual effort not yet recorded.
 ### KF-CORE-R09 — Capability Contract Implementation
 
 Accepted:
+- KF-CORE-R09-001 — Capability Contract & Provider Semantics (`4081dc0`; evidence `7a727e8`; baseline `c250c54`)
 
 Pending independent review:
-- KF-CORE-R09-001 — Capability Contract & Provider Semantics (`4081dc0`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
