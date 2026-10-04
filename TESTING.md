@@ -80,6 +80,10 @@ lifecycle_state.hpp
 lifecycle_test.cpp
 ```
 
+## 9a. Public API Inventory Audit (R1.0)
+
+`scripts/audit/check_api_inventory.py` (run by `make check` and the CTests `kritva_core_api_inventory_audit` and `kritva_core_api_inventory_audit_self_test`) checks `docs/compatibility/API_INVENTORY.md` against the installed headers: every installed header listed exactly once, every listed header present, valid stability classes and flags, documentation references resolving to pages listed in `docs/api/API_INDEX.md` with the stated status, and the Enum, Virt and Thr flags consistent with the header text (CORE-COMPAT-001). The self-test injects sixteen deliberate defects and requires each to be reported. The audit checks structure and references only; it does not judge what a stability class means.
+
 ## 10. Completion Criteria
 
 A feature is complete only after requirement coverage, API documentation, implementation, relevant tests, successful build/test, and final diff review.

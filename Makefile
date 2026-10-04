@@ -141,6 +141,17 @@ api-docs-check: ## Audit the Markdown API documentation (structure and reference
 	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_docs.py
 
 #------------------------------------------------------------------------------
+# Public API Inventory Audit (R1.0)
+#
+# Mechanical audit of docs/compatibility/API_INVENTORY.md against include/kritva/core/.
+#------------------------------------------------------------------------------
+.PHONY: api-inventory-check
+
+api-inventory-check: ## Audit the public API inventory against the installed headers
+	@echo "[api-inventory] Auditing public API inventory..."
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_inventory.py
+
+#------------------------------------------------------------------------------
 # Code Formatting
 #------------------------------------------------------------------------------
 
@@ -175,7 +186,7 @@ lint: ## Run static analysis and lint checks
 
 .PHONY: check
 
-check: header-check traceability-check api-docs-check format-check lint ## Run all local repository checks
+check: header-check traceability-check api-docs-check api-inventory-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
 

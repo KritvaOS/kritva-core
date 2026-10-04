@@ -17,6 +17,13 @@
 9. Security impact is classified.
 10. Full task validation passes and no unexplained regression is introduced.
 
+## Concrete Acceptance Gate (approved at plan alignment)
+
+- 49/49 current public headers inventoried; 0 duplicate, 0 missing, 0 invalid classifications, 0 broken documentation references.
+- `check_api_inventory.py --self-test` passes (every deliberate defect detected); the CTests and `make check` pass.
+- Traceability passes with CORE-COMPAT-001 defined and traced.
+- `git diff 27934bf HEAD -- include src` is empty; no version change.
+
 ## Security Impact
 
 Record exactly one approved classification.

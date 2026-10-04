@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — Core 1.0 API Maturity & Compatibility Foundation (KF-CORE-R10, in progress)
+
+- **R10-001 — Public API inventory (CORE-COMPAT-001).** `docs/compatibility/API_INVENTORY.md` lists and classifies all 49
+  installed public headers (every one `stable`; sensitivity flags; owning documentation and status), with the
+  documentation decisions recorded. `scripts/audit/check_api_inventory.py` audits it against `include/kritva/core/`
+  (`make check`, two CTests). No header, source or behavior change; no ABI or compatibility rule is defined by the
+  inventory itself.
+
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 
 A precise, generic contract around the existing capability mechanisms (`Capability`, `CapabilityId`, `CapabilitySet`,
