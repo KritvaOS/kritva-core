@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-004 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `test(core): add capability contract reference harness` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 3–4 ED |
@@ -121,10 +121,12 @@ Primary commit: `2608795` `test(core): add capability contract reference harness
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `2608795` (evidence `9d0a81d`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-004 is not yet accepted.**
+Reviewer notes: test-only (no production diff since the freeze commit `4c86b53`); the reusable set, provider and requirement conformance checks over the real implementations and independent defect models, the 45 defects each detected by the clause written for it, the 38 clause-removal mutants (37 killed; the one survivor is explained by the by-value return type) and the 11 production mutants are accepted; the one amendment of the unreviewed evidence commit corrected a count. `CORE-CAP-010` is authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-004 is ACCEPTED.**
