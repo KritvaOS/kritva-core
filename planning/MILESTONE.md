@@ -282,7 +282,7 @@ See `planning/milestones/KF-CORE-R09/` for the complete architecture, task accep
 
 ## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation
 
-Status: PLANNED — Design Consult APPROVED; Scope Confirmation pending; implementation not authorized.
+Status: PLANNED — Design Consult and Scope Confirmation APPROVED; R10-001 authorized.
 
 ### Objective
 
