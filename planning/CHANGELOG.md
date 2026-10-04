@@ -38,6 +38,7 @@ Accepted:
 - R09 Capability API Review — PASS / FROZEN (production freeze commit `4c86b53`; evidence `c84bb9c`)
 - KF-CORE-R09-004 — Reference Capability & Requirement Harness (`2608795`; evidence `9d0a81d`)
 - KF-CORE-R09-005 — Component Readiness / Lifecycle Boundary Integration (`0f6b6c3`; evidence `9a086ae`)
+- R09 Integration Freeze — PASS / HONORED (production freeze commit `4c86b53`; evidence `553258b`)
 
 Pending independent review:
 

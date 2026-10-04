@@ -68,9 +68,13 @@ Carried forward: 32-bit scheduler affinity mask; conformance level-2 mutation ga
 
 ## Decision
 
-To be completed by independent reviewer:
+Reviewer decision: **PASS / HONORED** (05-10-2026), ChatGPT (independent reviewer). Evidence commit `553258b`.
 
-**PASS / HONORED** or **CHANGES REQUIRED** or **BLOCKED**
+**Production freeze commit: `4c86b53`** (Capability API Review freeze; last production change R09-003 `e91a51f`); validation head `1679463`. R09-004 `2608795` and R09-005 `0f6b6c3` changed tests, documentation and requirements only. `git diff 4c86b53 HEAD -- include src` is empty: production code, API and behavior are unchanged after the freeze. Documentation drift: none. Security boundary change: none. Open blockers: 0.
+
+Allowed after the freeze: tests, documentation, requirements/traceability, validation tooling, security records and release metadata. Not allowed without an explicit architecture-review exception: production API changes, production semantic or behavior changes, and new readiness or dependency infrastructure. R09-006 must preserve the same rule while adding the documentation audit tooling, the boundary snapshot, the security review and the install-consumer validation.
+
+Non-blocking open issues retained: the 32-bit scheduler affinity mask; the conformance level-2 mutation gap; the `make lint` / `make format-check` stubs; the documented non-owning lifetime rule; the storable invalid-identity entry (documented, `add()` unchanged).
 
 ## Freeze Rule
 
