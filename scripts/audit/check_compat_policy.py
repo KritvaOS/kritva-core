@@ -10,7 +10,7 @@
 # Module      : Audit
 # Layer       : Core Foundation
 #
-# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004
+# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004, CORE-COMPAT-005, CORE-COMPAT-006, CORE-COMPAT-007
 # API         : CORE-API-COMPATIBILITY-POLICY
 #
 # Author      : KritvaOS Core Team
@@ -18,7 +18,7 @@
 #==============================================================================
 """Audit docs/compatibility/ policy pages: structure and references only, never whether a classification is right.
 
-Checks (deterministic, no network, standard library only), for every policy page listed in POLICY_PAGES (and the ABI-machinery guard on CMakeLists.txt):
+Checks (deterministic, no network, standard library only), for every policy page listed in POLICY_PAGES (the release-impact table is checked for consistency with the compatibility classes, the package examples against the documented selection rule, and CMakeLists.txt for the ABI-machinery guard):
   - the page exists and contains every required section (matched by heading keyword);
   - every header (`xxx/yyy.hpp`), document (`docs/...md`, or a page in docs/compatibility) and requirement id
     (`CORE-XXX-NNN`) it names in backticks exists (ids in REQUIREMENTS.md);
@@ -42,6 +42,11 @@ POLICY_PAGES = {
          "not security", "relationship", "traceability", "exclusions"],
         ["source compatibility", "semantic compatibility"],
     ),
+    "VERSIONING_POLICY.md": (
+        ["purpose", "version identity", "release impact", "enumerations", "evolution review", "package version selection",
+         "not security", "relationship", "traceability", "exclusions"],
+        [],
+    ),
     "ABI_POLICY.md": (
         ["purpose", "decision", "rationale", "not promised", "may rely", "future", "guard", "not security", "relationship",
          "traceability", "exclusions"],
@@ -61,6 +66,56 @@ def sections(text):
     """Map lower-cased heading text -> body, for '## ' headings."""
     parts = re.split(r"^##\s+(.+)$", text, flags=re.M)
     return {parts[i].lower(): parts[i + 1] for i in range(1, len(parts) - 1, 2)}
+
+
+IMPACTS = {"MAJOR", "MINOR", "PATCH"}
+# compatibility class -> release impacts the policy may assign (an Incompatible change is never MINOR or PATCH, a
+# Review-required change is never PATCH, a Compatible change is never MAJOR)
+ALLOWED_IMPACT = {"Incompatible": {"MAJOR"}, "Review-required": {"MINOR", "MAJOR"}, "Compatible": {"MINOR", "PATCH"}}
+
+
+def parse_version(text):
+    return tuple(int(x) for x in text.split("."))
+
+
+def package_accepts(installed, requested):
+    """The documented selection rule: same MAJOR and installed >= requested (missing components are 0)."""
+    i, r = parse_version(installed), parse_version(requested)
+    r = r + (0,) * (3 - len(r))
+    return i[0] == r[0] and i[:3] >= r[:3]
+
+
+def audit_versioning(page, text, errors):
+    secs = sections(text)
+    impact_rows = 0
+    seen_impacts = set()
+    for line in secs.get(next((h for h in secs if "release impact" in h), ""), "").splitlines():
+        m = re.match(r"^\|(.+)\|\s*([A-Za-z-]+)\s*\|\s*([A-Z]+)\s*\|(.+)\|\s*$", line)
+        if not m or m.group(2) in ("Compatibility class",):
+            continue
+        cls, impact = m.group(2), m.group(3)
+        impact_rows += 1
+        if cls not in CLASSES:
+            errors.append(f"docs/compatibility/{page}: a release-impact row has the invalid class '{cls}'")
+        elif impact not in IMPACTS:
+            errors.append(f"docs/compatibility/{page}: a release-impact row has the invalid impact '{impact}'")
+        else:
+            seen_impacts.add(impact)
+            if impact not in ALLOWED_IMPACT[cls]:
+                errors.append(f"docs/compatibility/{page}: a {cls} change is assigned the release impact {impact}, which the policy does not allow")
+    if impact_rows == 0:
+        errors.append(f"docs/compatibility/{page}: the release-impact table has no row")
+    for impact in sorted(IMPACTS - seen_impacts):
+        errors.append(f"docs/compatibility/{page}: the release-impact table has no {impact} row")
+    examples = 0
+    for line in secs.get(next((h for h in secs if "package version selection" in h), ""), "").splitlines():
+        m = re.match(r"^\|\s*(\d+(?:\.\d+){0,2})\s*\|\s*(\d+(?:\.\d+){0,2})\s*\|\s*(Accept|Reject)\s*\|\s*$", line)
+        if m:
+            examples += 1
+            if package_accepts(m.group(1), m.group(2)) != (m.group(3) == "Accept"):
+                errors.append(f"docs/compatibility/{page}: the example installed {m.group(1)} / requested {m.group(2)} states {m.group(3)}, which contradicts the documented selection rule")
+    if examples == 0:
+        errors.append(f"docs/compatibility/{page}: the package version selection section has no example row")
 
 
 def audit(root):
@@ -91,6 +146,8 @@ def audit(root):
                 errors.append(f"docs/compatibility/{page}: document {ref} does not exist in docs/compatibility")
             elif re.fullmatch(r"CORE-[A-Z]+-\d+", ref) and ref not in requirement_ids:
                 errors.append(f"docs/compatibility/{page}: requirement {ref} is not defined in REQUIREMENTS.md")
+        if page == "VERSIONING_POLICY.md":
+            audit_versioning(page, text, errors)
         for key in table_sections:
             body = next((b for h, b in secs.items() if key in h), "")
             found = set()
@@ -146,6 +203,11 @@ def self_test(root):
         ("a missing ABI guard section", lambda t: _edit(t, "docs/compatibility/ABI_POLICY.md", r"^## 7\. Guard$", "## 7. Notes"), "'guard' is missing"),
         ("ABI machinery added to the build", lambda t: _edit(t, "CMakeLists.txt", r"^add_library\(kritva_core$", "set_target_properties(kritva_core PROPERTIES SOVERSION 1)\nadd_library(kritva_core"), "introduces ABI machinery"),
         ("an undefined ABI requirement", lambda t: _edit(t, "docs/compatibility/ABI_POLICY.md", "`CORE-COMPAT-004`", "`CORE-COMPAT-" + "998`"), "not defined in REQUIREMENTS.md"),
+        ("an Incompatible change released as MINOR", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| Incompatible \| )MAJOR( \| Never permitted in MINOR or PATCH\. \|)", r"\1MINOR\2"), "does not allow"),
+        ("a Review-required change released as PATCH", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(Add an enumerator or `ErrorCode` value \| Review-required \| )MINOR", r"\1PATCH"), "does not allow"),
+        ("a package example that contradicts the rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| 1\.2\.3 \| 1\.3 \| )Reject", r"\1Accept"), "contradicts the documented selection rule"),
+        ("an invalid release impact", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| Compatible \| )PATCH( \| Changelog entry)", r"\1BUILD\2"), "invalid impact"),
+        ("a missing version-selection section", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"^## 6\. Installed package version selection$", "## 6. Notes"), "'package version selection' is missing"),
         ("an unlinked page", lambda t: _edit(t, "docs/api/API_GUIDELINES.md", "COMPATIBILITY_POLICY.md", "POLICY.md"), "does not link"),
     ]
     failures = 0

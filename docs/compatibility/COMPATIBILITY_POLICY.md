@@ -44,7 +44,7 @@ A change is **source-compatible** when every well-formed client that uses only d
 | Class | Meaning |
 |---|---|
 | `Compatible` | Permitted in a stable 1.x line without a recorded compatibility review. |
-| `Review-required` | May break some clients; permitted only through the API evolution review (R10-004) with a recorded decision. Until that process is accepted such a change is treated as `Incompatible`. |
+| `Review-required` | May break some clients; permitted only through the API evolution review (`VERSIONING_POLICY.md`) with a recorded decision. A change that does not pass that review is treated as `Incompatible`. |
 | `Incompatible` | Breaks well-formed clients; a stable item may not change this way in the 1.x line (removal and replacement follow the deprecation policy, R10-005). |
 
 | Change to a stable item | Class | Reason |

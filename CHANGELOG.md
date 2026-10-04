@@ -17,6 +17,12 @@
   Core 1.x promises no ABI or binary compatibility (with the rationale, what is not promised, what clients may rely on
   and the conditions for any future promise). The policy audit now also fails if ABI machinery (SOVERSION, visibility,
   export header, shared library) appears in `CMakeLists.txt`. No ABI mechanism, header, source or behavior change.
+- **R10-004 — Versioning and API evolution policy (CORE-COMPAT-005..007).** `docs/compatibility/VERSIONING_POLICY.md`
+  maps the compatibility classes to MAJOR/MINOR/PATCH release impact, fixes the evolution rules for enumerations,
+  `ErrorCode`, virtual interfaces and constants, defines the API evolution review and states the installed-package
+  version-selection rule for 1.x (same MAJOR, installed >= requested). The audit checks the release-impact table for
+  consistency with the compatibility classes and the package examples against the rule. No header, source, CMake build
+  or version change (R10-007 implements the package rule; R10-009 sets 1.0.0).
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 
