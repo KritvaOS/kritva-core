@@ -260,7 +260,7 @@ And for milestone validation:
 
 R0.8 is fully released and closed (`kritva-core-r0.8`, version 0.8.0, release-record commit `cbbec81`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
 
-KF-CORE-R10 is the active planning milestone. Design Consult and Scope Confirmation are APPROVED; R10-001 (`1dba571`), R10-002 (`bbe10b6`) and R10-003 (`559d75f`) R10-004 (`a121c24`) and R10-005 (`2882cd2`) are ACCEPTED; the R10 API / Compatibility Review is PASS / FROZEN (freeze `55e57df`); R10-006 (`b44b14b`) is ACCEPTED; R10-007 (`f212e46`, F5 `30c461b`) is ACCEPTED; the R10 Integration Freeze is next.
+KF-CORE-R10 is the active planning milestone. Design Consult and Scope Confirmation are APPROVED; R10-001 (`1dba571`), R10-002 (`bbe10b6`) and R10-003 (`559d75f`) R10-004 (`a121c24`) and R10-005 (`2882cd2`) are ACCEPTED; the R10 API / Compatibility Review is PASS / FROZEN (freeze `55e57df`); R10-006 (`b44b14b`) is ACCEPTED; R10-007 (`f212e46`, F5 `30c461b`) is ACCEPTED; the R10 Integration Freeze is PASS / HONORED (freeze `660e4f4`); R10-008 is next.
 
 ## Deferred Known Issues
 
@@ -356,8 +356,8 @@ R0.8 remains RELEASED / SYNCHRONIZED / CLOSED. R0.9 (Capability Contract & Readi
 | R10 API / Compatibility Review | Freeze R1.0 compatibility semantics | 1 ED | R10-001..005 | PASS / FROZEN (freeze `55e57df`) | API freeze |
 | KF-CORE-R10-006 | Compatibility & Boundary Validation Harness | 3–4 ED | API Review PASS/FROZEN | ACCEPTED (`b44b14b`) | Contract tests |
 | KF-CORE-R10-007 | Package / Install Compatibility | 2–3 ED | R10-006 | ACCEPTED (`f212e46`, F5 `30c461b`) | Integration Freeze input |
-| R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | 0.5 ED | R10-007 | READY | Production freeze |
-| KF-CORE-R10-008 | Documentation / Security / Traceability Validation | 2–3 ED | Integration Freeze | BLOCKED | Validation |
+| R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | 0.5 ED | R10-007 | PASS / HONORED (freeze `660e4f4`) | Production freeze |
+| KF-CORE-R10-008 | Documentation / Security / Traceability Validation | 2–3 ED | Integration Freeze | READY | Validation |
 | KF-CORE-R10-009 | Full Validation & Release Candidate | 2–3 ED | R10-008 | BLOCKED | Release Gate input |
 | R10 Release Gate | Release 1.0.0 | 1 ED | R10-009 | PLANNED | PASS required |
 
@@ -398,4 +398,4 @@ R10 Release Gate
 
 ## Current Decision
 
-R0.9 remains RELEASED / SYNCHRONIZED / CLOSED. KF-CORE-R10 is IN PROGRESS. Design Consult and Scope Confirmation are APPROVED; R10-001 (`1dba571`), R10-002 (`bbe10b6`) and R10-003 (`559d75f`) R10-004 (`a121c24`) and R10-005 (`2882cd2`) are ACCEPTED; the R10 API / Compatibility Review is PASS / FROZEN (freeze `55e57df`); R10-006 (`b44b14b`) is ACCEPTED; R10-007 (`f212e46`, F5 `30c461b`) is ACCEPTED; the R10 Integration Freeze is next.
+R0.9 remains RELEASED / SYNCHRONIZED / CLOSED. KF-CORE-R10 is IN PROGRESS. Design Consult and Scope Confirmation are APPROVED; R10-001 (`1dba571`), R10-002 (`bbe10b6`) and R10-003 (`559d75f`) R10-004 (`a121c24`) and R10-005 (`2882cd2`) are ACCEPTED; the R10 API / Compatibility Review is PASS / FROZEN (freeze `55e57df`); R10-006 (`b44b14b`) is ACCEPTED; R10-007 (`f212e46`, F5 `30c461b`) is ACCEPTED; the R10 Integration Freeze is PASS / HONORED (freeze `660e4f4`); R10-008 is next.

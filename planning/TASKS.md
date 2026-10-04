@@ -287,8 +287,8 @@ R09 Release Gate
 | R10 API / Compatibility Review | Freeze R1.0 compatibility semantics | architecture | PASS / FROZEN (`55e57df`) | 1 ED |
 | KF-CORE-R10-006 | Compatibility & Boundary Validation Harness | tests/compatibility | ACCEPTED (`b44b14b`) | 3–4 ED |
 | KF-CORE-R10-007 | Package / Install Compatibility | package/install | ACCEPTED (`f212e46`, F5 `30c461b`) | 2–3 ED |
-| R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | architecture | READY | 0.5 ED |
-| KF-CORE-R10-008 | Documentation / Security / Traceability Validation | docs/security/traceability | BLOCKED BY INTEGRATION FREEZE | 2–3 ED |
+| R10 Integration Freeze | Freeze R1.0 compatibility/package behavior | architecture | PASS / HONORED (`660e4f4`) | 0.5 ED |
+| KF-CORE-R10-008 | Documentation / Security / Traceability Validation | docs/security/traceability | READY | 2–3 ED |
 | KF-CORE-R10-009 | Full Validation & Release Candidate | validation/release | BLOCKED BY R10-008 | 2–3 ED |
 | R10 Release Gate | Release 1.0.0 | release | PLANNED | 1 ED |
 
