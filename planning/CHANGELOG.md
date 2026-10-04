@@ -34,9 +34,9 @@ Planned effort: 22–30 ED; actual effort not yet recorded.
 Accepted:
 - KF-CORE-R09-001 — Capability Contract & Provider Semantics (`4081dc0`; evidence `7a727e8`; baseline `c250c54`)
 - KF-CORE-R09-002 — CapabilitySet Invariants & Version Semantics (`4bd241e`; evidence `7bcd90d`)
+- KF-CORE-R09-003 — Requirement / Capability Matching Boundary (`e91a51f`; evidence `e53464a`; correction `7b6b0f4`)
 
 Pending independent review:
-- KF-CORE-R09-003 — Requirement / Capability Matching Boundary (`e91a51f`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 

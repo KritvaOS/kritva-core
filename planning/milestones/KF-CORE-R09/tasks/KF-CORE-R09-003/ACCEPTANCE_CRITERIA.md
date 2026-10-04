@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Task | KF-CORE-R09-003 |
-| Status | PLANNED |
+| Status | ACCEPTED |
 | Primary commit | `feat(core): define capability requirement matching boundary` |
 | Reviewer | ChatGPT — independent acceptance gate |
 | Estimated effort | 2–3 ED |
@@ -123,10 +123,12 @@ Primary commit: `e91a51f` `feat(core): define capability requirement matching bo
 
 | Item | Result |
 |---|---|
-| Reviewer | ChatGPT |
-| Decision | **PENDING** |
-| Accepted commit | Pending |
-| Evidence reference | Pending |
-| Date | Pending |
+| Reviewer | ChatGPT (via the external review session) |
+| Decision | **PASS** |
+| Accepted commit | `e91a51f` (evidence `e53464a`; correction `7b6b0f4`) |
+| Evidence reference | Implementor Evidence above |
+| Date | 05-10-2026 |
 
-**Reviewer Decision: PENDING — KF-CORE-R09-003 is not yet accepted.**
+Reviewer notes: no production type, signature or behavior change (one contract block in `capability_set.hpp`; `requirements.hpp`, `dependency_graph.hpp` and the Component/Runtime/context/platform headers byte-identical); provision distinct from requirement, identity-only matching, side-effect-free single-snapshot evaluation, the Runtime never evaluating or resolving, and capability requirements independent of Component dependency ordering are accepted together with the synchronized `CAPABILITY_REQUIREMENTS.md` and `PLATFORM_REQUIREMENTS.md`; the disclosed documentation-path correction `7b6b0f4` is accepted. `CORE-CAP-007` and `CORE-CAP-008` are authoritative.
+
+**Reviewer Decision: PASS — KF-CORE-R09-003 is ACCEPTED.**
