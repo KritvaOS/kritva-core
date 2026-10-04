@@ -9,7 +9,7 @@
 // Module      : Capability
 // Layer       : Core Foundation
 //
-// Requirements: CORE-CAP-003; CORE-CAP-005; CORE-CAP-006
+// Requirements: CORE-CAP-003; CORE-CAP-005; CORE-CAP-006; CORE-CAP-007; CORE-CAP-008
 // API         : CORE-API-CAPABILITY
 //
 // Author      : KritvaOS Core Team
@@ -85,6 +85,58 @@ namespace kritva::core {
 // EXCLUDED
 //   No registry, locator, broker or global store, no dynamic discovery or change
 //   events, no version-range matching and no capability credentials.
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// CAPABILITY PROVISION, REQUIREMENT AND MATCHING BOUNDARY (CORE-CAP-007, CORE-CAP-008)
+//
+// This block states how a capability PROVIDED by an entity relates to a capability
+// REQUIRED by a consumer. It adds no type: the existing mechanisms are used
+// (CapabilitySet above, platform::PlatformRequirements / CapabilityRequirement /
+// evaluate() / check_required() in platform/requirements.hpp, and the same model
+// through runtime::ComponentContext). Those headers are unchanged.
+//
+// PROVISION IS NOT REQUIREMENT
+//   Provision is what a provider DECLARES (a CapabilitySet snapshot). A
+//   requirement is what a consumer NEEDS: an explicit, declarative item (a
+//   CapabilityId and REQUIRED or OPTIONAL) in a PlatformRequirements the consumer
+//   or integrator builds. The two are related ONLY by an explicit check that the
+//   consumer or integrator makes. Core never derives a requirement from a
+//   provision, a provision from a requirement, or either from a Component's type,
+//   name or behavior. Evaluating a requirement is the consumer's or integrator's
+//   act: the Runtime does not evaluate, resolve, bind, inject or satisfy any
+//   capability requirement, ever, as part of any lifecycle operation.
+//
+// MATCHING IS IDENTITY-ONLY (CORE-CAP-008)
+//   A requirement for CapabilityId X is satisfied exactly when the provider's
+//   snapshot contains an entry with that CapabilityId (CapabilitySet::contains).
+//   NOTHING ELSE is consulted: not the capability's name, not its version (no
+//   version equality, range or compatibility test), not the provider's name,
+//   version, vendor or kind (PlatformInfo), not the platform type, operating
+//   system or hardware, not any spelling lookalike, and no inference of any kind.
+//   An entry with an invalid id can never satisfy a requirement because a
+//   requirement cannot name an invalid id (it is rejected when declared).
+//   Whether a provided capability VERSION is acceptable is policy of the consumer
+//   or integrator, applied by them after (and outside) the identity match.
+//
+// EVALUATION IS EXPLICIT, SIDE-EFFECT FREE AND DETERMINISTIC
+//   evaluate() and check_required() only read: they take at most ONE capability
+//   snapshot from the provider per evaluation, start, stop, configure, create or
+//   change nothing, never touch the requirements, the context, the adapter or the
+//   Runtime, and the same requirements against the same provision give the same
+//   report. Declaring a requirement is atomic (a rejected declaration changes
+//   nothing); a duplicate is decided by identity, not by (identity, level).
+//   REQUIRED items decide success; OPTIONAL items are reported but never decide.
+//
+// CAPABILITY REQUIREMENTS ARE NOT COMPONENT DEPENDENCIES
+//   runtime::DependencyGraph orders ComponentIds only and knows nothing about
+//   capabilities: a capability being provided or required never adds, removes or
+//   reorders a dependency edge, never changes the dependency order or the
+//   registration of a Component, and a Component that happens to provide what
+//   another requires is not thereby ordered before it. Ordering is declared by the
+//   integrator with add_dependency(); requirements are checked by the integrator.
+//   Both stay independent of lifecycle, readiness and health: whether a missing
+//   prerequisite makes a Component's own lifecycle operation fail is decided by
+//   that Component or the integrator, never by an automatic Core rule.
 //------------------------------------------------------------------------------
 class CapabilitySet {
 public:
