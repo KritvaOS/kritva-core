@@ -12,10 +12,10 @@ Every API document is listed here exactly once. **Status** is `maintained` (a co
 | Context | `context/COMPONENT_CONTEXT.md` | stub |
 | Context | `context/PLATFORM_CONTEXT.md` | stub |
 | Error | `error/ERROR.md` | stub |
-| Error | `error/ERROR_CODES.md` | stub |
+| Error | `error/ERROR_CODES.md` | maintained |
 | Lifecycle | `lifecycle/LIFECYCLE.md` | maintained |
-| Platform | `platform/PLATFORM_ADAPTER.md` | stub |
+| Platform | `platform/PLATFORM_ADAPTER.md` | maintained |
 | Platform | `platform/PLATFORM_REQUIREMENTS.md` | maintained |
-| Runtime | `runtime/COMPONENT.md` | stub |
-| Runtime | `runtime/RUNTIME.md` | stub |
+| Runtime | `runtime/COMPONENT.md` | maintained |
+| Runtime | `runtime/RUNTIME.md` | maintained |
 | Runtime | `runtime/DEPENDENCY_GRAPH.md` | maintained |

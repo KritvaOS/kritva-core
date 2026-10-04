@@ -47,6 +47,13 @@
   version is unchanged until the release candidate. Review finding F5 (architecture-review exception to the frozen
   policy text): `EXACT` is accepted only when the requested version string equals the installed version string, as
   CMake's `EXACT` is textual; the policy example table and the audit model now say so.
+- **R10-008 — Documentation, security and traceability validation (CORE-SEC-001, CORE-REL-001).** Security decisions
+  SD-R10-01..07, trust-boundary, threat-model and architecture updates and the R1.0 security review record
+  (`SECURITY IMPACT: DOCUMENTATION ONLY`), audited by `scripts/audit/check_security_docs.py`. Four stub API pages are
+  promoted to full maintained pages written from the existing header contracts: `ERROR_CODES`, `COMPONENT`,
+  `PLATFORM_ADAPTER` and `RUNTIME` (API index: 15 documents, 10 maintained, 5 stubs; decision D-INV-6: the other stubs
+  and the headers without a page stay header-contract-authoritative). `API.md` sections 52-55 and `docs/README.md`
+  describe the R1.0 contract. No header, source, build or behavior change.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 

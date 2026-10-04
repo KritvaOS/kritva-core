@@ -47,7 +47,7 @@ Domain is the first path component under `include/kritva/core/` (`core` for the 
 | `configuration/parameter.hpp` | configuration | stable | - | - | - | - | `configuration/CONFIGURATION.md` | stub |
 | `core.hpp` | core | stable | - | - | - | - | none | none |
 | `error/error.hpp` | error | stable | - | - | - | - | `error/ERROR.md` | stub |
-| `error/error_code.hpp` | error | stable | - | - | Y | - | `error/ERROR_CODES.md` | stub |
+| `error/error_code.hpp` | error | stable | - | - | Y | - | `error/ERROR_CODES.md` | maintained |
 | `error/result.hpp` | error | stable | Y | Y | - | - | `error/ERROR.md` | stub |
 | `event/event.hpp` | event | stable | - | - | - | - | none | none |
 | `event/event_type.hpp` | event | stable | - | - | Y | - | none | none |
@@ -57,14 +57,14 @@ Domain is the first path component under `include/kritva/core/` (`core` for the 
 | `lifecycle/lifecycle_state.hpp` | lifecycle | stable | - | - | Y | - | `lifecycle/LIFECYCLE.md` | maintained |
 | `messaging/message.hpp` | messaging | stable | - | - | - | - | none | none |
 | `messaging/topic.hpp` | messaging | stable | Y | - | - | - | none | none |
-| `platform/adapter.hpp` | platform | stable | Y | Y | Y | Y | `platform/PLATFORM_ADAPTER.md` | stub |
+| `platform/adapter.hpp` | platform | stable | Y | Y | Y | Y | `platform/PLATFORM_ADAPTER.md` | maintained |
 | `platform/boundary.hpp` | platform | stable | Y | Y | - | - | none | none |
 | `platform/clock.hpp` | platform | stable | - | - | - | - | none | none |
 | `platform/context.hpp` | platform | stable | Y | Y | - | - | `context/PLATFORM_CONTEXT.md` | stub |
 | `platform/requirements.hpp` | platform | stable | Y | Y | Y | - | `platform/PLATFORM_REQUIREMENTS.md` | maintained |
 | `platform/scheduler.hpp` | platform | stable | Y | Y | - | Y | none | none |
 | `platform/watchdog.hpp` | platform | stable | Y | Y | - | Y | none | none |
-| `runtime/component.hpp` | runtime | stable | Y | Y | - | Y | `runtime/COMPONENT.md` | stub |
+| `runtime/component.hpp` | runtime | stable | Y | Y | - | Y | `runtime/COMPONENT.md` | maintained |
 | `runtime/component_context.hpp` | runtime | stable | Y | Y | - | - | `context/COMPONENT_CONTEXT.md` | stub |
 | `runtime/component_events.hpp` | runtime | stable | Y | Y | - | Y | none | none |
 | `runtime/component_id.hpp` | runtime | stable | - | Y | - | - | none | none |
@@ -73,8 +73,8 @@ Domain is the first path component under `include/kritva/core/` (`core` for the 
 | `runtime/component_registry.hpp` | runtime | stable | Y | Y | - | - | `runtime/DEPENDENCY_GRAPH.md` | maintained |
 | `runtime/component_statistics.hpp` | runtime | stable | Y | Y | - | Y | none | none |
 | `runtime/dependency_graph.hpp` | runtime | stable | Y | Y | - | - | `runtime/DEPENDENCY_GRAPH.md` | maintained |
-| `runtime/runtime.hpp` | runtime | stable | - | - | - | Y | `runtime/RUNTIME.md` | stub |
-| `runtime/runtime_manager.hpp` | runtime | stable | Y | Y | - | - | `runtime/RUNTIME.md` | stub |
+| `runtime/runtime.hpp` | runtime | stable | - | - | - | Y | `runtime/RUNTIME.md` | maintained |
+| `runtime/runtime_manager.hpp` | runtime | stable | Y | Y | - | - | `runtime/RUNTIME.md` | maintained |
 | `statistics/counter.hpp` | statistics | stable | - | Y | - | - | none | none |
 | `statistics/gauge.hpp` | statistics | stable | Y | Y | - | - | none | none |
 | `statistics/statistics.hpp` | statistics | stable | Y | Y | - | - | none | none |
@@ -93,11 +93,12 @@ Domain is the first path component under `include/kritva/core/` (`core` for the 
 
 ## Documentation decisions
 
-- **D-INV-1 — stub pages.** Nine pages in `docs/api` are `stub`s (R0.9 policy, decision D13 of R1.0). A stub names its owning headers only through this inventory; it is not promoted to `maintained` by R1.0 classification. A stub becomes maintained when its public contract changes or when a later R1.0 task records that compatibility classification requires it.
+- **D-INV-1 — stub pages.** Nine pages in `docs/api` were `stub`s at the R0.9 baseline (decision D13 of R1.0). A stub names its owning headers only through this inventory. At R10-008 four were promoted to `maintained` (D-INV-6); five remain stubs (`ERROR`, `CONFIGURATION`, `CONFIGURATION_VERSION`, `COMPONENT_CONTEXT`, `PLATFORM_CONTEXT`), for which the header contract text is authoritative.
 - **D-INV-2 — headers without a page.** 29 of the 49 headers have no owning page (`none`). Their authoritative contract today is the header's own contract comment together with the requirement rows in `REQUIREMENTS.md`. R1.0 does not create pages for them by default; whether any of them needs a maintained page for compatibility classification is decided by KF-CORE-R10-002 and, for final reconciliation, KF-CORE-R10-008. Until then the `stable` classification applies to them exactly as to documented headers.
 - **D-INV-3 — umbrella header.** `core.hpp` is classified `stable` as an include convenience; it carries no contract of its own beyond including the headers it names.
 - **D-INV-4 — package.** The CMake package `kritva_core` and target `kritva_core::kritva_core` are part of the public surface. Their version-selection behavior is classified by R10-004 and tested by R10-007; this inventory only records that they are in scope.
 - **D-INV-5 — no ABI claim.** Inventory and `stable` classification say nothing about binary compatibility. The ABI posture is decided by R10-003.
+- **D-INV-6 — documentation for 1.0 (R10-008).** Four stubs were promoted to full maintained pages because the frozen compatibility policy protects a client-facing contract that the header comments carried alone: `ERROR_CODES` (observable enumerator values), `COMPONENT` (the client-implemented `Component` interface), `PLATFORM_ADAPTER` (the client-implemented platform boundary) and `RUNTIME` (the Runtime contract). Each page restates the existing header contract and adds no semantics. The five other stubs and the 29 headers without a dedicated page remain header-contract-authoritative for R1.0; their structure is covered by the surface snapshot and the compile-time boundary test, and the remaining documentation is a post-1.0 backlog unless a future contract change makes a maintained page necessary. A public header is not a mandatory standalone API page.
 
 ## Requirement
 

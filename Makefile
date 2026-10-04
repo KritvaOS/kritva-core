@@ -9,7 +9,7 @@
 # Module      : Development Infrastructure
 # Layer       : Development Infrastructure
 #
-# Requirements: CORE-BUILD-001
+# Requirements: CORE-BUILD-001, CORE-REL-001
 # API         : GNU Make
 #
 # Author      : KritvaOS
@@ -173,6 +173,17 @@ api-surface-check: ## Compare the public API surface with tests/compat/api_surfa
 	@echo "[api-surface] Auditing public API surface..."
 	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_surface.py
 
+#------------------------------------------------------------------------------
+# Security Documentation Audit (R1.0)
+#
+# Structure and classification consistency of docs/security and the R1.0 task records.
+#------------------------------------------------------------------------------
+.PHONY: security-docs-check
+
+security-docs-check: ## Audit the security documentation and security-impact classifications
+	@echo "[security-docs] Auditing security documentation..."
+	$(PYTHON) $(SCRIPT_DIR)/audit/check_security_docs.py
+
 api-surface-update: ## Regenerate the API surface snapshot (a deliberate change; needs an evolution review)
 	$(PYTHON) $(SCRIPT_DIR)/audit/check_api_surface.py --update
 
@@ -211,7 +222,7 @@ lint: ## Run static analysis and lint checks
 
 .PHONY: check
 
-check: header-check traceability-check api-docs-check api-inventory-check compat-policy-check api-surface-check format-check lint ## Run all local repository checks
+check: header-check traceability-check api-docs-check api-inventory-check compat-policy-check api-surface-check security-docs-check format-check lint ## Run all local repository checks
 	@echo ""
 	@echo "[check] All repository checks passed."
 

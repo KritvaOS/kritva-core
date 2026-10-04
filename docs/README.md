@@ -6,6 +6,7 @@ This directory contains maintained architecture, public API, security, and devel
 
 - `architecture/` — architectural principles, boundaries, and design decisions.
 - `api/` — human-readable public API contracts. Markdown is authoritative.
+- `compatibility/` — the Core 1.x compatibility and evolution contract (public API inventory, source and semantic compatibility, ABI posture, versioning, deprecation) with its audits.
 - `security/` — security architecture, trust boundaries, and threat-model records.
 - `development/` — development and contributor guidance.
 - `architecture/archive/` — historical review records retained for traceability.

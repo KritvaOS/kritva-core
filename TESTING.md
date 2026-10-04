@@ -96,6 +96,10 @@ lifecycle_test.cpp
 
 `tests/install/run_install_test.cmake` (CTest `kritva_core_install_consumer`) installs the package and checks version requests derived from the project version against the installed package: the major, `major.0`, `major.minor` and the full version are accepted; a newer patch, a newer minor and the next and previous major are refused; `EXACT` accepts only the full installed version string. `tests/install/package_version_matrix.cmake` (CTests `kritva_core_package_version_matrix` and `kritva_core_package_version_matrix_detects_minor_mode`) generates a package prefix with the project's own compatibility mode for several installed versions, runs `find_package` for every request with and without `EXACT` and compares each result with a model of the rule in `docs/compatibility/VERSIONING_POLICY.md` (CORE-COMPAT-010); the second test proves the matrix detects the old same-minor behavior. The policy audit fails if the package mode is not `SameMajorVersion`.
 
+## 9e. Security Documentation Audit (R1.0)
+
+`scripts/audit/check_security_docs.py` (`make check`, CTests `kritva_core_security_docs_audit` and `kritva_core_security_docs_audit_self_test`) checks that the four security documents exist, that the SD-R10 decisions are unique, contiguous and referenced by the threat model, that the architecture document and `planning/milestones/KF-CORE-R10/R10_SECURITY_REVIEW.md` record the R1.0 classification, and that every accepted R1.0 task record carries exactly one valid `SECURITY IMPACT` classification (CORE-SEC-001). It validates that the classification is recorded consistently, never whether the engineering judgment is right. The self-test injects ten deliberate defects.
+
 ## 10. Completion Criteria
 
 A feature is complete only after requirement coverage, API documentation, implementation, relevant tests, successful build/test, and final diff review.

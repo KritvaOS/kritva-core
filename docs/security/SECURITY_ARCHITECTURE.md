@@ -20,3 +20,7 @@ Authentication, authorization frameworks, key management, secure boot, TLS, cryp
 ## R0.9 security-impact classification
 
 R0.9 (Capability Contract & Readiness Boundary) is classified **SECURITY IMPACT: DOCUMENTATION ONLY**: no API, authority boundary, persistence, discovery or execution path was added; the trust assumptions it relies on are recorded in `SECURITY_DECISIONS.md` (SD-R09-01..07) and `TRUST_BOUNDARIES.md`.
+
+## R1.0 security-impact classification
+
+R1.0 (Core 1.0 API Maturity & Compatibility Foundation) is classified **SECURITY IMPACT: DOCUMENTATION ONLY**. It adds no API, authority boundary, persistence, discovery or execution path and introduces no security mechanism. The only production change is the package version-selection mode, which selects a package by version and makes no authenticity statement. The assumptions it relies on are recorded in `SECURITY_DECISIONS.md` (SD-R10-01..07), `TRUST_BOUNDARIES.md` and `THREAT_MODEL.md`; the review is `planning/milestones/KF-CORE-R10/R10_SECURITY_REVIEW.md` (`CORE-SEC-001`). Signing, provenance, secure transport, key management and credential handling remain out of scope and each requires a separate architecture decision.
