@@ -47,7 +47,7 @@ Estimated effort is established before implementation. Actual/observed effort is
 | Latest release commit | `d72343a` |
 | Remote verification | **PASS / RELEASED / SYNCHRONIZED / CLOSED** |
 | Completed milestones | R0.2, R0.3, R0.4, R0.5, R0.6, R0.7, R0.8, R0.9 |
-| Current active milestone | **KF-CORE-R10 — PLANNED; implementation not authorized** |
+| Current active milestone | **KF-CORE-R10 — PLANNED; Scope Confirmation APPROVED; R10-001 authorized** |
 | R08 implementation status | RELEASED / CLOSED |
 | R09 implementation status | RELEASED / CLOSED |
 | Open release blockers | 0 |
@@ -260,7 +260,7 @@ And for milestone validation:
 
 R0.8 is fully released and closed (`kritva-core-r0.8`, version 0.8.0, release-record commit `cbbec81`, remote verification PASS / RELEASED / SYNCHRONIZED / CLOSED).
 
-KF-CORE-R10 is the active planning milestone. Design Consult is APPROVED; Scope Confirmation is the next gate. Implementation is not yet authorized.
+KF-CORE-R10 is the active planning milestone. Design Consult and Scope Confirmation are APPROVED; R10-001 is authorized to start.
 
 ## Deferred Known Issues
 
@@ -347,8 +347,8 @@ R0.8 remains RELEASED / SYNCHRONIZED / CLOSED. R0.9 (Capability Contract & Readi
 | ID | Task | Est. | Dependency | Status | Gate |
 |---|---|---:|---|---|---|
 | R10 Design Consult | Core 1.0 maturity and compatibility architecture | 2–3 ED | R0.9 released | APPROVED | Scope input |
-| R10 Scope Confirmation | Confirm scope, compatibility posture and exclusions | 1 ED | Design Consult | PENDING | Implementation authorization input |
-| KF-CORE-R10-001 | Public API Inventory & Compatibility Classification | 2–3 ED | Scope Confirmation | PLANNED | Compatibility baseline |
+| R10 Scope Confirmation | Confirm scope, compatibility posture and exclusions | 1 ED | Design Consult | APPROVED | Implementation authorization input |
+| KF-CORE-R10-001 | Public API Inventory & Compatibility Classification | 2–3 ED | Scope Confirmation | READY / AUTHORIZED | Compatibility baseline |
 | KF-CORE-R10-002 | Source & Semantic Compatibility Contract | 3–4 ED | R10-001 | BLOCKED BY SCOPE | Compatibility contract |
 | KF-CORE-R10-003 | ABI / Binary Compatibility Policy | 2–3 ED | R10-002 | BLOCKED BY R10-002 | ABI policy |
 | KF-CORE-R10-004 | Versioning & API Evolution Policy | 3–4 ED | R10-003 | BLOCKED BY R10-003 | Review input |
@@ -398,4 +398,4 @@ R10 Release Gate
 
 ## Current Decision
 
-R0.9 remains RELEASED / SYNCHRONIZED / CLOSED. KF-CORE-R10 is now the active planning milestone at PLANNED status. Design Consult is APPROVED; Scope Confirmation is the next architecture gate. Implementation is not yet authorized.
+R0.9 remains RELEASED / SYNCHRONIZED / CLOSED. KF-CORE-R10 is now the active planning milestone at PLANNED status. Design Consult and Scope Confirmation are APPROVED; R10-001 is READY / AUTHORIZED.

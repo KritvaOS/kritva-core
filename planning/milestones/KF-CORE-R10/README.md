@@ -6,7 +6,7 @@
 
 ## State
 
-PLANNED — architecture proposal prepared; implementation not authorized.
+PLANNED — Design Consult and Scope Confirmation APPROVED; R10-001 authorized.
 
 ## Package Contents
 

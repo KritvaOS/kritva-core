@@ -2,7 +2,7 @@
 
 ## Status
 
-PLANNED — architecture proposal prepared; implementation not authorized.
+PLANNED — Design Consult and Scope Confirmation APPROVED; R10-001 authorized; implementation in progress by task.
 
 ## Objective
 
