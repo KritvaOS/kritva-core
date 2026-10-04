@@ -39,6 +39,7 @@ Accepted:
 - KF-CORE-R09-004 — Reference Capability & Requirement Harness (`2608795`; evidence `9d0a81d`)
 
 Pending independent review:
+- KF-CORE-R09-005 — Component Readiness / Lifecycle Boundary Integration (`0f6b6c3`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
