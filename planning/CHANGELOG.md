@@ -42,6 +42,7 @@ Accepted:
 - KF-CORE-R09-006 — API Documentation, Security & Boundary Validation (`04f0859`; evidence `87a2960`)
 
 Pending independent review:
+- KF-CORE-R09-007 — Full R0.9 Validation & Release Candidate (candidate `ef14e99`)
 
 ### KF-CORE-R07 — Component Operational Foundation Planning
 
