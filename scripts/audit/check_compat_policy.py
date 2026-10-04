@@ -10,7 +10,7 @@
 # Module      : Audit
 # Layer       : Core Foundation
 #
-# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004, CORE-COMPAT-005, CORE-COMPAT-006, CORE-COMPAT-007
+# Requirements: CORE-COMPAT-002, CORE-COMPAT-003, CORE-COMPAT-004, CORE-COMPAT-005, CORE-COMPAT-006, CORE-COMPAT-007, CORE-COMPAT-008
 # API         : CORE-API-COMPATIBILITY-POLICY
 #
 # Author      : KritvaOS Core Team
@@ -45,6 +45,11 @@ POLICY_PAGES = {
     "VERSIONING_POLICY.md": (
         ["purpose", "version identity", "release impact", "enumerations", "evolution review", "package version selection",
          "not security", "relationship", "traceability", "exclusions"],
+        [],
+    ),
+    "DEPRECATION_POLICY.md": (
+        ["purpose", "scope", "lifecycle", "deprecating an item", "compatibility window", "migration guidance", "register",
+         "security", "relationship", "traceability", "exclusions"],
         [],
     ),
     "ABI_POLICY.md": (
@@ -118,6 +123,52 @@ def audit_versioning(page, text, errors):
         errors.append(f"docs/compatibility/{page}: the package version selection section has no example row")
 
 
+def audit_deprecations(root, errors):
+    """The register and the code must agree: every [[deprecated]] in the public headers is registered, every registered
+    item is deprecated in its header, every row is complete, and removal is a MAJOR release after the deprecating one."""
+    register = os.path.join(root, "docs", "compatibility", "DEPRECATIONS.md")
+    if not os.path.isfile(register):
+        errors.append("docs/compatibility/DEPRECATIONS.md is missing")
+        return
+    rows, in_table, seen = [], False, set()
+    for line in read(register).splitlines():
+        if re.match(r"^\|\s*Header\s*\|\s*Item\s*\|", line):
+            in_table = True
+            continue
+        if in_table and line.startswith("|") and not line.startswith("|---"):
+            rows.append([c.strip() for c in line.strip().strip("|").split("|")])
+    if not in_table:
+        errors.append("docs/compatibility/DEPRECATIONS.md has no register table")
+        return
+    base = os.path.join(root, "include", "kritva", "core")
+    registered = set()
+    for cells in rows:
+        if len(cells) != 6 or any(not c for c in cells):
+            errors.append(f"DEPRECATIONS.md has an incomplete row: {'|'.join(cells)}")
+            continue
+        header, item, since, why, removal, migration = cells
+        header = header.strip("`")
+        if (header, item) in seen:
+            errors.append(f"DEPRECATIONS.md lists {header} {item} more than once")
+        seen.add((header, item))
+        registered.add(header)
+        path = os.path.join(base, header)
+        if not os.path.isfile(path):
+            errors.append(f"DEPRECATIONS.md names the header {header}, which does not exist")
+        elif "[[deprecated" not in read(path):
+            errors.append(f"DEPRECATIONS.md lists {header} {item} but the header contains no [[deprecated]] marker")
+        if not re.fullmatch(r"\d+\.\d+(\.\d+)?", since):
+            errors.append(f"DEPRECATIONS.md gives {header} {item} the invalid deprecated-since version '{since}'")
+        elif not re.fullmatch(r"\d+\.0(\.0)?", removal) or int(removal.split(".")[0]) <= int(since.split(".")[0]):
+            errors.append(f"DEPRECATIONS.md gives {header} {item} the earliest removal '{removal}', which is not a MAJOR release after {since}")
+    for d, _, files in os.walk(base):
+        for name in files:
+            if name.endswith(".hpp"):
+                rel = os.path.relpath(os.path.join(d, name), base).replace(os.sep, "/")
+                if "[[deprecated" in read(os.path.join(d, name)) and rel not in registered:
+                    errors.append(f"{rel} contains [[deprecated]] but has no row in DEPRECATIONS.md")
+
+
 def audit(root):
     errors = []
     base = os.path.join(root, "docs", "compatibility")
@@ -164,6 +215,7 @@ def audit(root):
             p = os.path.join(root, "docs", "api", entry)
             if not os.path.isfile(p) or page not in read(p):
                 errors.append(f"docs/api/{entry} does not link {page}")
+    audit_deprecations(root, errors)
     cmake = os.path.join(root, "CMakeLists.txt")
     if os.path.isfile(cmake) and ABI_MACHINERY.search(read(cmake)):
         errors.append("CMakeLists.txt introduces ABI machinery (SOVERSION, visibility, export header or a shared library) that docs/compatibility/ABI_POLICY.md says does not exist")
@@ -189,6 +241,15 @@ def _no_incompatible_in_source(tmp):
         f.write(text[:start] + section + text[end:])
 
 
+def _append(tmp, rel, text):
+    with open(os.path.join(tmp, rel), "a", encoding="utf-8") as f:
+        f.write(text)
+
+
+def _row(tmp, header, item, since, why, removal, migration):
+    _append(tmp, "docs/compatibility/DEPRECATIONS.md", f"| `{header}` | {item} | {since} | {why} | {removal} | {migration} |\n")
+
+
 def self_test(root):
     pol = "docs/compatibility/COMPATIBILITY_POLICY.md"
     cases = [
@@ -208,6 +269,15 @@ def self_test(root):
         ("a package example that contradicts the rule", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| 1\.2\.3 \| 1\.3 \| )Reject", r"\1Accept"), "contradicts the documented selection rule"),
         ("an invalid release impact", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"(\| Compatible \| )PATCH( \| Changelog entry)", r"\1BUILD\2"), "invalid impact"),
         ("a missing version-selection section", lambda t: _edit(t, "docs/compatibility/VERSIONING_POLICY.md", r"^## 6\. Installed package version selection$", "## 6. Notes"), "'package version selection' is missing"),
+        ("a deprecated marker with no register row", lambda t: _append(t, "include/kritva/core/capability/capability_id.hpp", '[[deprecated("use x")]] inline void old_fn();\n'), "has no row in DEPRECATIONS.md"),
+        ("a register row for an item that is not deprecated", lambda t: _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "use new_fn", "2.0.0", "see guide"), "contains no [[deprecated]] marker"),
+        ("a register row for a header that does not exist", lambda t: _row(t, "capability/nope.hpp", "old_fn", "1.2.0", "use new_fn", "2.0.0", "see guide"), "does not exist"),
+        ("an incomplete register row", lambda t: _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "", "2.0.0", "see guide"), "incomplete row"),
+        ("a removal that is not a later MAJOR release", lambda t: (_append(t, "include/kritva/core/capability/capability_id.hpp", '[[deprecated("x")]] inline void old_fn();\n'), _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "use new_fn", "1.3.0", "see guide"))[1], "not a MAJOR release after"),
+        ("an invalid deprecated-since version", lambda t: (_append(t, "include/kritva/core/capability/capability_id.hpp", '[[deprecated("x")]] inline void old_fn();\n'), _row(t, "capability/capability_id.hpp", "old_fn", "soon", "use new_fn", "2.0.0", "see guide"))[1], "invalid deprecated-since"),
+        ("a duplicated register row", lambda t: (_append(t, "include/kritva/core/capability/capability_id.hpp", '[[deprecated("x")]] inline void old_fn();\n'), _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "use new_fn", "2.0.0", "g"), _row(t, "capability/capability_id.hpp", "old_fn", "1.2.0", "use new_fn", "2.0.0", "g"))[2], "more than once"),
+        ("a missing register", lambda t: os.remove(os.path.join(t, "docs/compatibility/DEPRECATIONS.md")), "DEPRECATIONS.md is missing"),
+        ("a missing lifecycle section", lambda t: _edit(t, "docs/compatibility/DEPRECATION_POLICY.md", r"^## 3\. Lifecycle$", "## 3. Notes"), "'lifecycle' is missing"),
         ("an unlinked page", lambda t: _edit(t, "docs/api/API_GUIDELINES.md", "COMPATIBILITY_POLICY.md", "POLICY.md"), "does not link"),
     ]
     failures = 0
@@ -217,7 +287,7 @@ def self_test(root):
             os.makedirs(os.path.join(tmp, "docs"))
             for d in ("compatibility", "api"):
                 shutil.copytree(os.path.join(root, "docs", d), os.path.join(tmp, "docs", d))
-            os.symlink(os.path.join(root, "include"), os.path.join(tmp, "include"))
+            shutil.copytree(os.path.join(root, "include"), os.path.join(tmp, "include"))
             shutil.copy(os.path.join(root, "REQUIREMENTS.md"), os.path.join(tmp, "REQUIREMENTS.md"))
             shutil.copy(os.path.join(root, "CMakeLists.txt"), os.path.join(tmp, "CMakeLists.txt"))
             mutate(tmp)

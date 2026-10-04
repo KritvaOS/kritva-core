@@ -14,7 +14,7 @@ Markdown is authoritative. Generated HTML or PDF is publication output only.
 - Platform
 - Runtime
 
-The public-header inventory and compatibility classification (R1.0) lives in `../compatibility/API_INVENTORY.md`; the source and semantic compatibility policy for stable items is `../compatibility/COMPATIBILITY_POLICY.md` the ABI posture (no ABI promise) is `../compatibility/ABI_POLICY.md`, and release impact, evolution review and package version selection are `../compatibility/VERSIONING_POLICY.md`.
+The public-header inventory and compatibility classification (R1.0) lives in `../compatibility/API_INVENTORY.md`; the source and semantic compatibility policy for stable items is `../compatibility/COMPATIBILITY_POLICY.md` the ABI posture (no ABI promise) is `../compatibility/ABI_POLICY.md`, and release impact, evolution review and package version selection are `../compatibility/VERSIONING_POLICY.md`; deprecation and migration are `../compatibility/DEPRECATION_POLICY.md` with the register `../compatibility/DEPRECATIONS.md`.
 
 See `API_INDEX.md` for the current map (every document and whether it is `maintained` or a `stub`).
 

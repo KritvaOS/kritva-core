@@ -23,6 +23,11 @@
   version-selection rule for 1.x (same MAJOR, installed >= requested). The audit checks the release-impact table for
   consistency with the compatibility classes and the package examples against the rule. No header, source, CMake build
   or version change (R10-007 implements the package rule; R10-009 sets 1.0.0).
+- **R10-005 — Deprecation and migration policy (CORE-COMPAT-008).** `docs/compatibility/DEPRECATION_POLICY.md` defines
+  the lifecycle (stable, deprecated, removable, removed in a MAJOR release), the requirements for deprecating an item,
+  the compatibility window and migration guidance, and `docs/compatibility/DEPRECATIONS.md` is the register (empty:
+  no stable item is deprecated at 1.0.0). The audit checks the register against the public headers. No header, source
+  or behavior change.
 
 ## 0.9.0 — Capability Contract & Readiness Boundary (KF-CORE-R09)
 
