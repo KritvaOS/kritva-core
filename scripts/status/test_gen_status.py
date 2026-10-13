@@ -45,8 +45,10 @@ class RealFiles(unittest.TestCase):
         self.assertEqual([t["task_id"] for t in doc["tasks"]], IDS)
         for t in doc["tasks"]:
             self.assertEqual(set(t), {"task_id", "execution", "git_sync", "readiness", "evidence"})
-            self.assertIsNone(t["evidence"][0]["commit"])
+            self.assertIsNone(t["evidence"][0]["commit"])  # criteria reference never carries a commit
             self.assertTrue((ROOT / t["evidence"][0]["uri"]).is_file())
+            for ev in t["evidence"][1:]:  # CI entries come only from status/evidence.json
+                self.assertTrue(ev["uri"].startswith("https://") and ev["commit"] and ev["ci_run"])
 
     def test_committed_status_facts_match_planning_records(self):
         import json
@@ -98,6 +100,57 @@ class Synthetic(unittest.TestCase):
             (r / "planning/milestones/KF-CORE-R10/tasks/KF-CORE-R10-001/ACCEPTANCE_CRITERIA.md").unlink()
             with self.assertRaises(ValueError):
                 gen_status.build(r, "2026-10-11T00:00:00Z")
+
+
+class CiEvidence(unittest.TestCase):
+    A, B = "a" * 40, "b" * 40
+    URL = "https://github.com/KritvaOS/kritva-core/actions/runs/123"
+
+    def entry(self, **kw):
+        e = {"commit": self.A, "task_commit": self.A, "ci_run": 123, "url": self.URL, "workflow": "Kritva Core CI",
+             "result": "PASS", "kind": "OWN"}
+        e.update(kw)
+        return e
+
+    def repo_with(self, entries):
+        import json
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        r = Path(d.name)
+        shutil.copytree(ROOT / "planning", r / "planning")
+        (r / ".git" / "refs" / "heads").mkdir(parents=True)
+        (r / ".git" / "refs" / "heads" / "main").write_text("a" * 40)
+        if entries is not None:
+            (r / "status").mkdir()
+            (r / "status" / "evidence.json").write_text(json.dumps({"entries": entries}))
+        return r
+
+    def test_no_file_means_no_ci_evidence(self):
+        doc, _ = gen_status.build(self.repo_with(None), "2026-10-11T00:00:00Z")
+        self.assertTrue(all(len(t["evidence"]) == 1 for t in doc["tasks"]))
+
+    def test_valid_entry_is_emitted_as_commit_bound_pass(self):
+        doc, _ = gen_status.build(self.repo_with({IDS[0]: self.entry()}), "2026-10-11T00:00:00Z")
+        t = doc["tasks"][0]
+        self.assertEqual((t["task_id"], len(t["evidence"])), (IDS[0], 2))
+        ev = t["evidence"][1]
+        self.assertEqual((ev["commit"], ev["ci_run"], ev["result"], ev["uri"]), (self.A, "123", "PASS", self.URL))
+        self.assertEqual(sum(1 for x in doc["tasks"] if len(x["evidence"]) == 2), 1)
+
+    def test_bad_entries_are_rejected(self):
+        bad = [("KF-CORE-R09-001", self.entry()), (IDS[0], self.entry(result="FAIL")),
+               (IDS[0], self.entry(commit="abc123")), (IDS[0], self.entry(ci_run=124)),
+               (IDS[0], self.entry(url="https://example.com/runs/123")),
+               (IDS[0], self.entry(kind="GUESS")), (IDS[0], self.entry(kind="OWN", commit=self.B)),
+               (IDS[0], self.entry(workflow=""))]
+        for tid, e in bad:
+            with self.assertRaises(ValueError, msg=(tid, e)):
+                gen_status.build(self.repo_with({tid: e}), "2026-10-11T00:00:00Z")
+
+    def test_milestone_evidence_may_be_on_a_later_commit(self):
+        doc, _ = gen_status.build(self.repo_with({IDS[0]: self.entry(kind="MILESTONE", commit=self.B)}),
+                                  "2026-10-11T00:00:00Z")
+        self.assertEqual(doc["tasks"][0]["evidence"][1]["commit"], self.B)
 
 
 if __name__ == "__main__":

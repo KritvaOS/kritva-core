@@ -1,0 +1,87 @@
+{
+  "_note": "Owner-curated CI evidence per task (generated from kritva-program v2/tracking/evidence_map_proposal.json, reviewed by the owner). Read by scripts/status/gen_status.py. A run here is a FACT about a commit; credit is still decided centrally.",
+  "schema": "1.0",
+  "entries": {
+    "KF-CORE-R10-001": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "1dba57166dfef312f6c204b8dd759c93ec309c99"
+    },
+    "KF-CORE-R10-002": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "bbe10b6cb67165834d91b1cd0fe428579af5136d"
+    },
+    "KF-CORE-R10-003": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "559d75f7d7b57ef0dd6652e6f9d751b732e2d90d"
+    },
+    "KF-CORE-R10-004": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "a121c24f3987e97e4f7650effd45da638932e54e"
+    },
+    "KF-CORE-R10-005": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "2882cd2083591011d8556eec582eb777b6936dc3"
+    },
+    "KF-CORE-R10-006": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "b44b14be9ac32a75b7fcf0568ddabfb14bedb1d1"
+    },
+    "KF-CORE-R10-007": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "f212e469bb764cc0e27b3e40dfe8d67e9cd241d0"
+    },
+    "KF-CORE-R10-008": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "c0edf1f0e1fa75dd90172e280776ea5fd27ac8eb"
+    },
+    "KF-CORE-R10-009": {
+      "commit": "4acce3b60833abfe33168c4766405ab86ea73edc",
+      "ci_run": 37192914607,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/37192914607",
+      "workflow": "Kritva Core CI",
+      "result": "PASS",
+      "kind": "MILESTONE",
+      "task_commit": "af168478fa223b9c5bf4790984849cdf23964642"
+    }
+  }
+}
