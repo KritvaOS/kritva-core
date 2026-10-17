@@ -116,3 +116,14 @@ Human review is required for public API compatibility changes, architectural bou
 ## 14. Final Rule
 
 > Understand the architecture before changing the code.
+
+## 15. Program Governance Rules
+
+These rules apply in addition to everything above and follow the program's governance (D-035, D-040).
+
+- Never commit credentials, tokens, private keys or production data. Use obviously fake values in examples. The `secret-scan` workflow runs on every push and pull request; do not add allowlist entries to silence it, propose them to the owner.
+- Do not add `Claude-Session:` or session-URL trailers to commit messages or pull request descriptions; `commit-message-check` rejects them. A `Co-Authored-By:` line is allowed.
+- Work on a branch and open a pull request; do not push to `main`, force-push shared branches or rewrite history without the owner's explicit approval.
+- `status/status.json` is a generated planning report. Regenerate it, do not edit it by hand. Repository edits never create program credit: credit comes only from the baseline, approvals and evidence recorded in `KritvaOS/kritva-program`.
+- Program decisions are recorded in `KritvaOS/kritva-program` (`v2/DECISIONS.md`). Dinesh decides; AI advice is advisory.
+- `main` requires `secret-scan`, `commit-message-check` and Code Owner review (owner statement, D-040; not independently verified). With one owner the PR author cannot self-approve: use the owner bypass or a second reviewer.
