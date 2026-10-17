@@ -1,0 +1,19 @@
+# Kritva Core - code owners (D-035)
+# Proprietary and confidential. Copyright (c) 2026 Kritvaos.
+#
+# Owners are requested for review automatically. To make this binding, enable
+# "Require review from Code Owners" in the main branch ruleset.
+# Replace or add accounts or teams here when more reviewers join; an independent
+# reviewer for safety-sensitive paths is a program decision (D-025).
+
+*                       @dineshannayya
+
+/include/               @dineshannayya
+/src/                   @dineshannayya
+/tests/                 @dineshannayya
+/planning/              @dineshannayya
+/status/                @dineshannayya
+/scripts/               @dineshannayya
+/.github/               @dineshannayya
+/SECURITY.md            @dineshannayya
+/LICENSE                @dineshannayya
