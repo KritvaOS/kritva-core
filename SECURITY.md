@@ -13,7 +13,7 @@ Please do not open a public issue, pull request, discussion or post for an unpat
 
 ## 3. Reporting
 
-The intended route is GitHub private vulnerability reporting for this repository (Security tab, "Report a vulnerability"). Whether it is enabled for this repository has not been verified (owner action pending). If that option is not available to you, contact the repository owner through the GitHub profile listed in CODEOWNERS and ask for a private channel; do not send details in the first message.
+Reporting route: GitHub private vulnerability reporting for this repository (Security tab, "Report a vulnerability") is the first route. The Security Owner (Dinesh, D-032) reports that the reporting route was tested on 18 October 2026 (D-068). That is an owner statement; it has not been independently verified from this repository. If that option is not available to you, contact the repository owner through the GitHub profile listed in CODEOWNERS and ask for a private channel; do not send details in the first message.
 
 Include: affected component and version or commit, a description, steps to reproduce, observed and expected behaviour, the potential impact, and any mitigation you know of. Please leave out personal, customer, credential or production data.
 

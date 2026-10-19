@@ -205,7 +205,7 @@ Controlling statement ([AGENTS.md](AGENTS.md) section 15, the D-053 form): `type
 
 Core is a software library with no actuators or hardware. It is not a safety-certified component and no safety case is made for it: its tests are host tests, and passing them does not show that a robot using Core is safe. Safety and security behaviour changes need human review. Real-time guarantees are documented per API and are not verified by any hardware or real-time test here.
 
-**Reporting a vulnerability:** follow [SECURITY.md](SECURITY.md), which asks for GitHub private vulnerability reporting and, if that is not available, a direct request to the owner for a private channel. The Security Owner has not yet verified whether private vulnerability reporting is enabled (an owner action still pending, recorded in SECURITY.md, which also gives the fallback instruction). Never put details of an unfixed vulnerability in a public issue, pull request or commit message.
+**Reporting a vulnerability:** follow [SECURITY.md](SECURITY.md). It names GitHub private vulnerability reporting as the first route and gives a direct-contact fallback. The Security Owner reports having tested the reporting route on 18 October 2026 (D-068); that is ATTESTED, not independently verified, and nothing here promises a response time. Never put details of an unfixed vulnerability in a public issue, pull request or commit message.
 
 - Never commit secrets, private keys, tokens, passwords or production data. Use obviously fake values and mark them as fake. The `secret-scan` workflow runs on every push and pull request; do not add allowlist entries to silence it.
 - If a secret is committed by mistake, tell the Security Owner at once; removing it in a later commit does not make it safe.
