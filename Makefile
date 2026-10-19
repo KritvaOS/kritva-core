@@ -236,7 +236,7 @@ lint: ## Run static analysis and lint checks
 
 check: header-check traceability-check api-docs-check api-inventory-check compat-policy-check api-surface-check security-docs-check format-check lint ## Run all local repository checks
 	@echo ""
-	@echo "[check] All repository checks passed."
+	@echo "[check] The audit and header checks passed. format-check and lint are placeholders (nothing was checked), and this target does not run CTest."
 
 
 #------------------------------------------------------------------------------
