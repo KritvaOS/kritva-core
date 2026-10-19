@@ -28,7 +28,7 @@
 | Repository | `KritvaOS/kritva-core` |
 | Repository Type | Library |
 | Visibility Class | Not yet decided (D-039 in kritva-program recommends PRIVATE; the Apache-2.0 licence would permit a public release, so a public release needs an owner exception and a release review) |
-| GitHub Setting | PUBLIC (temporary, D-028 and D-037 in kritva-program; the setting is attested by the owner and was not verified from this README) |
+| GitHub Setting | PUBLIC, temporary (D-028 and D-037 in kritva-program own the temporary exposure and its return plan); OWNER-ATTESTED: no independent check of the setting and no verification date is recorded here |
 | Lifecycle Status | ACTIVE |
 | Repository Owner | Project owner (role; see section 15) |
 | Security Owner | Security Owner role ([SECURITY.md](SECURITY.md)) |
@@ -176,7 +176,7 @@ CI runs five separate workflows (below). `make check` is the local pre-PR comman
 |---|---|---|
 | `Kritva Core CI` (`kritva-core-ci.yml`) | every push; pull requests | CMake configure (Debug), build, `ctest --output-on-failure` |
 | `source-header-check` | every push; pull requests | `python3 scripts/lint/check_source_headers.py --mode tracked --strict` |
-| `status-report` | every push; pull requests | the status generator tests, `gen_status.py --check-facts`, and the schema checksum |
+| `status-report` | every push; pull requests | four distinct steps: the status generator tests, `gen_status.py --check-facts`, the vendored schema checksum, and validation of `status/status.json` against schema 2.0 (installs `jsonschema`) |
 | `commit-message-check` | pull requests | the commit checker's unit tests and the checker on the commits in the pull request (rejects session trailers and links only) |
 | `secret-scan` | push to `main`; pull requests; manual dispatch | gitleaks over the git history |
 
@@ -188,23 +188,23 @@ CI runs five separate workflows (below). `make check` is the local pre-PR comman
 | `make traceability-check`, `make api-docs-check`, `make api-inventory-check`, `make compat-policy-check`, `make api-surface-check`, `make security-docs-check` | check | audit scripts over the requirements, API pages, inventory, compatibility pages, the API surface snapshot and the security records |
 | `make format-check`, `make lint` | placeholder | print a to-do message and do nothing: they are not real checks even though `make check` runs them |
 | `make format` | placeholder | prints a to-do message; it formats nothing |
-| `make check` | check | runs the header, audit, format-check and lint targets; the last two are placeholders |
+| `make check` | check | runs the header and audit targets plus the format-check and lint placeholders; it does not run CTest |
 | `make coverage`, `make coverage-check` | generate (writes a coverage build and report) | `coverage-check` enforces a minimum line coverage; not in CI |
 | `make api-surface-update` | modify (regenerates the API surface snapshot) | a deliberate change; needs an evolution review |
 | `make clean`, `make coverage-clean`, `make rebuild` | modify (deletes build artefacts) | local only |
 | `make install` | modify (writes to the install prefix) | `PREFIX=<dir>` overrides the prefix |
 
-A passing check shows that the repository's documents, inventory and tests agree with each other. It does not show that a design is right, that a gate is closed or that the library is fit for a robot. `make test` and CI run on the host compiler only: there is no hardware or real-time test here.
+`make check` runs the header lint and the audit scripts and nothing else: it does not run CTest, so a passing `make check` does not show that any test passes (run `make test` or the CMake and `ctest` sequence in section 6 for that), and its closing message does not mean that formatting or static analysis were checked, because those two targets do nothing. A passing audit shows that the repository's documents, inventory and records agree with each other. It does not show that a design is right, that a gate is closed or that the library is fit for a robot. `make test` and CI run on the host compiler only: there is no hardware or real-time test here.
 
 ## 12. Git Workflow and Review
 
-Repository convention: `type(scope): summary` with small logical commits (examples in [AGENTS.md](AGENTS.md): `feat(core): add identity foundation`). CI enforces only that a commit carries no `Claude-Session:` trailer or session link (`commit-message-check`); the subject form is not checked by CI. Local style checks (`scripts/security/check_commit_format.py`) are advisory. The Kritva commit standard in kritva-program (D-053) is NOT formally adopted here (PD-019). Work on a branch and open a pull request; do not push to `main`, force-push a shared branch or rewrite history without the owner's explicit approval. `main` is protected by a ruleset that requires `secret-scan`, `commit-message-check` and Code Owner review (owner statement, D-040; not independently verified); with one owner the PR author cannot self-approve, so use the owner bypass or a second reviewer. Human review is required for the items listed in section 9.
+Controlling statement ([AGENTS.md](AGENTS.md) section 15, the D-053 form): `type(scope): summary` (types feat, fix, docs, refactor, test, build, ci, chore, perf, revert, security) with one `Task:` or `Tasks:` footer; `Tasks: None (reason)` is allowed only on a docs or chore commit that implements no task; small logical commits; merge by merge commit. CI (`commit-message-check`) enforces only that a commit carries no `Claude-Session:` trailer or session link; it does not check the subject form or the footer. The local checker `scripts/security/check_commit_format.py` is advisory. The Kritva commit standard in kritva-program (D-053) is NOT formally adopted here (PD-019). Work on a branch and open a pull request; do not push to `main`, force-push a shared branch or rewrite history without the owner's explicit approval. `main` is protected by a ruleset that requires `secret-scan`, `commit-message-check` and Code Owner review (owner statement, D-040; not independently verified); with one owner the PR author cannot self-approve, so use the owner bypass or a second reviewer. Human review is required for the items listed in section 9.
 
 ## 13. Safety and Security
 
 Core is a software library with no actuators or hardware. It is not a safety-certified component and no safety case is made for it: its tests are host tests, and passing them does not show that a robot using Core is safe. Safety and security behaviour changes need human review. Real-time guarantees are documented per API and are not verified by any hardware or real-time test here.
 
-**Reporting a vulnerability:** follow [SECURITY.md](SECURITY.md), which asks for GitHub private vulnerability reporting and, if that is not available, a direct request to the owner for a private channel. Whether private vulnerability reporting is enabled has not been verified from this README. Never put details of an unfixed vulnerability in a public issue, pull request or commit message.
+**Reporting a vulnerability:** follow [SECURITY.md](SECURITY.md), which asks for GitHub private vulnerability reporting and, if that is not available, a direct request to the owner for a private channel. The Security Owner has not yet verified whether private vulnerability reporting is enabled (an owner action still pending, recorded in SECURITY.md, which also gives the fallback instruction). Never put details of an unfixed vulnerability in a public issue, pull request or commit message.
 
 - Never commit secrets, private keys, tokens, passwords or production data. Use obviously fake values and mark them as fake. The `secret-scan` workflow runs on every push and pull request; do not add allowlist entries to silence it.
 - If a secret is committed by mistake, tell the Security Owner at once; removing it in a later commit does not make it safe.
