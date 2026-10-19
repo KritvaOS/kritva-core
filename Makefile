@@ -118,6 +118,18 @@ header-check: ## Validate KritvaOS source headers
 		--mode tracked --strict
 
 #------------------------------------------------------------------------------
+# README standard check
+#
+# Structural check of README.md only (metadata, topics, relative links,
+# placeholders). A PASS does not show that the content is accurate.
+#------------------------------------------------------------------------------
+
+.PHONY: check-readme
+
+check-readme: ## Structural check of README.md against the Kritva README standard
+	$(PYTHON) $(SCRIPT_DIR)/check_readme.py README.md
+
+#------------------------------------------------------------------------------
 # Requirements Traceability
 #
 # Audits REQUIREMENTS.md against headers, tests, and CMake registration.
