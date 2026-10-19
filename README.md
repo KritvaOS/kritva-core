@@ -20,15 +20,15 @@
 
 # Kritva Core
 
-> Platform-independent runtime foundation for the Kritva Open Robotic Computing Platform: an API-first C++ library of types, lifecycle, status, health, errors, events, capabilities, configuration and runtime and platform contracts. The visibility class of this repository is not yet decided (D-039 recommends private).
+> Platform-independent runtime foundation for the Kritva Open Robotic Computing Platform: an API-first C++ library of types, lifecycle, status, health, errors, events, capabilities, configuration and runtime and platform contracts. The visibility class of this repository is PUBLIC (D-063).
 
 | Property | Value |
 |---|---|
 | Project | KritvaOS |
 | Repository | `KritvaOS/kritva-core` |
 | Repository Type | Library |
-| Visibility Class | Not yet decided (D-039 in kritva-program recommends PRIVATE; the Apache-2.0 licence would permit a public release, so a public release needs an owner exception and a release review) |
-| GitHub Setting | PUBLIC, temporary (D-028 and D-037 in kritva-program own the temporary exposure and its return plan); OWNER-ATTESTED: no independent check of the setting and no verification date is recorded here |
+| Visibility Class | PUBLIC (owner decision D-063 in kritva-program; it is an exception to the D-039 recommendation of PRIVATE, and no release review is recorded) |
+| GitHub Setting | PUBLIC, the same as the class (D-063 in kritva-program keeps this repository public and takes it out of the return-to-private plan); OWNER-ATTESTED: no independent check of the setting and no verification date is recorded here |
 | Lifecycle Status | ACTIVE |
 | Repository Owner | Project owner (role; see section 15) |
 | Security Owner | Security Owner role ([SECURITY.md](SECURITY.md)) |
@@ -170,14 +170,15 @@ Evidence has types that are not interchangeable (a software test result, an audi
 
 ## 11. Build, Test, Regression and Validation
 
-CI runs five separate workflows (below). `make check` is the local pre-PR command; it is not the same as CI.
+CI runs six separate workflows (below). `make check` is the local pre-PR command; it is not the same as CI.
 
 | Workflow | Trigger | What it runs |
 |---|---|---|
 | `Kritva Core CI` (`kritva-core-ci.yml`) | every push; pull requests | CMake configure (Debug), build, `ctest --output-on-failure` |
 | `source-header-check` | every push; pull requests | `python3 scripts/lint/check_source_headers.py --mode tracked --strict` |
 | `status-report` | every push; pull requests | four distinct steps: the status generator tests, `gen_status.py --check-facts`, the vendored schema checksum, and validation of `status/status.json` against schema 2.0 (installs `jsonschema`) |
-| `commit-message-check` | pull requests | the commit checker's unit tests and the checker on the commits in the pull request (rejects session trailers and links only) |
+| `commit-message-check` | pull requests | the unit tests of both commit checkers, then `check_commit_messages.py` on the commits in the pull request (rejects session trailers and links) and `check_commit_format.py` on the same commits (the D-053 form; blocking since D-061) |
+| `readme-check` | pull requests; push to `main` | the README checker's unit tests, then `python3 scripts/check_readme.py README.md` (structure, metadata and local links only; not a required check yet, D-067) |
 | `secret-scan` | push to `main`; pull requests; manual dispatch | gitleaks over the git history |
 
 | Command | Effect | Notes |
@@ -198,7 +199,7 @@ CI runs five separate workflows (below). `make check` is the local pre-PR comman
 
 ## 12. Git Workflow and Review
 
-Controlling statement ([AGENTS.md](AGENTS.md) section 15, the D-053 form): `type(scope): summary` (types feat, fix, docs, refactor, test, build, ci, chore, perf, revert, security) with one `Task:` or `Tasks:` footer; `Tasks: None (reason)` is allowed only on a docs or chore commit that implements no task; small logical commits; merge by merge commit. CI (`commit-message-check`) enforces only that a commit carries no `Claude-Session:` trailer or session link; it does not check the subject form or the footer. The local checker `scripts/security/check_commit_format.py` is advisory. The Kritva commit standard in kritva-program (D-053) is NOT formally adopted here (PD-019). Work on a branch and open a pull request; do not push to `main`, force-push a shared branch or rewrite history without the owner's explicit approval. `main` is protected by a ruleset that requires `secret-scan`, `commit-message-check` and Code Owner review (owner statement, D-040; not independently verified); with one owner the PR author cannot self-approve, so use the owner bypass or a second reviewer. Human review is required for the items listed in section 9.
+Controlling statement ([AGENTS.md](AGENTS.md) section 15, the D-053 form): `type(scope): summary` (types feat, fix, docs, refactor, test, build, ci, chore, perf, revert, security) with one `Task:` or `Tasks:` footer; `Tasks: None (reason)` is allowed only on a docs or chore commit that implements no task; small logical commits; merge by merge commit. The owner adopted the Kritva commit standard in this repository (D-061, the core part of PD-019): the `commit-message-check` workflow runs `scripts/security/check_commit_format.py` on every commit in a pull request, together with the `Claude-Session:` trailer and session-link check. Work on a branch and open a pull request; do not push to `main`, force-push a shared branch or rewrite history without the owner's explicit approval. `main` is protected by a ruleset that requires `secret-scan`, `commit-message-check` and Code Owner review (owner statement, D-040; not independently verified); with one owner the PR author cannot self-approve, so use the owner bypass or a second reviewer. Human review is required for the items listed in section 9.
 
 ## 13. Safety and Security
 
@@ -231,4 +232,4 @@ The version is in [VERSION](VERSION) and the release notes in [CHANGELOG.md](CHA
 
 ## 17. License
 
-Apache License 2.0. Copyright (c) 2026 KritvaOS. See [LICENSE](LICENSE).
+Apache License 2.0. Copyright (c) 2026 KritvaOS. See [LICENSE](LICENSE). The owner confirmed Apache-2.0 as the licence of this repository (program decision D-064).
