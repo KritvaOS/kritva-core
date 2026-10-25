@@ -93,7 +93,7 @@ R06 Release Gate
 | KF-CORE-R07-006 | Runtime/Component Operational Integration | tests/integration | ACCEPTED (3f524cd) | 3–4 ED |
 | R07 Integration Freeze | Freeze production operational behavior | architecture | PASS / HONORED (`142a32e`) | 0.5 ED |
 | KF-CORE-R07-007 | Full R0.7 Validation | integration/validation | ACCEPTED `86dfcb9` (candidate d83e1ba) | 2–3 ED |
-| R07 Release Gate | Release 0.7.0 | release | PLANNED | 1 ED |
+| R07 Release Gate | Release 0.7.0 | release | PASS / RELEASED (`424984f`) | 1 ED |
 
 ## R07 Dependency Graph
 
@@ -144,7 +144,7 @@ R0.7 does not add `statistics()` to the mandatory `runtime::Component` base inte
 | R08 Integration Freeze | Freeze production configuration behavior | architecture | PASS / HONORED (`e1051a0`) | 0.5 ED |
 | KF-CORE-R08-006 | Configuration Boundary & Regression Validation | integration/validation | ACCEPTED (94fad8e) | 2–3 ED |
 | KF-CORE-R08-007 | Full R0.8 Validation & Release Candidate | integration/validation/release | ACCEPTED `1aa3611` (candidate 1e7ba2b) | 2–3 ED |
-| R08 Release Gate | Release 0.8.0 | release | PLANNED | 1 ED |
+| R08 Release Gate | Release 0.8.0 | release | RELEASED (`cbbec81`) | 1 ED |
 
 ## R08 Dependency Graph
 
@@ -273,7 +273,7 @@ R09 Release Gate
 ```
 
 
-## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation (Architecture Proposed)
+## KF-CORE-R10 — Core 1.0 API Maturity & Compatibility Foundation (Released)
 
 | ID | Task | Primary Area | Status | Est. Effort |
 |---|---|---|---|---:|
