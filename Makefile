@@ -20,6 +20,18 @@
 # Project Configuration
 #------------------------------------------------------------------------------
 
+# Kritva Makefile standard (kritva-program v2/planning/standards/MAKEFILE_STANDARD.md): `make` or `make help` lists the targets.
+# A target is documented by `name: ## text` on its rule line; `##@ Name` starts a help group.
+# An unimplemented gate exits 3 (NOT_IMPLEMENTED). It is never a pass.
+.DEFAULT_GOAL := help
+.PHONY: help
+
+##@ Help
+help: ## Show this list
+	@awk 'BEGIN { FS = ":.*##"; printf "\nUsage: make <target> [VAR=value ...]\n" } \
+	  /^##@/ { g = substr($$0, 5); next } \
+	  /^[a-zA-Z0-9_.-]+:[^=].*##/ { if (g != "") { printf "\n%s\n", g; g = "" }; sub(/^ +/, "", $$2); printf "  %-24s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
+
 PROJECT_NAME := kritva-core
 
 BUILD_DIR  := build
@@ -46,28 +58,16 @@ BUILD_TYPE ?= Debug
 # Default Target
 #------------------------------------------------------------------------------
 
-.DEFAULT_GOAL := help
-
 #------------------------------------------------------------------------------
 # Help
 #
 # Targets containing "##" are automatically displayed by "make help".
 #------------------------------------------------------------------------------
 
-.PHONY: help
-
-help: ## Show available development commands
-	@echo ""
-	@echo "Kritva Core - Development Commands"
-	@echo "==================================="
-	@echo ""
-	@grep -E '^[a-zA-Z0-9_-]+:.*##' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS=":.*## "}; {printf "  %-20s %s\n", $$1, $$2}'
-	@echo ""
-
 #------------------------------------------------------------------------------
 # Build
 #------------------------------------------------------------------------------
+##@ Build
 
 .PHONY: configure build rebuild clean
 
@@ -89,6 +89,7 @@ clean: ## Remove build artifacts
 #------------------------------------------------------------------------------
 # Test
 #------------------------------------------------------------------------------
+##@ Test
 
 .PHONY: test test-verbose
 
@@ -109,6 +110,7 @@ test-verbose: build ## Build and run tests with verbose output
 # Documentation, metadata, generated files, fixtures, and other excluded
 # files are skipped according to the checker policy.
 #------------------------------------------------------------------------------
+##@ Source Header Check
 
 .PHONY: header-check
 
@@ -123,6 +125,7 @@ header-check: ## Validate KritvaOS source headers
 # Structural check of README.md only (metadata, topics, relative links,
 # placeholders). A PASS does not show that the content is accurate.
 #------------------------------------------------------------------------------
+##@ README standard check
 
 .PHONY: check-readme
 
@@ -134,6 +137,7 @@ check-readme: ## Structural check of README.md against the Kritva README standar
 #
 # Audits REQUIREMENTS.md against headers, tests, and CMake registration.
 #------------------------------------------------------------------------------
+##@ Requirements Traceability
 
 .PHONY: traceability-check
 
@@ -146,6 +150,7 @@ traceability-check: ## Audit requirements/API/test traceability
 #
 # Mechanical structure/reference audit of docs/api (never prose quality).
 #------------------------------------------------------------------------------
+##@ API Documentation Audit
 .PHONY: api-docs-check
 
 api-docs-check: ## Audit the Markdown API documentation (structure and references)
@@ -157,6 +162,7 @@ api-docs-check: ## Audit the Markdown API documentation (structure and reference
 #
 # Mechanical audit of docs/compatibility/API_INVENTORY.md against include/kritva/core/.
 #------------------------------------------------------------------------------
+##@ Public API Inventory Audit (R1.0)
 .PHONY: api-inventory-check
 
 api-inventory-check: ## Audit the public API inventory against the installed headers
@@ -168,6 +174,7 @@ api-inventory-check: ## Audit the public API inventory against the installed hea
 #
 # Mechanical structure/reference audit of docs/compatibility policy pages.
 #------------------------------------------------------------------------------
+##@ Compatibility Policy Audit (R1.0)
 .PHONY: compat-policy-check
 
 compat-policy-check: ## Audit the compatibility policy pages (structure and references)
@@ -179,6 +186,7 @@ compat-policy-check: ## Audit the compatibility policy pages (structure and refe
 #
 # Detects any change to the public declaration surface against the reviewed snapshot.
 #------------------------------------------------------------------------------
+##@ Public API Surface Snapshot Audit (R1.0)
 .PHONY: api-surface-check api-surface-update
 
 api-surface-check: ## Compare the public API surface with tests/compat/api_surface.snapshot
@@ -190,6 +198,7 @@ api-surface-check: ## Compare the public API surface with tests/compat/api_surfa
 #
 # Structure and classification consistency of docs/security and the R1.0 task records.
 #------------------------------------------------------------------------------
+##@ Security Documentation Audit (R1.0)
 .PHONY: security-docs-check
 
 security-docs-check: ## Audit the security documentation and security-impact classifications
@@ -202,6 +211,7 @@ api-surface-update: ## Regenerate the API surface snapshot (a deliberate change;
 #------------------------------------------------------------------------------
 # Code Formatting
 #------------------------------------------------------------------------------
+##@ Code Formatting
 
 .PHONY: format format-check
 
@@ -216,6 +226,7 @@ format-check: ## Check source formatting
 #------------------------------------------------------------------------------
 # Static Analysis / Lint
 #------------------------------------------------------------------------------
+##@ Static Analysis / Lint
 
 .PHONY: lint
 
@@ -231,6 +242,7 @@ lint: ## Run static analysis and lint checks
 # Keep this broader than the Git pre-commit hook. The pre-commit hook should
 # remain lightweight and run only the source-header checker.
 #------------------------------------------------------------------------------
+##@ Repository Validation
 
 .PHONY: check
 
@@ -248,6 +260,7 @@ check: header-check traceability-check api-docs-check api-inventory-check compat
 # Coverage is intentionally separate from the normal test target so that
 # "make test" remains fast and unchanged.
 #------------------------------------------------------------------------------
+##@ Code Coverage
 
 .PHONY: coverage coverage-check coverage-clean
 
@@ -291,6 +304,7 @@ coverage-clean: ## Remove coverage build and reports
 #------------------------------------------------------------------------------
 # Install
 #------------------------------------------------------------------------------
+##@ Install
 
 .PHONY: install
 
@@ -301,6 +315,7 @@ install: build ## Install Kritva Core (PREFIX=<dir> overrides the install prefix
 #------------------------------------------------------------------------------
 # Information
 #------------------------------------------------------------------------------
+##@ Information
 
 .PHONY: info
 
@@ -316,3 +331,36 @@ info: ## Show build and project configuration
 	@echo "Python        : $(PYTHON)"
 	@echo "CMake         : $(CMAKE)"
 	@echo ""
+
+##@ Gates (unimplemented gates exit 3)
+define not_implemented
+	@echo "NOT_IMPLEMENTED: $(1) has no tests yet; this is not a pass"; exit 3
+endef
+
+.PHONY: test-unit
+test-unit: ## Unit tests (NOT_IMPLEMENTED: exits 3)
+	$(call not_implemented,test-unit)
+
+.PHONY: test-integration
+test-integration: ## Integration tests (NOT_IMPLEMENTED: exits 3)
+	$(call not_implemented,test-integration)
+
+.PHONY: test-regression
+test-regression: ## Regression tests (NOT_IMPLEMENTED: exits 3)
+	$(call not_implemented,test-regression)
+
+.PHONY: acceptance
+acceptance: ## Acceptance gate (NOT_IMPLEMENTED: exits 3)
+	$(call not_implemented,acceptance)
+
+.PHONY: docs-check
+docs-check: ## Documentation link and structure check (NOT_IMPLEMENTED: exits 3)
+	$(call not_implemented,docs-check)
+
+##@ Git
+.PHONY: git_sync
+git_sync: ## Switch to main, fast-forward from origin, prune, delete merged local branches
+	@git switch main
+	@git pull --ff-only --prune
+	@git branch --format='%(refname:short)' | grep -vx main | xargs -r git branch -d
+	@git log --oneline -3
