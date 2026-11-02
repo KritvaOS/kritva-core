@@ -341,3 +341,36 @@ R10 Release Gate
 Version `1.0.0`, annotated tag `kritva-core-r1.0`, subject to the R10 Release Gate.
 
 See `planning/milestones/KF-CORE-R10/` for the complete architecture, requirements proposal, task acceptance package and gate records.
+
+## V2 Program Milestone Alignment
+
+This section links Core's planned work to the V2 program milestones owned by `KritvaOS/kritva-program`. It is a reading aid. It adds no task, changes no status and creates no program credit.
+
+Authority (kritva-program D-011, D-093 to D-096):
+
+- The program owns the V2 milestone plan: [v2/planning/milestones.json](https://github.com/KritvaOS/kritva-program/blob/main/v2/planning/milestones.json), rendered in [V2_MILESTONE_PLAN.md](https://github.com/KritvaOS/kritva-program/blob/main/v2/planning/V2_MILESTONE_PLAN.md). Task-to-milestone mapping lives in the program baseline. Core does not assert a program milestone in `status/status.json`.
+- Each Core repository milestone below uses the ID the program already records, `V2-M<n>-CORE-<seq>`, and maps to exactly one program milestone. Cross-milestone dependencies are recorded at program level only.
+- A milestone closes only through an approved `COMPLETION_RECORD.md` in the program's acceptance standard. A merge, a CI run or a tag does not close one.
+- Task counts, weight and closure state are in the program's generated [STATUS_DETAIL.md](https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_DETAIL.md). They are not repeated here.
+
+### Core repository milestones
+
+| Repository milestone | Program milestone | Outcome (as recorded by the program) | Status | Tasks |
+|---|---|---|---|---|
+| `V2-M0-CORE-001` | V2-M0 | Engineering contract approved and pinned; contract_pin check closed. | PROPOSED | None yet |
+| `V2-M2-CORE-001` | V2-M2 | Artifact and compatibility contract published as a versioned release. | PROPOSED | None yet |
+| `V2-M8-CORE-001` | V2-M8 | Release, security disposition and recovery documentation reviewed. | PROPOSED | None yet |
+
+Core has no planned repository milestone in V2-M1, V2-M3, V2-M4, V2-M5, V2-M6 or V2-M7. Whether that is intended is an open program decision (gap G-05 in the program's `V2_REPOSITORY_RECONCILIATION.md`). Do not add a milestone here to fill it.
+
+`V2-M0-CORE-001` depends on the pending program decision PD-015 (approve drafting the Core engineering contract). No work starts under it before the owner decides.
+
+### Historical milestone
+
+`KF-CORE-R10` (Core R1.0, tag `kritva-core-r1.0`) is classified `PRE_V2` by the program (D-094). It sits outside V2-M0 to V2-M8, no V2 milestone closes by reference to it, and no weight or credit transfers from it. The R0.2 to R0.9 history above is unchanged.
+
+### Rules for this section
+
+- Use the existing IDs. Do not introduce a second scheme.
+- Do not add tasks under a PROPOSED milestone until the program allocates real task IDs and baselines them.
+- Update this section only after the program records a change in `milestones.json`; the program record wins on any disagreement.
