@@ -27,6 +27,7 @@ import gen_status  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 IDS = [f"KF-CORE-R10-00{i}" for i in range(1, 10)]
+M0 = "KF-CORE-M0-001"
 MANIFEST = "| Task | Title |\n|---|---|\n" + "".join(f"| {t} | x |\n" for t in IDS) + "| R10 Release Gate | Release |\n"
 
 
@@ -40,9 +41,9 @@ class RealFiles(unittest.TestCase):
             ROOT / "planning/milestones/KF-CORE-R10/TASK_MANIFEST.md")
         self.assertEqual(sorted(ids), IDS)
 
-    def test_build_emits_nine_tasks_without_acceptance_fields(self):
+    def test_build_emits_nine_r10_tasks_and_the_m0_task_without_acceptance_fields(self):
         doc, _ = gen_status.build(ROOT, "2026-10-11T00:00:00Z")
-        self.assertEqual([t["task_id"] for t in doc["tasks"]], IDS)
+        self.assertEqual([t["task_id"] for t in doc["tasks"]], IDS + [M0])
         for t in doc["tasks"]:
             self.assertEqual(set(t), {"task_id", "execution", "git_sync", "readiness", "evidence"})
             self.assertIsNone(t["evidence"][0]["commit"])  # criteria reference never carries a commit
@@ -55,6 +56,45 @@ class RealFiles(unittest.TestCase):
         doc, _ = gen_status.build(ROOT, "2026-10-11T00:00:00Z")
         old = json.loads((ROOT / "status/status.json").read_text())
         self.assertEqual(gen_status.facts(old), gen_status.facts(doc))
+
+
+class M0Task(unittest.TestCase):
+    def test_m0_manifest_has_one_task(self):
+        ids = gen_status.parse_manifest(ROOT / "planning/milestones/KF-CORE-M0/TASK_MANIFEST.md")
+        self.assertEqual(ids, [M0])
+
+    def test_m0_task_is_in_progress_and_has_no_ci_evidence(self):
+        doc, _ = gen_status.build(ROOT, "2026-10-11T00:00:00Z")
+        t = next(x for x in doc["tasks"] if x["task_id"] == M0)
+        self.assertEqual(t["execution"], "IN_PROGRESS")
+        self.assertEqual(len(t["evidence"]), 1)
+        self.assertIsNone(t["evidence"][0]["commit"])
+
+    def test_m0_task_cannot_carry_ci_evidence_until_complete(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = Path(d)
+            shutil.copytree(ROOT / "planning", r / "planning")
+            (r / ".git" / "refs" / "heads").mkdir(parents=True)
+            (r / ".git" / "refs" / "heads" / "main").write_text("a" * 40)
+            (r / "status").mkdir()
+            import json
+            e = {"commit": "a" * 40, "task_commit": "a" * 40, "ci_run": 1,
+                 "url": "https://github.com/KritvaOS/kritva-core/actions/runs/1",
+                 "workflow": "Kritva Core CI", "result": "PASS", "kind": "OWN"}
+            (r / "status" / "evidence.json").write_text(json.dumps({"entries": {M0: e}}))
+            with self.assertRaises(ValueError):
+                gen_status.build(r, "2026-10-11T00:00:00Z")
+
+    def test_task_in_two_manifests_fails(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = Path(d)
+            shutil.copytree(ROOT / "planning", r / "planning")
+            (r / ".git" / "refs" / "heads").mkdir(parents=True)
+            (r / ".git" / "refs" / "heads" / "main").write_text("a" * 40)
+            m = r / "planning/milestones/KF-CORE-M0/TASK_MANIFEST.md"
+            m.write_text(m.read_text() + f"| {IDS[0]} | dup |\n")
+            with self.assertRaises(ValueError):
+                gen_status.build(r, "2026-10-11T00:00:00Z")
 
 
 class Synthetic(unittest.TestCase):

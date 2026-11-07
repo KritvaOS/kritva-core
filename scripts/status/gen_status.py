@@ -18,13 +18,14 @@
 #==============================================================================
 """Generate status/status.json (kritva-program schema 2.0) for kritva-core.
 
-Scope: the nine KF-CORE-R10 implementation tasks only (Core R1.0). Earlier
+Scope: the nine KF-CORE-R10 implementation tasks (Core R1.0) and the V2-M0
+governance task KF-CORE-M0-001 (kritva-program baseline v11, D-117). Earlier
 milestones (R02..R09) are deliberately not reported here; whether they enter
 the program baseline is a central decision.
 
 Reports FACTS only, derived from this repo's own planning records:
-  planning/milestones/KF-CORE-R10/TASK_MANIFEST.md        the task roster
-  planning/milestones/KF-CORE-R10/tasks/<id>/ACCEPTANCE_CRITERIA.md  evidence pointer
+  planning/milestones/<KF-CORE-R10|KF-CORE-M0>/TASK_MANIFEST.md     the task roster
+  planning/milestones/<milestone>/tasks/<id>/ACCEPTANCE_CRITERIA.md  evidence pointer
   planning/MILESTONE_STATUS.md                            per-task status text
   git (or .git/refs when git is unavailable)              source commit and sync state
 It never reports review or acceptance: those are decided centrally in
@@ -66,9 +67,11 @@ from pathlib import Path
 
 WORKSTREAM_ID = "CORE"
 REPO = "KritvaOS/kritva-core"
-MILESTONE = "KF-CORE-R10"
-MANIFEST_ROW = re.compile(r"^\|\s*(KF-CORE-R10-\d{3})\s*\|")
-STATUS_ROW = re.compile(r"^\|\s*(KF-CORE-R10-\d{3})\s*\|\s*([^|]+?)\s*\|")
+# KF-CORE-R10 is the Core R1.0 milestone; KF-CORE-M0 holds the V2-M0 governance task (baseline v11, D-117).
+MILESTONES = ["KF-CORE-R10", "KF-CORE-M0"]
+TASK_ID = r"KF-CORE-(?:R10|M0)-\d{3}"
+MANIFEST_ROW = re.compile(r"^\|\s*(" + TASK_ID + r")\s*\|")
+STATUS_ROW = re.compile(r"^\|\s*(" + TASK_ID + r")\s*\|\s*([^|]+?)\s*\|")
 STATUS = re.compile(r"^(accepted|released|in progress|not started|blocked)", re.I)
 SHA = re.compile(r"^[0-9a-f]{40}$")
 RUN_URL = re.compile(r"^https://github\.com/KritvaOS/kritva-core/actions/runs/(\d+)$")
@@ -197,12 +200,16 @@ def load_ci_evidence(root, known_tasks, executions):
 
 def build(root, updated_at):
     source, sync, dirty_unchecked = source_info(root)
-    base = root / "planning" / "milestones" / MILESTONE
-    ids = parse_manifest(base / "TASK_MANIFEST.md")
+    by_milestone = {}
+    for ms in MILESTONES:
+        by_milestone[ms] = parse_manifest(root / "planning" / "milestones" / ms / "TASK_MANIFEST.md")
+    ids = [t for ms in MILESTONES for t in by_milestone[ms]]
+    if len(set(ids)) != len(ids):
+        raise ValueError("a task appears in more than one milestone manifest")
     statuses = parse_status(root / "planning" / "MILESTONE_STATUS.md", set(ids))
     tasks = []
-    for tid in sorted(ids):
-        acc = f"planning/milestones/{MILESTONE}/tasks/{tid}/ACCEPTANCE_CRITERIA.md"
+    for ms, tid in [(ms, t) for ms in MILESTONES for t in sorted(by_milestone[ms])]:
+        acc = f"planning/milestones/{ms}/tasks/{tid}/ACCEPTANCE_CRITERIA.md"
         if not (root / acc).is_file():
             raise ValueError(f"evidence target missing for {tid}: {acc}")
         tasks.append({
