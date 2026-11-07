@@ -321,3 +321,11 @@ Release: Kritva Core R0.8, version 0.8.0; release candidate `1e7ba2b`; tag `krit
 | KF-CORE-R09-006 | ACCEPTED (04f0859) | Integration Freeze PASS/HONORED | 2–3 ED |
 | KF-CORE-R09-007 | ACCEPTED `683a3ce` (candidate ef14e99) | R09-006 | 2–3 ED |
 | R09 Release Gate | RELEASED (`d72343a`) | R09-007 | 1 ED |
+
+## KF-CORE-M0 — V2-M0 Governance Task (kritva-program baseline v11, D-117)
+
+Planning record only. The task is baselined in the program with weight 5; it earns no credit until the owner accepts it, a central approval is recorded and CI evidence exists on the approved commit.
+
+| ID | Status | Dependency | Est. Effort |
+|---|---|---|---:|
+| KF-CORE-M0-001 | In progress (contract and pin merged, D-113; waits for owner acceptance, central approval and CI evidence) | PD-015 decided | — |

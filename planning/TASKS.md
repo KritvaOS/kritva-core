@@ -2,6 +2,14 @@
 
 R0.2 through R0.9 are recorded as released historical milestones. R1.0 is released as well (`kritva-core-r1.0`).
 
+## KF-CORE-M0 — V2-M0 Governance Task
+
+Baselined in kritva-program v11 (D-117). No credit until owner acceptance, a central approval and CI evidence.
+
+| ID | Task | Primary Area | Status | Primary Commit |
+|---|---|---|---|---|
+| KF-CORE-M0-001 | Core engineering contract and version pin | docs/development | In progress (contract and pin merged, D-113; acceptance pending) | n/a (docs and CI already merged) |
+
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
 | ID | Task | Primary Area | Status | Primary Commit |
