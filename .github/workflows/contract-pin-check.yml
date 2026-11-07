@@ -1,0 +1,38 @@
+#==============================================================================
+# Copyright (c) 2026 KritvaOS
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : contract-pin-check.yml
+# Description : Fail when the engineering contract differs from its pin
+#
+# Component   : Infrastructure
+# Module      : Engineering Contract Pin
+# Layer       : Development Infrastructure
+#
+# Requirements: kritva-program decisions D-023, PD-015
+# API         : GitHub Actions workflow
+#
+# Author      : KritvaOS
+# Created     : 07-11-2026
+#==============================================================================
+name: contract-pin-check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-pin-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (full history for the pinned commit)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check contract against its pin
+        run: python3 scripts/contract/check_contract_pin.py --verify-git
