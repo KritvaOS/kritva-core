@@ -44,7 +44,117 @@
   },
   "repo": "Core",
   "repository": "KritvaOS/kritva-core",
-  "schema_version": 1,
+  "schema_version": 2,
+  "tasks": [
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-M0-001",
+      "kind": "baselined",
+      "milestone": "M0",
+      "title": "Core engineering contract and version pin",
+      "weight": 5
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-001",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Public API Inventory & Compatibility Classification",
+      "weight": 3
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-002",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Source & Semantic Compatibility Contract",
+      "weight": 4
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-003",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "ABI / Binary Compatibility Policy",
+      "weight": 3
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-004",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Versioning & API Evolution Policy",
+      "weight": 4
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-005",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Deprecation & Migration Policy",
+      "weight": 3
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-006",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Compatibility & Boundary Validation Harness",
+      "weight": 4
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-007",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Package / Install Compatibility",
+      "weight": 3
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-008",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Documentation / Security / Traceability Validation",
+      "weight": 3
+    },
+    {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KF-CORE-R10-009",
+      "kind": "baselined",
+      "milestone": "Foundation",
+      "title": "Full Validation & Release Candidate",
+      "weight": 3
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-CORE-002",
+      "kind": "planned",
+      "milestone": "M2",
+      "title": "Core build and artifact integration",
+      "weight": 5
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-CORE-003",
+      "kind": "planned",
+      "milestone": "M8",
+      "title": "Core release and security review",
+      "weight": 6
+    }
+  ],
   "titles": {
     "M0": "Foundation",
     "M1": "Studio",

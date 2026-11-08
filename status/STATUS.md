@@ -27,6 +27,32 @@ Accepted weight over total weight, where total covers completed Foundation work,
 
 Milestone dates are owner-approved planning dates in the program, not delivery commitments.
 
+## Baselined tasks
+
+Tasks in the approved program baseline. Weight is the baseline weight. Acceptance is decided by kritva-program; execution is this repository's own report.
+
+| Task | Title | Milestone | Weight | Execution | Acceptance |
+|---|---|---|---|---|---|
+| `KF-CORE-R10-001` | Public API Inventory & Compatibility Classification | Foundation | 3 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-002` | Source & Semantic Compatibility Contract | Foundation | 4 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-003` | ABI / Binary Compatibility Policy | Foundation | 3 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-004` | Versioning & API Evolution Policy | Foundation | 4 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-005` | Deprecation & Migration Policy | Foundation | 3 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-006` | Compatibility & Boundary Validation Harness | Foundation | 4 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-007` | Package / Install Compatibility | Foundation | 3 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-008` | Documentation / Security / Traceability Validation | Foundation | 3 | COMPLETE | ACCEPTED |
+| `KF-CORE-R10-009` | Full Validation & Release Candidate | Foundation | 3 | COMPLETE | ACCEPTED |
+| `KF-CORE-M0-001` | Core engineering contract and version pin | M0 | 5 | COMPLETE | ACCEPTED |
+
+## Planned tasks (not baselined)
+
+Owner-approved V2 planning scope that is not in the baseline yet. Weights are estimates (point value). These earn no credit until they are baselined and accepted.
+
+| Task | Title | Milestone | Estimated weight | Execution | Acceptance |
+|---|---|---|---|---|---|
+| `PROPOSED-NEW-CORE-002` | Core build and artifact integration | M2 | 5 | NOT_STARTED | NOT BASELINED |
+| `PROPOSED-NEW-CORE-003` | Core release and security review | M8 | 6 | NOT_STARTED | NOT BASELINED |
+
 ## Four states, kept apart
 
 | State | This repository | Decided by |
