@@ -82,6 +82,15 @@
       "result": "PASS",
       "kind": "MILESTONE",
       "task_commit": "af168478fa223b9c5bf4790984849cdf23964642"
+    },
+    "KF-CORE-M0-001": {
+      "commit": "0b30a998ef701864cb0e5133be3330cb230e5118",
+      "task_commit": "71a82e9b6e2ec3c6155270391adaa30e7751c1b9",
+      "ci_run": 42398261494,
+      "url": "https://github.com/KritvaOS/kritva-core/actions/runs/42398261494",
+      "workflow": "contract-pin-check",
+      "result": "PASS",
+      "kind": "MILESTONE"
     }
   }
 }

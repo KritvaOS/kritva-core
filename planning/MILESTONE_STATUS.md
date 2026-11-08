@@ -328,4 +328,4 @@ Planning record only. The task is baselined in the program with weight 5; it ear
 
 | ID | Status | Dependency | Est. Effort |
 |---|---|---|---:|
-| KF-CORE-M0-001 | In progress (contract and pin merged, D-113; waits for owner acceptance, central approval and CI evidence) | PD-015 decided | — |
+| KF-CORE-M0-001 | ACCEPTED (owner accepted 2026-11-08; contract and pin merged, D-113; contract-pin-check run 42398261494 PASS on `0b30a99`; central approval pending) | PD-015 decided | — |

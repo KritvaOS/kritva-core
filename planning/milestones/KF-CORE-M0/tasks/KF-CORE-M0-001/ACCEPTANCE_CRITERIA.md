@@ -1,6 +1,6 @@
 # KF-CORE-M0-001 — Acceptance Criteria
 
-Status: IN PROGRESS (criteria drafted from kritva-program `v2/planning/M0_TASK_DEFINITIONS.md`; owner review and central approval pending)
+Status: ACCEPTED (owner accepted 2026-11-08 under the interim reviewer roles of D-047, not independent review; criteria drafted from kritva-program `v2/planning/M0_TASK_DEFINITIONS.md`; central approval pending)
 
 ## Acceptance Criteria
 
