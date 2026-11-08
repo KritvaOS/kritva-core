@@ -63,25 +63,27 @@ class M0Task(unittest.TestCase):
         ids = gen_status.parse_manifest(ROOT / "planning/milestones/KF-CORE-M0/TASK_MANIFEST.md")
         self.assertEqual(ids, [M0])
 
-    def test_m0_task_is_in_progress_and_has_no_ci_evidence(self):
+    def test_m0_task_is_complete_with_commit_bound_ci_evidence(self):
         doc, _ = gen_status.build(ROOT, "2026-10-11T00:00:00Z")
         t = next(x for x in doc["tasks"] if x["task_id"] == M0)
-        self.assertEqual(t["execution"], "IN_PROGRESS")
-        self.assertEqual(len(t["evidence"]), 1)
-        self.assertIsNone(t["evidence"][0]["commit"])
+        self.assertEqual(t["execution"], "COMPLETE")
+        self.assertEqual(len(t["evidence"]), 2)
+        self.assertIsNone(t["evidence"][0]["commit"])  # criteria reference only
+        ev = t["evidence"][1]
+        self.assertEqual(ev["result"], "PASS")
+        self.assertTrue(ev["uri"].startswith("https://github.com/KritvaOS/kritva-core/actions/runs/"))
 
-    def test_m0_task_cannot_carry_ci_evidence_until_complete(self):
+    def test_m0_task_cannot_carry_ci_evidence_unless_complete(self):
         with tempfile.TemporaryDirectory() as d:
             r = Path(d)
             shutil.copytree(ROOT / "planning", r / "planning")
+            shutil.copytree(ROOT / "status", r / "status")
             (r / ".git" / "refs" / "heads").mkdir(parents=True)
             (r / ".git" / "refs" / "heads" / "main").write_text("a" * 40)
-            (r / "status").mkdir()
-            import json
-            e = {"commit": "a" * 40, "task_commit": "a" * 40, "ci_run": 1,
-                 "url": "https://github.com/KritvaOS/kritva-core/actions/runs/1",
-                 "workflow": "Kritva Core CI", "result": "PASS", "kind": "OWN"}
-            (r / "status" / "evidence.json").write_text(json.dumps({"entries": {M0: e}}))
+            ms = r / "planning" / "MILESTONE_STATUS.md"
+            lines = [("| KF-CORE-M0-001 | In progress (test) |" if ln.startswith("| KF-CORE-M0-001 |") else ln)
+                     for ln in ms.read_text().splitlines()]
+            ms.write_text("\n".join(lines) + "\n")
             with self.assertRaises(ValueError):
                 gen_status.build(r, "2026-10-11T00:00:00Z")
 

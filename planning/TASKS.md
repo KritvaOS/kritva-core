@@ -8,7 +8,7 @@ Baselined in kritva-program v11 (D-117). No credit until owner acceptance, a cen
 
 | ID | Task | Primary Area | Status | Primary Commit |
 |---|---|---|---|---|
-| KF-CORE-M0-001 | Core engineering contract and version pin | docs/development | In progress (contract and pin merged, D-113; acceptance pending) | n/a (docs and CI already merged) |
+| KF-CORE-M0-001 | Core engineering contract and version pin | docs/development | ACCEPTED (owner accepted 2026-11-08; contract and pin merged, D-113; contract-pin-check PASS on `0b30a99`; central approval pending) | n/a (docs and CI already merged) |
 
 ## KF-CORE-R05 — Platform Runtime Integration Foundation
 
