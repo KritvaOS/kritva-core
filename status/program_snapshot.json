@@ -1,0 +1,59 @@
+{
+  "baseline_tasks": {
+    "accepted_tasks": 1,
+    "baseline_tasks": 1,
+    "rows": 2
+  },
+  "evidence_notes": [],
+  "execution": {
+    "complete": 10,
+    "tasks": 10
+  },
+  "foundation": {
+    "accepted_tasks": 9,
+    "accepted_weight": 30,
+    "tasks": 9,
+    "weight": 30
+  },
+  "milestones": {
+    "M0": {
+      "accepted": 5,
+      "baseline": 5,
+      "point": 0,
+      "rows": 0
+    },
+    "M2": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 5,
+      "rows": 1
+    },
+    "M8": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 6,
+      "rows": 1
+    }
+  },
+  "program": {
+    "baseline_approved": true,
+    "baseline_version": 12,
+    "generated_at": "2026-11-08T12:16:37Z",
+    "release_state": "NOT_READY",
+    "view": "https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md"
+  },
+  "repo": "Core",
+  "repository": "KritvaOS/kritva-core",
+  "schema_version": 1,
+  "titles": {
+    "M0": "Foundation",
+    "M1": "Studio",
+    "M2": "Build & Artifact",
+    "M3": "Control Plane",
+    "M4": "Booking & Commercial",
+    "M5": "Execution",
+    "M6": "Lab & Robot",
+    "M7": "Live & Results",
+    "M8": "Production"
+  }
+}
