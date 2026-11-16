@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the copyright holder transition in scripts/lint/check_source_headers.py (kritva-standard decision D-1)."""
+"""Tests for the copyright holder line in scripts/lint/check_source_headers.py (kritva-standard decision D-1)."""
 import importlib.util
 import tempfile
 import unittest
@@ -26,21 +26,26 @@ def header(copyright_line, spdx="# SPDX-License-Identifier: Apache-2.0"):
     return f"#!/usr/bin/env python3\n#====\n# {copyright_line}\n{spdx}\n#\n{FIELDS}#====\n\nprint(1)\n"
 
 
-class HolderTransition(unittest.TestCase):
+class HolderLine(unittest.TestCase):
     def check(self, text):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "x.py"
             p.write_text(text, encoding="utf-8")
             return H.validate_file(p)
 
-    def test_old_holder_is_accepted(self):
-        self.assertEqual(self.check(header("Copyright (c) 2026 KritvaOS")), [])
-
     def test_new_holder_is_accepted(self):
         self.assertEqual(self.check(header("Copyright (c) 2026 Kritva Robotics Private Limited.")), [])
 
+    def test_old_holder_is_rejected(self):
+        errs = self.check(header("Copyright (c) 2026 KritvaOS"))
+        self.assertTrue(any("HEADER-003" in e for e in errs))
+
     def test_other_holder_is_rejected(self):
         errs = self.check(header("Copyright (c) 2026 Somebody Else"))
+        self.assertTrue(any("HEADER-003" in e for e in errs))
+
+    def test_missing_trailing_period_is_rejected(self):
+        errs = self.check(header("Copyright (c) 2026 Kritva Robotics Private Limited"))
         self.assertTrue(any("HEADER-003" in e for e in errs))
 
     def test_missing_spdx_is_still_rejected(self):
