@@ -39,6 +39,13 @@ EXCLUDED_DIRS = {
 
 EXEMPT_NAMES = {"requirements.txt", "source_header_check.version"}
 
+# Transition (kritva-standard decision D-1): the old and the new holder wording are both accepted
+# until every header in this repository is changed; then the old wording is removed.
+ACCEPTED_HOLDERS = (
+    "Copyright (c) 2026 KritvaOS",
+    "Copyright (c) 2026 Kritva Robotics Private Limited",
+)
+
 EXEMPT_DIRS = {
     ".github/agents",
     ".github/instructions",
@@ -119,9 +126,10 @@ def validate_file(path: Path) -> list[str]:
             f"{path}: [HEADER-001] missing SPDX-License-Identifier: Apache-2.0"
         )
 
-    if "Copyright (c) 2026 KritvaOS" not in block:
+    if not any(holder in block for holder in ACCEPTED_HOLDERS):
         errors.append(
-            f"{path}: [HEADER-003] missing Copyright (c) 2026 KritvaOS"
+            f"{path}: [HEADER-003] missing copyright line "
+            f"({' or '.join(ACCEPTED_HOLDERS)})"
         )
 
     for field in REQUIRED_FIELDS:
