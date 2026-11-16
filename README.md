@@ -1,6 +1,6 @@
 <!--
 //==============================================================================
-// Copyright (c) 2026 KritvaOS
+// Copyright (c) 2026 Kritva Robotics Private Limited.
 // SPDX-License-Identifier: Apache-2.0
 //
 // File        : README.md
@@ -234,4 +234,4 @@ The version is in [VERSION](VERSION) and the release notes in [CHANGELOG.md](CHA
 
 ## 17. License
 
-Apache License 2.0. Copyright (c) 2026 KritvaOS. See [LICENSE](LICENSE). The owner confirmed Apache-2.0 as the licence of this repository (program decision D-064).
+Apache License 2.0. Copyright (c) 2026 Kritva Robotics Private Limited. See [LICENSE](LICENSE). The owner confirmed Apache-2.0 as the licence of this repository (program decision D-064).
