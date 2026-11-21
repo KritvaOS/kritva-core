@@ -357,6 +357,73 @@ acceptance: ## Acceptance gate (NOT_IMPLEMENTED: exits 3)
 docs-check: ## Documentation link and structure check (NOT_IMPLEMENTED: exits 3)
 	$(call not_implemented,docs-check)
 
+##@ Preflight
+# "make preflight" is the one command to run before pushing. It runs the checks CI runs on a pull request
+# that can run on this machine, keeps going after a failure, prints a summary, fixes nothing and never
+# fetches or installs anything. Not mirrored: secret-scan (gitleaks).
+# PREFLIGHT_BASE is the branch the commits are compared with; run "git fetch origin" first.
+# PREFLIGHT_SKIP_BUILD=1 leaves out the build and test step (the pre-push hook does this for pushes that change no code).
+.PHONY: preflight preflight-commits readme-test commit-tests progress-check status-tests status-facts-check status-schema-check contract-pin-check hooks-install preflight-hook-on preflight-hook-off
+
+PREFLIGHT_BASE ?= origin/main
+PREFLIGHT_STEPS := check check-readme readme-test commit-tests preflight-commits contract-pin-check progress-check status-tests status-facts-check status-schema-check test
+
+preflight: ## Run the CI checks locally and report every failure (PREFLIGHT_BASE=origin/main)
+	@fail=""; \
+	for step in $(if $(PREFLIGHT_SKIP_BUILD),$(filter-out test,$(PREFLIGHT_STEPS)),$(PREFLIGHT_STEPS)); do \
+	  echo ""; echo "[preflight] >>> $$step"; \
+	  if $(MAKE) --no-print-directory $$step; then :; else fail="$$fail $$step"; fi; \
+	done; \
+	echo ""; \
+	$(if $(PREFLIGHT_SKIP_BUILD),echo "[preflight] Build and test step skipped (PREFLIGHT_SKIP_BUILD is set); CI still runs it.";) \
+	if [ -n "$$fail" ]; then \
+	  echo "[preflight] FAILED:$$fail"; \
+	  echo "[preflight] Fix these, then run make preflight again. CI would reject this push."; \
+	  exit 1; \
+	fi; \
+	echo "[preflight] All preflight checks passed. CI also runs secret-scan."
+
+preflight-commits: ## Check the commits since PREFLIGHT_BASE: message rules, commit format
+	@git rev-parse --verify --quiet "$(PREFLIGHT_BASE)^{commit}" >/dev/null || { echo "[preflight-commits] $(PREFLIGHT_BASE) not found. Run: git fetch origin"; exit 2; }
+	@$(PYTHON) scripts/security/check_commit_messages.py --range "$(PREFLIGHT_BASE)..HEAD"
+	@$(PYTHON) scripts/security/check_commit_format.py --range "$(PREFLIGHT_BASE)..HEAD"
+
+commit-tests: ## Run the commit checker unit tests (same as the commit-message-check workflow)
+	@$(PYTHON) -m unittest discover -s tests/commit_message_check
+
+readme-test: ## Run the README checker unit tests (same as the readme-check workflow)
+	@$(PYTHON) -m unittest discover -s tests/readme_check
+
+progress-check: ## Check the progress report against its snapshot (same as the progress-check workflow)
+	@$(PYTHON) scripts/progress_report.py --check
+
+status-tests: ## Run the status generator tests (same as the status-report workflow)
+	@$(PYTHON) -m unittest scripts/status/test_gen_status.py
+
+status-facts-check: ## Check status facts against the planning records (same as the status-report workflow)
+	@$(PYTHON) scripts/status/gen_status.py --check-facts
+
+status-schema-check: ## Check the vendored schema hash and validate status/status.json (needs jsonschema 4.26.0, as CI installs)
+	@cd status && sha256sum -c status.schema.json.sha256
+	@$(PYTHON) -c 'import jsonschema' 2>/dev/null || { echo "[status-schema-check] jsonschema is not installed (CI uses 4.26.0). In a virtualenv: python3 -m pip install jsonschema==4.26.0"; exit 1; }
+	@$(PYTHON) -c "import json, jsonschema; s = json.load(open('status/status.schema.json')); r = json.load(open('status/status.json')); jsonschema.Draft202012Validator(s).validate(r); assert r['schema_version'] == '2.0', 'unsupported schema_version'; print('status.json valid; tasks:', len(r['tasks']))"
+
+contract-pin-check: ## Check the contract against its pin (same as the contract-pin-check workflow; needs full git history)
+	@$(PYTHON) scripts/contract/check_contract_pin.py --verify-git
+
+hooks-install: ## Enable the repository Git hooks (.githooks): make preflight runs before every git push
+	git config core.hooksPath .githooks
+	@echo "[hooks] core.hooksPath set to .githooks; pre-push runs make preflight."
+	@echo "[hooks] Turn it off with: make preflight-hook-off. Skip it once with: git push --no-verify"
+
+preflight-hook-on: ## Run "make preflight" before every git push (the default after hooks-install)
+	git config kritva.preflightOnPush true
+	@echo "[hooks] pre-push preflight is ON for this clone. It needs core.hooksPath (make hooks-install)."
+
+preflight-hook-off: ## Turn off the pre-push preflight in this clone (CI still runs every check)
+	git config kritva.preflightOnPush false
+	@echo "[hooks] pre-push preflight is OFF for this clone."
+
 ##@ Git
 .PHONY: git_sync
 git_sync: ## Switch to main, fast-forward from origin, prune, delete merged local branches
