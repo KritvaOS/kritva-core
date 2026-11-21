@@ -192,6 +192,8 @@ CI runs six separate workflows (below). `make check` is the local pre-PR command
 | `make format-check`, `make lint` | placeholder | print a to-do message and do nothing: they are not real checks even though `make check` runs them |
 | `make format` | placeholder | prints a to-do message; it formats nothing |
 | `make check` | check | runs the header and audit targets plus the format-check and lint placeholders; it does not run CTest |
+| `make preflight` | generate (writes `build/`) | the CI checks that run on this machine, locally: the header and audit checks (`make check`), the README check and its tests, the commit checker tests and the commit checks over your branch commits, the contract pin check, the progress report check, the status generator tests, the status facts check, the status schema check and the CMake build with CTest (`make test`); lists every failure; run `git fetch origin` first; it does not run `secret-scan` and does not replace CI |
+| `make hooks-install`, `make preflight-hook-off` | modify | `hooks-install` makes `git push` run `make preflight` in this clone; `preflight-hook-off` turns that off (`git push --no-verify` skips it once) |
 | `make coverage`, `make coverage-check` | generate (writes a coverage build and report) | `coverage-check` enforces a minimum line coverage; not in CI |
 | `make api-surface-update` | modify (regenerates the API surface snapshot) | a deliberate change; needs an evolution review |
 | `make clean`, `make coverage-clean`, `make rebuild` | modify (deletes build artefacts) | local only |
